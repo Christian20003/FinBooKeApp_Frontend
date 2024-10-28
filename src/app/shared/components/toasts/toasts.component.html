@@ -1,0 +1,11 @@
+<div class="toasts-container">
+  <div class="overlap-container">
+    @for (toast of test; track toast) {
+      <app-toast
+        [toast]="toast"
+        (removeToast)="onRemoveToast(toast)"
+        [@moveDown]></app-toast>
+    }
+  </div>
+</div>
+<button (click)="onAdd()">Add</button>
