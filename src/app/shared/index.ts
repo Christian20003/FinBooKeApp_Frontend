@@ -3,7 +3,7 @@ export { SmallErrorMsgComponent } from './components/small-error-msg/small-error
 export { LoadingComponent } from './components/loading/loading.component';
 export { User, TestUser } from './models/User';
 export { Session, TestSession } from './models/Session';
-export { Toast, ToastTypes, ToastRemoveType } from './models/Toast';
+export { Toast, ToastTypes, ToastRemoveType, TestToast } from './models/Toast';
 export {
   slideInX,
   slideOutX,

@@ -26,3 +26,11 @@ export interface Toast {
   type: ToastTypes;
   autoRemove: ToastRemoveType;
 }
+
+/** A example object for a toast (usable for testing) */
+export const TestToast: Toast = {
+  id: 1,
+  message: 'This is a test message',
+  type: ToastTypes.ERROR,
+  autoRemove: ToastRemoveType.SHORT,
+};
