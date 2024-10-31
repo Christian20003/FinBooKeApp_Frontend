@@ -1,6 +1,6 @@
 <div class="toasts-container">
   <div class="overlap-container">
-    @for (toast of test; track toast) {
+    @for (toast of toasts; track toast) {
       <app-toast
         [toast]="toast"
         (removeToast)="onRemoveToast(toast)"
@@ -8,4 +8,3 @@
     }
   </div>
 </div>
-<button (click)="onAdd()">Add</button>

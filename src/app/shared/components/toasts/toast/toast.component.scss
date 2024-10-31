@@ -67,11 +67,11 @@
     }
 
     .short-time {
-        animation: increase 10s;
+        animation: increase 10s forwards;
     }
 
     .long-time {
-        animation: increase 15s;
+        animation: increase 15s forwards;
     }
 
     .infinite-time {

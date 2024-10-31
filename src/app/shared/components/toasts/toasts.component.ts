@@ -6,8 +6,9 @@ import {
   trigger,
   useAnimation,
 } from '@angular/animations';
-import { Toast, ToastRemoveType, ToastTypes } from '../../models/Toast';
+import { Toast } from '../../models/Toast';
 import { slideInY } from '../..';
+import { ToastService } from './toast.service';
 
 @Component({
   selector: 'app-toasts',
@@ -31,47 +32,15 @@ import { slideInY } from '../..';
   ],
 })
 export class ToastsComponent {
-  test: Toast[] = [
-    {
-      id: 1,
-      message: 'Hello World',
-      type: ToastTypes.ERROR,
-      autoRemove: ToastRemoveType.NONE,
-    },
-    {
-      id: 2,
-      message: 'Das war ein Erfolg',
-      type: ToastTypes.SUCCESS,
-      autoRemove: ToastRemoveType.SHORT,
-    },
-    {
-      id: 3,
-      message: 'Warning',
-      type: ToastTypes.WARNING,
-      autoRemove: ToastRemoveType.SHORT,
-    },
-    {
-      id: 3,
-      message:
-        'Das hier ist ein Info text und ich versuche in so lange wie möglich zu machen. Nun habe ich noch weitere dinge zu erwähnen',
-      type: ToastTypes.NONE,
-      autoRemove: ToastRemoveType.SHORT,
-    },
-  ];
-  value = 2;
+  public toasts: Toast[] = [];
 
-  onAdd() {
-    const value = {
-      id: 4,
-      message: 'This is a new toast',
-      type: ToastTypes.ERROR,
-      autoRemove: ToastRemoveType.LONG,
-    };
-    this.test.push(value);
+  constructor(private service: ToastService) {
+    this.service.toastStore$.subscribe(data => {
+      this.toasts = data;
+    });
   }
 
   onRemoveToast(toast: Toast) {
-    const index = this.test.indexOf(toast);
-    this.test.splice(index, 1);
+    this.service.removeToast(toast.id);
   }
 }
