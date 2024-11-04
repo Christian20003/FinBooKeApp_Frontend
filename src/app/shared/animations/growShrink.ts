@@ -1,4 +1,20 @@
-import { animate, style, transition, trigger } from '@angular/animations';
+import {
+  animate,
+  animation,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
+
+/**
+ * This variable defines a simple shrink animation with the height of an element. It will also
+ * disappear with changing `opacity` value.
+ * @param time    - Defines the time of the animation - e.g. "0.5s" (css syntax)
+ */
+export const shrinkHeight = animation([
+  style({ opacity: 1, height: '*' }),
+  animate('{{ time }} ease-out', style({ opacity: 0, height: 0 })),
+]);
 
 /**
  * This variable defines a simple grow and shrink animation. If the element should be displayed it will grow

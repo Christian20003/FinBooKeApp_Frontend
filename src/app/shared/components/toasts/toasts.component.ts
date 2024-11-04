@@ -1,13 +1,7 @@
 import { Component } from '@angular/core';
-import {
-  animate,
-  style,
-  transition,
-  trigger,
-  useAnimation,
-} from '@angular/animations';
+import { transition, trigger, useAnimation } from '@angular/animations';
 import { Toast } from '../../models/Toast';
-import { slideInY } from '../..';
+import { shrinkHeight, slideInY } from '../..';
 import { ToastService } from './toast.service';
 
 @Component({
@@ -15,7 +9,7 @@ import { ToastService } from './toast.service';
   templateUrl: './toasts.component.html',
   styleUrl: './toasts.component.scss',
   animations: [
-    trigger('moveDown', [
+    trigger('toastAnimation', [
       transition(':enter', [
         useAnimation(slideInY, {
           params: {
@@ -25,22 +19,30 @@ import { ToastService } from './toast.service';
         }),
       ]),
       transition(':leave', [
-        style({ opacity: 1, height: '*' }),
-        animate('300ms ease-out', style({ opacity: 0, height: 0 })),
+        useAnimation(shrinkHeight, {
+          params: {
+            time: '0.3s',
+          },
+        }),
       ]),
     ]),
   ],
 })
 export class ToastsComponent {
+  /** A list of toasts which should be displayed */
   public toasts: Toast[] = [];
 
-  constructor(private service: ToastService) {
-    this.service.toastStore$.subscribe(data => {
+  constructor(private toastService: ToastService) {
+    this.toastService.toastStore$.subscribe(data => {
       this.toasts = data;
     });
   }
 
+  /**
+   * This function removes a toast from the `toasts` list as well as from the {@link ToastService}
+   * @param toast     The toast which should be removed
+   */
   onRemoveToast(toast: Toast) {
-    this.service.removeToast(toast.id);
+    this.toastService.removeToast(toast.id);
   }
 }

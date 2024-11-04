@@ -11,7 +11,7 @@ export {
   moveRightToLeft,
 } from './animations/slideLeftRight';
 export { slideInY, slideOutY, moveDown } from './animations/slideUpDown';
-export { growShrink } from './animations/growShrink';
+export { growShrink, shrinkHeight } from './animations/growShrink';
 export {
   setUser,
   setUserName,
