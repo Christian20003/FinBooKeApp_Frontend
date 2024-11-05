@@ -1,13 +1,13 @@
 import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { selectUser } from '../../stores/UserStore/User.selector';
-import { moveDown, moveLeftToRight } from '../..';
+import { moveDown } from '../..';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
-  animations: [moveDown, moveLeftToRight],
+  animations: [moveDown],
 })
 export class NavbarComponent implements OnInit {
   public imagePath: WritableSignal<string> = signal('');
