@@ -16,7 +16,7 @@ import { NavElementsComponent } from './nav-elements/nav-elements.component';
 import { TestUser, User } from '../../models/User';
 import { selectUser } from '../../stores/UserStore/User.selector';
 
-describe('NavbarComponent', () => {
+describe('NavbarComponent - Unit Tests', () => {
   let component: NavbarComponent;
   let fixture: ComponentFixture<NavbarComponent>;
   let store: MockStore;

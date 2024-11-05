@@ -18,7 +18,7 @@ import { getNativeElement } from 'src/app/testing/testing-support';
 import { loginPath } from 'src/app/auth/auth-routing-module';
 import { DebugElement } from '@angular/core';
 
-describe('NavElementsComponent', () => {
+describe('NavElementsComponent - Unit Tests', () => {
   let component: NavElementsComponent;
   let fixture: ComponentFixture<NavElementsComponent>;
   let router: Router;

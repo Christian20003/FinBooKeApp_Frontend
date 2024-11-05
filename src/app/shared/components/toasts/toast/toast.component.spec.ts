@@ -13,7 +13,7 @@ import {
 } from 'src/app/shared/models/Toast';
 import { getNativeElement } from 'src/app/testing/testing-support';
 
-describe('ToastComponent', () => {
+describe('ToastComponent - Unit Tests', () => {
   let component: ToastComponent;
   let fixture: ComponentFixture<ToastComponent>;
 
