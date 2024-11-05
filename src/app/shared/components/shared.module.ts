@@ -8,6 +8,7 @@ import { SmallErrorMsgComponent } from './small-error-msg/small-error-msg.compon
 import { NavElementsComponent } from './navbar/nav-elements/nav-elements.component';
 import { ToastComponent } from './toasts/toast/toast.component';
 import { ToastsComponent } from './toasts/toasts.component';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import { ToastsComponent } from './toasts/toasts.component';
     ToastComponent,
     ToastsComponent,
   ],
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink, RouterLinkActive],
   exports: [
     InvalidInputComponent,
     LoadingComponent,
