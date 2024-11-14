@@ -1,148 +1,64 @@
 <!-- idee: https://pankaj-kumar.medium.com/angular-8-9-user-registration-and-login-example-and-tutoria-96e7a6615c48 -->
- @let controls = form.controls; 
+@let controls = form.controls;
 
-    <div class="container" >
+<div class="container">
 
-        <form id="register-form" [formGroup]="form">
-          <div class="relative-container">
-          <!-- The input element for the email -->
-              <input id="email" class="input" type="text" formControlName="vorname" />
-              <!-- The label for the email element with an SVG -->
-              <div id="label-email" class="label">
-                <svg
-                  class="icon"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M4 7.00005L10.2 11.65C11.2667 12.45 12.7333 12.45 13.8 11.65L20 7"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round" />
-                  <rect
-                    x="3"
-                    y="5"
-                    width="18"
-                    height="14"
-                    rx="2"
-                    stroke-width="2"
-                    stroke-linecap="round" />
-                </svg>
-                <p>Vorname</p>
-              </div>
-              @if( controls.vorname.invalid && (controls.vorname.dirty || controls.vorname.touched)) {
-                <app-invalid-input [message]="text.vorname.invalid"></app-invalid-input>
-              }
-          </div>
+  <form id="register-form" [formGroup]="form">
 
-          <div class="relative-container">
-            <!-- The input element for the email -->
-                <input id="email" class="input" type="text" formControlName="nachname" />
-                <!-- The label for the email element with an SVG -->
-                <div id="label-email" class="label">
-                  <svg
-                    class="icon"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      d="M4 7.00005L10.2 11.65C11.2667 12.45 12.7333 12.45 13.8 11.65L20 7"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round" />
-                    <rect
-                      x="3"
-                      y="5"
-                      width="18"
-                      height="14"
-                      rx="2"
-                      stroke-width="2"
-                      stroke-linecap="round" />
-                  </svg>
-                  <p>Nachname</p>
-                </div>
-                @if( controls.nachname.invalid && (controls.nachname.dirty || controls.nachname.touched)) {
-                  <app-invalid-input [message]="text.vorname.invalid"></app-invalid-input>
-                }
-            </div>
+    <div class="relative-container">
+      <!-- The input element for the email -->
+      <input id="name" class="input" type="text" formControlName="name" />
+      <!-- The label for the email element with an SVG -->
+      <div id="label-email" class="label">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
+            stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z" stroke="#000000" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" />
 
-            <div class="relative-container">
-              <!-- The input element for the email -->
-                  <input id="email" class="input" type="text" formControlName="email" />
-                  <!-- The label for the email element with an SVG -->
-                  <div id="label-email" class="label">
-                    <svg
-                      class="icon"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg">
-                      <path
-                        d="M4 7.00005L10.2 11.65C11.2667 12.45 12.7333 12.45 13.8 11.65L20 7"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round" />
-                      <rect
-                        x="3"
-                        y="5"
-                        width="18"
-                        height="14"
-                        rx="2"
-                        stroke-width="2"
-                        stroke-linecap="round" />
-                    </svg>
-                    <p>Email-Adresse</p>
-                  </div>
-              </div>
-
-              <div class="relative-container">
-                <!-- The input element for the email -->
-                    <input id="email" class="input" type="text" formControlName="password" />
-                    <!-- The label for the email element with an SVG -->
-                      <!-- The label for the password field with an SVG -->
-                    <div id="label-password" class="label">
-                      <svg
-                        class="icon"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M21.0667 5C21.6586 5.95805 22 7.08604 22 8.29344C22 11.7692 19.1708 14.5869 15.6807 14.5869C15.0439 14.5869 13.5939 14.4405 12.8885 13.8551L12.0067 14.7333C11.272 15.465 11.8598 15.465 12.1537 16.0505C12.1537 16.0505 12.8885 17.075 12.1537 18.0995C11.7128 18.6849 10.4783 19.5045 9.06754 18.0995L8.77362 18.3922C8.77362 18.3922 9.65538 19.4167 8.92058 20.4412C8.4797 21.0267 7.30403 21.6121 6.27531 20.5876C6.22633 20.6364 5.952 20.9096 5.2466 21.6121C4.54119 22.3146 3.67905 21.9048 3.33616 21.6121L2.45441 20.7339C1.63143 19.9143 2.1115 19.0264 2.45441 18.6849L10.0963 11.0743C10.0963 11.0743 9.3615 9.90338 9.3615 8.29344C9.3615 4.81767 12.1907 2 15.6807 2C16.4995 2 17.282 2.15509 18 2.43738"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round" />
-                        <path
-                          d="M17.8851 8.29353C17.8851 9.50601 16.8982 10.4889 15.6807 10.4889C14.4633 10.4889 13.4763 9.50601 13.4763 8.29353C13.4763 7.08105 14.4633 6.09814 15.6807 6.09814C16.8982 6.09814 17.8851 7.08105 17.8851 8.29353Z"
-                          stroke-width="1.5" />
-                      </svg>
-                      <p>Password</p>
-                    </div>
-                </div>
-
-                <div class="relative-container">
-                  <!-- The input element for the email -->
-                      <input id="email" class="input" type="text" formControlName="pwcheck" />
-                      <!-- The label for the email element with an SVG -->
-                        <!-- The label for the password field with an SVG -->
-    <div id="label-password" class="label">
-      <svg
-        class="icon"
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M21.0667 5C21.6586 5.95805 22 7.08604 22 8.29344C22 11.7692 19.1708 14.5869 15.6807 14.5869C15.0439 14.5869 13.5939 14.4405 12.8885 13.8551L12.0067 14.7333C11.272 15.465 11.8598 15.465 12.1537 16.0505C12.1537 16.0505 12.8885 17.075 12.1537 18.0995C11.7128 18.6849 10.4783 19.5045 9.06754 18.0995L8.77362 18.3922C8.77362 18.3922 9.65538 19.4167 8.92058 20.4412C8.4797 21.0267 7.30403 21.6121 6.27531 20.5876C6.22633 20.6364 5.952 20.9096 5.2466 21.6121C4.54119 22.3146 3.67905 21.9048 3.33616 21.6121L2.45441 20.7339C1.63143 19.9143 2.1115 19.0264 2.45441 18.6849L10.0963 11.0743C10.0963 11.0743 9.3615 9.90338 9.3615 8.29344C9.3615 4.81767 12.1907 2 15.6807 2C16.4995 2 17.282 2.15509 18 2.43738"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round" />
-                        <path
-                          d="M17.8851 8.29353C17.8851 9.50601 16.8982 10.4889 15.6807 10.4889C14.4633 10.4889 13.4763 9.50601 13.4763 8.29353C13.4763 7.08105 14.4633 6.09814 15.6807 6.09814C16.8982 6.09814 17.8851 7.08105 17.8851 8.29353Z"
-                          stroke-width="1.5" />
-                      </svg>
-                      <p>Password Bestätigen</p>
-                    </div>
-                  </div>
-    
-          <button id="register-button" >Submit</button>
-        </form>
-
+        </svg>
+        <p>Name</p>
+      </div>
+      @if( controls.name.invalid && (controls.name.dirty || controls.name.touched)) {
+      <app-invalid-input [message]="text.name.invalid"></app-invalid-input>
+      }
     </div>
+
+    <div class="relative-container">
+      <!-- The input element for the email -->
+      <input id="email" class="input" type="text" formControlName="email" />
+      <!-- The label for the email element with an SVG -->
+      <div id="label-email" class="label">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 7.00005L10.2 11.65C11.2667 12.45 12.7333 12.45 13.8 11.65L20 7" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" />
+          <rect x="3" y="5" width="18" height="14" rx="2" stroke-width="2" stroke-linecap="round" />
+        </svg>
+        <p>Email-Adresse</p>
+      </div>
+    </div>
+
+    <div class="relative-container">
+      <!-- The input element for the email -->
+      <input id="password" class="input" type="text" formControlName="password" />
+      <!-- The label for the email element with an SVG -->
+      <!-- The label for the password field with an SVG -->
+      <div id="label-password" class="label">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M21.0667 5C21.6586 5.95805 22 7.08604 22 8.29344C22 11.7692 19.1708 14.5869 15.6807 14.5869C15.0439 14.5869 13.5939 14.4405 12.8885 13.8551L12.0067 14.7333C11.272 15.465 11.8598 15.465 12.1537 16.0505C12.1537 16.0505 12.8885 17.075 12.1537 18.0995C11.7128 18.6849 10.4783 19.5045 9.06754 18.0995L8.77362 18.3922C8.77362 18.3922 9.65538 19.4167 8.92058 20.4412C8.4797 21.0267 7.30403 21.6121 6.27531 20.5876C6.22633 20.6364 5.952 20.9096 5.2466 21.6121C4.54119 22.3146 3.67905 21.9048 3.33616 21.6121L2.45441 20.7339C1.63143 19.9143 2.1115 19.0264 2.45441 18.6849L10.0963 11.0743C10.0963 11.0743 9.3615 9.90338 9.3615 8.29344C9.3615 4.81767 12.1907 2 15.6807 2C16.4995 2 17.282 2.15509 18 2.43738"
+            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path
+            d="M17.8851 8.29353C17.8851 9.50601 16.8982 10.4889 15.6807 10.4889C14.4633 10.4889 13.4763 9.50601 13.4763 8.29353C13.4763 7.08105 14.4633 6.09814 15.6807 6.09814C16.8982 6.09814 17.8851 7.08105 17.8851 8.29353Z"
+            stroke-width="1.5" />
+        </svg>
+        <p>Password</p>
+      </div>
+    </div>
+
+
+    <button id="register-button">Submit</button>
+  </form>
+
+</div>

@@ -8,20 +8,15 @@ import { RegisterForm } from './register.form.service';
 })
 export class RegisterComponent {
 
-  public readonly formService = inject(RegisterForm); 
-  public readonly form = this.formService.registerForm; 
-  
+  public readonly formService = inject(RegisterForm);
+  public readonly form = this.formService.registerForm;
+
   // this shall be outsourced to shared
   public readonly text = {
-    vorname: {
-      label: 'Vorname',
-      missing: 'Bitte einen Vorname angeben',
-      invalid: 'Ungültiger Vorname',
-    },
-    nachname: {
-      label: 'Nachname',
-      missing: 'Bitte einen Nachname angeben',
-      invalid: 'Ungültiger Nachname',
+    name: {
+      label: 'Name',
+      missing: 'Bitte einen Name angeben',
+      invalid: 'Ungültiger Name',
     },
     email: {
       label: 'Email-Adresse',
@@ -32,11 +27,6 @@ export class RegisterComponent {
       label: 'Passwort',
       missing: 'Bitte ein Passwort eingeben',
       invalid: 'Ungültig Passwort, soll ein grßes Buchstabe und eine Sonderzeichen geben',
-    },
-    pwcheck: {
-      label: 'Passwort',
-      missing: 'Bitte ein Passwort eingeben',
-      invalid: 'Die PW stimmen nicht überein',
     }
   };
 
