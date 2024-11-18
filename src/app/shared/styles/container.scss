@@ -54,6 +54,21 @@ $default-border-radius: 0.3rem;
     transition: all 0.5s;
 }
 
+/**
+    This mixin defines a simple container for a SVG icon
+    $width      - The width of the icon
+    $colors     - The color of the icon
+    $isStroke   - If the stroke property should be used, otherwise fill
+*/
+@mixin svg-icon-container($width: 1.6rem, $color: colors.$black, $isStroke: false) {
+    width: $width;
+    @if $isStroke {
+        stroke: $color;
+    } @else {
+        fill: $color;
+    }
+}
+
 /*
     This mixin defines a simple container for an SVG-element
     $width      - defines the width of the SVG
@@ -79,4 +94,23 @@ $default-border-radius: 0.3rem;
     backdrop-filter: $blur;
     border-radius: 1%;
     background-color: $background-color;
+}
+
+@mixin circle-container($width: 2.5rem, $line-height: 2rem, $background-color: colors.$light-grey, $withAnimation: true) {
+    width: $width;
+    height: $width;
+    background-color: $background-color;
+    line-height: $line-height;
+    text-align: center;
+    border-radius: 50%;
+    transition: opacity 0.5s;
+
+    & > svg {
+        margin-top: 20%;
+    }
+    @if ($withAnimation) {
+        &:where(:hover, :focus) {
+            opacity: 50%;
+        }
+    }
 }

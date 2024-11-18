@@ -1,7 +1,8 @@
 @use '../../styles/colors.scss';
+@use '../../styles/container.scss';
 
 $desktop-screen-width: 46rem;
-$shadow-effect: rgba(0, 0, 0, 0.3) 0 1.18rem 2.3rem, rgba(0, 0, 0, 0.22) 0 0.9rem 0.9rem;
+$shadow-effect: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 
 nav {
     position: sticky;
@@ -34,21 +35,9 @@ nav {
             cursor: pointer;
 
             .profile-btn {
-                width: 2.5rem;
-                height: 2.5rem;
-                line-height: 2.15rem;
-                border-radius: 50%;
-                text-align: center;
+                @include container.circle-container($line-height: 2.15rem);
                 margin: auto;
-                background-color: colors.$light-grey;
                 color: colors.$moderate-red;
-                transition: opacity 0.5s;
-            }
-
-            &:where(:hover, :focus) {
-                .profile-btn {
-                    opacity: 50%;
-                }
             }
         }
     }

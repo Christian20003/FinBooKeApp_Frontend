@@ -1,0 +1,30 @@
+@use '../../shared/styles/container.scss';
+@use '../../shared/styles/text.scss';
+
+.dashboard-container {
+    margin-top: 1rem;
+
+    @media (min-width: 46rem) {
+        margin-left: 2rem;
+        margin-right: 2rem;
+    }
+
+    .message-block {
+        display: grid;
+        gap: 2rem;
+        margin-top: 1.5rem;
+
+        @media (min-width: 1050px) {
+            grid-template-columns: auto auto;
+        }
+
+        .message {
+            @include container.card-container();
+            @include text.description();
+            width: 100%;
+            height: 20rem;
+            line-height: 20rem;
+            text-align: center;
+        }
+    }
+}

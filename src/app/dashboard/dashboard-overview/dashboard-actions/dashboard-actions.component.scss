@@ -1,0 +1,61 @@
+@use '../../../shared/styles/container.scss';
+@use '../../../shared/styles/text.scss';
+@use '../../../shared/styles/colors.scss';
+
+.action-block {
+    @include container.card-container();
+    display: flex;
+    overflow-x: scroll;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+
+    .action-container {
+
+        margin-top: 1rem;
+        cursor: pointer;
+
+        &:first-child {
+            margin-left: auto;
+            margin-right: 1rem;
+        }
+    
+        &:last-child {
+            margin-left: 1rem;
+            margin-right: auto;
+        }
+    
+        &:not(:first-child, :last-child) {
+            margin-left: 1rem;
+            margin-right: 1rem;
+        }
+
+        .action-description {
+            @include text.description();
+            margin-top: 0.2rem;
+            text-align: center;
+            transition: color 0.2s;
+        }
+
+        .icon-container {
+            @include container.circle-container($width: 3.8rem, $withAnimation: false);
+            border-style: dashed;
+            border-color: colors.$black;
+    
+            .icon {
+                @include container.svg-icon-container($width: 2.2rem, $isStroke: true);
+            }
+        }
+
+        &:where(:hover, :focus) {
+
+            .action-description {
+                color: colors.$moderate-red;
+            }
+
+            .icon-container {
+                border-style: solid;
+                border-color: colors.$moderate-red;
+            }
+        }
+    }
+}
