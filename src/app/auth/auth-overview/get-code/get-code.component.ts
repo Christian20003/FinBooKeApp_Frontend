@@ -12,6 +12,7 @@ import { moveLeftToRight } from 'src/app/shared';
   templateUrl: './get-code.component.html',
   styleUrls: ['./get-code.component.scss'],
   animations: [moveLeftToRight],
+  standalone: false,
 })
 export class GetCodeComponent implements OnInit {
   // Form to be able to enter an email address

@@ -9,6 +9,7 @@ import { deleteUser } from 'src/app/shared/stores/UserStore/User.actions';
   selector: 'app-nav-elements',
   templateUrl: './nav-elements.component.html',
   styleUrl: './nav-elements.component.scss',
+  standalone: false,
 })
 export class NavElementsComponent {
   public type: InputSignal<string> = input<string>('dashboard');

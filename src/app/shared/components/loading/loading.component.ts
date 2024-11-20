@@ -7,6 +7,7 @@ import { moveLeftToRight } from '../../animations/slideLeftRight';
   templateUrl: './loading.component.html',
   styleUrls: ['./loading.component.scss'],
   animations: [growShrink, moveLeftToRight],
+  standalone: false,
 })
 export class LoadingComponent {
   public readonly message: InputSignal<string> = input('');

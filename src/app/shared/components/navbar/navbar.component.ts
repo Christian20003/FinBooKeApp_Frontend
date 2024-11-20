@@ -8,6 +8,7 @@ import { moveDown } from '../..';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
   animations: [moveDown],
+  standalone: false,
 })
 export class NavbarComponent implements OnInit {
   public imagePath: WritableSignal<string> = signal('');

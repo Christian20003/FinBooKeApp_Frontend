@@ -12,6 +12,7 @@ import { Toast, ToastRemoveType, ToastTypes } from 'src/app/shared';
   selector: 'app-toast',
   templateUrl: './toast.component.html',
   styleUrl: './toast.component.scss',
+  standalone: false,
 })
 export class ToastComponent implements OnInit {
   /** The actual toast object */

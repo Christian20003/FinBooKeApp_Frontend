@@ -20,6 +20,7 @@ import { securityCode, loginData, registerData } from '../auth.interface';
   templateUrl: './auth-overview.component.html',
   styleUrls: ['./auth-overview.component.scss'],
   animations: [moveLeftToRight, moveRightToLeft],
+  standalone: false,
 })
 export class AuthOverviewComponent {
   // TODO: Loading Screen

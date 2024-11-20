@@ -13,6 +13,7 @@ import { loginData } from '../../auth.interface';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   animations: [moveLeftToRight],
+  standalone: false,
 })
 export class LoginComponent implements OnInit {
   //EventEmitter to sent the entered login data to the parent component.

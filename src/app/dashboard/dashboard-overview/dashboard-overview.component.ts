@@ -7,6 +7,7 @@ import { ToastService } from 'src/app/shared/components/toasts/toast.service';
   selector: 'app-dashboard-overview',
   templateUrl: './dashboard-overview.component.html',
   styleUrl: './dashboard-overview.component.scss',
+  standalone: false,
 })
 export class DashboardOverviewComponent {
   constructor(private service: ToastService) {}

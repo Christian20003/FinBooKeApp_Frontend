@@ -27,6 +27,7 @@ import { ToastService } from './toast.service';
       ]),
     ]),
   ],
+  standalone: false,
 })
 export class ToastsComponent {
   /** A list of toasts which should be displayed */
