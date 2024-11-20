@@ -16,10 +16,12 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^19.0.0",
+    "@angular/cdk": "^19.0.0",
     "@angular/common": "^19.0.0",
     "@angular/compiler": "^19.0.0",
     "@angular/core": "^19.0.0",
     "@angular/forms": "^19.0.0",
+    "@angular/material": "^19.0.0",
     "@angular/platform-browser": "^19.0.0",
     "@angular/platform-browser-dynamic": "^19.0.0",
     "@angular/router": "^19.0.0",
@@ -61,5 +63,19 @@
     "prettier-eslint": "^16.3.0",
     "puppeteer": "^23.3.0",
     "typescript": "~5.6.3"
+  },
+  "overrides": {
+    "@ngrx/effects": {
+      "@angular/core": "$@angular/core"
+    },
+    "@ngrx/store": {
+      "@angular/core": "$@angular/core"
+    },
+    "ng-mocks": {
+      "@angular/core": "$@angular/core",
+      "@angular/common": "$@angular/common",
+      "@angular/forms": "$@angular/forms",
+      "@angular/platform-browser": "$@angular/platform-browser"
+    }
   }
 }
