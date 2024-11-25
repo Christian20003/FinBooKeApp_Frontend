@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, Renderer2 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { selectUser, setUser } from './shared';
 import { Router } from '@angular/router';
@@ -14,7 +14,9 @@ export class AppComponent {
 
   constructor(
     private store: Store,
-    private router: Router
+    private router: Router,
+    private elementRef: ElementRef,
+    private renderer: Renderer2
   ) {
     const data = this.store.select(selectUser);
     data.subscribe(state => {
@@ -43,5 +45,15 @@ export class AppComponent {
       })
     );
     this.router.navigate(['dashboard']);
+  }
+
+  changeTheme() {
+    const body = this.elementRef.nativeElement.ownerDocument
+      .body as HTMLBodyElement;
+    if (body.classList.contains('dark')) {
+      this.renderer.removeClass(body, 'dark');
+    } else {
+      this.renderer.addClass(body, 'dark');
+    }
   }
 }

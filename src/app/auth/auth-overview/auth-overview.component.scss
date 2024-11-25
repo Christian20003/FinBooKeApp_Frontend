@@ -17,6 +17,7 @@ $desktop-screen-width: 26rem;
 
 #title{
     @include text.header();
+    color: var(--highlight-color-container-primary);
 }
 
 .container{

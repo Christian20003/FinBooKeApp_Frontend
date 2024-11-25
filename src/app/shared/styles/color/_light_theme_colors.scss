@@ -1,0 +1,11 @@
+@use '@angular/material' as mat;
+@use './theme.scss' as app-theme;
+
+@mixin light-theme-color-vars() {
+    --background-color-container-primary: #{ mat.get-theme-color(app-theme.$application-theme, neutral, 95) };
+
+    --highlight-color-container-primary: #{ mat.get-theme-color(app-theme.$application-theme, primary, 50) };
+    --highlight-color-container-secondary: #{ mat.get-theme-color(app-theme.$application-theme, secondary, 50) };
+
+    --shadow-color-primary: #{ rgba(mat.get-theme-color(app-theme.$application-theme, tertiary, 10), 0.35) };
+}

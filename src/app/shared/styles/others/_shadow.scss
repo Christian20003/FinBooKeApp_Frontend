@@ -1,0 +1,6 @@
+@mixin border-shadow-outside() {
+    box-shadow: var(--shadow-color-primary) 
+                0rem 1.8rem 3.7rem -0.7rem, 
+                var(--shadow-color-primary) 
+                0rem 1.1rem 2.2rem -1.1rem;
+}
