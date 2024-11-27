@@ -1,4 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, input, InputSignal } from '@angular/core';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-invalid-input',
@@ -7,5 +9,17 @@ import { Component, Input } from '@angular/core';
   standalone: false,
 })
 export class InvalidInputComponent {
-  @Input() message = '';
+  public message: InputSignal<string> = input.required();
+
+  constructor(
+    private iconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
+  ) {
+    this.iconRegistry.addSvgIcon(
+      'warning',
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        '../../../assets/icons/warning.svg'
+      )
+    );
+  }
 }

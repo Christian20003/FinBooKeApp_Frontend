@@ -8,6 +8,8 @@ import {
   getNativeElement,
   triggerInput,
 } from '../testing-support';
+import { MatIconModule } from '@angular/material/icon';
+import { provideHttpClient } from '@angular/common/http';
 
 describe('GetCodeComponent', () => {
   let component: GetCodeComponent;
@@ -16,7 +18,8 @@ describe('GetCodeComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [GetCodeComponent, InvalidInputComponent],
-      imports: [ReactiveFormsModule, BrowserAnimationsModule],
+      imports: [ReactiveFormsModule, BrowserAnimationsModule, MatIconModule],
+      providers: [provideHttpClient()],
     });
     fixture = TestBed.createComponent(GetCodeComponent);
     component = fixture.componentInstance;
@@ -34,7 +37,7 @@ describe('GetCodeComponent', () => {
       fixture,
       InvalidInputComponent
     );
-    expect(invalidComp.componentInstance.message).toBe(
+    expect(invalidComp.componentInstance.message()).toBe(
       component.text.email.missing
     );
   });
@@ -56,7 +59,7 @@ describe('GetCodeComponent', () => {
       fixture,
       InvalidInputComponent
     );
-    expect(invalidComp.componentInstance.message).toBe(
+    expect(invalidComp.componentInstance.message()).toBe(
       component.text.email.invalid
     );
   });

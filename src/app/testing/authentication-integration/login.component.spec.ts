@@ -42,7 +42,7 @@ describe('LoginComponent - Integration Tests', () => {
       fixture,
       InvalidInputComponent
     );
-    expect(invalidComp.componentInstance.message)
+    expect(invalidComp.componentInstance.message())
       .withContext(
         'The displayed message of InvalidInputComponent should be "Missing email"'
       )
@@ -64,7 +64,7 @@ describe('LoginComponent - Integration Tests', () => {
       fixture,
       InvalidInputComponent
     );
-    expect(invalidComp.componentInstance.message)
+    expect(invalidComp.componentInstance.message())
       .withContext(
         'The displayed message of InvalidInputComponent should be "Invalid email"'
       )
@@ -86,7 +86,7 @@ describe('LoginComponent - Integration Tests', () => {
       fixture,
       InvalidInputComponent
     );
-    expect(invalidComp.componentInstance.message)
+    expect(invalidComp.componentInstance.message())
       .withContext(
         'The displayed message of InvalidInputComponent should be "Missing password"'
       )
@@ -109,12 +109,12 @@ describe('LoginComponent - Integration Tests', () => {
       fixture,
       InvalidInputComponent
     );
-    expect(invalidComp[0].componentInstance.message)
+    expect(invalidComp[0].componentInstance.message())
       .withContext(
         'The displayed message of InvalidInputComponent should be "Missing email"'
       )
       .toBe(errorMessage2);
-    expect(invalidComp[1].componentInstance.message)
+    expect(invalidComp[1].componentInstance.message())
       .withContext(
         'The displayed message of InvalidInputComponent should be "Missing password"'
       )
@@ -143,12 +143,12 @@ describe('LoginComponent - Integration Tests', () => {
       fixture,
       InvalidInputComponent
     );
-    expect(invalidComp[0].componentInstance.message)
+    expect(invalidComp[0].componentInstance.message())
       .withContext(
         'The displayed message of InvalidInputComponent should be "Invalid email"'
       )
       .toBe(errorMessage2);
-    expect(invalidComp[1].componentInstance.message)
+    expect(invalidComp[1].componentInstance.message())
       .withContext(
         'The displayed message of InvalidInputComponent should be "Missing password"'
       )

@@ -9,6 +9,7 @@ import { NavElementsComponent } from './navbar/nav-elements/nav-elements.compone
 import { ToastComponent } from './toasts/toast/toast.component';
 import { ToastsComponent } from './toasts/toasts.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
     ToastComponent,
     ToastsComponent,
   ],
-  imports: [CommonModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule, MatIconModule, RouterLink, RouterLinkActive],
   exports: [
     InvalidInputComponent,
     LoadingComponent,

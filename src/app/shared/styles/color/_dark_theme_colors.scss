@@ -8,6 +8,7 @@
     --text-color-primary: #{mat.get-theme-color(app-theme.$application-theme, neutral, 95)};
 
     --icon-color-primary: #{mat.get-theme-color(app-theme.$application-theme, neutral, 95)};
+    --icon-color-warning: #{mat.get-theme-color(app-theme.$application-theme, error, 35)};
 
     --border-color-primary: #{mat.get-theme-color(app-theme.$application-theme, neutral, 95)};
     --border-color-secondary: #{mat.get-theme-color(app-theme.$application-theme, primary, 50)};

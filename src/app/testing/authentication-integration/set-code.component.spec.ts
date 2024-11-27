@@ -9,6 +9,8 @@ import {
   getNativeElements,
   triggerInput,
 } from '../testing-support';
+import { MatIconModule } from '@angular/material/icon';
+import { provideHttpClient } from '@angular/common/http';
 
 describe('SetCodeComponent - Unit Tests', () => {
   let component: SetCodeComponent;
@@ -17,7 +19,8 @@ describe('SetCodeComponent - Unit Tests', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [SetCodeComponent, InvalidInputComponent],
-      imports: [ReactiveFormsModule, BrowserAnimationsModule],
+      imports: [ReactiveFormsModule, BrowserAnimationsModule, MatIconModule],
+      providers: [provideHttpClient()],
     });
     fixture = TestBed.createComponent(SetCodeComponent);
     component = fixture.componentInstance;
@@ -35,7 +38,9 @@ describe('SetCodeComponent - Unit Tests', () => {
       fixture,
       InvalidInputComponent
     );
-    expect(invalidComp.componentInstance.message).toBe(component.text.missing);
+    expect(invalidComp.componentInstance.message()).toBe(
+      component.text.missing
+    );
   });
 
   it('I-Test-2: Clicking the submit button with invalid code should display an error message', () => {
@@ -56,6 +61,8 @@ describe('SetCodeComponent - Unit Tests', () => {
       fixture,
       InvalidInputComponent
     );
-    expect(invalidComp.componentInstance.message).toBe(component.text.missing);
+    expect(invalidComp.componentInstance.message()).toBe(
+      component.text.missing
+    );
   });
 });
