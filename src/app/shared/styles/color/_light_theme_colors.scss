@@ -1,11 +1,26 @@
-@use '@angular/material' as mat;
-@use './theme.scss' as app-theme;
+@use "@angular/material" as mat;
+@use "./theme.scss" as app-theme;
 
 @mixin light-theme-color-vars() {
-    --background-color-container-primary: #{ mat.get-theme-color(app-theme.$application-theme, neutral, 95) };
+    --background-color-container-primary: #{mat.get-theme-color(app-theme.$application-theme, neutral, 95)};
+    --background-color-container-secondary: #{mat.get-theme-color(app-theme.$application-theme, neutral, 90)};
 
-    --highlight-color-container-primary: #{ mat.get-theme-color(app-theme.$application-theme, primary, 50) };
-    --highlight-color-container-secondary: #{ mat.get-theme-color(app-theme.$application-theme, secondary, 50) };
+    --text-color-primary: #{mat.get-theme-color(app-theme.$application-theme, neutral, 6)};
 
-    --shadow-color-primary: #{ rgba(mat.get-theme-color(app-theme.$application-theme, tertiary, 10), 0.35) };
+    --icon-color-primary: #{mat.get-theme-color(app-theme.$application-theme, neutral, 6)};
+
+    --border-color-primary: #{mat.get-theme-color(app-theme.$application-theme, neutral, 6)};
+    --border-color-secondary: #{mat.get-theme-color(app-theme.$application-theme, primary, 50)};
+
+    --highlight-color-container-primary: #{mat.get-theme-color(app-theme.$application-theme, primary, 50)};
+    --highlight-color-container-secondary: #{mat.get-theme-color(app-theme.$application-theme, secondary, 50)};
+
+    --background-color-button-focus: #{mat.get-theme-color(app-theme.$application-theme, primary, 50)};
+    --background-color-button-active: #{mat.get-theme-color(app-theme.$application-theme, primary, 35)};
+
+    --link-color: #{mat.get-theme-color(app-theme.$application-theme, tertiary, 25)};
+    --link-color-focus: #{mat.get-theme-color(app-theme.$application-theme, tertiary, 10)};
+
+    --shadow-color-primary: #{rgba(mat.get-theme-color(app-theme.$application-theme, secondary, 30), 0.55)};
+    --shadow-color-highlight: #{rgba(mat.get-theme-color(app-theme.$application-theme, tertiary, 0), 0.65)};
 }

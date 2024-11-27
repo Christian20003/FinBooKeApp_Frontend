@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatIconModule } from '@angular/material/icon';
+import { provideHttpClient } from '@angular/common/http';
 import { LoginComponent } from 'src/app/auth/auth-overview/login/login.component';
 import { InvalidInputComponent } from 'src/app/shared';
 import {
@@ -17,7 +19,8 @@ describe('LoginComponent - Integration Tests', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [LoginComponent, InvalidInputComponent],
-      imports: [ReactiveFormsModule, BrowserAnimationsModule],
+      imports: [ReactiveFormsModule, BrowserAnimationsModule, MatIconModule],
+      providers: [provideHttpClient()],
     });
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
@@ -39,7 +42,11 @@ describe('LoginComponent - Integration Tests', () => {
       fixture,
       InvalidInputComponent
     );
-    expect(invalidComp.componentInstance.message).toBe(errorMessage);
+    expect(invalidComp.componentInstance.message)
+      .withContext(
+        'The displayed message of InvalidInputComponent should be "Missing email"'
+      )
+      .toBe(errorMessage);
   });
 
   it('I-TEST-2: Validation of invalid email with correct error message', () => {
@@ -57,7 +64,11 @@ describe('LoginComponent - Integration Tests', () => {
       fixture,
       InvalidInputComponent
     );
-    expect(invalidComp.componentInstance.message).toBe(errorMessage);
+    expect(invalidComp.componentInstance.message)
+      .withContext(
+        'The displayed message of InvalidInputComponent should be "Invalid email"'
+      )
+      .toBe(errorMessage);
   });
 
   it('I-TEST-3: Validation of empty password with correct error message', () => {
@@ -75,7 +86,11 @@ describe('LoginComponent - Integration Tests', () => {
       fixture,
       InvalidInputComponent
     );
-    expect(invalidComp.componentInstance.message).toBe('Missing password');
+    expect(invalidComp.componentInstance.message)
+      .withContext(
+        'The displayed message of InvalidInputComponent should be "Missing password"'
+      )
+      .toBe('Missing password');
   });
 
   it('I-TEST-4: Validation of error messages with empty email and empty password after clicking login', () => {
@@ -94,8 +109,16 @@ describe('LoginComponent - Integration Tests', () => {
       fixture,
       InvalidInputComponent
     );
-    expect(invalidComp[0].componentInstance.message).toBe(errorMessage2);
-    expect(invalidComp[1].componentInstance.message).toBe(errorMessage1);
+    expect(invalidComp[0].componentInstance.message)
+      .withContext(
+        'The displayed message of InvalidInputComponent should be "Missing email"'
+      )
+      .toBe(errorMessage2);
+    expect(invalidComp[1].componentInstance.message)
+      .withContext(
+        'The displayed message of InvalidInputComponent should be "Missing password"'
+      )
+      .toBe(errorMessage1);
   });
 
   it('I-TEST-5: Validation of error messages with incorrect email and empty password after clicking login', () => {
@@ -120,7 +143,15 @@ describe('LoginComponent - Integration Tests', () => {
       fixture,
       InvalidInputComponent
     );
-    expect(invalidComp[0].componentInstance.message).toBe(errorMessage2);
-    expect(invalidComp[1].componentInstance.message).toBe(errorMessage1);
+    expect(invalidComp[0].componentInstance.message)
+      .withContext(
+        'The displayed message of InvalidInputComponent should be "Invalid email"'
+      )
+      .toBe(errorMessage2);
+    expect(invalidComp[1].componentInstance.message)
+      .withContext(
+        'The displayed message of InvalidInputComponent should be "Missing password"'
+      )
+      .toBe(errorMessage1);
   });
 });

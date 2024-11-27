@@ -22,6 +22,7 @@ $desktop-screen-width: 26rem;
 
 .container{
     @include container.card-container();
+    background-color: var(--background-color-container-secondary);
 
     display: grid;
     width: fit-content;

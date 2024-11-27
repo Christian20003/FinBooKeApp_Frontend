@@ -1,0 +1,31 @@
+@mixin input-container($hasLabel: false) {
+    padding: 0.4rem;
+    width: 96%;
+    background-color: var(--background-color-container-secondary);
+    color: var(--text-color-primary);
+    outline: none;
+    border: none;
+    border-bottom: 0.2rem var(--border-color-primary) solid;
+    transition: border-color 0.5s ease-out;
+
+    &:focus {
+        border-color: var(--border-color-secondary);
+    }
+
+    @if ($hasLabel) {
+        &:where(:focus, .ng-dirty) ~ .label {
+            transform: translate(20%, -50%);
+        }
+    }
+}
+
+@mixin label-container() {
+    display: flex;
+    position: absolute;
+    width: 100%;
+    color: var(--text-color-primary);
+    bottom: 0;
+    opacity: 0.4;
+    pointer-events: none;
+    transition: all 0.5s;
+}

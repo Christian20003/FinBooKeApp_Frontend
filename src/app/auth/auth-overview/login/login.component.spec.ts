@@ -1,11 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockComponent } from 'ng-mocks';
-
-import { LoginComponent } from './login.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { InvalidInputComponent } from 'src/app/shared/index';
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatIconModule } from '@angular/material/icon';
+import { provideHttpClient } from '@angular/common/http';
+import { MockComponent } from 'ng-mocks';
+import { LoginComponent } from './login.component';
+import { InvalidInputComponent } from 'src/app/shared/index';
 import {
   getNativeElement,
   getNativeElements,
@@ -19,7 +20,8 @@ describe('LoginComponent - Unit Tests', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [LoginComponent, MockComponent(InvalidInputComponent)],
-      imports: [ReactiveFormsModule, BrowserAnimationsModule],
+      imports: [ReactiveFormsModule, BrowserAnimationsModule, MatIconModule],
+      providers: [provideHttpClient()],
     });
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
@@ -27,7 +29,9 @@ describe('LoginComponent - Unit Tests', () => {
   });
 
   it('U-TEST-1: Component should create', () => {
-    expect(component).toBeTruthy();
+    expect(component)
+      .withContext('LoginComponent should not be undefined')
+      .toBeTruthy();
   });
 
   it('U-TEST-2: The number of input elements should equal the number of formControls', () => {
@@ -36,9 +40,15 @@ describe('LoginComponent - Unit Tests', () => {
     const emailFormGroup = component.loginForm.get('email');
     const passwordFormGroup = component.loginForm.get('password');
 
-    expect(inputElements.length).toEqual(2);
-    expect(emailFormGroup).toBeTruthy();
-    expect(passwordFormGroup).toBeTruthy();
+    expect(inputElements.length)
+      .withContext('Template should have 2 input elements')
+      .toEqual(2);
+    expect(emailFormGroup)
+      .withContext('FormControl object for email should exist')
+      .toBeTruthy();
+    expect(passwordFormGroup)
+      .withContext('FormControl object for password should exist')
+      .toBeTruthy();
   });
 
   it('U-TEST-3: Initial values of the form', () => {
@@ -51,11 +61,16 @@ describe('LoginComponent - Unit Tests', () => {
       '#password'
     );
     const form = component.loginForm;
-    const initValues = { email: null, password: null };
 
-    expect(form.value).toEqual(initValues);
-    expect(emailInput.value).toEqual('');
-    expect(passwordInput.value).toEqual('');
+    expect(form.value)
+      .withContext('FormGroup data should have the following structure')
+      .toEqual({ email: null, password: null });
+    expect(emailInput.value)
+      .withContext('Content in the email input element should be empty')
+      .toEqual('');
+    expect(passwordInput.value)
+      .withContext('Content in the password input element should be empty')
+      .toEqual('');
   });
 
   it('U-TEST-4: Validation of empty email before interaction', () => {
@@ -64,8 +79,14 @@ describe('LoginComponent - Unit Tests', () => {
       fixture,
       'app-invalid-input'
     );
-    expect(invalidComp).toBeFalsy();
-    expect(emailControl?.errors?.['required']).toBeTruthy();
+    expect(invalidComp)
+      .withContext(
+        'InvalidInputComponent should not appear of untouched email input element'
+      )
+      .toBeFalsy();
+    expect(emailControl?.errors?.['required'])
+      .withContext('Validator error "required" should exist')
+      .toBeTruthy();
   });
 
   it('U-TEST-5: Validation of empty email after interaction', () => {
@@ -82,8 +103,16 @@ describe('LoginComponent - Unit Tests', () => {
       fixture,
       'app-invalid-input'
     );
-    expect(invalidComp).toBeTruthy();
-    expect(emailControl?.errors?.['required']).toBeTruthy();
+    expect(invalidComp)
+      .withContext(
+        'InvalidInputComponent should appear after touching the email input element with false value'
+      )
+      .toBeTruthy();
+    expect(emailControl?.errors?.['required'])
+      .withContext(
+        'Validator error "required" should exist after entering an empty string'
+      )
+      .toBeTruthy();
   });
 
   it('U-TEST-6: Validation of false email after interaction', () => {
@@ -100,8 +129,16 @@ describe('LoginComponent - Unit Tests', () => {
       fixture,
       'app-invalid-input'
     );
-    expect(invalidComp).toBeTruthy();
-    expect(emailControl?.errors?.['email']).toBeTruthy();
+    expect(invalidComp)
+      .withContext(
+        'InvalidInputComponent should appear after entering a invalid email value'
+      )
+      .toBeTruthy();
+    expect(emailControl?.errors?.['email'])
+      .withContext(
+        'Validator error "email" should exist after entering a invalid email value'
+      )
+      .toBeTruthy();
   });
 
   it('U-TEST-7: Validation of empty password before interaction', () => {
@@ -110,8 +147,14 @@ describe('LoginComponent - Unit Tests', () => {
       fixture,
       'app-invalid-input'
     );
-    expect(invalidComp).toBeFalsy();
-    expect(emailFormGroup?.errors?.['required']).toBeTruthy();
+    expect(invalidComp)
+      .withContext(
+        'InvalidInputComponent should not appear of untouched password input element'
+      )
+      .toBeFalsy();
+    expect(emailFormGroup?.errors?.['required'])
+      .withContext('Validator error "required" should exist')
+      .toBeTruthy();
   });
 
   it('U-TEST-8: Validation of empty password after interaction', () => {
@@ -129,8 +172,16 @@ describe('LoginComponent - Unit Tests', () => {
       'app-invalid-input'
     );
 
-    expect(invalidComp).toBeTruthy();
-    expect(passwordControl?.errors?.['required']).toBeTruthy();
+    expect(invalidComp)
+      .withContext(
+        'InvalidInputComponent should appear after touching the email input element with an empty value'
+      )
+      .toBeTruthy();
+    expect(passwordControl?.errors?.['required'])
+      .withContext(
+        'Validator error "required" should exist after entering an empty string'
+      )
+      .toBeTruthy();
   });
 
   it('U-TEST-9: Validation of valid form', () => {
@@ -151,8 +202,14 @@ describe('LoginComponent - Unit Tests', () => {
       'app-invalid-input'
     );
 
-    expect(component.loginForm.valid).toBeTruthy();
-    expect(invalidComp).toBeFalsy();
+    expect(component.loginForm.valid)
+      .withContext('FormGroup should be valid if all values are correct')
+      .toBeTruthy();
+    expect(invalidComp)
+      .withContext(
+        'InvalidInputComponent should not appear if all value are correct'
+      )
+      .toBeFalsy();
   });
 
   it('U-Test-10: Invalid form should not be submitted and errors should be displayed', () => {
@@ -180,9 +237,17 @@ describe('LoginComponent - Unit Tests', () => {
       InvalidInputComponent
     >(fixture, 'app-invalid-input');
     const length = invalidComp.length;
-    expect(component.loginForm.invalid).toBeTruthy();
-    expect(component.login.emit).not.toHaveBeenCalled();
-    expect(length).toEqual(2);
+    expect(component.loginForm.invalid)
+      .withContext('FormGroup should be invalid')
+      .toBeTruthy();
+    expect(component.login.emit)
+      .withContext('Login data should not be sent to the parent')
+      .not.toHaveBeenCalled();
+    expect(length)
+      .withContext(
+        'There should be a InvalidInputComponent for incorrect email and password'
+      )
+      .toEqual(2);
   });
 
   it('U-Test-11: Valid form should be submitted', () => {
@@ -209,9 +274,17 @@ describe('LoginComponent - Unit Tests', () => {
       fixture,
       'app-invalid-input'
     );
-    expect(component.loginForm.valid).toBeTruthy();
-    expect(component.login.emit).toHaveBeenCalled();
-    expect(invalidComp).toBeFalsy();
+    expect(component.loginForm.valid)
+      .withContext('FormGroup should be valid')
+      .toBeTruthy();
+    expect(component.login.emit)
+      .withContext('Login data should be sent to the parent')
+      .toHaveBeenCalled();
+    expect(invalidComp)
+      .withContext(
+        'There should not any InvalidInputComponent in correct submission'
+      )
+      .toBeFalsy();
   });
 
   it('U-Test-12: The forgetPwd emitter should be triggerd if the forget password button will be clicked', () => {
@@ -223,6 +296,8 @@ describe('LoginComponent - Unit Tests', () => {
     forgetPwd.click();
     fixture.detectChanges();
 
-    expect(component.forgetPwd.emit).toHaveBeenCalled();
+    expect(component.forgetPwd.emit)
+      .withContext('The emit function of forgetPwd should be called')
+      .toHaveBeenCalled();
   });
 });

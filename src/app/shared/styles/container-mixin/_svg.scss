@@ -1,0 +1,6 @@
+@mixin svg-label-container($width: 2rem, $stroke: var(--icon-color-primary), $fill: none) {
+    width: $width;
+    margin-right: 1rem;
+    stroke: var(--icon-color-primary);
+    fill: $fill;
+}

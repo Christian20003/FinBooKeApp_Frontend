@@ -34,6 +34,7 @@ import {
   triggerInput,
 } from '../testing-support';
 import { HttpErrorResponse, provideHttpClient } from '@angular/common/http';
+import { MatIconModule } from '@angular/material/icon';
 
 describe('AuthOverviewComponent', () => {
   let component: AuthOverviewComponent;
@@ -74,6 +75,7 @@ describe('AuthOverviewComponent', () => {
         StoreModule.forRoot({ user: userReducer }, {}),
         EffectsModule.forRoot([userEffects]),
         ReactiveFormsModule,
+        MatIconModule,
       ],
       providers: [
         AuthenticationService,

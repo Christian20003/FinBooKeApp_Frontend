@@ -1,12 +1,14 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit, output, OutputEmitterRef } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 import { moveLeftToRight } from 'src/app/shared/index';
-import { loginData } from '../../auth.interface';
+import { LoginData } from '../../models/loginData';
 
 @Component({
   selector: 'app-login',
@@ -16,10 +18,10 @@ import { loginData } from '../../auth.interface';
   standalone: false,
 })
 export class LoginComponent implements OnInit {
-  //EventEmitter to sent the entered login data to the parent component.
-  @Output() login = new EventEmitter<loginData>();
-  // EventEmitter to signal the parent component that the user forgot his password.
-  @Output() forgetPwd = new EventEmitter();
+  //Output signal to sent the entered login data to the parent component.
+  public login: OutputEmitterRef<LoginData> = output();
+  // Output signal to signal the parent component that the user forgot his password.
+  public forgetPwd: OutputEmitterRef<void> = output();
 
   // The reactive login form
   loginForm!: FormGroup;
@@ -39,6 +41,24 @@ export class LoginComponent implements OnInit {
     errorMsg: 'Es ist leider ein unerwarteter Fehler aufgetreten',
     forgetPwd: 'Passwort vergessen?',
   };
+
+  constructor(
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
+  ) {
+    this.matIconRegistry.addSvgIcon(
+      'password',
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        '../../../../assets/icons/password.svg'
+      )
+    );
+    this.matIconRegistry.addSvgIcon(
+      'email',
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        '../../../../assets/icons/email.svg'
+      )
+    );
+  }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({

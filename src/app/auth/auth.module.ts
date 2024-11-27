@@ -11,6 +11,7 @@ import { GetCodeComponent } from './auth-overview/get-code/get-code.component';
 import { SetCodeComponent } from './auth-overview/set-code/set-code.component';
 import { authInterceptor } from './auth-interceptor';
 import { SharedModule } from '../shared/components/shared.module';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { SharedModule } from '../shared/components/shared.module';
     ReactiveFormsModule,
     AuthRoutingModule,
     SharedModule,
+    MatIconModule,
   ],
   providers: [provideHttpClient(withInterceptors([authInterceptor]))],
   exports: [AuthOverviewComponent],
