@@ -11,7 +11,7 @@ import {
 import { MatIconModule } from '@angular/material/icon';
 import { provideHttpClient } from '@angular/common/http';
 
-describe('GetCodeComponent', () => {
+describe('GetCodeComponent - Integration Tests', () => {
   let component: GetCodeComponent;
   let fixture: ComponentFixture<GetCodeComponent>;
 
@@ -37,9 +37,11 @@ describe('GetCodeComponent', () => {
       fixture,
       InvalidInputComponent
     );
-    expect(invalidComp.componentInstance.message()).toBe(
-      component.text.email.missing
-    );
+    expect(invalidComp.componentInstance.message())
+      .withContext(
+        'InvalidInputComponent should appear with the defined message'
+      )
+      .toBe(component.text.email.missing);
   });
 
   it('I-Test-2: Clicking the "send-code" button with invalid email address should not change the error message', () => {
@@ -59,8 +61,10 @@ describe('GetCodeComponent', () => {
       fixture,
       InvalidInputComponent
     );
-    expect(invalidComp.componentInstance.message()).toBe(
-      component.text.email.invalid
-    );
+    expect(invalidComp.componentInstance.message())
+      .withContext(
+        'InvalidInputComponent should appear with the defined message'
+      )
+      .toBe(component.text.email.invalid);
   });
 });

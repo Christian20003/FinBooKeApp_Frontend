@@ -1,10 +1,19 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  input,
+  InputSignal,
+  OnInit,
+  output,
+  OutputEmitterRef,
+} from '@angular/core';
 import {
   AbstractControl,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 import { moveLeftToRight } from 'src/app/shared';
 
 @Component({
@@ -15,12 +24,12 @@ import { moveLeftToRight } from 'src/app/shared';
   standalone: false,
 })
 export class GetCodeComponent implements OnInit {
-  // Form to be able to enter an email address
-  emailForm!: FormGroup;
   // The option to get an existing email address
-  @Input() emailValue = '';
+  public readonly emailValue: InputSignal<string> = input('');
   // EventEmitter to send the email address to the parent component
-  @Output() setEmail = new EventEmitter<string>();
+  public setEmail: OutputEmitterRef<string> = output();
+  // Form to be able to enter an email address
+  public emailForm!: FormGroup;
 
   // All text labels for the HTML template
   text = {
@@ -32,15 +41,27 @@ export class GetCodeComponent implements OnInit {
     sendCode: 'Code senden',
   };
 
+  constructor(
+    private iconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
+  ) {
+    this.iconRegistry.addSvgIcon(
+      'email',
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        '../../../../assets/icons/email.svg'
+      )
+    );
+  }
+
   ngOnInit(): void {
     this.emailForm = new FormGroup({
-      email: new FormControl(this.emailValue, [
+      email: new FormControl(this.emailValue(), [
         Validators.required,
         Validators.email,
       ]),
     });
     // Label will be moved if necessary
-    if (this.emailValue !== '') {
+    if (this.emailValue() !== '') {
       this.email?.markAsDirty();
     }
   }
