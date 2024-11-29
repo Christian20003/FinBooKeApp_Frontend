@@ -4,6 +4,7 @@ import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { StoreModule } from '@ngrx/store';
 import { userReducer } from './shared/index';
+import { SharedModule } from './shared/components/shared.module';
 
 describe('AppComponent', () => {
   beforeEach(() =>
@@ -12,6 +13,7 @@ describe('AppComponent', () => {
         RouterTestingModule,
         AuthModule,
         StoreModule.forRoot({ user: userReducer }, {}),
+        SharedModule,
       ],
       declarations: [AppComponent],
     })

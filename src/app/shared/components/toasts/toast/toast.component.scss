@@ -1,0 +1,124 @@
+@use '../../../styles/colors.scss';
+@use '../../../styles/text.scss';
+@use '../../../styles/container.scss';
+
+.toast-content {
+    display: flex;
+    gap: 0.5rem;
+    height: 100%;
+    align-items: center; 
+    position: relative;
+    @include text.description();
+    @include container.card-container();
+
+    .success-icon, .error-icon, .warning-icon, .info-icon, .box, .close {
+        flex: 0 0 auto;
+    }
+
+    .box {
+        width: 1.5rem;
+        height: 100%;
+        border-top-left-radius: 0.3rem;
+        border-bottom-left-radius: 0.3rem;
+    }
+
+    .success-icon, .error-icon, .warning-icon, .info-icon {
+        width: 2rem;
+    }
+
+    .success-icon {
+        fill: colors.$success-green;
+    }
+
+    .success-box {
+        background-color: colors.$success-green;
+    }
+
+    .error-icon {
+        fill: colors.$error-red;
+    }
+
+    .error-box {
+        background-color: colors.$error-red;
+    }
+
+    .warning-icon {
+        fill: colors.$warning-yellow;
+    }
+
+    .warning-box {
+        background-color: colors.$warning-yellow;
+    }
+
+    .info-icon {
+        fill: colors.$info-blue;
+    }
+
+    .info-box {
+        background-color: colors.$info-blue;
+    }
+
+    .time-line {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        height: 0.3rem;
+        border-radius: 0.3rem;
+    }
+
+    .short-time {
+        animation: increase 10s forwards;
+    }
+
+    .long-time {
+        animation: increase 15s forwards;
+    }
+
+    .infinite-time {
+        width: 100%;
+    }
+
+    .description {
+        margin-right: auto;
+    }
+
+    .type-icon, .close-icon {
+        width: 2rem;
+        fill: colors.$success-green;
+    }
+
+    .close {
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        outline: inherit;
+        margin-right: 0.5rem;
+
+        .close-icon {
+            width: 1.5rem;
+            stroke: colors.$black;
+            stroke-width: 0.2rem;
+            transition: 0.5s background-color;
+            border-radius: 0.3rem;
+        }
+
+        &:hover, &:focus {
+            .close-icon {
+                background-color: colors.$light-grey;
+            }
+        }
+
+        &:active {
+            .close-icon {
+                background-color: colors.$grey;
+            }
+        }
+    }
+}
+
+@keyframes increase {
+    0% {width: 0}
+    100% {width: 100%}
+}

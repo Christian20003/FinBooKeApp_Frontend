@@ -1,0 +1,43 @@
+@use '../../../shared/styles/colors.scss';
+
+.text, #stroke-shape-render, #stroke-render-1, #stroke-render-2 {
+    text-transform: capitalize;
+    font-family: 'Tiro Kannada';
+    letter-spacing: normal;
+    font-style: italic;
+    font-weight: 400;
+    white-space: pre;
+    font-size: 24px;
+    text-decoration: colors.$moderate-red;
+    direction: ltr;
+}
+
+.text {
+    fill: colors.$moderate-red;
+    fill-opacity: 1;
+}
+
+#shape-1 {
+    fill: none; 
+    stroke: colors.$white; 
+    stroke-width: 4
+}
+
+#shape-2 {
+    fill: colors.$black; 
+    stroke: none
+}
+
+#stroke-render-1 {
+    fill: none;
+    stroke-width: 4;
+    stroke: colors.$white;
+    stroke-opacity: 1;
+}
+
+#stroke-render-2 {
+    fill: none;
+    stroke-width: 2;
+    stroke: none;
+    stroke-opacity: 1;
+}

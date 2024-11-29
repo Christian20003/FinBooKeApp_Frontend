@@ -20,14 +20,23 @@ import { securityCode, loginData, registerData } from '../auth.interface';
   templateUrl: './auth-overview.component.html',
   styleUrls: ['./auth-overview.component.scss'],
   animations: [moveLeftToRight, moveRightToLeft],
+  standalone: false,
 })
 export class AuthOverviewComponent {
+  // TODO: Loading Screen
   // Boolean which describes if the loading screen should be displayed
   waiting = false;
   // Saves some potencial error message occurring using the authentication service
   error = '';
   // Saves the potencial email address entered by the user during password reset
   email = '';
+
+  // All text values which are used in this component.
+  text = {
+    loginButton: 'Anmelden',
+    registerButton: 'Registrieren',
+    title: 'Willkommen bei der FinBoKeApp',
+  };
 
   constructor(
     private router: Router,

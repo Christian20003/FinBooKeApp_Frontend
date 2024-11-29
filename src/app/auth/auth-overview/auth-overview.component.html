@@ -1,15 +1,16 @@
+<h1 id="title">{{ text.title }}</h1>
 <div class="container">
   <div class="grid-container">
     <!-- Button to access the login screen -->
     <button id="login" [ngClass]="{ inactive: !isLogin() }" (click)="onLogin()">
-      Anmelden
+      {{ text.loginButton }}
     </button>
     <!-- Button to access the register screen -->
     <button
       id="register"
       [ngClass]="{ inactive: isLogin() }"
       (click)="onRegister()">
-      Registrieren
+      {{ text.registerButton }}
     </button>
   </div>
   <div class="overlap-grid-container">
@@ -40,7 +41,9 @@
   </div>
   <!-- Loading screen -->
   @if (waiting) {
-    <app-loading id="loading"></app-loading>
+    <app-loading
+      id="loading"
+      message="Hello my friends i am now here"></app-loading>
   }
   <!-- Error block -->
   @if (error) {

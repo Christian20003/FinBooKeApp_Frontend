@@ -5,6 +5,7 @@ import { RegisterForm } from './register.form.service';
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
+  standalone: false,
 })
 export class RegisterComponent {
 

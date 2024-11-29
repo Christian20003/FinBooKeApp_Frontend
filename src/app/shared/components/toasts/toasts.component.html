@@ -1,0 +1,10 @@
+<div class="toasts-container">
+  <div class="overlap-container">
+    @for (toast of toasts; track toast) {
+      <app-toast
+        [toast]="toast"
+        (removeToast)="onRemoveToast(toast)"
+        [@toastAnimation]></app-toast>
+    }
+  </div>
+</div>

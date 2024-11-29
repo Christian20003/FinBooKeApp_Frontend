@@ -1,0 +1,59 @@
+<svg
+    width="98"
+    height="48"
+    fill="none"
+    version="1.1">
+    <g>
+      <g>
+        <g>
+          <g class="text-container">
+            <text
+              x="4"
+              y="38.4"
+              dominant-baseline="ideographic"
+              textLength="90.417"
+              lengthAdjust="spacingAndGlyphs"
+              class="text">
+              FinBoKe
+            </text>
+            <g>
+              <g>
+                <defs>
+                  <text
+                    x="4"
+                    y="38.4"
+                    dominant-baseline="ideographic"
+                    textLength="90.417"
+                    lengthAdjust="spacingAndGlyphs"
+                    id="stroke-shape-render">
+                    FinBoKe
+                  </text>
+                  <mask
+                    id="outer-stroke-render"
+                    x="1.172"
+                    y="11.572"
+                    width="96.074"
+                    height="29.657"
+                    maskUnits="userSpaceOnUse">
+                    <use
+                      id="shape-1"
+                      href="#stroke-shape-render" />
+                    <use
+                      id="shape-2"
+                      href="#stroke-shape-render" />
+                  </mask>
+                </defs>
+                <use
+                  href="#stroke-shape-render"
+                  mask="url(#outer-stroke-render)"
+                  id="stroke-render-1" />
+                <use
+                  href="#stroke-shape-render"
+                  id="stroke-render-2"/>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+</svg>

@@ -1,0 +1,40 @@
+@use "../others/shadow" as shadow;
+
+@mixin button(
+    $color: var(--background-color-button-focus),
+    $bg-color: var(--background-color-container-seconday),
+    $color-active: var(--background-color-button-active)
+) {
+    background-color: $bg-color;
+    color: $color;
+    border-color: $color;
+    outline: none;
+    cursor: pointer;
+    transition:
+        all 0.5s,
+        background-color 0.1s;
+
+    &:where(:hover, :focus) {
+        transform: translateY(-10px);
+        background-color: $color;
+        color: var(--text-color-primary);
+        @include shadow.border-shadow-strong();
+    }
+
+    &:active {
+        background-color: $color-active;
+    }
+}
+
+@mixin link-button() {
+    background-color: var(--background-color-container-seconday);
+    color: var(--link-color);
+    border: none;
+    cursor: pointer;
+    text-align: start;
+    text-decoration: underline;
+
+    &:where(:hover, :focus) {
+        color: var(--link-color-focus);
+    }
+}

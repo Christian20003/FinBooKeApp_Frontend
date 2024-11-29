@@ -1,59 +1,39 @@
-@use './shared/styles/text.scss' as text;
-@use './shared/styles/colors.scss' as colors;
-@use './shared/styles/container.scss' as container;
+@use "./shared/styles/container-mixin/circle" as circle;
 
-#title{
-    @include text.header();
-}
-
-$max-screen-width: 60rem;
-
-.small-shape-bottom, .large-shape-bottom{
+.small-shape-bottom,
+.large-shape-bottom {
     position: fixed;
-    border-radius: 100% 0 0 0;
-    bottom: 0;
-    right: 0;
+    bottom: 2rem;
+    right: 2rem;
 }
 
-.small-shape-bottom, .small-shape-left{
-    $size-large: 20rem;
-    $size-small: 15rem;
+.small-shape-left,
+.large-shape-left {
+    position: fixed;
+    left: 2rem;
+    top: 2rem;
+}
 
-    @media (max-width: $max-screen-width) {
-        width: $size-small;
-        height: $size-small;
-    }
-    width: $size-large;
-    height: $size-large;
-    background-color: colors.$moderate-red;
+.small-shape-bottom,
+.small-shape-left {
     z-index: -1;
-    box-shadow: container.$shadow-border-light-bg;
+    @include circle.circle-shape(
+        $width: 20rem,
+        $width-small: 15rem,
+        $bg-color: var(--highlight-color-container-primary),
+        $screen-bounday: 60rem,
+        $hasShadow: true
+    );
 }
 
-.large-shape-bottom, .large-shape-left{
-    $size-large: 25rem;
-    $size-small: 20rem;
-
-    @media (max-width: $max-screen-width) {
-        width: $size-small;
-        height: $size-small;
-    }
-    width: $size-large;
-    height: $size-large;
-    background-color: colors.$lime-green;
+.large-shape-bottom,
+.large-shape-left {
     z-index: -2;
-    box-shadow: container.$shadow-border-dark-bg;
-}
-
-.small-shape-left, .large-shape-left{
-    $top-large: 30%;
-    $top-small: 15%;
-
-    @media (max-width: $max-screen-width) {
-        top: $top-small;
-    }
-    position: fixed;
-    border-radius: 100% 100% 100% 100%;
-    left: 0;
-    top: $top-large;   
+    @include circle.circle-shape(
+        $width: 25rem,
+        $width-small: 20rem,
+        $bg-color: var(--highlight-color-container-secondary),
+        $screen-bounday: 60rem,
+        $hasShadow: true
+    );
 }

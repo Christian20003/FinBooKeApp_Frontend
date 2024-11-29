@@ -1,10 +1,14 @@
-<div>
-  <h1 id="title">{{ title }}</h1>
-  <app-auth-overview></app-auth-overview>
-</div>
+@if (isLoggedIn) {
+  <app-navbar></app-navbar>
+} @else {
+  <!-- TODO: Delete after development -->
+  <button (click)="goToDashboard()">Go to dashboard</button>
+}
+<button (click)="changeTheme()">Theme changer</button>
+<app-toasts></app-toasts>
+<router-outlet></router-outlet>
 
 <div class="small-shape-left"></div>
 <div class="large-shape-left"></div>
 <div class="small-shape-bottom"></div>
 <div class="large-shape-bottom"></div>
-<!-- <router-outlet></router-outlet> -->

@@ -1,49 +1,60 @@
 @use '../../styles/colors.scss';
 @use '../../styles/container.scss';
+@use '../../styles/text.scss';
 
-@mixin icon-anim($delay){
-    animation: growShrink 5s $delay infinite;
-}
-
-$icon-size: 3.0rem;
-
-#blur-container{
+.container{
+    display: grid;
+    height: 100%;
     @include container.blur-container($background-color: rgb(colors.$very-dark-gray, 0.5));
-    display: flex;
-    justify-content: center;
-    align-items: center;
 
-    #svg-container{
-        display: grid;
-        grid-auto-flow: column;
-        gap: 0.5rem;
-        width: fit-content; 
+    .outer-circle {
+        padding: 0.8rem;
+        margin: auto;
+        margin-bottom: 0;
+        position: relative;
 
-        .icon{
-            width: $icon-size;
-            opacity: 0;
-        }
-
-        .yellow-circle{
-            fill: colors.$gold;
-        }
-
-        .white-circle, .white-rect{
-            fill: colors.$white;
-        }
-
-        // Add for every icon the animation
-        @for $i from 0 to 5 {
-            #icon-#{$i} {
-                @include icon-anim(#{$i}s);
+        .inner-circle{
+            width: fit-content; 
+            background-color: colors.$moderate-red;
+            padding: 0.5rem;
+            border-radius: 50%;
+    
+            .icon{
+                width: 2.0rem;
+                fill: colors.$white;
             }
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0.22rem;
+            left: 0.12rem;
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+            border: 0.2rem solid;
+            border-color: colors.$vivid-red colors.$moderate-red colors.$moderate-red colors.$moderate-red;
+            animation: spin 1.2s linear infinite;
+        }
+
+    }
+
+    .loading-description {
+        margin: auto;
+        margin-top: 0.5rem;
+
+        .loading-title {
+            @include text.description($color: colors.$white, $weight: bold, $align: center);
+        }
+
+        .loading-text {
+            @include text.description($color: colors.$white, $align: center);
         }
     }
 }
 
-@keyframes growShrink {
-    from{ height: 0rem; }
-    25%{ height: $icon-size; opacity: 1; }
-    75%{ height: $icon-size; opacity: 1; }
-    to{ height: 0rem; opacity: 0; }
-}
+@keyframes spin { 
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}
+  }

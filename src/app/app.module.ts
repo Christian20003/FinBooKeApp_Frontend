@@ -8,6 +8,9 @@ import { EffectsModule } from '@ngrx/effects';
 import { AuthModule } from './auth/auth.module';
 import { userReducer } from './shared/stores/UserStore/User.reducer';
 import { userEffects } from './shared/stores/UserStore/User.effects';
+import { DashboardModule } from './dashboard/dashboard.module';
+import { SharedModule } from './shared/components/shared.module';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,10 +18,12 @@ import { userEffects } from './shared/stores/UserStore/User.effects';
     BrowserModule,
     AppRoutingModule,
     AuthModule,
+    DashboardModule,
+    SharedModule,
     StoreModule.forRoot({ user: userReducer }, {}),
     EffectsModule.forRoot([userEffects]),
   ],
-  providers: [],
+  providers: [provideAnimationsAsync()],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

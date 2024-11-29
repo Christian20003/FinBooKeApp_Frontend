@@ -8,7 +8,11 @@ import { Observable, catchError, map, throwError } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthenticationService {
-  static errorMsg = {
+  private readonly LOGIN_PATH: string = 'https://backend/login';
+  private readonly REGISTER_PATH: string = 'https://backend/register';
+  private readonly CODE_PATH: string = 'https://backend/login/code';
+
+  private static readonly errorMsg = {
     invalidStructure: 'Etwas ist mit der erhaltenen Antwort schief gelaufen',
     invalidCredentials: 'Die eingegebenen Daten sind ungültig',
     assignedName: 'Der angegebene Benutzername ist bereits vergeben',
@@ -17,10 +21,6 @@ export class AuthenticationService {
     unavailable: 'Der Service ist aktuell nicht verfügbar',
     unknown: 'Es ist ein unerwarteter Fehler eingetreten',
   };
-
-  LOGIN_PATH = 'https://backend/login';
-  REGISTER_PATH = 'https://backend/register';
-  CODE_PATH = 'https://backend/login/code';
 
   constructor(private http: HttpClient) {}
 
@@ -105,6 +105,19 @@ export class AuthenticationService {
   postCode(data: securityCode): Observable<string | Error> {
     return this.http
       .put<string>(this.CODE_PATH, data)
+      .pipe(catchError(this.errorHandling));
+  }
+
+  /**
+   * This function makes a DELETE request via HTTP to try a logout from the account. If the request was successfull it will return an
+   * observable with a string message, otherwise it will return an observable with an {@link Error} object, inlcuding a corresponding
+   * message.
+   *
+   * @returns           An observable either with a string message after success or an {@link Error} object after failure.
+   */
+  deleteLogin(): Observable<string | Error> {
+    return this.http
+      .delete<string>(this.LOGIN_PATH)
       .pipe(catchError(this.errorHandling));
   }
 

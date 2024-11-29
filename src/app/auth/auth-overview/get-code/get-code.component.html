@@ -4,43 +4,24 @@
     <input id="email" class="input" type="email" formControlName="email" />
     <!-- The label for the email element with an SVG -->
     <div id="label-email" class="label">
-      <svg
-        class="icon"
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M4 7.00005L10.2 11.65C11.2667 12.45 12.7333 12.45 13.8 11.65L20 7"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round" />
-        <rect
-          x="3"
-          y="5"
-          width="18"
-          height="14"
-          rx="2"
-          stroke-width="2"
-          stroke-linecap="round" />
-      </svg>
+      <mat-icon class="icon" svgIcon="email" [inline]="true"></mat-icon>
       <p>{{ text.email.label }}</p>
     </div>
   </div>
   <div class="relative-container">
     <!-- The element with the information about missing email address -->
-    <div
-      class="missing"
-      *ngIf="email?.errors?.['required'] && email?.touched"
-      [@moveLeftToRight]>
-      <app-invalid-input [message]="text.email.missing"></app-invalid-input>
-    </div>
-    <!-- The element with the information about invalid email address -->
-    <div
-      class="missing"
-      *ngIf="email?.errors?.['email'] && email?.touched"
-      [@moveLeftToRight]>
-      <app-invalid-input [message]="text.email.invalid"></app-invalid-input>
-    </div>
+    @if (email?.errors?.['required'] && email?.touched) {
+      <app-invalid-input
+        class="missing"
+        [message]="text.email.missing"
+        [@moveLeftToRight]></app-invalid-input>
+      <!-- The element with the information about invalid email address -->
+    } @else if (email?.errors?.['email'] && email?.touched) {
+      <app-invalid-input
+        class="missing"
+        [message]="text.email.invalid"
+        [@moveLeftToRight]></app-invalid-input>
+    }
   </div>
   <!-- Button to send the email address -->
   <button id="send-code-button">

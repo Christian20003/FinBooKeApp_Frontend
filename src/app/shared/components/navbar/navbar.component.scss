@@ -1,0 +1,70 @@
+@use '../../styles/colors.scss';
+@use '../../styles/container.scss';
+
+$desktop-screen-width: 46rem;
+$shadow-effect: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+
+nav {
+    position: sticky;
+    top: 0;
+    // Delete margin added by the browser
+    margin: -0.5rem;
+    box-shadow: $shadow-effect;
+
+    .nav-container {
+        display: flex;
+        gap: 1.6rem;
+        justify-content: center;
+        background-color: colors.$black;
+
+        $boundary: 1.0rem;
+        :first-child {
+            padding-top: 0.2rem;
+            margin-left: $boundary;
+            margin-right: auto;
+        }
+        :last-child:not(.profile-box) {
+            margin-right: $boundary;
+            margin-left: auto;
+        }
+
+        .nav-elem {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            cursor: pointer;
+
+            .profile-btn {
+                @include container.circle-container($line-height: 2.15rem);
+                margin: auto;
+                color: colors.$moderate-red;
+            }
+        }
+    }
+    .vertical-secondary-nav, .vertical-primary-nav {
+        position: absolute;
+        top: 4rem;
+        right: 1rem;
+        width: 11rem;
+        background-color: colors.$black;
+        border: 0.1rem colors.$moderate-red solid;
+        padding: 0.5rem 1.8rem 0.5rem 0.8rem;
+        box-shadow: $shadow-effect;
+    }
+}
+
+@media (min-width: $desktop-screen-width) {
+    .vertical-primary-nav {
+        visibility: hidden;
+    }
+}
+
+@media (max-width: $desktop-screen-width) {
+    .can-hide {
+        display: none;
+    }
+
+    .vertical-secondary-nav {
+        visibility: hidden;
+    }
+}

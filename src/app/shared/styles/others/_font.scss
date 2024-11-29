@@ -1,0 +1,24 @@
+@use "@angular/material" as mat;
+@use "../color/theme" as theme;
+
+$desktop-screen-width: 44rem;
+
+@mixin description-font($align: start, $text-decoration: none) {
+    font-size: mat.get-theme-typography(theme.$application-theme, body-medium, font-size);
+    align: $align;
+    text-decoration: $text-decoration;
+
+    @media (min-width: $desktop-screen-width) {
+        font-size: mat.get-theme-typography(theme.$application-theme, body-large, font-size);
+    }
+}
+
+@mixin label-font($align: start, $text-decoration: none) {
+    font-size: mat.get-theme-typography(theme.$application-theme, label-medium, font-size);
+    align: $align;
+    text-decoration: $text-decoration;
+
+    @media (min-width: $desktop-screen-width) {
+        font-size: mat.get-theme-typography(theme.$application-theme, label-large, font-size);
+    }
+}

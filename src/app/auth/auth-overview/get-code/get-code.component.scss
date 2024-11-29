@@ -1,50 +1,45 @@
-@use '../../../shared/styles/text.scss';
-@use '../../../shared/styles/button.scss';
-@use '../../../shared/styles/container.scss';
-@use '../../../shared/styles/colors.scss';
+@use "../../../shared/styles/container-mixin/input" as input;
+@use "../../../shared/styles/container-mixin/svg" as svg;
+@use "../../../shared/styles/container-mixin/button" as button;
+@use "../../../shared/styles/others/font" as font;
 
-$desktop-screen-width: 26rem;
-
-#email-form{
+#email-form {
     display: grid;
     gap: 2rem;
     margin-top: 1.5rem;
 
-    .relative-container{
+    .relative-container {
         position: relative;
 
-        .input{
-            @include container.input-container();
-            @include text.description();
-        }
-
-        #label-email{
-            @include container.label-container($top: -4px);
-            @include text.label();
-        }
-
-        // Enables the moving-up animations for the labels
-        #email:where(:focus, .ng-dirty) ~ #label-email{
-            @media (min-width: $desktop-screen-width) {
-                transform: translate(50%, -65%);
+        .input {
+            @include input.input-container($hasLabel: true);
+            & {
+                @include font.description-font();
             }
-           transform: translate(0, -65%);
         }
 
-        .icon{
-            @include container.svg-label-container();
+        #label-email {
+            @include input.label-container();
+            & {
+                @include font.label-font();
+            }
         }
 
-        .missing{
+        .icon {
+            @include svg.svg-label-container();
+        }
+
+        .missing {
             position: absolute;
-            margin: -2rem 0;
+            bottom: -0.5rem;
         }
-
     }
 
-    #send-code-button{
-        @include button.button();
-        @include text.description($align: center, $color: colors.$moderate-red);
+    #send-code-button {
         padding: 1rem 2rem;
+        @include button.button();
+        & {
+            @include font.description-font();
+        }
     }
 }

@@ -12,7 +12,7 @@ import {
  * @param time    - Defines the time of the animation - e.g. "0.5s" (css syntax)
  * @param length  - Defines the moving points on the x-axis - e.g. "-50px" (css syntax)
  */
-export const slideOut = animation([
+export const slideOutX = animation([
   style({
     transform: 'translateX(0px)',
     opacity: 1,
@@ -31,7 +31,7 @@ export const slideOut = animation([
  * @param time    - Defines the time of the animation - e.g. "0.5s" (css syntax)
  * @param length  - Defines the moving points on the x-axis - e.g. "-50px" (css syntax)
  */
-export const slideIn = animation([
+export const slideInX = animation([
   style({
     transform: 'translateX({{ length }})',
     opacity: '0',
@@ -52,7 +52,7 @@ export const slideIn = animation([
  */
 export const moveLeftToRight = trigger('moveLeftToRight', [
   transition(':enter', [
-    useAnimation(slideIn, {
+    useAnimation(slideInX, {
       params: {
         length: '-50px',
         time: '1s',
@@ -60,7 +60,7 @@ export const moveLeftToRight = trigger('moveLeftToRight', [
     }),
   ]),
   transition(':leave', [
-    useAnimation(slideOut, {
+    useAnimation(slideOutX, {
       params: {
         length: '50px',
         time: '0.5s',
@@ -77,7 +77,7 @@ export const moveLeftToRight = trigger('moveLeftToRight', [
  */
 export const moveRightToLeft = trigger('moveRightToLeft', [
   transition(':enter', [
-    useAnimation(slideIn, {
+    useAnimation(slideInX, {
       params: {
         length: '100px',
         time: '1s',
@@ -85,7 +85,7 @@ export const moveRightToLeft = trigger('moveRightToLeft', [
     }),
   ]),
   transition(':leave', [
-    useAnimation(slideOut, {
+    useAnimation(slideOutX, {
       params: {
         length: '-50px',
         time: '0.5s',

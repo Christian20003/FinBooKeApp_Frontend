@@ -1,9 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
-@use './app/shared/styles/colors.scss';
-@use './app/shared/styles/text.scss';
+@use "@angular/material" as mat;
+@use "./app/shared/styles/color/light_theme_colors" as light-theme;
+@use "./app/shared/styles/color/dark_theme_colors" as dark-theme;
+@use "./app/shared/styles/color/theme" as theme-obj;
 
-html{
-    background-color: colors.$very-dark-gray;
-    color: colors.$moderate-red;
-    font-family: text.$font-family;
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: var(--background-color-container-primary);
+  font-family: mat.get-theme-typography(theme-obj.$application-theme, display-large, font-family);
+}
+
+:root {
+  @include light-theme.light-theme-color-vars();
+}
+
+:root body.dark {
+  @include dark-theme.dark-theme-color-vars();
 }

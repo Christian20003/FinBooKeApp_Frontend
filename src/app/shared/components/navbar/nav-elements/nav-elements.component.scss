@@ -1,0 +1,67 @@
+@use '../../../styles/colors.scss';
+@use '../../../styles/text.scss';
+
+$transition-time: 0.5s;
+
+.nav-elem {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+    cursor: pointer;
+    @include text.description($color: colors.$white);
+    transition: border $transition-time, padding $transition-time;
+
+    .nav-elem-icon {
+        fill: colors.$white;
+        width: 1.6rem;
+        transition: fill $transition-time;
+    }
+    
+    .nav-elem-description {
+        transition: color $transition-time;
+    
+        &::after {
+            content: '';
+            display: block;
+            transform: scaleX(0);
+            height: 0.15rem;
+            background-color: colors.$moderate-red;
+            transition: transform $transition-time ease-out;
+        }
+    }
+
+    &:hover, &:focus {
+        .nav-elem-icon {
+            fill: colors.$moderate-red;
+        }
+
+        .nav-elem-description {
+            color: colors.$moderate-red;
+        }
+
+        &:is(.border-animation) {
+            border-left: 0.2rem colors.$moderate-red solid;
+            padding-left: 0.5rem;
+        }
+
+        &:is(.underline-animation) {
+            .nav-elem-description::after {
+                transform: scaleX(1);
+            }
+        }
+    }
+}
+
+.active {
+    color: colors.$moderate-red;
+
+    .nav-elem-icon {
+        fill: colors.$moderate-red;
+    }
+
+    &:is(.underline-animation) {
+        .nav-elem-description::after {
+            transform: scaleX(1);
+        }
+    }
+}

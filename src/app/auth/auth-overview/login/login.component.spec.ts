@@ -1,413 +1,303 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockComponent } from 'ng-mocks';
-
-import { LoginComponent } from './login.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import {
-  InvalidInputComponent,
-  execEvents,
-  getNativeElement,
-} from 'src/app/shared/index';
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { getNativeElements } from 'src/app/shared/testing/comp-help-functions';
+import { MatIconModule } from '@angular/material/icon';
+import { provideHttpClient } from '@angular/common/http';
+import { MockComponent } from 'ng-mocks';
+import { LoginComponent } from './login.component';
+import { InvalidInputComponent } from 'src/app/shared/index';
+import {
+  getNativeElement,
+  getNativeElements,
+  triggerInput,
+} from 'src/app/testing/testing-support';
 
 describe('LoginComponent - Unit Tests', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
 
-  /*################################################################################################################################ 
-                                                      UNIT-TESTS
-################################################################################################################################*/
-
-  describe('#Unit Tests', () => {
-    beforeEach(() => {
-      TestBed.configureTestingModule({
-        declarations: [LoginComponent, MockComponent(InvalidInputComponent)],
-        imports: [ReactiveFormsModule, BrowserAnimationsModule],
-      });
-      fixture = TestBed.createComponent(LoginComponent);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [LoginComponent, MockComponent(InvalidInputComponent)],
+      imports: [ReactiveFormsModule, BrowserAnimationsModule, MatIconModule],
+      providers: [provideHttpClient()],
     });
-
-    it('U-TEST: Component should create', () => {
-      expect(component).toBeTruthy();
-    });
-
-    it('U-TEST: Equal number of elements - HTML and TS-Form', () => {
-      // Get HTML-input elements as well as formGroup elements.
-      const formElement = fixture.debugElement.query(By.css('#login-form'));
-      const inputElements = formElement.queryAll(By.css('input'));
-      const emailFormGroup = component.loginForm.get('email');
-      const passwordFormGroup = component.loginForm.get('password');
-
-      /* TESTS */
-
-      // 2 HTML-elements
-      expect(inputElements.length).toEqual(2);
-      // Valid email FormControl element
-      expect(emailFormGroup).toBeTruthy();
-      // Valid password FormControl element
-      expect(passwordFormGroup).toBeTruthy();
-    });
-
-    it('U-TEST: Initial values of the form', () => {
-      // Get HTML-input elements
-      const emailInput = getNativeElement<LoginComponent, HTMLInputElement>(
-        fixture,
-        '#email'
-      );
-      const passwordInput = getNativeElement<LoginComponent, HTMLInputElement>(
-        fixture,
-        '#password'
-      );
-      // Get FormGroup object
-      const form = component.loginForm;
-      // Initial data
-      const initValues = { email: null, password: null };
-
-      /* TESTS */
-
-      // Initial values of FormGroup object should be null
-      expect(form.value).toEqual(initValues);
-      // HTML-input elements should be empty strings
-      expect(emailInput.value).toEqual('');
-      expect(passwordInput.value).toEqual('');
-    });
-
-    it('U-TEST: Validation of empty email before interaction', () => {
-      const emailControl = component.loginForm.get('email');
-      const invalidComp = getNativeElement<
-        LoginComponent,
-        InvalidInputComponent
-      >(fixture, 'app-invalid-input');
-      expect(invalidComp).toBeFalsy();
-      expect(emailControl?.errors?.['required']).toBeTruthy();
-    });
-
-    it('U-TEST: Validation of empty email after interaction', () => {
-      const emailInput = getNativeElement<LoginComponent, HTMLInputElement>(
-        fixture,
-        '#email'
-      );
-      // Set empty value and trigger corresponding events
-      emailInput.value = '';
-      execEvents([emailInput], ['input', 'blur']);
-      fixture.detectChanges();
-      // Get changed content to be tested
-      const emailControl = component.loginForm.get('email');
-      const invalidComp = getNativeElement<
-        LoginComponent,
-        InvalidInputComponent
-      >(fixture, 'app-invalid-input');
-
-      /* TESTS */
-
-      // Component with 'invalid message' should exist
-      expect(invalidComp).toBeTruthy();
-      // The 'required' validator should return error
-      expect(emailControl?.errors?.['required']).toBeTruthy();
-    });
-
-    it('U-TEST: Validation of false email after interaction', () => {
-      const emailInput = getNativeElement<LoginComponent, HTMLInputElement>(
-        fixture,
-        '#email'
-      );
-      // Set invalid value and trigger corresponding events
-      emailInput.value = 'wrongEmail.de';
-      execEvents([emailInput], ['input', 'blur']);
-      fixture.detectChanges();
-      // Get changed content to be tested
-      const emailControl = component.loginForm.get('email');
-      const invalidComp = getNativeElement<
-        LoginComponent,
-        InvalidInputComponent
-      >(fixture, 'app-invalid-input');
-
-      /* TESTS */
-
-      // Component with 'invalid message' should exist
-      expect(invalidComp).toBeTruthy();
-      // The 'email' validator should return error
-      expect(emailControl?.errors?.['email']).toBeTruthy();
-    });
-
-    it('U-TEST: Validation of empty password before interaction', () => {
-      const emailFormGroup = component.loginForm.get('password');
-      const invalidComp = getNativeElement<
-        LoginComponent,
-        InvalidInputComponent
-      >(fixture, 'app-invalid-input');
-      expect(invalidComp).toBeFalsy();
-      expect(emailFormGroup?.errors?.['required']).toBeTruthy();
-    });
-
-    it('U-TEST: Validation of empty password after interaction', () => {
-      const passwordInput = getNativeElement<LoginComponent, HTMLInputElement>(
-        fixture,
-        '#password'
-      );
-      // Set empty value and trigger corresponding events
-      passwordInput.value = '';
-      execEvents([passwordInput], ['input', 'blur']);
-      fixture.detectChanges();
-      // Get changed content to be tested
-      const passwordControl = component.loginForm.get('password');
-      const invalidComp = getNativeElement<
-        LoginComponent,
-        InvalidInputComponent
-      >(fixture, 'app-invalid-input');
-
-      /* TESTS */
-
-      // Component with 'invalid message' should exist
-      expect(invalidComp).toBeTruthy();
-      // The 'required' validator should return error
-      expect(passwordControl?.errors?.['required']).toBeTruthy();
-    });
-
-    it('U-TEST: Validation of valid form', () => {
-      const emailInput = getNativeElement<LoginComponent, HTMLInputElement>(
-        fixture,
-        '#email'
-      );
-      const passwordInput = getNativeElement<LoginComponent, HTMLInputElement>(
-        fixture,
-        '#password'
-      );
-      // Set valid values and trigger corresponding events
-      emailInput.value = 'example@gmail.com';
-      passwordInput.value = 'examplePassword';
-      execEvents([emailInput, passwordInput], ['input', 'blur']);
-      fixture.detectChanges();
-      // Get changed content to be tested
-      const invalidComp = getNativeElement<
-        LoginComponent,
-        InvalidInputComponent
-      >(fixture, 'app-invalid-input');
-
-      /* TESTS */
-
-      // FormGroup object should be valid
-      expect(component.loginForm.valid).toBeTruthy();
-      // Component with 'invalid message' should not exist
-      expect(invalidComp).toBeFalsy();
-    });
-
-    it('U-Test: Invalid form should not be submitted and errors should be displayed', () => {
-      const emailInput = getNativeElement<LoginComponent, HTMLInputElement>(
-        fixture,
-        '#email'
-      );
-      const passwordInput = getNativeElement<LoginComponent, HTMLInputElement>(
-        fixture,
-        '#password'
-      );
-      const loginButton = getNativeElement<LoginComponent, HTMLButtonElement>(
-        fixture,
-        '#login-button'
-      );
-      // Set invalid values and trigger corresponding events
-      emailInput.value = 'Test';
-      passwordInput.value = '';
-      execEvents([emailInput, passwordInput], ['input', 'blur']);
-      // Add spy to the emit() function
-      spyOn(component.login, 'emit');
-      loginButton.click();
-      fixture.detectChanges();
-
-      const invalidComp = getNativeElements<
-        LoginComponent,
-        InvalidInputComponent
-      >(fixture, 'app-invalid-input');
-      const length: number = invalidComp.length;
-
-      /* TESTS */
-
-      expect(component.loginForm.invalid).toBeTruthy();
-      expect(component.login.emit).not.toHaveBeenCalled();
-      expect(length).toEqual(2);
-    });
-
-    it('U-Test: Valid form should be submitted', () => {
-      const emailInput = getNativeElement<LoginComponent, HTMLInputElement>(
-        fixture,
-        '#email'
-      );
-      const passwordInput = getNativeElement<LoginComponent, HTMLInputElement>(
-        fixture,
-        '#password'
-      );
-      const loginButton = getNativeElement<LoginComponent, HTMLButtonElement>(
-        fixture,
-        '#login-button'
-      );
-      // Set valid values and trigger corresponding events
-      emailInput.value = 'example@gmail.com';
-      passwordInput.value = 'examplePassword';
-      execEvents([emailInput, passwordInput], ['input', 'blur']);
-      // Add spy to the emit() function
-      spyOn(component.login, 'emit');
-      loginButton.click();
-      fixture.detectChanges();
-      const invalidComp = getNativeElement<
-        LoginComponent,
-        InvalidInputComponent
-      >(fixture, 'app-invalid-input');
-
-      /* TESTS */
-
-      expect(component.loginForm.valid).toBeTruthy();
-      expect(component.login.emit).toHaveBeenCalled();
-      expect(invalidComp).toBeFalsy();
-    });
-
-    it('U-Test: The forgetPwd emitter should be triggerd if the forget password button will be clicked', () => {
-      const forgetPwd = getNativeElement<LoginComponent, HTMLButtonElement>(
-        fixture,
-        '#forget-pwd'
-      );
-      // Add spy to the emit() function
-      spyOn(component.forgetPwd, 'emit');
-      forgetPwd.click();
-      fixture.detectChanges();
-
-      /* TESTS */
-      expect(component.forgetPwd.emit).toHaveBeenCalled();
-    });
+    fixture = TestBed.createComponent(LoginComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
-  /*################################################################################################################################ 
-                                                      INTEGRATION-TESTS
-################################################################################################################################*/
+  it('U-TEST-1: Component should create', () => {
+    expect(component)
+      .withContext('LoginComponent should not be undefined')
+      .toBeTruthy();
+  });
 
-  describe('#Integration Tests', () => {
-    beforeEach(() => {
-      TestBed.configureTestingModule({
-        declarations: [LoginComponent, InvalidInputComponent],
-        imports: [ReactiveFormsModule, BrowserAnimationsModule],
-      });
-      fixture = TestBed.createComponent(LoginComponent);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    });
+  it('U-TEST-2: The number of input elements should equal the number of formControls', () => {
+    const formElement = fixture.debugElement.query(By.css('#login-form'));
+    const inputElements = formElement.queryAll(By.css('input'));
+    const emailFormGroup = component.loginForm.get('email');
+    const passwordFormGroup = component.loginForm.get('password');
 
-    it('I-TEST: Validation of empty email with correct error message', () => {
-      const emailInput = getNativeElement<LoginComponent, HTMLInputElement>(
-        fixture,
-        '#email'
-      );
-      // Set error message
-      component.text.email.missing = 'Missing email';
-      // Set empty value and trigger corresponding events
-      emailInput.value = '';
-      execEvents([emailInput], ['input', 'blur']);
-      fixture.detectChanges();
-      // Get changed content to be tested
-      const invalidComp = fixture.debugElement.query(
-        By.directive(InvalidInputComponent)
-      );
+    expect(inputElements.length)
+      .withContext('Template should have 2 input elements')
+      .toEqual(2);
+    expect(emailFormGroup)
+      .withContext('FormControl object for email should exist')
+      .toBeTruthy();
+    expect(passwordFormGroup)
+      .withContext('FormControl object for password should exist')
+      .toBeTruthy();
+  });
 
-      /* TESTS */
+  it('U-TEST-3: Initial values of the form', () => {
+    const emailInput = getNativeElement<LoginComponent, HTMLInputElement>(
+      fixture,
+      '#email'
+    );
+    const passwordInput = getNativeElement<LoginComponent, HTMLInputElement>(
+      fixture,
+      '#password'
+    );
+    const form = component.loginForm;
 
-      // Component with 'invalid message' should exist
-      expect(invalidComp.componentInstance.message).toBe('Missing email');
-    });
+    expect(form.value)
+      .withContext('FormGroup data should have the following structure')
+      .toEqual({ email: null, password: null });
+    expect(emailInput.value)
+      .withContext('Content in the email input element should be empty')
+      .toEqual('');
+    expect(passwordInput.value)
+      .withContext('Content in the password input element should be empty')
+      .toEqual('');
+  });
 
-    it('I-TEST: Validation of invalid email with correct error message', () => {
-      const emailInput = getNativeElement<LoginComponent, HTMLInputElement>(
-        fixture,
-        '#email'
-      );
-      // Set error message
-      component.text.email.invalid = 'Invalid email';
-      // Set empty value and trigger corresponding events
-      emailInput.value = 'wrongEmail.de';
-      execEvents([emailInput], ['input', 'blur']);
-      fixture.detectChanges();
-      // Get changed content to be tested
-      const invalidComp = fixture.debugElement.query(
-        By.directive(InvalidInputComponent)
-      );
+  it('U-TEST-4: Validation of empty email before interaction', () => {
+    const emailControl = component.loginForm.get('email');
+    const invalidComp = getNativeElement<LoginComponent, InvalidInputComponent>(
+      fixture,
+      'app-invalid-input'
+    );
+    expect(invalidComp)
+      .withContext(
+        'InvalidInputComponent should not appear of untouched email input element'
+      )
+      .toBeFalsy();
+    expect(emailControl?.errors?.['required'])
+      .withContext('Validator error "required" should exist')
+      .toBeTruthy();
+  });
 
-      /* TESTS */
+  it('U-TEST-5: Validation of empty email after interaction', () => {
+    const emailInput = getNativeElement<LoginComponent, HTMLInputElement>(
+      fixture,
+      '#email'
+    );
+    emailInput.value = '';
+    triggerInput([emailInput]);
+    fixture.detectChanges();
 
-      // Component with 'invalid message' should exist
-      expect(invalidComp.componentInstance.message).toBe('Invalid email');
-    });
+    const emailControl = component.loginForm.get('email');
+    const invalidComp = getNativeElement<LoginComponent, InvalidInputComponent>(
+      fixture,
+      'app-invalid-input'
+    );
+    expect(invalidComp)
+      .withContext(
+        'InvalidInputComponent should appear after touching the email input element with false value'
+      )
+      .toBeTruthy();
+    expect(emailControl?.errors?.['required'])
+      .withContext(
+        'Validator error "required" should exist after entering an empty string'
+      )
+      .toBeTruthy();
+  });
 
-    it('I-TEST: Validation of empty password with correct error message', () => {
-      const passwordInput = getNativeElement<LoginComponent, HTMLInputElement>(
-        fixture,
-        '#password'
-      );
-      // Set error message
-      component.text.password.missing = 'Missing password';
-      // Set empty value and trigger corresponding events
-      passwordInput.value = '';
-      execEvents([passwordInput], ['input', 'blur']);
-      fixture.detectChanges();
-      // Get changed content to be tested
-      const invalidComp = fixture.debugElement.query(
-        By.directive(InvalidInputComponent)
-      );
+  it('U-TEST-6: Validation of false email after interaction', () => {
+    const emailInput = getNativeElement<LoginComponent, HTMLInputElement>(
+      fixture,
+      '#email'
+    );
+    emailInput.value = 'wrongEmail.de';
+    triggerInput([emailInput]);
+    fixture.detectChanges();
 
-      /* TESTS */
+    const emailControl = component.loginForm.get('email');
+    const invalidComp = getNativeElement<LoginComponent, InvalidInputComponent>(
+      fixture,
+      'app-invalid-input'
+    );
+    expect(invalidComp)
+      .withContext(
+        'InvalidInputComponent should appear after entering a invalid email value'
+      )
+      .toBeTruthy();
+    expect(emailControl?.errors?.['email'])
+      .withContext(
+        'Validator error "email" should exist after entering a invalid email value'
+      )
+      .toBeTruthy();
+  });
 
-      // Component with 'invalid message' should exist
-      expect(invalidComp.componentInstance.message).toBe('Missing password');
-    });
+  it('U-TEST-7: Validation of empty password before interaction', () => {
+    const emailFormGroup = component.loginForm.get('password');
+    const invalidComp = getNativeElement<LoginComponent, InvalidInputComponent>(
+      fixture,
+      'app-invalid-input'
+    );
+    expect(invalidComp)
+      .withContext(
+        'InvalidInputComponent should not appear of untouched password input element'
+      )
+      .toBeFalsy();
+    expect(emailFormGroup?.errors?.['required'])
+      .withContext('Validator error "required" should exist')
+      .toBeTruthy();
+  });
 
-    it('I-TEST: Validation of error messages with empty email and empty password after clicking login', () => {
-      const button = getNativeElement<LoginComponent, HTMLButtonElement>(
-        fixture,
-        '#login-button'
-      );
-      // Set error message
-      component.text.password.missing = 'Missing password';
-      component.text.email.missing = 'Missing email';
-      button.click();
-      fixture.detectChanges();
-      // Get changed content to be tested
-      const invalidComp = fixture.debugElement.queryAll(
-        By.directive(InvalidInputComponent)
-      );
+  it('U-TEST-8: Validation of empty password after interaction', () => {
+    const passwordInput = getNativeElement<LoginComponent, HTMLInputElement>(
+      fixture,
+      '#password'
+    );
+    passwordInput.value = '';
+    triggerInput([passwordInput]);
+    fixture.detectChanges();
 
-      /* TESTS */
+    const passwordControl = component.loginForm.get('password');
+    const invalidComp = getNativeElement<LoginComponent, InvalidInputComponent>(
+      fixture,
+      'app-invalid-input'
+    );
 
-      // Component with 'invalid message' should exist
-      expect(invalidComp[0].componentInstance.message).toBe('Missing email');
-      expect(invalidComp[1].componentInstance.message).toBe('Missing password');
-    });
+    expect(invalidComp)
+      .withContext(
+        'InvalidInputComponent should appear after touching the email input element with an empty value'
+      )
+      .toBeTruthy();
+    expect(passwordControl?.errors?.['required'])
+      .withContext(
+        'Validator error "required" should exist after entering an empty string'
+      )
+      .toBeTruthy();
+  });
 
-    it('I-TEST: Validation of error messages with incorrect email and empty password after clicking login', () => {
-      const emailInput = getNativeElement<LoginComponent, HTMLInputElement>(
-        fixture,
-        '#email'
-      );
-      const button = getNativeElement<LoginComponent, HTMLButtonElement>(
-        fixture,
-        '#login-button'
-      );
-      emailInput.value = 'Test';
-      // Set error message
-      component.text.password.missing = 'Missing password';
-      component.text.email.invalid = 'Invalid email';
-      execEvents([emailInput], ['input', 'blur']);
-      button.click();
-      fixture.detectChanges();
-      // Get changed content to be tested
-      const invalidComp = fixture.debugElement.queryAll(
-        By.directive(InvalidInputComponent)
-      );
+  it('U-TEST-9: Validation of valid form', () => {
+    const emailInput = getNativeElement<LoginComponent, HTMLInputElement>(
+      fixture,
+      '#email'
+    );
+    const passwordInput = getNativeElement<LoginComponent, HTMLInputElement>(
+      fixture,
+      '#password'
+    );
+    emailInput.value = 'example@gmail.com';
+    passwordInput.value = 'examplePassword';
+    triggerInput([emailInput, passwordInput]);
+    fixture.detectChanges();
+    const invalidComp = getNativeElement<LoginComponent, InvalidInputComponent>(
+      fixture,
+      'app-invalid-input'
+    );
 
-      /* TESTS */
+    expect(component.loginForm.valid)
+      .withContext('FormGroup should be valid if all values are correct')
+      .toBeTruthy();
+    expect(invalidComp)
+      .withContext(
+        'InvalidInputComponent should not appear if all value are correct'
+      )
+      .toBeFalsy();
+  });
 
-      // Component with 'invalid message' should exist
-      expect(invalidComp[0].componentInstance.message).toBe('Invalid email');
-      expect(invalidComp[1].componentInstance.message).toBe('Missing password');
-    });
+  it('U-Test-10: Invalid form should not be submitted and errors should be displayed', () => {
+    const emailInput = getNativeElement<LoginComponent, HTMLInputElement>(
+      fixture,
+      '#email'
+    );
+    const passwordInput = getNativeElement<LoginComponent, HTMLInputElement>(
+      fixture,
+      '#password'
+    );
+    const loginButton = getNativeElement<LoginComponent, HTMLButtonElement>(
+      fixture,
+      '#login-button'
+    );
+    emailInput.value = 'Test';
+    passwordInput.value = '';
+    triggerInput([emailInput, passwordInput]);
+    spyOn(component.login, 'emit');
+    loginButton.click();
+    fixture.detectChanges();
+
+    const invalidComp = getNativeElements<
+      LoginComponent,
+      InvalidInputComponent
+    >(fixture, 'app-invalid-input');
+    const length = invalidComp.length;
+    expect(component.loginForm.invalid)
+      .withContext('FormGroup should be invalid')
+      .toBeTruthy();
+    expect(component.login.emit)
+      .withContext('Login data should not be sent to the parent')
+      .not.toHaveBeenCalled();
+    expect(length)
+      .withContext(
+        'There should be a InvalidInputComponent for incorrect email and password'
+      )
+      .toEqual(2);
+  });
+
+  it('U-Test-11: Valid form should be submitted', () => {
+    const emailInput = getNativeElement<LoginComponent, HTMLInputElement>(
+      fixture,
+      '#email'
+    );
+    const passwordInput = getNativeElement<LoginComponent, HTMLInputElement>(
+      fixture,
+      '#password'
+    );
+    const loginButton = getNativeElement<LoginComponent, HTMLButtonElement>(
+      fixture,
+      '#login-button'
+    );
+    emailInput.value = 'example@gmail.com';
+    passwordInput.value = 'examplePassword';
+    triggerInput([emailInput, passwordInput]);
+    spyOn(component.login, 'emit');
+    loginButton.click();
+    fixture.detectChanges();
+
+    const invalidComp = getNativeElement<LoginComponent, InvalidInputComponent>(
+      fixture,
+      'app-invalid-input'
+    );
+    expect(component.loginForm.valid)
+      .withContext('FormGroup should be valid')
+      .toBeTruthy();
+    expect(component.login.emit)
+      .withContext('Login data should be sent to the parent')
+      .toHaveBeenCalled();
+    expect(invalidComp)
+      .withContext(
+        'There should not any InvalidInputComponent in correct submission'
+      )
+      .toBeFalsy();
+  });
+
+  it('U-Test-12: The forgetPwd emitter should be triggerd if the forget password button will be clicked', () => {
+    const forgetPwd = getNativeElement<LoginComponent, HTMLButtonElement>(
+      fixture,
+      '#forget-pwd'
+    );
+    spyOn(component.forgetPwd, 'emit');
+    forgetPwd.click();
+    fixture.detectChanges();
+
+    expect(component.forgetPwd.emit)
+      .withContext('The emit function of forgetPwd should be called')
+      .toHaveBeenCalled();
   });
 });

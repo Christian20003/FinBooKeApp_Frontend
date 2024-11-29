@@ -1,12 +1,12 @@
-@use '../../styles/container.scss';
-@use '../../styles/colors.scss';
-@use '../../styles/text.scss';
+@use "../../styles/container-mixin/svg" as svg;
+@use "../../styles/others/font" as font;
 
-#invalid-content-container{
+#invalid-content-container {
     display: flex;
-    @include text.label($color: colors.$soft-red);
+    color: var(--icon-color-warning);
+    @include font.label-font();
 }
 
-#icon{
-    @include container.svg-label-container($width: 1.5rem, $fill: colors.$soft-red, $stroke: none);
+#icon {
+    @include svg.svg-label-container($width: 1.5rem, $fill: var(--icon-color-warning), $stroke: none);
 }

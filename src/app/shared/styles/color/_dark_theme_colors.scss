@@ -1,0 +1,27 @@
+@use "@angular/material" as mat;
+@use "./theme.scss" as app-theme;
+
+@mixin dark-theme-color-vars() {
+    --background-color-container-primary: #{mat.get-theme-color(app-theme.$application-theme, neutral, 6)};
+    --background-color-container-secondary: #{mat.get-theme-color(app-theme.$application-theme, neutral, 12)};
+
+    --text-color-primary: #{mat.get-theme-color(app-theme.$application-theme, neutral, 95)};
+
+    --icon-color-primary: #{mat.get-theme-color(app-theme.$application-theme, neutral, 95)};
+    --icon-color-warning: #{mat.get-theme-color(app-theme.$application-theme, error, 35)};
+
+    --border-color-primary: #{mat.get-theme-color(app-theme.$application-theme, neutral, 95)};
+    --border-color-secondary: #{mat.get-theme-color(app-theme.$application-theme, primary, 50)};
+
+    --highlight-color-container-primary: #{mat.get-theme-color(app-theme.$application-theme, primary, 50)};
+    --highlight-color-container-secondary: #{mat.get-theme-color(app-theme.$application-theme, secondary, 50)};
+
+    --background-color-button-focus: #{mat.get-theme-color(app-theme.$application-theme, primary, 50)};
+    --background-color-button-active: #{mat.get-theme-color(app-theme.$application-theme, primary, 35)};
+
+    --link-color: #{mat.get-theme-color(app-theme.$application-theme, tertiary, 40)};
+    --link-color-focus: #{mat.get-theme-color(app-theme.$application-theme, tertiary, 35)};
+
+    --shadow-color-primary: #{rgba(mat.get-theme-color(app-theme.$application-theme, primary, 50), 0.35)};
+    --shadow-color-highlight: #{rgba(mat.get-theme-color(app-theme.$application-theme, tertiary, 0), 0.65)};
+}

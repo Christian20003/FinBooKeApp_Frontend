@@ -1,20 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, input, InputSignal } from '@angular/core';
+import { growShrink } from '../../animations/growShrink';
+import { moveLeftToRight } from '../../animations/slideLeftRight';
 
 @Component({
   selector: 'app-loading',
   templateUrl: './loading.component.html',
   styleUrls: ['./loading.component.scss'],
+  animations: [growShrink, moveLeftToRight],
+  standalone: false,
 })
-export class LoadingComponent implements OnInit {
-  /* This array saves the IDs of all shown icons */
-  icons: Array<{ id: string }> = [];
-  /* The number of icons which should be displayed (IF CHANGED - also update SCSS file) */
-  number = 5;
-
-  ngOnInit(): void {
-    // Create the IDs
-    for (let i = 0; i < this.number; i++) {
-      this.icons.push({ id: 'icon-' + i });
-    }
-  }
+export class LoadingComponent {
+  public readonly message: InputSignal<string> = input('');
+  public readonly text = {
+    title: 'Laden...',
+  };
 }

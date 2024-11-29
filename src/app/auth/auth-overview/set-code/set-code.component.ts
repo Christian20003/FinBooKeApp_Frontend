@@ -8,6 +8,7 @@ import { securityCode } from '../../auth.interface';
   templateUrl: './set-code.component.html',
   styleUrls: ['./set-code.component.scss'],
   animations: [moveLeftToRight],
+  standalone: false,
 })
 export class SetCodeComponent implements OnInit {
   // The formGroup which saves the user input with the code.
