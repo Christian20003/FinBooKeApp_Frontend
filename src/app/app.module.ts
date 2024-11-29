@@ -11,6 +11,8 @@ import { userEffects } from './shared/stores/UserStore/User.effects';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { SharedModule } from './shared/components/shared.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { HttpClientModule } from '@angular/common/http';
+import { TranslocoRootModule } from './transloco-root.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,6 +24,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     SharedModule,
     StoreModule.forRoot({ user: userReducer }, {}),
     EffectsModule.forRoot([userEffects]),
+    HttpClientModule,
+    TranslocoRootModule,
   ],
   providers: [provideAnimationsAsync()],
   bootstrap: [AppComponent],
