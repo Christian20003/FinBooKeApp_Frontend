@@ -1,11 +1,15 @@
-<form id="email-form" [formGroup]="emailForm" (submit)="onSubmit()">
+<form
+  id="email-form"
+  [formGroup]="emailForm"
+  *transloco="let text"
+  (submit)="onSubmit()">
   <div class="relative-container">
     <!-- The input element for the email -->
     <input id="email" class="input" type="email" formControlName="email" />
     <!-- The label for the email element with an SVG -->
     <div id="label-email" class="label">
       <mat-icon class="icon" svgIcon="email" [inline]="true"></mat-icon>
-      <p>{{ text.email.label }}</p>
+      <p>{{ text('auth.email.label') }}</p>
     </div>
   </div>
   <div class="relative-container">
@@ -13,18 +17,18 @@
     @if (email?.errors?.['required'] && email?.touched) {
       <app-invalid-input
         class="missing"
-        [message]="text.email.missing"
+        [message]="text('auth.email.missing')"
         [@moveLeftToRight]></app-invalid-input>
       <!-- The element with the information about invalid email address -->
     } @else if (email?.errors?.['email'] && email?.touched) {
       <app-invalid-input
         class="missing"
-        [message]="text.email.invalid"
+        [message]="text('auth.email.invalid')"
         [@moveLeftToRight]></app-invalid-input>
     }
   </div>
   <!-- Button to send the email address -->
   <button id="send-code-button">
-    {{ text.sendCode }}
+    {{ text('auth.actions.sendCode') }}
   </button>
 </form>

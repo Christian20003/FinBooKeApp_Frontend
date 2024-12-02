@@ -1,3 +1,20 @@
 {
-    "title": "Hello iam Christian Lindner"
+    "auth": {
+        "title": "Welcome to FinBoKeApp",
+        "actions": {
+            "login": "Login",
+            "register": "Register",
+            "forgotPwd": "Forgot password?",
+            "sendCode": "Send code"
+        },
+        "email": {
+            "label": "E-Mail",
+            "missing": "Please enter an e-mail address",
+            "invalid": "Invalid e-mail address"            
+        },
+        "password": {
+            "label": "Password",
+            "missing": "Please enter a password"
+        }
+    }
 }

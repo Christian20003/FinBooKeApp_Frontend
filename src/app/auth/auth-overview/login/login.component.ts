@@ -26,22 +26,6 @@ export class LoginComponent implements OnInit {
   // The reactive login form
   loginForm!: FormGroup;
 
-  // All text values which are used in this component.
-  text = {
-    email: {
-      label: 'Email-Adresse',
-      missing: 'Bitte eine Email-Adresse angeben',
-      invalid: 'Ungültige Email-Adresse',
-    },
-    password: {
-      label: 'Passwort',
-      missing: 'Bitte ein Passwort eingeben',
-    },
-    login: 'Anmelden',
-    errorMsg: 'Es ist leider ein unerwarteter Fehler aufgetreten',
-    forgetPwd: 'Passwort vergessen?',
-  };
-
   constructor(
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer

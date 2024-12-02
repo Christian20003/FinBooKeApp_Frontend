@@ -11,29 +11,31 @@ import {
   getNativeElement,
   triggerInput,
 } from '../testing-support';
+import { getTranslocoModule } from '../transloco-testing.module';
 
 describe('LoginComponent - Integration Tests', () => {
-  let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [LoginComponent, InvalidInputComponent],
-      imports: [ReactiveFormsModule, BrowserAnimationsModule, MatIconModule],
+      imports: [
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        MatIconModule,
+        getTranslocoModule(),
+      ],
       providers: [provideHttpClient()],
     });
     fixture = TestBed.createComponent(LoginComponent);
-    component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
   it('I-TEST-1: Validation of empty email with correct error message', () => {
-    const errorMessage = 'Missing email';
     const emailInput = getNativeElement<LoginComponent, HTMLInputElement>(
       fixture,
       '#email'
     );
-    component.text.email.missing = errorMessage;
     emailInput.value = '';
     triggerInput([emailInput]);
     fixture.detectChanges();
@@ -44,18 +46,16 @@ describe('LoginComponent - Integration Tests', () => {
     );
     expect(invalidComp.componentInstance.message())
       .withContext(
-        'The displayed message of InvalidInputComponent should be "Missing email"'
+        'The displayed message of InvalidInputComponent should be "Please enter an e-mail address"'
       )
-      .toBe(errorMessage);
+      .toBe('Please enter an e-mail address');
   });
 
   it('I-TEST-2: Validation of invalid email with correct error message', () => {
-    const errorMessage = 'Invalid email';
     const emailInput = getNativeElement<LoginComponent, HTMLInputElement>(
       fixture,
       '#email'
     );
-    component.text.email.invalid = errorMessage;
     emailInput.value = 'wrongEmail.de';
     triggerInput([emailInput]);
     fixture.detectChanges();
@@ -66,18 +66,16 @@ describe('LoginComponent - Integration Tests', () => {
     );
     expect(invalidComp.componentInstance.message())
       .withContext(
-        'The displayed message of InvalidInputComponent should be "Invalid email"'
+        'The displayed message of InvalidInputComponent should be "Invalid e-mail address"'
       )
-      .toBe(errorMessage);
+      .toBe('Invalid e-mail address');
   });
 
   it('I-TEST-3: Validation of empty password with correct error message', () => {
-    const errorMessage = 'Missing password';
     const passwordInput = getNativeElement<LoginComponent, HTMLInputElement>(
       fixture,
       '#password'
     );
-    component.text.password.missing = errorMessage;
     passwordInput.value = '';
     triggerInput([passwordInput]);
     fixture.detectChanges();
@@ -88,20 +86,16 @@ describe('LoginComponent - Integration Tests', () => {
     );
     expect(invalidComp.componentInstance.message())
       .withContext(
-        'The displayed message of InvalidInputComponent should be "Missing password"'
+        'The displayed message of InvalidInputComponent should be "Please enter a password"'
       )
-      .toBe('Missing password');
+      .toBe('Please enter a password');
   });
 
   it('I-TEST-4: Validation of error messages with empty email and empty password after clicking login', () => {
-    const errorMessage1 = 'Missing password';
-    const errorMessage2 = 'Missing email';
     const button = getNativeElement<LoginComponent, HTMLButtonElement>(
       fixture,
       '#login-button'
     );
-    component.text.password.missing = errorMessage1;
-    component.text.email.missing = errorMessage2;
     button.click();
     fixture.detectChanges();
 
@@ -111,19 +105,17 @@ describe('LoginComponent - Integration Tests', () => {
     );
     expect(invalidComp[0].componentInstance.message())
       .withContext(
-        'The displayed message of InvalidInputComponent should be "Missing email"'
+        'The displayed message of InvalidInputComponent should be "Please enter an e-mail address"'
       )
-      .toBe(errorMessage2);
+      .toBe('Please enter an e-mail address');
     expect(invalidComp[1].componentInstance.message())
       .withContext(
-        'The displayed message of InvalidInputComponent should be "Missing password"'
+        'The displayed message of InvalidInputComponent should be "Please enter a password"'
       )
-      .toBe(errorMessage1);
+      .toBe('Please enter a password');
   });
 
   it('I-TEST-5: Validation of error messages with incorrect email and empty password after clicking login', () => {
-    const errorMessage1 = 'Missing password';
-    const errorMessage2 = 'Invalid email';
     const emailInput = getNativeElement<LoginComponent, HTMLInputElement>(
       fixture,
       '#email'
@@ -132,8 +124,6 @@ describe('LoginComponent - Integration Tests', () => {
       fixture,
       '#login-button'
     );
-    component.text.password.missing = errorMessage1;
-    component.text.email.invalid = errorMessage2;
     emailInput.value = 'Test';
     triggerInput([emailInput]);
     button.click();
@@ -145,13 +135,13 @@ describe('LoginComponent - Integration Tests', () => {
     );
     expect(invalidComp[0].componentInstance.message())
       .withContext(
-        'The displayed message of InvalidInputComponent should be "Invalid email"'
+        'The displayed message of InvalidInputComponent should be "Invalid e-mail address"'
       )
-      .toBe(errorMessage2);
+      .toBe('Invalid e-mail address');
     expect(invalidComp[1].componentInstance.message())
       .withContext(
-        'The displayed message of InvalidInputComponent should be "Missing password"'
+        'The displayed message of InvalidInputComponent should be "Please enter a password"'
       )
-      .toBe(errorMessage1);
+      .toBe('Please enter a password');
   });
 });

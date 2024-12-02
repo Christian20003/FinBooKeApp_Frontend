@@ -35,6 +35,7 @@ import {
 } from '../testing-support';
 import { HttpErrorResponse, provideHttpClient } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
+import { getTranslocoModule } from '../transloco-testing.module';
 
 describe('AuthOverviewComponent', () => {
   let component: AuthOverviewComponent;
@@ -76,6 +77,7 @@ describe('AuthOverviewComponent', () => {
         EffectsModule.forRoot([userEffects]),
         ReactiveFormsModule,
         MatIconModule,
+        getTranslocoModule(),
       ],
       providers: [
         AuthenticationService,

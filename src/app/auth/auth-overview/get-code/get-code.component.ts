@@ -31,16 +31,6 @@ export class GetCodeComponent implements OnInit {
   // Form to be able to enter an email address
   public emailForm!: FormGroup;
 
-  // All text labels for the HTML template
-  text = {
-    email: {
-      label: 'Email-Adresse',
-      missing: 'Bitte eine Email-Adresse angeben',
-      invalid: 'Ungültige Email-Adresse',
-    },
-    sendCode: 'Code senden',
-  };
-
   constructor(
     private iconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer

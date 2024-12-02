@@ -10,19 +10,23 @@ import {
 } from '../testing-support';
 import { MatIconModule } from '@angular/material/icon';
 import { provideHttpClient } from '@angular/common/http';
+import { getTranslocoModule } from '../transloco-testing.module';
 
 describe('GetCodeComponent - Integration Tests', () => {
-  let component: GetCodeComponent;
   let fixture: ComponentFixture<GetCodeComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [GetCodeComponent, InvalidInputComponent],
-      imports: [ReactiveFormsModule, BrowserAnimationsModule, MatIconModule],
+      imports: [
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        MatIconModule,
+        getTranslocoModule(),
+      ],
       providers: [provideHttpClient()],
     });
     fixture = TestBed.createComponent(GetCodeComponent);
-    component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
@@ -41,7 +45,7 @@ describe('GetCodeComponent - Integration Tests', () => {
       .withContext(
         'InvalidInputComponent should appear with the defined message'
       )
-      .toBe(component.text.email.missing);
+      .toBe('Please enter an e-mail address');
   });
 
   it('I-Test-2: Clicking the "send-code" button with invalid email address should not change the error message', () => {
@@ -65,6 +69,6 @@ describe('GetCodeComponent - Integration Tests', () => {
       .withContext(
         'InvalidInputComponent should appear with the defined message'
       )
-      .toBe(component.text.email.invalid);
+      .toBe('Invalid e-mail address');
   });
 });

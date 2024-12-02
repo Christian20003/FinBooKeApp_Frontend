@@ -12,7 +12,7 @@ import { SetCodeComponent } from './auth-overview/set-code/set-code.component';
 import { authInterceptor } from './auth-interceptor';
 import { SharedModule } from '../shared/components/shared.module';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoDirective } from '@ngneat/transloco';
 
 @NgModule({
   declarations: [
@@ -29,7 +29,7 @@ import { TranslocoModule } from '@ngneat/transloco';
     AuthRoutingModule,
     SharedModule,
     MatIconModule,
-    TranslocoModule,
+    TranslocoDirective,
   ],
   providers: [provideHttpClient(withInterceptors([authInterceptor]))],
   exports: [AuthOverviewComponent],
