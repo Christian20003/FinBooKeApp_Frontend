@@ -39,7 +39,7 @@
         padding: 1rem 2rem;
         @include button.button();
         & {
-            @include font.description-font();
+            @include font.description-font($align: center);
         }
     }
 }

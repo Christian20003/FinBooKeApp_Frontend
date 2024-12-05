@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatIconModule } from '@angular/material/icon';
+import { provideHttpClient } from '@angular/common/http';
 import { SetCodeComponent } from 'src/app/auth/auth-overview/set-code/set-code.component';
 import { InvalidInputComponent } from 'src/app/shared';
 import {
@@ -9,21 +11,23 @@ import {
   getNativeElements,
   triggerInput,
 } from '../testing-support';
-import { MatIconModule } from '@angular/material/icon';
-import { provideHttpClient } from '@angular/common/http';
+import { getTranslocoModule } from '../transloco-testing.module';
 
 describe('SetCodeComponent - Unit Tests', () => {
-  let component: SetCodeComponent;
   let fixture: ComponentFixture<SetCodeComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [SetCodeComponent, InvalidInputComponent],
-      imports: [ReactiveFormsModule, BrowserAnimationsModule, MatIconModule],
+      imports: [
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        MatIconModule,
+        getTranslocoModule(),
+      ],
       providers: [provideHttpClient()],
     });
     fixture = TestBed.createComponent(SetCodeComponent);
-    component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
@@ -38,9 +42,9 @@ describe('SetCodeComponent - Unit Tests', () => {
       fixture,
       InvalidInputComponent
     );
-    expect(invalidComp.componentInstance.message()).toBe(
-      component.text.missing
-    );
+    expect(invalidComp.componentInstance.message())
+      .withContext('Error message is not as defined')
+      .toBe('Please enter the complete code');
   });
 
   it('I-Test-2: Clicking the submit button with invalid code should display an error message', () => {
@@ -61,8 +65,8 @@ describe('SetCodeComponent - Unit Tests', () => {
       fixture,
       InvalidInputComponent
     );
-    expect(invalidComp.componentInstance.message()).toBe(
-      component.text.missing
-    );
+    expect(invalidComp.componentInstance.message())
+      .withContext('Error message is not as defined')
+      .toBe('Please enter the complete code');
   });
 });

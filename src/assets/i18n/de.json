@@ -15,6 +15,9 @@
         "password": {
             "label": "Passwort",
             "missing": "Bitte Passwort eingeben"
+        },
+        "code": {
+            "missing": "Bitte vollständigen Code eingeben"
         }
     }
 }

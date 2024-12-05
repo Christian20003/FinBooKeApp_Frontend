@@ -29,3 +29,18 @@
     pointer-events: none;
     transition: all 0.5s;
 }
+
+@mixin digit-box-container(){
+    width: 2rem;
+    height: 3rem;
+    color: var(--text-color-primary);
+    background-color: var(--background-color-container-secondary);
+    border: 0.2rem var(--border-color-primary) solid;
+    border-radius: 0.5rem;
+    outline: none;
+    transition: border-color 0.5s; 
+    
+    &:focus{
+        border-color: var(--highlight-color-container-primary);
+    }
+}

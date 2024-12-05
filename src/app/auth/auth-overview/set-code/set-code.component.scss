@@ -1,41 +1,40 @@
-@use '../../../shared/styles/button.scss';
-@use '../../../shared/styles/text.scss';
-@use '../../../shared/styles/colors.scss';
-@use '../../../shared/styles/container.scss';
+@use "../../../shared/styles/container-mixin/input" as input;
+@use "../../../shared/styles/container-mixin/button" as button;
+@use "../../../shared/styles/others/font" as font;
 
-#code-form{
+#code-form {
     position: relative;
     display: grid;
     gap: 2rem;
 
-    #input-container{
+    #input-container {
         display: grid;
         grid-auto-flow: column;
         gap: 0.2rem;
         margin-top: 1.5rem;
-        margin-bottom: 0.5rem;
 
-        .key-field{
-            width: 2rem;
-            height: 3rem;
-            @include container.input-code-container();
-            @include text.description($align: center);
+        .key-field {
+            @include input.digit-box-container();
+            & {
+                @include font.header-font($align: center);
+            }
         }
     }
 
-    #relative-container{
+    #relative-container {
         position: relative;
 
-        #missing{
+        #missing {
             position: absolute;
-            margin: -2rem 0;
+            bottom: -0.5rem;
         }
     }
 
-    #proof-code-button{
-        @include button.button();
-        @include text.description($align: center, $color: colors.$moderate-red);
+    #proof-code-button {
         padding: 1rem 2rem;
-        
+        @include button.button();
+        & {
+            @include font.description-font($align: center);
+        }
     }
 }

@@ -1,7 +1,7 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit, output, OutputEmitterRef } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { moveLeftToRight } from 'src/app/shared';
-import { securityCode } from '../../auth.interface';
+import { securityCode } from '../../models/securityCode';
 
 @Component({
   selector: 'app-set-code',
@@ -12,17 +12,11 @@ import { securityCode } from '../../auth.interface';
 })
 export class SetCodeComponent implements OnInit {
   // The formGroup which saves the user input with the code.
-  codeForm!: FormGroup;
-  // The eventEmitter which sends the entered code to the parent component
-  @Output() sendCode = new EventEmitter<securityCode>();
+  public codeForm!: FormGroup;
+  // The output signal which sends the entered code to the parent component
+  public readonly sendCode: OutputEmitterRef<securityCode> = output();
   // Bool which identifies if a complete access code has been entered
-  isInvalid = false;
-
-  // The static text
-  text = {
-    proofCode: 'Code senden',
-    missing: 'Bitte vollständigen Code eingeben',
-  };
+  public isInvalid = false;
 
   ngOnInit(): void {
     this.codeForm = new FormGroup({
@@ -54,15 +48,39 @@ export class SetCodeComponent implements OnInit {
   }
 
   /**
-   * This function moves on to the next input element if the value of the current input element isn't falsy.
+   * This function validates the input of the code input element. If the value
+   * is a lower case letter, it will be changed to an upper case letter. If the
+   * value is not a letter `(A-Z)` or number `(0-9)`, it will be removed. After
+   * recognizing a correct value it will switch to the next input element.
    *
-   * @param currrent  - The current input element which received an input event
+   * @param currrent  - The current input element which received an `input` event
    * @param next      - The next input element which should be focused
    */
-  toNext(current: HTMLInputElement, next: HTMLInputElement): void {
-    if (current.value) {
-      next.focus();
+  validate(current: HTMLInputElement, next: HTMLInputElement): void {
+    let value = current.value;
+    const isLowerLetter = new RegExp('[a-z]');
+    const isValid = new RegExp('[A-Z0-9]');
+    if (isLowerLetter.test(value)) {
+      value = value.toUpperCase();
+      current.value = value;
     }
+    if (isValid.test(value)) {
+      next.focus();
+    } else {
+      current.value = '';
+    }
+    if (this.codeForm.valid) {
+      this.isInvalid = false;
+    }
+  }
+
+  /**
+   * This function selects the complete content of the input element.
+   *
+   * @param current   - The current input element which received a `focus` event.
+   */
+  onFocus(current: HTMLInputElement): void {
+    current.select();
   }
 
   /**
