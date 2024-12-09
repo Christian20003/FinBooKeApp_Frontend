@@ -7,7 +7,9 @@
 <button (click)="changeTheme()">Theme changer</button>
 <button (click)="changeLanguage()">Language changer</button>
 <app-toasts></app-toasts>
-<router-outlet></router-outlet>
+<div [@routeAnimation]="getRouteAnimationData()">
+  <router-outlet></router-outlet>
+</div>
 
 <div class="small-shape-left"></div>
 <div class="large-shape-left"></div>

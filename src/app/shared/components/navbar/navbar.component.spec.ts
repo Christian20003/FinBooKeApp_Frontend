@@ -5,7 +5,7 @@ import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MemoizedSelector } from '@ngrx/store';
 import { MockComponent } from 'ng-mocks';
-import { dashboardPath, routes } from 'src/app/app-routing.module';
+import { dashboardPath, routes } from 'src/app/routing/app-routing.module';
 import {
   getNativeElement,
   getNativeElements,

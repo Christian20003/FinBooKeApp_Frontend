@@ -11,7 +11,7 @@ import {
   profilePath,
   routes,
   settingsPath,
-} from 'src/app/app-routing.module';
+} from 'src/app/routing/app-routing.module';
 import { AuthenticationService } from 'src/app/auth/auth-overview/authentication.service';
 import { deleteUser } from 'src/app/shared';
 import { getNativeElement } from 'src/app/testing/testing-support';

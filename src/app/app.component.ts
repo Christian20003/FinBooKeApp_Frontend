@@ -1,7 +1,7 @@
 import { Component, ElementRef, Renderer2 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { selectUser, setUser } from './shared';
-import { Router } from '@angular/router';
+import { ChildrenOutletContexts, Router } from '@angular/router';
 import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
@@ -18,7 +18,8 @@ export class AppComponent {
     private router: Router,
     private elementRef: ElementRef,
     private renderer: Renderer2,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private contexts: ChildrenOutletContexts
   ) {
     const data = this.store.select(selectUser);
     data.subscribe(state => {
@@ -28,6 +29,12 @@ export class AppComponent {
         this.router.navigate(['login']);
       }
     });
+  }
+
+  getRouteAnimationData() {
+    return this.contexts.getContext('primary')?.route?.snapshot?.data?.[
+      'animation'
+    ];
   }
 
   // TODO: Delete after development
