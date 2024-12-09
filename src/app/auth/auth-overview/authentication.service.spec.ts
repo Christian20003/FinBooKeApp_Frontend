@@ -105,12 +105,12 @@ describe('AuthenticationService - Unit Tests', () => {
 
   it('U-Test-5: A successful postCode request', () => {
     const data = {
-      value1: 1,
-      value2: 2,
-      value3: 3,
-      value4: 4,
-      value5: 5,
-      value6: 6,
+      value1: '1',
+      value2: '2',
+      value3: '3',
+      value4: '4',
+      value5: '5',
+      value6: '6',
     };
 
     service.postCode(data).subscribe({
@@ -193,12 +193,12 @@ describe('AuthenticationService - Unit Tests', () => {
 
   it('U-Test-10: A faulty postCode request', () => {
     const data = {
-      value1: 1,
-      value2: 2,
-      value3: 3,
-      value4: 4,
-      value5: 5,
-      value6: 6,
+      value1: '1',
+      value2: '2',
+      value3: '3',
+      value4: '4',
+      value5: '5',
+      value6: '6',
     };
 
     service.postCode(data).subscribe({

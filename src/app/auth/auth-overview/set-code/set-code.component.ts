@@ -1,7 +1,7 @@
 import { Component, OnInit, output, OutputEmitterRef } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { moveLeftToRight } from 'src/app/shared';
-import { securityCode } from '../../models/securityCode';
+import { SecurityCode } from '../../models/securityCode';
 
 @Component({
   selector: 'app-set-code',
@@ -14,7 +14,7 @@ export class SetCodeComponent implements OnInit {
   // The formGroup which saves the user input with the code.
   public codeForm!: FormGroup;
   // The output signal which sends the entered code to the parent component
-  public readonly sendCode: OutputEmitterRef<securityCode> = output();
+  public readonly sendCode: OutputEmitterRef<SecurityCode> = output();
   // Bool which identifies if a complete access code has been entered
   public isInvalid = false;
 
@@ -107,9 +107,9 @@ export class SetCodeComponent implements OnInit {
    * key does not exist in the {@link codeForm} it will return 0.
    *
    * @param key   - The key of the {@link FormControl} element
-   * @returns       If the {@link FormControl} exist, its saved value otherwise 0
+   * @returns       The stored value if the {@link FormControl} exist, otherwise 0
    */
-  private getValue(key: string): number {
+  private getValue(key: string): string {
     const control = this.codeForm.get(key);
     return control?.value ? control.value : 0;
   }

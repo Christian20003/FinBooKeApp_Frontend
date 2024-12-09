@@ -1,8 +1,9 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from 'src/app/shared/index';
-import { securityCode, loginData, registerData } from '../auth.interface';
+import { loginData, registerData } from '../auth.interface';
 import { Observable, catchError, map, throwError } from 'rxjs';
+import { SecurityCode } from '../models/securityCode';
 
 @Injectable({
   providedIn: 'root',
@@ -102,7 +103,7 @@ export class AuthenticationService {
    * @param data      - The code data as a {@link securityCode} object.
    * @returns           An observable either with a string message after success or an {@link Error} object after failure.
    */
-  postCode(data: securityCode): Observable<string | Error> {
+  postCode(data: SecurityCode): Observable<string | Error> {
     return this.http
       .put<string>(this.CODE_PATH, data)
       .pipe(catchError(this.errorHandling));
