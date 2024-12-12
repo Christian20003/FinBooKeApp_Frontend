@@ -9,15 +9,24 @@
         },
         "email": {
             "label": "E-Mail",
-            "missing": "Please enter an e-mail address",
+            "missing": "Empty e-mail address",
             "invalid": "Invalid e-mail address"            
         },
         "password": {
             "label": "Password",
-            "missing": "Please enter a password"
+            "missing": "Empty password"
         },
         "code": {
             "missing": "Please enter the complete code"
         }
+    },
+    "http-error": {
+        "invalid": "The submitted data could not be processed",
+        "credentials": "The given account data is incorrect",
+        "user-name": "The specified user name is already taken",
+        "unautherized": "You are not authorised for this action",
+        "not-found": "The requested resource could not be found",
+        "unavailable": "The requested service is currently not available",
+        "server-error": "An unexpected error has occurred"
     }
 }

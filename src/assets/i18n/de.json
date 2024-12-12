@@ -9,15 +9,24 @@
         },
         "email": {
             "label": "E-Mail",
-            "missing": "Bitte E-Mail-Adresse eingeben",
+            "missing": "Fehlende E-Mail-Adresse",
             "invalid": "Ungültige E-Mail-Adresse"            
         },
         "password": {
             "label": "Passwort",
-            "missing": "Bitte Passwort eingeben"
+            "missing": "Fehlendes Passwort"
         },
         "code": {
             "missing": "Bitte vollständigen Code eingeben"
         }
+    },
+    "http-error": {
+        "invalid": "Die übergebenen Daten konnten nicht verarbeitet werden",
+        "credentials": "Die angegebenen Account-Daten sind fehlerhaft",
+        "user-name": "Der angegebene Benutzername ist bereits vergeben",
+        "unautherized": "Sie sind für diese Aktion nicht autorisiert",
+        "not-found": "Die angeforderte Ressource konnte nicht gefunden werden",
+        "unavailable": "Der angeforderte Service ist zurzeit nicht erreichbar",
+        "server-error": "Es ist ein unerwarteter Fehler eingetreten"
     }
 }

@@ -1,29 +1,28 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from 'src/app/shared/index';
-import { loginData, registerData } from '../auth.interface';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { SecurityCode } from '../models/securityCode';
+import { TranslocoService } from '@ngneat/transloco';
+import { EnvironmentService } from 'src/app/dev-tools/environment.service';
+import { LoginData } from '../models/loginData';
+import { LoggerService } from 'src/app/dev-tools/logging.service';
+import { RegisterData } from '../models/registerData';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
-  private readonly LOGIN_PATH: string = 'https://backend/login';
-  private readonly REGISTER_PATH: string = 'https://backend/register';
-  private readonly CODE_PATH: string = 'https://backend/login/code';
+  private readonly LOGIN_PATH: string = '/login';
+  private readonly REGISTER_PATH: string = '/register';
+  private readonly CODE_PATH: string = '/login/code';
 
-  private static readonly errorMsg = {
-    invalidStructure: 'Etwas ist mit der erhaltenen Antwort schief gelaufen',
-    invalidCredentials: 'Die eingegebenen Daten sind ungültig',
-    assignedName: 'Der angegebene Benutzername ist bereits vergeben',
-    notFound: 'Es konnte keine Verbindung hergestellt werden',
-    serverError: 'Es kam zu einem serverseitigen Fehler',
-    unavailable: 'Der Service ist aktuell nicht verfügbar',
-    unknown: 'Es ist ein unerwarteter Fehler eingetreten',
-  };
-
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private transloco: TranslocoService,
+    private logger: LoggerService,
+    private envService: EnvironmentService
+  ) {}
 
   /**
    * This function makes a POST request via HTTP to try a login with the given data. If the request was successfull it will return an
@@ -33,8 +32,10 @@ export class AuthenticationService {
    * @param data      - The login data as a {@link loginData} object.
    * @returns           An observable either with a {@link User} object after success or an {@link Error} object after failure.
    */
-  postLogin(data: loginData): Observable<User | Error> {
-    return this.http.post<User>(this.LOGIN_PATH, data).pipe(
+  postLogin(data: LoginData): Observable<User | Error> {
+    const path = this.envService.apiUrl + this.LOGIN_PATH;
+    this.logger.logInfo('POST to ' + path, data);
+    return this.http.post<User>(path, data).pipe(
       map(response => {
         if (
           response.name &&
@@ -42,14 +43,13 @@ export class AuthenticationService {
           response.id &&
           response.session
         ) {
+          this.logger.logInfo('Success of POST to ' + path, response);
           return response;
         }
-        console.error(
-          'Something went wrong with the structure of the response during login'
-        );
-        return new Error(AuthenticationService.errorMsg.invalidStructure);
+        this.logger.logError('Error of POST to ' + path, response);
+        return new Error(this.transloco.translate('http-error.invalid'));
       }),
-      catchError(this.errorHandling)
+      catchError(this.errorHandling.bind(this))
     );
   }
 
@@ -61,8 +61,10 @@ export class AuthenticationService {
    * @param data      - The registration data as a {@link registerData} object.
    * @returns           An observable either with a {@link User} object after success or an {@link Error} object after failure.
    */
-  postRegister(data: registerData): Observable<User | Error> {
-    return this.http.post<User>(this.REGISTER_PATH, data).pipe(
+  postRegister(data: RegisterData): Observable<User | Error> {
+    const path = this.envService.apiUrl + this.REGISTER_PATH;
+    this.logger.logInfo('POST to ' + path, data);
+    return this.http.post<User>(path, data).pipe(
       map(response => {
         if (
           response.name &&
@@ -70,14 +72,13 @@ export class AuthenticationService {
           response.id &&
           response.session
         ) {
+          this.logger.logInfo('Success of POST to ' + path, response);
           return response;
         }
-        console.error(
-          'Something went wrong with the structure of the response during registration'
-        );
-        return new Error(AuthenticationService.errorMsg.invalidStructure);
+        this.logger.logError('Error of POST to ' + path, response);
+        return new Error(this.transloco.translate('http-error.invalid'));
       }),
-      catchError(this.errorHandling)
+      catchError(this.errorHandling.bind(this))
     );
   }
 
@@ -90,9 +91,15 @@ export class AuthenticationService {
    * @returns           An observable either with a string message after success or an {@link Error} object after failure.
    */
   postEmail(email: string): Observable<string | Error> {
-    return this.http
-      .post<string>(this.CODE_PATH, email)
-      .pipe(catchError(this.errorHandling));
+    const path = this.envService.apiUrl + this.CODE_PATH;
+    this.logger.logInfo('POST to ' + path, email);
+    return this.http.post<string>(path, email).pipe(
+      map(response => {
+        this.logger.logInfo('Success of POST to ' + path, response);
+        return response;
+      }),
+      catchError(this.errorHandling.bind(this))
+    );
   }
 
   /**
@@ -104,9 +111,15 @@ export class AuthenticationService {
    * @returns           An observable either with a string message after success or an {@link Error} object after failure.
    */
   postCode(data: SecurityCode): Observable<string | Error> {
-    return this.http
-      .put<string>(this.CODE_PATH, data)
-      .pipe(catchError(this.errorHandling));
+    const path = this.envService.apiUrl + this.CODE_PATH;
+    this.logger.logInfo('PUT to ' + path, data);
+    return this.http.put<string>(path, data).pipe(
+      map(response => {
+        this.logger.logInfo('Success of PUT to ' + path, response);
+        return response;
+      }),
+      catchError(this.errorHandling.bind(this))
+    );
   }
 
   /**
@@ -117,9 +130,15 @@ export class AuthenticationService {
    * @returns           An observable either with a string message after success or an {@link Error} object after failure.
    */
   deleteLogin(): Observable<string | Error> {
-    return this.http
-      .delete<string>(this.LOGIN_PATH)
-      .pipe(catchError(this.errorHandling));
+    const path = this.envService.apiUrl + this.LOGIN_PATH;
+    this.logger.logInfo('DELETE to ' + path);
+    return this.http.delete<string>(path).pipe(
+      map(response => {
+        this.logger.logInfo('Success of DELETE to ' + path, response);
+        return response;
+      }),
+      catchError(this.errorHandling.bind(this))
+    );
   }
 
   /**
@@ -130,30 +149,31 @@ export class AuthenticationService {
    * @returns         A new observable with an error object, including a corresponding error message.
    */
   private errorHandling(error: HttpErrorResponse): Observable<Error> {
+    this.logger.logError('Error of request', error);
     switch (error.status) {
       case 404:
         return throwError(() => {
-          return new Error(AuthenticationService.errorMsg.notFound);
+          return new Error(this.transloco.translate('http-error.not-found'));
         });
       case 406:
         return throwError(() => {
-          return new Error(AuthenticationService.errorMsg.invalidCredentials);
+          return new Error(this.transloco.translate('http-error.credentials'));
         });
       case 409:
         return throwError(() => {
-          return new Error(AuthenticationService.errorMsg.assignedName);
+          return new Error(this.transloco.translate('http-error.user-name'));
         });
       case 500:
         return throwError(() => {
-          return new Error(AuthenticationService.errorMsg.serverError);
+          return new Error(this.transloco.translate('http-error.unavailable'));
         });
       case 503:
         return throwError(() => {
-          return new Error(AuthenticationService.errorMsg.unavailable);
+          return new Error(this.transloco.translate('http-error.server-error'));
         });
       default:
         return throwError(() => {
-          return new Error(AuthenticationService.errorMsg.unknown);
+          return new Error(this.transloco.translate('http-error.server-error'));
         });
     }
   }

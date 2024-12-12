@@ -48,7 +48,7 @@ describe('LoginComponent - Integration Tests', () => {
       .withContext(
         'The displayed message of InvalidInputComponent should be "Please enter an e-mail address"'
       )
-      .toBe('Please enter an e-mail address');
+      .toBe('Empty e-mail address');
   });
 
   it('I-TEST-2: Validation of invalid email with correct error message', () => {
@@ -88,7 +88,7 @@ describe('LoginComponent - Integration Tests', () => {
       .withContext(
         'The displayed message of InvalidInputComponent should be "Please enter a password"'
       )
-      .toBe('Please enter a password');
+      .toBe('Empty password');
   });
 
   it('I-TEST-4: Validation of error messages with empty email and empty password after clicking login', () => {
@@ -107,12 +107,12 @@ describe('LoginComponent - Integration Tests', () => {
       .withContext(
         'The displayed message of InvalidInputComponent should be "Please enter an e-mail address"'
       )
-      .toBe('Please enter an e-mail address');
+      .toBe('Empty e-mail address');
     expect(invalidComp[1].componentInstance.message())
       .withContext(
         'The displayed message of InvalidInputComponent should be "Please enter a password"'
       )
-      .toBe('Please enter a password');
+      .toBe('Empty password');
   });
 
   it('I-TEST-5: Validation of error messages with incorrect email and empty password after clicking login', () => {
@@ -142,6 +142,6 @@ describe('LoginComponent - Integration Tests', () => {
       .withContext(
         'The displayed message of InvalidInputComponent should be "Please enter a password"'
       )
-      .toBe('Please enter a password');
+      .toBe('Empty password');
   });
 });

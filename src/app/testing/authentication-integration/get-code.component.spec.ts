@@ -45,7 +45,7 @@ describe('GetCodeComponent - Integration Tests', () => {
       .withContext(
         'InvalidInputComponent should appear with the defined message'
       )
-      .toBe('Please enter an e-mail address');
+      .toBe('Empty e-mail address');
   });
 
   it('I-Test-2: Clicking the "send-code" button with invalid email address should not change the error message', () => {

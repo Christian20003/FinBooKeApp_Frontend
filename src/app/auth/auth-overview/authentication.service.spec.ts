@@ -1,38 +1,39 @@
 import { TestBed } from '@angular/core/testing';
-
-import { AuthenticationService } from './authentication.service';
 import {
   HttpTestingController,
   provideHttpClientTesting,
 } from '@angular/common/http/testing';
-import { User } from 'src/app/shared';
 import { HttpErrorResponse, provideHttpClient } from '@angular/common/http';
+import { TestUser, User } from 'src/app/shared';
+import { EnvironmentService } from 'src/app/dev-tools/environment.service';
+import { getTranslocoModule } from 'src/app/testing/transloco-testing.module';
+import { AuthenticationService } from './authentication.service';
+import { TestLoginData } from '../models/loginData';
+import { TestRegisterData } from '../models/registerData';
+import { TestSecurityCode } from '../models/securityCode';
 
 describe('AuthenticationService - Unit Tests', () => {
   let service: AuthenticationService;
   let httpTestingController: HttpTestingController;
-  const dummyUser = {
-    id: 2,
-    name: 'max',
-    email: 'max.mustermann@moon.com',
-    password: '123',
-    imagePath: 'https://backend/test',
-    session: {
-      token: 'abcde',
-      expire: 1000,
-    },
-  };
-  const requestPaths = {
-    login: 'https://backend/login',
-    register: 'https://backend/register',
-    code: 'https://backend/login/code',
-  };
+  let envService: EnvironmentService;
+  const loggingServie = jasmine.createSpyObj('LoggingService', [
+    'logInfo',
+    'logError',
+  ]);
+  const api = 'http://testing';
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [provideHttpClient(), provideHttpClientTesting()],
+      imports: [getTranslocoModule()],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        EnvironmentService,
+        { provide: loggingServie, useValue: loggingServie },
+      ],
     });
     service = TestBed.inject(AuthenticationService);
+    envService = TestBed.inject(EnvironmentService);
     httpTestingController = TestBed.inject(HttpTestingController);
   });
 
@@ -43,188 +44,236 @@ describe('AuthenticationService - Unit Tests', () => {
   /*-----------------------------------------------Successful-Requests-----------------------------------------------------------*/
 
   it('U-Test-1: should be created', () => {
-    expect(service).toBeTruthy();
+    expect(service)
+      .withContext('AuthenticationService should exist')
+      .toBeTruthy();
   });
 
   it('U-Test-2: A successful login request', () => {
-    const data = {
-      email: dummyUser.email,
-      password: dummyUser.password,
-    };
-
-    service.postLogin(data).subscribe({
+    spyOnProperty(envService, 'apiUrl', 'get').and.returnValue(api);
+    service.postLogin(TestLoginData).subscribe({
       next: response => {
         const user = response as User;
-        expect(user.name).toBeTruthy();
-        expect(user.id).toBeTruthy();
-        expect(user.imagePath).toBeTruthy();
-        expect(user.session).toBeTruthy();
-        expect(user.email).toBeTruthy();
+        expect(user.name)
+          .withContext('Responding user object should have a name')
+          .toBeTruthy();
+        expect(user.id)
+          .withContext('Responding user object should have an id')
+          .toBeTruthy();
+        expect(user.imagePath)
+          .withContext('Responding user object should have an imagePath')
+          .toBeTruthy();
+        expect(user.session)
+          .withContext('Responding user object should have a session object')
+          .toBeTruthy();
+        expect(user.email)
+          .withContext('Responding user object should have an email')
+          .toBeTruthy();
       },
     });
-
-    const req = httpTestingController.expectOne(requestPaths.login);
-    expect(req.request.method).toBe('POST');
-    req.flush(dummyUser);
+    // @ts-expect-error Getting the relativ path
+    const path = api + service.LOGIN_PATH;
+    const req = httpTestingController.expectOne(path);
+    expect(req.request.method)
+      .withContext('POST request should be executed')
+      .toBe('POST');
+    req.flush(TestUser);
   });
 
   it('U-Test-3: A successful register request', () => {
-    const data = {
-      email: dummyUser.email,
-      name: dummyUser.name,
-      password: dummyUser.password,
-    };
-
-    service.postRegister(data).subscribe({
+    spyOnProperty(envService, 'apiUrl', 'get').and.returnValue(api);
+    service.postRegister(TestRegisterData).subscribe({
       next: response => {
         const user = response as User;
-        expect(user.name).toBeTruthy();
-        expect(user.id).toBeTruthy();
-        expect(user.imagePath).toBeTruthy();
-        expect(user.session).toBeTruthy();
-        expect(user.email).toBeTruthy();
+        expect(user.name)
+          .withContext('Responding user object should have a name')
+          .toBeTruthy();
+        expect(user.id)
+          .withContext('Responding user object should have an id')
+          .toBeTruthy();
+        expect(user.imagePath)
+          .withContext('Responding user object should have an imagePath')
+          .toBeTruthy();
+        expect(user.session)
+          .withContext('Responding user object should have a session object')
+          .toBeTruthy();
+        expect(user.email)
+          .withContext('Responding user object should have an email')
+          .toBeTruthy();
       },
     });
-
-    const req = httpTestingController.expectOne(requestPaths.register);
-    expect(req.request.method).toBe('POST');
-    req.flush(dummyUser);
+    // @ts-expect-error Getting the relativ path
+    const path = api + service.REGISTER_PATH;
+    const req = httpTestingController.expectOne(path);
+    expect(req.request.method)
+      .withContext('POST request should be executed')
+      .toBe('POST');
+    req.flush(TestUser);
   });
 
   it('U-Test-4: A successful postEmail request', () => {
-    service.postEmail(dummyUser.email).subscribe({
+    spyOnProperty(envService, 'apiUrl', 'get').and.returnValue(api);
+    service.postEmail(TestUser.email).subscribe({
       next: response => {
-        expect(response).toBeTruthy();
+        expect(response)
+          .withContext('Success response should exist')
+          .toBeTruthy();
       },
     });
-
-    const req = httpTestingController.expectOne(requestPaths.code);
-    expect(req.request.method).toBe('POST');
+    // @ts-expect-error Getting the relativ path
+    const path = api + service.CODE_PATH;
+    const req = httpTestingController.expectOne(path);
+    expect(req.request.method)
+      .withContext('POST request should be executed')
+      .toBe('POST');
     req.flush('Success');
   });
 
   it('U-Test-5: A successful postCode request', () => {
-    const data = {
-      value1: '1',
-      value2: '2',
-      value3: '3',
-      value4: '4',
-      value5: '5',
-      value6: '6',
-    };
-
-    service.postCode(data).subscribe({
+    spyOnProperty(envService, 'apiUrl', 'get').and.returnValue(api);
+    service.postCode(TestSecurityCode).subscribe({
       next: response => {
-        expect(response).toBeTruthy();
+        expect(response)
+          .withContext('Success response should exist')
+          .toBeTruthy();
       },
     });
-
-    const req = httpTestingController.expectOne(requestPaths.code);
-    expect(req.request.method).toBe('PUT');
+    // @ts-expect-error Getting the relativ path
+    const path = api + service.CODE_PATH;
+    const req = httpTestingController.expectOne(path);
+    expect(req.request.method)
+      .withContext('PUT request should be executed')
+      .toBe('PUT');
     req.flush('Success');
   });
 
   it('U-Test-6: A successful logout request', () => {
+    spyOnProperty(envService, 'apiUrl', 'get').and.returnValue(api);
     service.deleteLogin().subscribe({
       next: response => {
-        expect(response).toBeTruthy();
+        expect(response)
+          .withContext('Success response should exist')
+          .toBeTruthy();
       },
     });
-
-    const req = httpTestingController.expectOne(requestPaths.login);
-    expect(req.request.method).toBe('DELETE');
+    // @ts-expect-error Getting the relativ path
+    const path = api + service.LOGIN_PATH;
+    const req = httpTestingController.expectOne(path);
+    expect(req.request.method)
+      .withContext('DELETE request should be executed')
+      .toBe('DELETE');
     req.flush('Success');
   });
 
   /*-----------------------------------------------Unsuccessful-Requests----------------------------------------------------------*/
 
   it('U-Test-7: A faulty login request', () => {
-    const data = {
-      email: dummyUser.email,
-      password: dummyUser.password,
-    };
-
-    service.postLogin(data).subscribe({
+    spyOnProperty(envService, 'apiUrl', 'get').and.returnValue(api);
+    service.postLogin(TestLoginData).subscribe({
       error: error => {
-        expect(error).toBeTruthy();
-        expect(error.message).not.toEqual('');
+        expect(error)
+          .withContext('Error object should be present')
+          .toBeTruthy();
+        expect(error.message)
+          .withContext('Erros object should have a message')
+          .not.toEqual('');
       },
     });
-
-    const req = httpTestingController.expectOne(requestPaths.login);
+    // @ts-expect-error Getting the relativ path
+    const path = api + service.LOGIN_PATH;
+    const req = httpTestingController.expectOne(path);
     const error = new HttpErrorResponse({ status: 406 });
-    expect(req.request.method).toBe('POST');
+    expect(req.request.method)
+      .withContext('POST request should be executed')
+      .toBe('POST');
     req.flush('Invalid credentials', error);
   });
 
   it('U-Test-8: A faulty register request', () => {
-    const data = {
-      email: dummyUser.email,
-      name: dummyUser.name,
-      password: dummyUser.password,
-    };
-
-    service.postRegister(data).subscribe({
+    spyOnProperty(envService, 'apiUrl', 'get').and.returnValue(api);
+    service.postRegister(TestRegisterData).subscribe({
       error: error => {
-        expect(error).toBeTruthy();
-        expect(error.message).not.toEqual('');
+        expect(error)
+          .withContext('Error object should be present')
+          .toBeTruthy();
+        expect(error.message)
+          .withContext('Erros object should have a message')
+          .not.toEqual('');
       },
     });
-
-    const req = httpTestingController.expectOne(requestPaths.register);
+    // @ts-expect-error Getting the relativ path
+    const path = api + service.REGISTER_PATH;
+    const req = httpTestingController.expectOne(path);
     const error = new HttpErrorResponse({ status: 404 });
-    expect(req.request.method).toBe('POST');
+    expect(req.request.method)
+      .withContext('POST request should be executed')
+      .toBe('POST');
     req.flush('Resource not found', error);
   });
 
   it('U-Test-9: A faulty postEmail request', () => {
-    service.postEmail(dummyUser.email).subscribe({
+    spyOnProperty(envService, 'apiUrl', 'get').and.returnValue(api);
+    service.postEmail(TestUser.email).subscribe({
       error: error => {
-        expect(error).toBeTruthy();
-        expect(error.message).not.toEqual('');
+        expect(error)
+          .withContext('Error object should be present')
+          .toBeTruthy();
+        expect(error.message)
+          .withContext('Erros object should have a message')
+          .not.toEqual('');
       },
     });
-
-    const req = httpTestingController.expectOne(requestPaths.code);
+    // @ts-expect-error Getting the relativ path
+    const path = api + service.CODE_PATH;
+    const req = httpTestingController.expectOne(path);
     const error = new HttpErrorResponse({ status: 444 });
-    expect(req.request.method).toBe('POST');
+    expect(req.request.method)
+      .withContext('POST request should be executed')
+      .toBe('POST');
     req.flush('Unknown problem', error);
   });
 
   it('U-Test-10: A faulty postCode request', () => {
-    const data = {
-      value1: '1',
-      value2: '2',
-      value3: '3',
-      value4: '4',
-      value5: '5',
-      value6: '6',
-    };
-
-    service.postCode(data).subscribe({
+    spyOnProperty(envService, 'apiUrl', 'get').and.returnValue(api);
+    service.postCode(TestSecurityCode).subscribe({
       error: error => {
-        expect(error).toBeTruthy();
-        expect(error.message).not.toEqual('');
+        expect(error)
+          .withContext('Error object should be present')
+          .toBeTruthy();
+        expect(error.message)
+          .withContext('Erros object should have a message')
+          .not.toEqual('');
       },
     });
-
-    const req = httpTestingController.expectOne(requestPaths.code);
+    // @ts-expect-error Getting the relativ path
+    const path = api + service.CODE_PATH;
+    const req = httpTestingController.expectOne(path);
     const error = new HttpErrorResponse({ status: 500 });
-    expect(req.request.method).toBe('PUT');
+    expect(req.request.method)
+      .withContext('PUT request should be executed')
+      .toBe('PUT');
     req.flush('Server error', error);
   });
 
   it('U-Test-11: A faulty logout request', () => {
+    spyOnProperty(envService, 'apiUrl', 'get').and.returnValue(api);
     service.deleteLogin().subscribe({
       error: error => {
-        expect(error).toBeTruthy();
-        expect(error.message).not.toEqual('');
+        expect(error)
+          .withContext('Error object should be present')
+          .toBeTruthy();
+        expect(error.message)
+          .withContext('Erros object should have a message')
+          .not.toEqual('');
       },
     });
-
-    const req = httpTestingController.expectOne(requestPaths.login);
+    // @ts-expect-error Getting the relativ path
+    const path = api + service.LOGIN_PATH;
+    const req = httpTestingController.expectOne(path);
     const error = new HttpErrorResponse({ status: 500 });
-    expect(req.request.method).toBe('DELETE');
+    expect(req.request.method)
+      .withContext('DELETE request should be executed')
+      .toBe('DELETE');
     req.flush('Server error', error);
   });
 });

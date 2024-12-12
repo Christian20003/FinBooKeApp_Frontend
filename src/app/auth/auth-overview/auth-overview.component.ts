@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   setUser,
   moveLeftToRight,
   moveRightToLeft,
   User,
 } from 'src/app/shared/index';
-import { Router } from '@angular/router';
+import { AuthenticationService } from './authentication.service';
 import {
   loginPath,
   registerPath,
   resetPasswordPath,
 } from '../auth-routing-module';
-import { AuthenticationService } from './authentication.service';
 import { Store } from '@ngrx/store';
 import { loginData, registerData } from '../auth.interface';
 import { SecurityCode } from '../models/securityCode';

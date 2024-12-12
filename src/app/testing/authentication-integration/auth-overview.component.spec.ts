@@ -36,6 +36,7 @@ import {
 import { HttpErrorResponse, provideHttpClient } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { getTranslocoModule } from '../transloco-testing.module';
+import { EnvironmentService } from 'src/app/dev-tools/environment.service';
 
 describe('AuthOverviewComponent', () => {
   let component: AuthOverviewComponent;
@@ -43,6 +44,9 @@ describe('AuthOverviewComponent', () => {
   let router: Router;
   let store: Store;
   let httpTestingController: HttpTestingController;
+  let envService: EnvironmentService;
+  let authService: AuthenticationService;
+  const api = 'http://testing';
   const user = {
     id: 1,
     name: 'Max',
@@ -52,11 +56,6 @@ describe('AuthOverviewComponent', () => {
       token: '3435234',
       expire: 44,
     },
-  };
-  const requestPaths = {
-    login: 'https://backend/login',
-    register: 'https://backend/register',
-    code: 'https://backend/login/code',
   };
 
   beforeEach(() => {
@@ -81,6 +80,7 @@ describe('AuthOverviewComponent', () => {
       ],
       providers: [
         AuthenticationService,
+        EnvironmentService,
         provideHttpClient(),
         provideHttpClientTesting(),
       ],
@@ -89,8 +89,10 @@ describe('AuthOverviewComponent', () => {
     component = fixture.componentInstance;
     store = TestBed.inject(Store);
     router = TestBed.inject(Router);
+    envService = TestBed.inject(EnvironmentService);
+    authService = TestBed.inject(AuthenticationService);
     httpTestingController = TestBed.inject(HttpTestingController);
-
+    spyOnProperty(envService, 'apiUrl', 'get').and.returnValue(api);
     fixture.detectChanges();
   });
 
@@ -129,7 +131,9 @@ describe('AuthOverviewComponent', () => {
     fixture.detectChanges();
 
     // Define the response of the HTTP request
-    const req = httpTestingController.expectOne(requestPaths.login);
+    // @ts-expect-error Getting the relativ path
+    const path = api + authService.LOGIN_PATH;
+    const req = httpTestingController.expectOne(path);
     user.email = 'test@doener.com';
     req.flush(user);
 
@@ -179,8 +183,10 @@ describe('AuthOverviewComponent', () => {
     submitEmail.click();
 
     // Define HTTP request
+    // @ts-expect-error Getting the relativ path
+    const path = api + authService.CODE_PATH;
     const postEmailReq = httpTestingController.expectOne(
-      requestPaths.code,
+      path,
       'Post email address request'
     );
     postEmailReq.flush(user.email);
@@ -203,7 +209,7 @@ describe('AuthOverviewComponent', () => {
 
     // Define HTTP request
     const postCodeReq = httpTestingController.expectOne(
-      requestPaths.code,
+      path,
       'Post security code request'
     );
     postCodeReq.flush('Success');
@@ -246,9 +252,11 @@ describe('AuthOverviewComponent', () => {
     fixture.detectChanges();
 
     // Define the response of the HTTP request
-    const req = httpTestingController.expectOne(requestPaths.login);
+    // @ts-expect-error Getting the relativ path
+    const path = api + authService.LOGIN_PATH;
+    const req = httpTestingController.expectOne(path);
     const error = new HttpErrorResponse({ status: 406 });
-    req.flush('Ivalid Credentials', error);
+    req.flush('Invalid Credentials', error);
     fixture.detectChanges();
 
     // Proof if error component shows up
@@ -293,8 +301,10 @@ describe('AuthOverviewComponent', () => {
     submitEmail.click();
 
     // Define HTTP request
+    // @ts-expect-error Getting the relativ path
+    const path = api + authService.CODE_PATH;
     const postEmailReq = httpTestingController.expectOne(
-      requestPaths.code,
+      path,
       'Post email address request'
     );
     const error = new HttpErrorResponse({ status: 404 });
@@ -343,8 +353,10 @@ describe('AuthOverviewComponent', () => {
     submitEmail.click();
 
     // Define HTTP request
+    // @ts-expect-error Getting the relativ path
+    const path = api + authService.CODE_PATH;
     const postEmailReq = httpTestingController.expectOne(
-      requestPaths.code,
+      path,
       'Post email address request'
     );
     postEmailReq.flush(user.email);
@@ -367,7 +379,7 @@ describe('AuthOverviewComponent', () => {
 
     // Define HTTP request
     const postCodeReq = httpTestingController.expectOne(
-      requestPaths.code,
+      path,
       'Post security code request'
     );
     const error = new HttpErrorResponse({ status: 500 });

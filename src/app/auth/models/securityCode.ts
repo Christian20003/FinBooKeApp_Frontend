@@ -17,3 +17,12 @@ export interface SecurityCode {
   value5: string;
   value6: string;
 }
+
+export const TestSecurityCode: SecurityCode = {
+  value1: 'A',
+  value2: '2',
+  value3: 'F',
+  value4: '9',
+  value5: 'V',
+  value6: 'E',
+};

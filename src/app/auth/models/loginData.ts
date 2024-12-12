@@ -8,3 +8,8 @@ export interface LoginData {
   email: string;
   password: string;
 }
+
+export const TestLoginData: LoginData = {
+  email: 'max-mustermann@gmail.com',
+  password: '1234',
+};
