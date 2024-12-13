@@ -1,4 +1,4 @@
-@if (isLoggedIn) {
+@if (!isAuthPath()) {
   <app-navbar></app-navbar>
 } @else {
   <!-- TODO: Delete after development -->

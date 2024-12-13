@@ -1,70 +1,73 @@
-import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
-
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Router, RouterModule } from '@angular/router';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { MockComponent } from 'ng-mocks';
+import { of, throwError } from 'rxjs';
+import { getNativeElement } from 'src/app/testing/testing-support';
+import { ToastService } from 'src/app/shared/components/toasts/toast.service';
+import { getTranslocoModule } from 'src/app/testing/transloco-testing.module';
+import { routes } from 'src/app/routing/app-routing.module';
+import {
+  LoadingComponent,
+  TestUser,
+  ToastRemoveType,
+  ToastTypes,
+  initialState,
+} from 'src/app/shared/index';
 import { AuthOverviewComponent } from './auth-overview.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MockComponent } from 'ng-mocks';
 import { AuthenticationService } from './authentication.service';
-import { authRoutes } from '../auth-routing-module';
-import { Router, RouterModule } from '@angular/router';
-import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import {
-  LoadingComponent,
-  SmallErrorMsgComponent,
-  initialState,
-} from 'src/app/shared/index';
-import { of, throwError } from 'rxjs';
 import { GetCodeComponent } from './get-code/get-code.component';
 import { SetCodeComponent } from './set-code/set-code.component';
-import { NgZone } from '@angular/core';
-import { getNativeElement } from 'src/app/testing/testing-support';
+import {
+  loginPath,
+  registerPath,
+  resetPasswordPath,
+} from '../auth-routing-module';
+import { TestLoginData } from '../models/loginData';
+import { TestRegisterData } from '../models/registerData';
+import { TestSecurityCode } from '../models/securityCode';
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 describe('AuthOverviewComponent', () => {
   let component: AuthOverviewComponent;
   let fixture: ComponentFixture<AuthOverviewComponent>;
   let router: Router;
   let mockStore: MockStore;
-  let stubService = jasmine.createSpyObj('AuthenticationService', [
-    'postLogin',
-    'postRegister',
-    'postEmail',
-    'postCode',
-  ]);
-  const user = {
-    id: 1,
-    name: 'Max',
-    imagePath: '/test',
-    email: 'test-test@test.com',
-    session: {
-      token: '3435234',
-      expire: 44,
-    },
-  };
+  let authService: any;
+  let toastService: any;
 
-  const createComponent = () => {
-    stubService = jasmine.createSpyObj('AuthenticationService', [
+  const createComponent = async () => {
+    authService = jasmine.createSpyObj('AuthenticationService', [
       'postLogin',
       'postRegister',
       'postEmail',
       'postCode',
     ]);
-    TestBed.configureTestingModule({
+    toastService = jasmine.createSpyObj('ToastService', ['addToast']);
+    await TestBed.configureTestingModule({
       declarations: [
         AuthOverviewComponent,
         MockComponent(LoginComponent),
         MockComponent(RegisterComponent),
         MockComponent(LoadingComponent),
-        MockComponent(SmallErrorMsgComponent),
         MockComponent(GetCodeComponent),
         MockComponent(SetCodeComponent),
       ],
-      imports: [BrowserAnimationsModule, RouterModule.forRoot(authRoutes)],
+      imports: [
+        BrowserAnimationsModule,
+        RouterModule.forRoot(routes),
+        getTranslocoModule(),
+      ],
       providers: [
-        { provide: AuthenticationService, useValue: stubService },
+        { provide: AuthenticationService, useValue: authService },
+        { provide: ToastService, useValue: toastService },
         provideMockStore({ initialState }),
       ],
-    });
+    }).compileComponents();
     fixture = TestBed.createComponent(AuthOverviewComponent);
     component = fixture.componentInstance;
     router = TestBed.inject(Router);
@@ -74,7 +77,7 @@ describe('AuthOverviewComponent', () => {
 
   /*-----------------------------------------------------Route testing--------------------------------------------------------*/
 
-  describe('- Route testing', () => {
+  describe('Route testing', () => {
     beforeEach(createComponent);
 
     it('U-Test-1: Clicking login button should change the route to "/login"', () => {
@@ -84,7 +87,9 @@ describe('AuthOverviewComponent', () => {
       );
       const navigateSpy = spyOn(router, 'navigate');
       button.click();
-      expect(navigateSpy).toHaveBeenCalledWith(['login']);
+      expect(navigateSpy)
+        .withContext('App should be at route /login')
+        .toHaveBeenCalledWith([loginPath]);
     });
 
     it('U-Test-2: Clicking register button should change the route to "/register"', () => {
@@ -94,115 +99,114 @@ describe('AuthOverviewComponent', () => {
       );
       const navigateSpy = spyOn(router, 'navigate');
       button.click();
-      expect(navigateSpy).toHaveBeenCalledWith(['register']);
+      expect(navigateSpy)
+        .withContext('App should be at route /register')
+        .toHaveBeenCalledWith([registerPath]);
     });
 
     it('U-Test-3: The onForgetPwd function should change the route to "/login/resetPassword"', () => {
       const navigateSpy = spyOn(router, 'navigate');
       component.onForgetPwd();
-      expect(navigateSpy).toHaveBeenCalledWith(['login', 'resetPassword']);
+      expect(navigateSpy)
+        .withContext('App should be at route /login/forgetPassword')
+        .toHaveBeenCalledWith([loginPath, resetPasswordPath]);
     });
 
-    it('U-Test-4: The isLogin function should return true if the keyword "login" is in the path', fakeAsync(() => {
-      const ngZone = new NgZone({});
-      ngZone.run(() => {
-        router.navigate(['/login']).then(() => {
-          expect(component.isLogin()).toBeTrue();
-        });
-      });
-    }));
+    it('U-Test-4: The isLogin function should return true if the keyword "login" is in the path', async () => {
+      await router.navigate([loginPath]);
+      expect(component.isLogin())
+        .withContext('isLogin function should return true')
+        .toBeTrue();
+    });
 
     it('U-Test-5: The isLogin function should return false if the keyword "login" is not in the path', () => {
-      expect(component.isLogin()).toBeFalse();
+      expect(component.isLogin())
+        .withContext('isLogin function should return false')
+        .toBeFalse();
     });
 
-    it('U-Test-6: The isCode function should return true if the keyword "resetPassword" is in the path', fakeAsync(() => {
-      const ngZone = new NgZone({});
-      ngZone.run(() => {
-        router.navigate(['/login/resetPassword']).then(() => {
-          expect(component.isCode()).toBeTrue();
-        });
-      });
-    }));
+    it('U-Test-6: The isCode function should return true if the keyword "resetPassword" is in the path', async () => {
+      await router.navigate([loginPath, resetPasswordPath]);
+      expect(component.isCode())
+        .withContext('isCode function should return true')
+        .toBeTrue();
+    });
 
     it('U-Test-7: The isCode function should return false if the keyword "resetPassword" is not in the path', () => {
-      expect(component.isCode()).toBeFalse();
+      expect(component.isCode())
+        .withContext('isCode function should return false')
+        .toBeFalse();
     });
   });
 
   /*-------------------------------------------------Component appearing------------------------------------------------------*/
 
-  describe('- Component Appearing', () => {
-    let ngZone = new NgZone({});
-
-    beforeEach(() => {
-      createComponent();
-      ngZone = new NgZone({});
-    });
+  describe('Component Appearing', () => {
+    beforeEach(createComponent);
 
     it('U-Test-8: Should create', () => {
-      expect(component).toBeTruthy();
+      expect(component)
+        .withContext('AuthOverviewComponent should exist')
+        .toBeTruthy();
     });
 
-    it('U-Test-9: Login component should appear after navigating to "/login"', fakeAsync(() => {
-      ngZone.run(() => {
-        router.navigate(['/login']).then(() => {
-          fixture.detectChanges();
-          const loginComp = getNativeElement<
-            AuthOverviewComponent,
-            LoginComponent
-          >(fixture, 'app-login');
-          expect(loginComp).toBeTruthy();
-        });
-      });
-    }));
+    it('U-Test-9: Login component should appear after navigating to "/login"', async () => {
+      await router.navigate([loginPath]);
+      fixture.detectChanges();
+      const loginComp = getNativeElement<AuthOverviewComponent, LoginComponent>(
+        fixture,
+        'app-login'
+      );
+      expect(loginComp)
+        .withContext('LoginComponent should be present')
+        .toBeTruthy();
+    });
 
-    it('U-Test-10: Register component should appear after navigating to "/register"', fakeAsync(() => {
-      ngZone.run(() => {
-        router.navigate(['/register']).then(() => {
-          fixture.detectChanges();
-          const registerComp = getNativeElement<
-            AuthOverviewComponent,
-            RegisterComponent
-          >(fixture, 'app-register');
-          expect(registerComp).toBeTruthy();
-        });
-      });
-    }));
+    it('U-Test-10: Register component should appear after navigating to "/register"', async () => {
+      await router.navigate(['/register']);
+      fixture.detectChanges();
+      const registerComp = getNativeElement<
+        AuthOverviewComponent,
+        RegisterComponent
+      >(fixture, 'app-register');
+      expect(registerComp)
+        .withContext('RegisterComponent should be present')
+        .toBeTruthy();
+    });
 
-    it('U-Test-11: GetCode component should appear after navigating to "/login/resetPassword" and empty email', fakeAsync(() => {
-      ngZone.run(() => {
-        router.navigate(['/login/resetPassword']).then(() => {
-          fixture.detectChanges();
-          const getCodeComp = getNativeElement<
-            AuthOverviewComponent,
-            GetCodeComponent
-          >(fixture, 'app-get-code');
-          expect(getCodeComp).toBeTruthy();
-        });
-      });
-    }));
+    it('U-Test-11: GetCode component should appear after navigating to "/login/resetPassword" and empty email', async () => {
+      await router.navigate(['/login/resetPassword']);
+      fixture.detectChanges();
+      const getCodeComp = getNativeElement<
+        AuthOverviewComponent,
+        GetCodeComponent
+      >(fixture, 'app-get-code');
+      expect(getCodeComp)
+        .withContext('GetCodeComponent should be present')
+        .toBeTruthy();
+    });
 
-    it('U-Test-12: SetCode component should appear after navigating to "/login/resetPassword" and not empty email', fakeAsync(() => {
+    it('U-Test-12: SetCode component should appear after navigating to "/login/resetPassword" and not empty email', async () => {
       component.email = 'max@mustermann.com';
-      ngZone.run(() => {
-        router.navigate(['/login/resetPassword']).then(() => {
-          fixture.detectChanges();
-          const setCodeComp = getNativeElement<
-            AuthOverviewComponent,
-            SetCodeComponent
-          >(fixture, 'app-set-code');
-          expect(setCodeComp).toBeTruthy();
-        });
-      });
-    }));
+      await router.navigate([loginPath, resetPasswordPath]);
+      fixture.detectChanges();
+      const setCodeComp = getNativeElement<
+        AuthOverviewComponent,
+        SetCodeComponent
+      >(fixture, 'app-set-code');
+      expect(setCodeComp)
+        .withContext('SetCodeComponent should be present')
+        .toBeTruthy();
+    });
 
     it('U-Test-13: Loading component should not be visible at default', () => {
       const loadingComp = getNativeElement<
         AuthOverviewComponent,
         LoadingComponent
       >(fixture, 'app-loading');
-      expect(loadingComp).toBeFalsy();
+      expect(loadingComp)
+        .withContext('LoadingComponent should not be present by default')
+        .toBeFalsy();
     });
 
     it('U-Test-14: Loading component should be visible when corresponding attribute is true', () => {
@@ -212,348 +216,188 @@ describe('AuthOverviewComponent', () => {
         AuthOverviewComponent,
         LoadingComponent
       >(fixture, 'app-loading');
-      expect(loadingComp).toBeTruthy();
-    });
-
-    it('U-Test-15: Small-error-message component should not be visible at default', () => {
-      const errorComp = getNativeElement<
-        AuthOverviewComponent,
-        SmallErrorMsgComponent
-      >(fixture, 'app-small-error-msg');
-      expect(errorComp).toBeFalsy();
-    });
-
-    it('U-Test-16: Small-error-message component should be visible if the string is not empty', () => {
-      component.error = 'Test';
-      fixture.detectChanges();
-      const errorComp = getNativeElement<
-        AuthOverviewComponent,
-        SmallErrorMsgComponent
-      >(fixture, 'app-small-error-msg');
-      expect(errorComp).toBeTruthy();
+      expect(loadingComp)
+        .withContext('LoadingComponent should be present')
+        .toBeTruthy();
     });
   });
 
   /*-----------------------------------------------------onSubmitLogin----------------------------------------------------------*/
 
-  describe('- onSubmitLogin', () => {
-    const loginData = {
-      email: 'test.test@test.com',
-      password: '123',
-    };
-
+  describe('onSubmitLogin', () => {
     beforeEach(createComponent);
 
-    it('U-Test-17: After calling function, the error attribute should be empty and waiting should be true', () => {
-      stubService.postLogin.and.returnValue(of());
-      component.onSubmitLogin(loginData);
+    it('U-Test-15: Calling postLogin function and waiting for the response', () => {
+      authService.postLogin.and.returnValue(of());
+      component.onSubmitLogin(TestLoginData);
       fixture.detectChanges();
-      expect(component.waiting).toBeTrue();
-      expect(component.error).toBe('');
+      expect(component.waiting)
+        .withContext('Waiting flag should be true')
+        .toBeTrue();
     });
 
-    it('U-Test-18: After calling function and getting a truthy result, the error attribute should be empty waiting should be false', () => {
-      stubService.postLogin.and.returnValue(of(user));
-      component.onSubmitLogin(loginData);
+    it('U-Test-16: Calling postLogin function and getting a success result', () => {
+      const spy = spyOn(mockStore, 'dispatch');
+      authService.postLogin.and.returnValue(of(TestUser));
+      component.onSubmitLogin(TestLoginData);
       fixture.detectChanges();
-      expect(component.waiting).toBeFalse();
-      expect(component.error).toBe('');
+      expect(component.waiting)
+        .withContext('Waiting flag should be false')
+        .toBeFalse();
+      expect(spy)
+        .withContext('User object should be transmitted to store')
+        .toHaveBeenCalled();
     });
 
-    it('U-Test-19: After calling function and getting an error, waiting should be false and error should have specific message', () => {
-      stubService.postLogin.and.returnValue(
+    it('U-Test-17: Calling postLogin function and getting an error', () => {
+      const errorMsg = 'Error occurred';
+      authService.postLogin.and.returnValue(
         throwError(() => {
-          return new Error('Es ist ein unerwarteter Fehler eingetreten.');
+          return new Error(errorMsg);
         })
       );
-      component.onSubmitLogin(loginData);
+      component.onSubmitLogin(TestLoginData);
       fixture.detectChanges();
-      expect(component.waiting).toBeFalse();
-      expect(component.error).toBe(
-        'Es ist ein unerwarteter Fehler eingetreten.'
-      );
-    });
-
-    it('U-Test-20: After calling function and getting an error, SmallError component should be displayed', () => {
-      stubService.postLogin.and.returnValue(
-        throwError(() => {
-          return new Error('Es ist ein unerwarteter Fehler eingetreten.');
-        })
-      );
-      component.onSubmitLogin(loginData);
-      fixture.detectChanges();
-      const errorComp = getNativeElement<
-        AuthOverviewComponent,
-        SmallErrorMsgComponent
-      >(fixture, 'app-small-error-msg');
-      expect(errorComp).toBeTruthy();
-    });
-
-    it('U-Test-21: After calling function with an successfull http request, the dispatch function of the store should be called', () => {
-      spyOn(mockStore, 'dispatch');
-      stubService.postLogin.and.returnValue(of(user));
-      component.onSubmitLogin(loginData);
-      fixture.detectChanges();
-      expect(mockStore.dispatch).toHaveBeenCalled();
+      expect(component.waiting)
+        .withContext('Waiting flag should be false')
+        .toBeFalse();
+      expect(toastService.addToast)
+        .withContext('Error-Toast should be created')
+        .toHaveBeenCalledWith(errorMsg, ToastTypes.ERROR, ToastRemoveType.NONE);
     });
   });
 
   /*----------------------------------------------------onSubmitRegister--------------------------------------------------------*/
 
-  describe('- onSubmitRegister', () => {
-    const registerData = {
-      email: 'test.test@test.com',
-      name: 'dummy',
-      password: '123',
-    };
-
+  describe('onSubmitRegister', () => {
     beforeEach(createComponent);
 
-    it('U-Test-22: After calling function, the error attribute should be empty and waiting should be true', () => {
-      stubService.postRegister.and.returnValue(of());
-      component.onSubmitRegister(registerData);
+    it('U-Test-18: Calling postRegister function and waiting for a response', () => {
+      authService.postRegister.and.returnValue(of());
+      component.onSubmitRegister(TestRegisterData);
       fixture.detectChanges();
-      expect(component.waiting).toBeTrue();
-      expect(component.error).toBe('');
+      expect(component.waiting)
+        .withContext('Waiting flag should be true')
+        .toBeTrue();
     });
 
-    it('U-Test-23: After calling function and getting a truthy result, the error attribute should be empty waiting should be false', () => {
-      stubService.postRegister.and.returnValue(of(user));
-      component.onSubmitRegister(registerData);
+    it('U-Test-19: Calling postResgister function and getting a success result', () => {
+      const spy = spyOn(mockStore, 'dispatch');
+      authService.postRegister.and.returnValue(of(TestUser));
+      component.onSubmitRegister(TestRegisterData);
       fixture.detectChanges();
-      expect(component.waiting).toBeFalse();
-      expect(component.error).toBe('');
+      expect(component.waiting)
+        .withContext('Waiting flag should be false')
+        .toBeFalse();
+      expect(spy)
+        .withContext('User object should be transmitted to the store')
+        .toHaveBeenCalled();
     });
 
-    it('U-Test-24: After calling function and getting an error, waiting should be false and error should have specific message', () => {
-      stubService.postRegister.and.returnValue(
+    it('U-Test-20: Calling postRegister function and getting an error', () => {
+      const errorMsg = 'Error occurred';
+      authService.postRegister.and.returnValue(
         throwError(() => {
-          return new Error('Es ist ein unerwarteter Fehler eingetreten.');
+          return new Error(errorMsg);
         })
       );
-      component.onSubmitRegister(registerData);
+      component.onSubmitRegister(TestRegisterData);
       fixture.detectChanges();
-      expect(component.waiting).toBeFalse();
-      expect(component.error).toBe(
-        'Es ist ein unerwarteter Fehler eingetreten.'
-      );
-    });
-
-    it('U-Test-25: After calling function and getting an error, SmallError component should be displayed', () => {
-      stubService.postRegister.and.returnValue(
-        throwError(() => {
-          return new Error('Es ist ein unerwarteter Fehler eingetreten.');
-        })
-      );
-      component.onSubmitRegister(registerData);
-      fixture.detectChanges();
-      const errorComp = getNativeElement<
-        AuthOverviewComponent,
-        SmallErrorMsgComponent
-      >(fixture, 'app-small-error-msg');
-      expect(errorComp).toBeTruthy();
-    });
-
-    it('U-Test-26: After calling function with an successfull http request, the dispatch function of the store should be called', () => {
-      spyOn(mockStore, 'dispatch');
-      stubService.postRegister.and.returnValue(of(user));
-      component.onSubmitRegister(registerData);
-      fixture.detectChanges();
-      expect(mockStore.dispatch).toHaveBeenCalled();
-    });
-  });
-
-  /*----------------------------------------------------onSubmitRegister--------------------------------------------------------*/
-
-  describe('- onSubmitRegister', () => {
-    const registerData = {
-      email: 'test.test@test.com',
-      name: 'dummy',
-      password: '123',
-    };
-
-    beforeEach(createComponent);
-
-    it('U-Test-27: After calling function, the error attribute should be empty and waiting should be true', () => {
-      stubService.postRegister.and.returnValue(of());
-      component.onSubmitRegister(registerData);
-      fixture.detectChanges();
-      expect(component.waiting).toBeTrue();
-      expect(component.error).toBe('');
-    });
-
-    it('U-Test-28: After calling function and getting a truthy result, the error attribute should be empty waiting should be false', () => {
-      stubService.postRegister.and.returnValue(of(user));
-      component.onSubmitRegister(registerData);
-      fixture.detectChanges();
-      expect(component.waiting).toBeFalse();
-      expect(component.error).toBe('');
-    });
-
-    it('U-Test-29: After calling function and getting an error, waiting should be false and error should have specific message', () => {
-      stubService.postRegister.and.returnValue(
-        throwError(() => {
-          return new Error('Es ist ein unerwarteter Fehler eingetreten.');
-        })
-      );
-      component.onSubmitRegister(registerData);
-      fixture.detectChanges();
-      expect(component.waiting).toBeFalse();
-      expect(component.error).toBe(
-        'Es ist ein unerwarteter Fehler eingetreten.'
-      );
-    });
-
-    it('U-Test-30: After calling function and getting an error, SmallError component should be displayed', () => {
-      stubService.postRegister.and.returnValue(
-        throwError(() => {
-          return new Error('Es ist ein unerwarteter Fehler eingetreten.');
-        })
-      );
-      component.onSubmitRegister(registerData);
-      fixture.detectChanges();
-      const errorComp = getNativeElement<
-        AuthOverviewComponent,
-        SmallErrorMsgComponent
-      >(fixture, 'app-small-error-msg');
-      expect(errorComp).toBeTruthy();
-    });
-
-    it('U-Test-31: After calling function with an successfull http request, the dispatch function of the store should be called', () => {
-      spyOn(mockStore, 'dispatch');
-      stubService.postRegister.and.returnValue(of(user));
-      component.onSubmitRegister(registerData);
-      fixture.detectChanges();
-      expect(mockStore.dispatch).toHaveBeenCalled();
+      expect(component.waiting)
+        .withContext('Waiting flag should be false')
+        .toBeFalse();
+      expect(toastService.addToast)
+        .withContext('Error-Toast should be created')
+        .toHaveBeenCalledWith(errorMsg, ToastTypes.ERROR, ToastRemoveType.NONE);
     });
   });
 
   /*---------------------------------------------------------onSetCode------------------------------------------------------------*/
 
-  describe('- onSetCode', () => {
-    const securityCode = {
-      value1: '1',
-      value2: '1',
-      value3: '1',
-      value4: '1',
-      value5: '1',
-      value6: '1',
-    };
-
+  describe('onSetCode', () => {
     beforeEach(createComponent);
 
-    it('U-Test-32: After calling function, the error attribute should be empty and waiting should be true', () => {
-      stubService.postCode.and.returnValue(of());
-      component.onSetCode(securityCode);
+    it('U-Test-21: Calling postCode function and waiting for the response', () => {
+      authService.postCode.and.returnValue(of());
+      component.onSetCode(TestSecurityCode);
       fixture.detectChanges();
-      expect(component.waiting).toBeTrue();
-      expect(component.error).toBe('');
+      expect(component.waiting)
+        .withContext('Waiting flag should be true')
+        .toBeTrue();
     });
 
-    it('U-Test-33: After calling function and getting a truthy result, the error attribute should be empty waiting should be false', () => {
-      stubService.postCode.and.returnValue(of('Success'));
-      component.onSetCode(securityCode);
-      fixture.detectChanges();
-      expect(component.waiting).toBeFalse();
-      expect(component.error).toBe('');
-    });
-
-    it('U-Test-34: After calling function and getting an error, waiting should be false and error should have specific message', () => {
-      stubService.postCode.and.returnValue(
-        throwError(() => {
-          return new Error('Es ist ein unerwarteter Fehler eingetreten.');
-        })
-      );
-      component.onSetCode(securityCode);
-      fixture.detectChanges();
-      expect(component.waiting).toBeFalse();
-      expect(component.error).toBe(
-        'Es ist ein unerwarteter Fehler eingetreten.'
-      );
-    });
-
-    it('U-Test-35: After calling function and getting an error, SmallError component should be displayed', () => {
-      stubService.postCode.and.returnValue(
-        throwError(() => {
-          return new Error('Es ist ein unerwarteter Fehler eingetreten.');
-        })
-      );
-      component.onSetCode(securityCode);
-      fixture.detectChanges();
-      const errorComp = getNativeElement<
-        AuthOverviewComponent,
-        SmallErrorMsgComponent
-      >(fixture, 'app-small-error-msg');
-      expect(errorComp).toBeTruthy();
-    });
-
-    it('U-Test-36: After calling function with an successfull http request, a navigation to loginPath should appear', () => {
+    it('U-Test-22: Calling postCode function and getting a success result', () => {
       const navigateSpy = spyOn(router, 'navigate');
-      stubService.postCode.and.returnValue(of('Success'));
-      component.onSetCode(securityCode);
+      authService.postCode.and.returnValue(of('Success'));
+      component.onSetCode(TestSecurityCode);
       fixture.detectChanges();
-      expect(navigateSpy).toHaveBeenCalledWith(['login']);
+      expect(component.waiting)
+        .withContext('Waiting flag should be false')
+        .toBeFalse();
+      expect(navigateSpy)
+        .withContext('The route should be changed to /login')
+        .toHaveBeenCalledWith([loginPath]);
+    });
+
+    it('U-Test-23: Calling postCode function and getting an error', () => {
+      const errorMsg = 'Error occurred';
+      authService.postCode.and.returnValue(
+        throwError(() => {
+          return new Error(errorMsg);
+        })
+      );
+      component.onSetCode(TestSecurityCode);
+      fixture.detectChanges();
+      expect(component.waiting)
+        .withContext('Waiting flag should be false')
+        .toBeFalse();
+      expect(toastService.addToast)
+        .withContext('Error-Toast should be created')
+        .toHaveBeenCalledWith(errorMsg, ToastTypes.ERROR, ToastRemoveType.NONE);
     });
   });
 
   /*---------------------------------------------------------onSetEmail-----------------------------------------------------------*/
 
-  describe('- onSetEmail', () => {
-    const email = 'max@mustermann.com';
-
+  describe('onSetEmail', () => {
     beforeEach(createComponent);
 
-    it('U-Test-37: After calling function, the error attribute should be empty and waiting should be true', () => {
-      stubService.postEmail.and.returnValue(of());
-      component.onSetEmail(email);
+    it('U-Test-24: Calling postEmail function and waiting for a response', () => {
+      authService.postEmail.and.returnValue(of());
+      component.onSetEmail(TestUser.email);
       fixture.detectChanges();
-      expect(component.waiting).toBeTrue();
-      expect(component.error).toBe('');
+      expect(component.waiting)
+        .withContext('Waiting flag should be true')
+        .toBeTrue();
     });
 
-    it('U-Test-38: After calling function and getting a truthy result, the error attribute should be empty waiting should be false', () => {
-      stubService.postEmail.and.returnValue(of(email));
-      component.onSetEmail(email);
+    it('U-Test-25: Calling postEmail function and getting a success result', () => {
+      authService.postEmail.and.returnValue(of(TestUser.email));
+      component.onSetEmail(TestUser.email);
       fixture.detectChanges();
-      expect(component.waiting).toBeFalse();
-      expect(component.error).toBe('');
+      expect(component.waiting)
+        .withContext('Waiting flag should be false')
+        .toBeFalse();
+      expect(component.email)
+        .withContext('Email value should be the one from the request')
+        .toBe(TestUser.email);
     });
 
-    it('U-Test-39: After calling function and getting an error, waiting should be false and error should have specific message', () => {
-      stubService.postEmail.and.returnValue(
+    it('U-Test-26: After calling function and getting an error, waiting should be false and error should have specific message', () => {
+      const errorMsg = 'Error occurred';
+      authService.postEmail.and.returnValue(
         throwError(() => {
-          return new Error('Es ist ein unerwarteter Fehler eingetreten.');
+          return new Error(errorMsg);
         })
       );
-      component.onSetEmail(email);
+      component.onSetEmail(TestUser.email);
       fixture.detectChanges();
-      expect(component.waiting).toBeFalse();
-      expect(component.error).toBe(
-        'Es ist ein unerwarteter Fehler eingetreten.'
-      );
-    });
-
-    it('U-Test-40: After calling function and getting an error, SmallError component should be displayed', () => {
-      stubService.postEmail.and.returnValue(
-        throwError(() => {
-          return new Error('Es ist ein unerwarteter Fehler eingetreten.');
-        })
-      );
-      component.onSetEmail(email);
-      fixture.detectChanges();
-      const errorComp = getNativeElement<
-        AuthOverviewComponent,
-        SmallErrorMsgComponent
-      >(fixture, 'app-small-error-msg');
-      expect(errorComp).toBeTruthy();
-    });
-
-    it('U-Test-41: After calling function with an successfull http request, a navigation to loginPath should appear', () => {
-      stubService.postEmail.and.returnValue(of(email));
-      component.onSetEmail(email);
-      fixture.detectChanges();
-      expect(component.email).toBeTruthy();
-      expect(component.email).toBe(email);
+      expect(component.waiting)
+        .withContext('Waiting flag should be false')
+        .toBeFalse();
+      expect(toastService.addToast)
+        .withContext('Error-Toast should be created')
+        .toHaveBeenCalledWith(errorMsg, ToastTypes.ERROR, ToastRemoveType.NONE);
     });
   });
 });

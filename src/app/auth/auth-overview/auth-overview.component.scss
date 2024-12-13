@@ -1,100 +1,76 @@
-@use '../../shared/styles/container.scss';
-@use '../../shared/styles/text.scss';
-@use '../../shared/styles/colors.scss';
+@use "../../shared/styles/container-mixin/box" as box;
+@use "../../shared/styles/others/font" as font;
 
-
-$desktop-screen-width: 26rem;
-
-/* Defines the grid-template-columns depending which item is selected. Makes the sliding animation possible */
-@mixin grid-column-template($left: false){
-    $grid-item-size: 49%;
-    @if $left{
-        grid-template-columns: $grid-item-size auto; 
-    } @else {
-        grid-template-columns: auto $grid-item-size; 
-    }
-}
-
-#title{
-    @include text.header();
+#title {
     color: var(--highlight-color-container-primary);
+    @include font.title-font($align: center);
 }
 
-.container{
-    @include container.card-container();
-    background-color: var(--background-color-container-secondary);
-
+.container {
     display: grid;
+    grid-row: 2;
+    grid-column: 1;
     width: fit-content;
     margin: 0 auto;
+    @include box.box-container();
 
-    .grid-container{
+    .grid-container {
         display: grid;
         grid-row: 1;
         grid-column: 1;
-        transition: all 0.5s;
-    }
+        transition: grid-template-columns 0.5s;
 
-    #login, #register{
-        @include text.description();
-        padding: 1rem 2rem;
-        outline: none;
-        border: none;
-        cursor: pointer;
-        border-radius: container.$default-border-radius - 0.1rem;
-        background-color: inherit;
-
-        &.inactive{
-            background-color: colors.$very-dark-gray;
-            color: colors.$moderate-red;
-            transition: all 0.5s;
+        @media (min-width: 26rem) {
+            grid-auto-flow: column;
+            &:has(#login.inactive) {
+                grid-template-columns: 50% 50%;
+                overflow: hidden;
+            }
+            &:has(#register.inactive) {
+                grid-template-columns: 50% 50%;
+            }
+            &:has(#register.inactive:is(:hover, :focus)) {
+                grid-template-columns: 0% 100%;
+            }
+            &:has(#login.inactive:is(:hover, :focus)) {
+                grid-template-columns: 100% 0%;
+            }
         }
 
-        &.inactive:is(:hover, :focus){
-            background-color: colors.$moderate-red;
-            color: colors.$white;
-        }
-    }
-
-    .overlap-grid-container{
-        display: grid;
-        grid-row: 2;
-        grid-column: 1;
-
-        .auth-content{
+        #login,
+        #register {
             padding: 1rem 2rem;
-            grid-column-start: 1;
-            grid-row-start: 1;
+            outline: none;
+            border: none;
+            cursor: pointer;
+            border-radius: 0.3rem;
+            background-color: inherit;
+            color: var(--text-color-primary);
+            white-space: nowrap;
+            @include font.description-font($align: center);
+
+            &.inactive {
+                background-color: var(--background-color-container-complement);
+                color: var(--highlight-color-container-primary);
+                transition: all 0.5s;
+            }
+
+            &.inactive:is(:hover, :focus) {
+                background-color: var(--highlight-color-container-primary);
+                color: var(--text-color-primary);
+            }
         }
+    }
+
+    .overlap-grid-container {
+        display: grid;
+        grid-column: 1;
+        grid-row: 2;
+        padding: 1rem 2rem;
     }
 
     #loading {
         grid-row: 1 / 3;
         grid-column: 1;
     }
-
-    #error-msg{
-        position: absolute;
-        max-width: 20rem;
-    }
 }
-
-/* Defines the template according to the class assignment and the hover-/focus-effect */
-@media (min-width: $desktop-screen-width) {
-    .grid-container{
-        grid-auto-flow: column;
-        &:has(#login.inactive){
-            @include grid-column-template(false);
-        }
-        &:has(#register.inactive){
-            @include grid-column-template(true);
-        }
-        &:has(#register.inactive:is(:hover, :focus)){
-            grid-template-columns: 0% auto;
-        }
-        &:has(#login.inactive:is(:hover, :focus)){
-            grid-template-columns: auto 0%;
-            overflow: hidden;
-        }
-    }
-} 

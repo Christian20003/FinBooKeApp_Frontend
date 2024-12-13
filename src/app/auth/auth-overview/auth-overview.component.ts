@@ -1,20 +1,24 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import {
   setUser,
   moveLeftToRight,
   moveRightToLeft,
   User,
+  ToastTypes,
+  ToastRemoveType,
 } from 'src/app/shared/index';
+import { ToastService } from 'src/app/shared/components/toasts/toast.service';
 import { AuthenticationService } from './authentication.service';
 import {
   loginPath,
   registerPath,
   resetPasswordPath,
 } from '../auth-routing-module';
-import { Store } from '@ngrx/store';
-import { loginData, registerData } from '../auth.interface';
 import { SecurityCode } from '../models/securityCode';
+import { LoginData } from '../models/loginData';
+import { RegisterData } from '../models/registerData';
 
 @Component({
   selector: 'app-auth-overview',
@@ -24,25 +28,16 @@ import { SecurityCode } from '../models/securityCode';
   standalone: false,
 })
 export class AuthOverviewComponent {
-  // TODO: Loading Screen
   // Boolean which describes if the loading screen should be displayed
   waiting = false;
-  // Saves some potencial error message occurring using the authentication service
-  error = '';
   // Saves the potencial email address entered by the user during password reset
   email = '';
-
-  // All text values which are used in this component.
-  text = {
-    loginButton: 'Anmelden',
-    registerButton: 'Registrieren',
-    title: 'Willkommen bei der FinBoKeApp',
-  };
 
   constructor(
     private router: Router,
     private store: Store,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private toastService: ToastService
   ) {}
 
   /**
@@ -73,7 +68,6 @@ export class AuthOverviewComponent {
    * @param email   - The email address to which the security code should be sent
    */
   onSetEmail(email: string) {
-    this.error = '';
     this.waiting = true;
     this.authService.postEmail(email).subscribe({
       next: response => {
@@ -82,7 +76,11 @@ export class AuthOverviewComponent {
       },
       error: error => {
         this.waiting = false;
-        this.error = error.message;
+        this.toastService.addToast(
+          error.message,
+          ToastTypes.ERROR,
+          ToastRemoveType.NONE
+        );
       },
     });
   }
@@ -94,7 +92,6 @@ export class AuthOverviewComponent {
    * @param code   - The security code which should be sent
    */
   onSetCode(code: SecurityCode) {
-    this.error = '';
     this.waiting = true;
     this.authService.postCode(code).subscribe({
       next: () => {
@@ -103,7 +100,11 @@ export class AuthOverviewComponent {
       },
       error: error => {
         this.waiting = false;
-        this.error = error.message;
+        this.toastService.addToast(
+          error.message,
+          ToastTypes.ERROR,
+          ToastRemoveType.NONE
+        );
       },
     });
   }
@@ -114,18 +115,22 @@ export class AuthOverviewComponent {
    *
    * @param data    - The login data which should be sent
    */
-  onSubmitLogin(data: loginData) {
-    this.error = '';
+  onSubmitLogin(data: LoginData) {
     this.waiting = true;
     this.authService.postLogin(data).subscribe({
       next: response => {
         this.waiting = false;
         this.store.dispatch(setUser({ user: response as User }));
-        // TODO: Go to the dashboard path
+        // Do not use dashboardPath, otherwise Tests will not execute
+        this.router.navigate(['dashboard']);
       },
       error: error => {
         this.waiting = false;
-        this.error = error.message;
+        this.toastService.addToast(
+          error.message,
+          ToastTypes.ERROR,
+          ToastRemoveType.NONE
+        );
       },
     });
   }
@@ -136,18 +141,22 @@ export class AuthOverviewComponent {
    *
    * @param data    - The login data which should be sent
    */
-  onSubmitRegister(data: registerData) {
-    this.error = '';
+  onSubmitRegister(data: RegisterData) {
     this.waiting = true;
     this.authService.postRegister(data).subscribe({
       next: response => {
         this.waiting = false;
         this.store.dispatch(setUser({ user: response as User }));
-        // TODO: Go to the dashboard path
+        // Do not use dashboardPath, otherwise Tests will not execute
+        this.router.navigate(['dashboard']);
       },
       error: error => {
         this.waiting = false;
-        this.error = error.message;
+        this.toastService.addToast(
+          error.message,
+          ToastTypes.ERROR,
+          ToastRemoveType.NONE
+        );
       },
     });
   }

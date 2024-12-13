@@ -4,6 +4,7 @@
 @mixin dark-theme-color-vars() {
     --background-color-container-primary: #{mat.get-theme-color(app-theme.$application-theme, neutral, 6)};
     --background-color-container-secondary: #{mat.get-theme-color(app-theme.$application-theme, neutral, 12)};
+    --background-color-container-complement: #{mat.get-theme-color(app-theme.$application-theme, neutral, 95)};
 
     --text-color-primary: #{mat.get-theme-color(app-theme.$application-theme, neutral, 95)};
 

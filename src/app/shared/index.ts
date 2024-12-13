@@ -1,5 +1,4 @@
 export { InvalidInputComponent } from './components/invalid-input/invalid-input.component';
-export { SmallErrorMsgComponent } from './components/small-error-msg/small-error-msg.component';
 export { LoadingComponent } from './components/loading/loading.component';
 export { User, TestUser } from './models/User';
 export { Session, TestSession } from './models/Session';

@@ -1,55 +1,45 @@
-<h1 id="title" *transloco="let t">{{ t('auth.title') }}</h1>
-<div class="container">
+<h1 id="title" *transloco="let text">{{ text('auth.title') }}</h1>
+<div class="container" *transloco="let text">
   <div class="grid-container">
     <!-- Button to access the login screen -->
     <button id="login" [ngClass]="{ inactive: !isLogin() }" (click)="onLogin()">
-      {{ text.loginButton }}
+      {{ text('auth.actions.login') }}
     </button>
     <!-- Button to access the register screen -->
     <button
       id="register"
       [ngClass]="{ inactive: isLogin() }"
       (click)="onRegister()">
-      {{ text.registerButton }}
+      {{ text('auth.actions.register') }}
     </button>
   </div>
   <div class="overlap-grid-container">
-    <!-- Register screen -->
-    @if (!isLogin()) {
-      <app-register [@moveLeftToRight] class="auth-content"></app-register>
-      <!-- Login screen -->
-    } @else if (isLogin() && !isCode()) {
-      <app-login
-        [@moveLeftToRight]
-        class="auth-content"
-        (login)="onSubmitLogin($event)"
-        (forgetPwd)="onForgetPwd()"></app-login>
+    @if (isLogin()) {
       <!-- Set email for reset password screen -->
-    } @else if (isCode() && !email) {
-      <app-get-code
-        [@moveLeftToRight]
-        class="auth-content"
-        [emailValue]="email"
-        (setEmail)="onSetEmail($event)"></app-get-code>
-      <!-- Set security code screen -->
+      @if (isCode() && email) {
+        <app-set-code
+          [@moveLeftToRight]
+          (sendCode)="onSetCode($event)"></app-set-code>
+        <!-- Set security code screen -->
+      } @else if (isCode() && !email) {
+        <app-get-code
+          [@moveLeftToRight]
+          [emailValue]="email"
+          (setEmail)="onSetEmail($event)"></app-get-code>
+        <!-- Login screen -->
+      } @else {
+        <app-login
+          [@moveLeftToRight]
+          (login)="onSubmitLogin($event)"
+          (forgetPwd)="onForgetPwd()"></app-login>
+      }
+      <!-- Register screen -->
     } @else {
-      <app-set-code
-        [@moveLeftToRight]
-        (sendCode)="onSetCode($event)"
-        class="auth-content"></app-set-code>
+      <app-register [@moveLeftToRight]></app-register>
     }
   </div>
   <!-- Loading screen -->
   @if (waiting) {
-    <app-loading
-      id="loading"
-      message="Hello my friends i am now here"></app-loading>
-  }
-  <!-- Error block -->
-  @if (error) {
-    <app-small-error-msg
-      id="error-msg"
-      [@moveLeftToRight]
-      [message]="error"></app-small-error-msg>
+    <app-loading id="loading" [message]="text('auth.loading')"></app-loading>
   }
 </div>

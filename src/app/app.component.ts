@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { selectUser, setUser } from './shared';
 import { ChildrenOutletContexts, Router } from '@angular/router';
 import { TranslocoService } from '@ngneat/transloco';
+import { loginPath, registerPath } from './auth/auth-routing-module';
 
 @Component({
   selector: 'app-root',
@@ -11,8 +12,6 @@ import { TranslocoService } from '@ngneat/transloco';
   standalone: false,
 })
 export class AppComponent {
-  isLoggedIn: boolean = false;
-
   constructor(
     private store: Store,
     private router: Router,
@@ -23,12 +22,17 @@ export class AppComponent {
   ) {
     const data = this.store.select(selectUser);
     data.subscribe(state => {
-      if (state.id > 0) {
-        this.isLoggedIn = true;
-      } else {
+      if (state.id <= 0) {
         this.router.navigate(['login']);
       }
     });
+  }
+
+  isAuthPath(): boolean {
+    return (
+      this.router.url.includes(loginPath) ||
+      this.router.url.includes(registerPath)
+    );
   }
 
   getRouteAnimationData() {

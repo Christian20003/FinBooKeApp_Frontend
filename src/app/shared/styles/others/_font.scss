@@ -3,6 +3,16 @@
 
 $desktop-screen-width: 44rem;
 
+@mixin title-font($align: start, $text-decoration: none) {
+    text-align: $align;
+    text-decoration: $text-decoration;
+    font-size: mat.get-theme-typography(theme.$application-theme, headline-medium, font-size);
+
+    @media (min-width: $desktop-screen-width) {
+        font-size: mat.get-theme-typography(theme.$application-theme, headline-large, font-size);
+    }
+}
+
 @mixin header-font($align: start, $text-decoration: none) {
     text-align: $align;
     text-decoration: $text-decoration;
