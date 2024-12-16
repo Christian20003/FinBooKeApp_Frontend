@@ -58,11 +58,11 @@ describe('AuthOverviewComponent', () => {
         AuthOverviewComponent,
         LoginComponent,
         RegisterComponent,
-        LoadingComponent,
         SetCodeComponent,
         GetCodeComponent,
       ],
       imports: [
+        LoadingComponent,
         BrowserAnimationsModule,
         RouterModule.forRoot(routes),
         StoreModule.forRoot({ user: userReducer }, {}),

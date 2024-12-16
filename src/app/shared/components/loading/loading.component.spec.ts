@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { LoadingComponent } from './loading.component';
-import { getNativeElement } from 'src/app/testing/testing-support';
+import { provideHttpClient } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { getNativeElement } from 'src/app/testing/testing-support';
+import { getTranslocoModule } from 'src/app/testing/transloco-testing.module';
+import { LoadingComponent } from './loading.component';
 
 describe('LoadingComponent - Unit-Tests', () => {
   let component: LoadingComponent;
@@ -10,8 +11,12 @@ describe('LoadingComponent - Unit-Tests', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [LoadingComponent],
-      imports: [BrowserAnimationsModule],
+      imports: [
+        LoadingComponent,
+        BrowserAnimationsModule,
+        getTranslocoModule(),
+      ],
+      providers: [provideHttpClient()],
     });
     fixture = TestBed.createComponent(LoadingComponent);
     component = fixture.componentInstance;
@@ -19,7 +24,7 @@ describe('LoadingComponent - Unit-Tests', () => {
   });
 
   it('U-Test-1: Should create', () => {
-    expect(component).toBeTruthy();
+    expect(component).withContext('LoadingComponent should exist').toBeTruthy();
   });
 
   it('U-Test-2: Message property should be printed', () => {
@@ -30,6 +35,8 @@ describe('LoadingComponent - Unit-Tests', () => {
       fixture,
       '.loading-text'
     );
-    expect(element.innerText).toBe(message);
+    expect(element.innerText)
+      .withContext('Displayed should equal the value from input signal')
+      .toBe(message);
   });
 });

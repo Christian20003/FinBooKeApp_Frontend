@@ -1,8 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router, RouterModule } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { MockComponent } from 'ng-mocks';
+import { MockModule } from 'ng-mocks';
 import { of, throwError } from 'rxjs';
 import { getNativeElement } from 'src/app/testing/testing-support';
 import { ToastService } from 'src/app/shared/components/toasts/toast.service';
@@ -29,6 +32,7 @@ import {
 import { TestLoginData } from '../models/loginData';
 import { TestRegisterData } from '../models/registerData';
 import { TestSecurityCode } from '../models/securityCode';
+import { AuthModule } from '../auth.module';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -49,23 +53,20 @@ describe('AuthOverviewComponent', () => {
     ]);
     toastService = jasmine.createSpyObj('ToastService', ['addToast']);
     await TestBed.configureTestingModule({
-      declarations: [
-        AuthOverviewComponent,
-        MockComponent(LoginComponent),
-        MockComponent(RegisterComponent),
-        MockComponent(LoadingComponent),
-        MockComponent(GetCodeComponent),
-        MockComponent(SetCodeComponent),
-      ],
+      declarations: [AuthOverviewComponent],
       imports: [
+        MockModule(AuthModule),
         BrowserAnimationsModule,
         RouterModule.forRoot(routes),
+        ReactiveFormsModule,
+        MatIconModule,
         getTranslocoModule(),
       ],
       providers: [
         { provide: AuthenticationService, useValue: authService },
         { provide: ToastService, useValue: toastService },
         provideMockStore({ initialState }),
+        provideHttpClient(),
       ],
     }).compileComponents();
     fixture = TestBed.createComponent(AuthOverviewComponent);

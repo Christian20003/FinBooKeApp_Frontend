@@ -6,13 +6,14 @@ import { LoginComponent } from './auth-overview/login/login.component';
 import { RegisterComponent } from './auth-overview/register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthRoutingModule } from './auth-routing-module';
-import { provideHttpClient /* withInterceptors */ } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { GetCodeComponent } from './auth-overview/get-code/get-code.component';
 import { SetCodeComponent } from './auth-overview/set-code/set-code.component';
-//import { authInterceptor } from './auth-interceptor';
+import { authInterceptor } from './auth-interceptor';
 import { SharedModule } from '../shared/components/shared.module';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslocoDirective } from '@ngneat/transloco';
+import { LoadingComponent } from '../shared';
 
 @NgModule({
   declarations: [
@@ -30,9 +31,9 @@ import { TranslocoDirective } from '@ngneat/transloco';
     SharedModule,
     MatIconModule,
     TranslocoDirective,
+    LoadingComponent,
   ],
-  providers: [provideHttpClient()],
+  providers: [provideHttpClient(withInterceptors([authInterceptor]))],
   exports: [AuthOverviewComponent],
 })
 export class AuthModule {}
-// withInterceptors([authInterceptor])

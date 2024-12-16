@@ -60,13 +60,13 @@ export const moveLeftToRight = trigger('moveLeftToRight', [
     }),
   ]),
   transition(':leave', [
+    style({ position: 'absolute' }),
     useAnimation(slideOutX, {
       params: {
         length: '50px',
         time: '0.5s',
       },
     }),
-    animate('0.5s', style({ height: '0px' })),
   ]),
 ]);
 
@@ -85,6 +85,7 @@ export const moveRightToLeft = trigger('moveRightToLeft', [
     }),
   ]),
   transition(':leave', [
+    style({ position: 'relative' }),
     useAnimation(slideOutX, {
       params: {
         length: '-50px',

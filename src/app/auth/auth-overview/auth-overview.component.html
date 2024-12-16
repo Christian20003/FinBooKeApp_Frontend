@@ -40,6 +40,8 @@
   </div>
   <!-- Loading screen -->
   @if (waiting) {
-    <app-loading id="loading" [message]="text('auth.loading')"></app-loading>
+    <app-loading
+      id="loading"
+      [message]="text('loading-screen.send')"></app-loading>
   }
 </div>

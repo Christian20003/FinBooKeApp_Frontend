@@ -20,6 +20,11 @@
             "missing": "Bitte vollständigen Code eingeben"
         }
     },
+    "loading-screen": {
+        "header": "Bitte warten...",
+        "send": "Daten werden übermittelt",
+        "read": "Daten werden angefragt"
+    },
     "http-error": {
         "invalid": "Die übergebenen Daten konnten nicht verarbeitet werden",
         "credentials": "Die angegebenen Account-Daten sind fehlerhaft",

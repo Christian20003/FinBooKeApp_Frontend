@@ -4,12 +4,14 @@ import { selectUser, setUser } from './shared';
 import { ChildrenOutletContexts, Router } from '@angular/router';
 import { TranslocoService } from '@ngneat/transloco';
 import { loginPath, registerPath } from './auth/auth-routing-module';
+import { routingAnimation } from './routing/routing-animation';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   standalone: false,
+  animations: [routingAnimation],
 })
 export class AppComponent {
   constructor(

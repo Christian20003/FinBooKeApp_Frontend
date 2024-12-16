@@ -20,6 +20,11 @@
             "missing": "Please enter the complete code"
         }
     },
+    "loading-screen": {
+        "header": "Please wait...",
+        "send": "Data is transmitted",
+        "read": "Data is requested"
+    },
     "http-error": {
         "invalid": "The submitted data could not be processed",
         "credentials": "The given account data is incorrect",

@@ -1,11 +1,9 @@
-@use '../../styles/colors.scss';
-@use '../../styles/container.scss';
-@use '../../styles/text.scss';
+@use "../../styles/container-mixin/blur" as blur;
+@use "../../styles/others/font" as font;
 
-.container{
+.container {
     display: grid;
-    height: 100%;
-    @include container.blur-container($background-color: rgb(colors.$very-dark-gray, 0.5));
+    @include blur.blur-container();
 
     .outer-circle {
         padding: 0.8rem;
@@ -13,31 +11,31 @@
         margin-bottom: 0;
         position: relative;
 
-        .inner-circle{
-            width: fit-content; 
-            background-color: colors.$moderate-red;
+        .inner-circle {
+            background-color: var(--highlight-color-container-primary);
             padding: 0.5rem;
             border-radius: 50%;
-    
-            .icon{
-                width: 2.0rem;
-                fill: colors.$white;
+
+            .icon {
+                width: 2rem;
+                height: 2rem;
+                fill: var(--background-color-container-primary);
             }
         }
 
         &::after {
-            content: '';
+            content: "";
             position: absolute;
             top: 0.22rem;
-            left: 0.12rem;
+            left: 0.1rem;
             width: 4rem;
             height: 4rem;
             border-radius: 50%;
             border: 0.2rem solid;
-            border-color: colors.$vivid-red colors.$moderate-red colors.$moderate-red colors.$moderate-red;
+            border-color: var(--border-color-complement) var(--border-color-secondary) var(--border-color-secondary)
+                var(--border-color-secondary);
             animation: spin 1.2s linear infinite;
         }
-
     }
 
     .loading-description {
@@ -45,16 +43,23 @@
         margin-top: 0.5rem;
 
         .loading-title {
-            @include text.description($color: colors.$white, $weight: bold, $align: center);
+            color: white;
+            font-weight: 900;
+            @include font.description-font($align: center);
         }
 
         .loading-text {
-            @include text.description($color: colors.$white, $align: center);
+            color: white;
+            @include font.description-font($align: center);
         }
     }
 }
 
-@keyframes spin { 
-    0% { transform: rotate(0deg);}
-    100% { transform: rotate(360deg);}
-  }
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

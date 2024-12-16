@@ -7,12 +7,14 @@
     --background-color-container-complement: #{mat.get-theme-color(app-theme.$application-theme, neutral, 95)};
 
     --text-color-primary: #{mat.get-theme-color(app-theme.$application-theme, neutral, 95)};
+    --text-color-complement: #{mat.get-theme-color(app-theme.$application-theme, neutral, 6)};
 
     --icon-color-primary: #{mat.get-theme-color(app-theme.$application-theme, neutral, 95)};
     --icon-color-warning: #{mat.get-theme-color(app-theme.$application-theme, error, 35)};
 
     --border-color-primary: #{mat.get-theme-color(app-theme.$application-theme, neutral, 95)};
     --border-color-secondary: #{mat.get-theme-color(app-theme.$application-theme, primary, 50)};
+    --border-color-complement: #{mat.get-theme-color(app-theme.$application-theme, neutral, 6)};
 
     --highlight-color-container-primary: #{mat.get-theme-color(app-theme.$application-theme, primary, 50)};
     --highlight-color-container-secondary: #{mat.get-theme-color(app-theme.$application-theme, secondary, 50)};
@@ -25,4 +27,6 @@
 
     --shadow-color-primary: #{rgba(mat.get-theme-color(app-theme.$application-theme, primary, 50), 0.35)};
     --shadow-color-highlight: #{rgba(mat.get-theme-color(app-theme.$application-theme, tertiary, 0), 0.65)};
+
+    --blur-background: #{rgba(mat.get-theme-color(app-theme.$application-theme, neutral, 35), 0.55)};
 }
