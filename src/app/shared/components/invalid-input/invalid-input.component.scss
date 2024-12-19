@@ -3,10 +3,10 @@
 
 #invalid-content-container {
     display: flex;
-    color: var(--icon-color-warning);
+    color: var(--icon-color-error);
     @include font.label-font();
 }
 
 #icon {
-    @include svg.svg-label-container($width: 1.5rem, $fill: var(--icon-color-warning), $stroke: none);
+    @include svg.svg-label-container($width: 1.5rem, $fill: var(--icon-color-error), $stroke: none);
 }

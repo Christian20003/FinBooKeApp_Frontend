@@ -1,7 +1,5 @@
-@use '../../styles/colors.scss';
-@use '../../styles/text.scss';
-
-.toasts-container, .overlap-container {
+.toasts-container,
+.overlap-container {
     left: 0;
     right: 0;
     margin: 0 auto;
@@ -9,7 +7,7 @@
 
 .toasts-container {
     position: sticky;
-    top: 4.0rem;
+    top: 4rem;
     max-width: 35rem;
     z-index: 100;
 

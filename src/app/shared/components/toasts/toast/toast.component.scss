@@ -1,17 +1,23 @@
-@use '../../../styles/colors.scss';
-@use '../../../styles/text.scss';
-@use '../../../styles/container.scss';
+@use "../../../styles/others/font" as font;
+@use "../../../styles/container-mixin/box" as box;
+@use "../../../styles/container-mixin/svg" as svg;
 
 .toast-content {
     display: flex;
     gap: 0.5rem;
     height: 100%;
-    align-items: center; 
+    align-items: center;
     position: relative;
-    @include text.description();
-    @include container.card-container();
+    color: var(--text-color-primary);
+    @include box.box-container();
+    @include font.description-font();
 
-    .success-icon, .error-icon, .warning-icon, .info-icon, .box, .close {
+    .success-icon,
+    .error-icon,
+    .warning-icon,
+    .info-icon,
+    .box,
+    .close {
         flex: 0 0 auto;
     }
 
@@ -22,40 +28,36 @@
         border-bottom-left-radius: 0.3rem;
     }
 
-    .success-icon, .error-icon, .warning-icon, .info-icon {
-        width: 2rem;
-    }
-
     .success-icon {
-        fill: colors.$success-green;
+        @include svg.svg-label-container($stroke: none, $fill: var(--icon-color-success));
     }
 
     .success-box {
-        background-color: colors.$success-green;
+        background-color: var(--icon-color-success);
     }
 
     .error-icon {
-        fill: colors.$error-red;
+        @include svg.svg-label-container($stroke: none, $fill: var(--icon-color-error));
     }
 
     .error-box {
-        background-color: colors.$error-red;
+        background-color: var(--icon-color-error);
     }
 
     .warning-icon {
-        fill: colors.$warning-yellow;
+        @include svg.svg-label-container($stroke: none, $fill: var(--icon-color-warning));
     }
 
     .warning-box {
-        background-color: colors.$warning-yellow;
+        background-color: var(--icon-color-warning);
     }
 
     .info-icon {
-        fill: colors.$info-blue;
+        @include svg.svg-label-container($stroke: var(--icon-color-info));
     }
 
     .info-box {
-        background-color: colors.$info-blue;
+        background-color: var(--icon-color-info);
     }
 
     .time-line {
@@ -82,43 +84,40 @@
         margin-right: auto;
     }
 
-    .type-icon, .close-icon {
-        width: 2rem;
-        fill: colors.$success-green;
-    }
-
     .close {
         background: none;
         color: inherit;
         border: none;
-        padding: 0;
         cursor: pointer;
-        outline: inherit;
         margin-right: 0.5rem;
 
         .close-icon {
-            width: 1.5rem;
-            stroke: colors.$black;
-            stroke-width: 0.2rem;
-            transition: 0.5s background-color;
             border-radius: 0.3rem;
+            @include svg.svg-label-container($stroke: var(--icon-color-primary));
+            margin-right: 0;
+            transition: 0.5s background-color;
         }
 
-        &:hover, &:focus {
+        &:hover,
+        &:focus {
             .close-icon {
-                background-color: colors.$light-grey;
+                background-color: var(--background-color-button-focus);
             }
         }
 
         &:active {
             .close-icon {
-                background-color: colors.$grey;
+                background-color: var(--background-color-button-active);
             }
         }
     }
 }
 
 @keyframes increase {
-    0% {width: 0}
-    100% {width: 100%}
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
 }

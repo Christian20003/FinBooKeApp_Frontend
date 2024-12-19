@@ -5,6 +5,11 @@ import {
   tick,
 } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { provideHttpClient } from '@angular/common/http';
+import {
+  HttpTestingController,
+  provideHttpClientTesting,
+} from '@angular/common/http/testing';
 import { ToastService } from 'src/app/shared/components/toasts/toast.service';
 import { ToastComponent } from 'src/app/shared/components/toasts/toast/toast.component';
 import { ToastsComponent } from 'src/app/shared/components/toasts/toasts.component';
@@ -15,15 +20,20 @@ describe('ToastsComponent - Integration Tests', () => {
   let component: ToastsComponent;
   let fixture: ComponentFixture<ToastsComponent>;
   let service: ToastService;
+  let controller: HttpTestingController;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ToastsComponent, ToastComponent],
-      imports: [BrowserAnimationsModule],
-      providers: [ToastService],
+      imports: [BrowserAnimationsModule, ToastsComponent, ToastComponent],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        ToastService,
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ToastsComponent);
+    controller = TestBed.inject(HttpTestingController);
     component = fixture.componentInstance;
     service = TestBed.inject(ToastService);
     fixture.detectChanges();
@@ -90,6 +100,9 @@ describe('ToastsComponent - Integration Tests', () => {
   it('I-Test-3: After adding a new toast, it should automatically remove itself', fakeAsync(() => {
     service.addToast(TestToast.message, TestToast.type, TestToast.autoRemove);
     fixture.detectChanges();
+    // Mocking request otherwise not working in fakeAsync
+    const req = controller.expectOne('../../../../../assets/icons/error.svg');
+    req.flush('<svg></svg>');
     tick(15000);
     fixture.detectChanges();
     const toastComponents = getComponents<ToastsComponent, ToastComponent>(

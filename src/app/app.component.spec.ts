@@ -6,6 +6,7 @@ import { StoreModule } from '@ngrx/store';
 import { userReducer } from './shared/index';
 import { SharedModule } from './shared/components/shared.module';
 import { TranslocoRootModule } from './transloco-root.module';
+import { ToastsComponent } from './shared/components/toasts/toasts.component';
 
 describe('AppComponent', () => {
   beforeEach(() =>
@@ -16,6 +17,7 @@ describe('AppComponent', () => {
         StoreModule.forRoot({ user: userReducer }, {}),
         SharedModule,
         TranslocoRootModule,
+        ToastsComponent,
       ],
       declarations: [AppComponent],
     })

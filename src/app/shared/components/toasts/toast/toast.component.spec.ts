@@ -12,6 +12,7 @@ import {
   ToastTypes,
 } from 'src/app/shared/models/Toast';
 import { getNativeElement } from 'src/app/testing/testing-support';
+import { provideHttpClient } from '@angular/common/http';
 
 describe('ToastComponent - Unit Tests', () => {
   let component: ToastComponent;
@@ -23,7 +24,8 @@ describe('ToastComponent - Unit Tests', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ToastComponent],
+      imports: [ToastComponent],
+      providers: [provideHttpClient()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ToastComponent);

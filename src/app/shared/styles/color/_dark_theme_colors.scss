@@ -10,7 +10,10 @@
     --text-color-complement: #{mat.get-theme-color(app-theme.$application-theme, neutral, 6)};
 
     --icon-color-primary: #{mat.get-theme-color(app-theme.$application-theme, neutral, 95)};
-    --icon-color-warning: #{mat.get-theme-color(app-theme.$application-theme, error, 35)};
+    --icon-color-warning: rgb(188, 139, 18);
+    --icon-color-success: rgb(0, 128, 0);
+    --icon-color-error: rgb(191, 52, 59);
+    --icon-color-info: rgb(24, 151, 192);
 
     --border-color-primary: #{mat.get-theme-color(app-theme.$application-theme, neutral, 95)};
     --border-color-secondary: #{mat.get-theme-color(app-theme.$application-theme, primary, 50)};

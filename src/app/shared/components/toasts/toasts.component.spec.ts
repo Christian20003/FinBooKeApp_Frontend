@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { provideHttpClient } from '@angular/common/http';
 import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
 import { getComponents } from 'src/app/testing/testing-support';
@@ -21,10 +22,18 @@ describe('ToastsComponent - Unit Tests', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ToastsComponent, MockComponent(ToastComponent)],
-      imports: [BrowserAnimationsModule],
-      providers: [{ provide: ToastService, useValue: mockService }],
+      imports: [ToastComponent, BrowserAnimationsModule, ToastsComponent],
+      providers: [
+        provideHttpClient(),
+        { provide: ToastService, useValue: mockService },
+      ],
     }).compileComponents();
+
+    // Currently MockComponent() not directly usable in imports field
+    TestBed.overrideComponent(ToastComponent, {
+      remove: { imports: [ToastComponent] },
+      add: { imports: [MockComponent(ToastComponent)] },
+    });
 
     fixture = TestBed.createComponent(ToastsComponent);
     component = fixture.componentInstance;

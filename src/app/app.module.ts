@@ -13,6 +13,7 @@ import { SharedModule } from './shared/components/shared.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslocoRootModule } from './transloco-root.module';
+import { ToastsComponent } from './shared/components/toasts/toasts.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,6 +27,7 @@ import { TranslocoRootModule } from './transloco-root.module';
     EffectsModule.forRoot([userEffects]),
     HttpClientModule,
     TranslocoRootModule,
+    ToastsComponent,
   ],
   providers: [provideAnimationsAsync()],
   bootstrap: [AppComponent],
