@@ -20,6 +20,14 @@
             "missing": "Bitte vollständigen Code eingeben"
         }
     },
+    "navbar": {
+        "dashboard": "Dashboard",
+        "finances": "Finanzen",
+        "accounts": "Konten",
+        "profile": "Profil",
+        "settings": "Einstellungen",
+        "logout": "Logout"
+    },
     "loading-screen": {
         "header": "Bitte warten...",
         "send": "Daten werden übermittelt",

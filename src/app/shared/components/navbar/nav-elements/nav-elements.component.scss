@@ -1,46 +1,57 @@
-@use '../../../styles/colors.scss';
-@use '../../../styles/text.scss';
-
-$transition-time: 0.5s;
+@use "../../../styles/others/font" as font;
+@use "../../../styles//container-mixin/svg" as svg;
 
 .nav-elem {
     display: flex;
-    gap: 0.4rem;
+    gap: 0.8rem;
+    color: var(--text-color-primary);
     align-items: center;
     cursor: pointer;
-    @include text.description($color: colors.$white);
-    transition: border $transition-time, padding $transition-time;
+    transition:
+        border 0.5s,
+        padding 0.5s;
+    @include font.description-font();
 
-    .nav-elem-icon {
-        fill: colors.$white;
-        width: 1.6rem;
-        transition: fill $transition-time;
+    .nav-elem-icon-stroke {
+        @include svg.svg-container($stroke: var(--icon-color-primary));
+        transition: stroke 0.5s;
     }
-    
+
+    .nav-elem-icon-fill {
+        @include svg.svg-container($stroke: none, $fill: var(--icon-color-primary));
+        transition: fill 0.5s;
+    }
+
     .nav-elem-description {
-        transition: color $transition-time;
-    
+        transition: color 0.5s;
+        font-weight: 900;
+
         &::after {
-            content: '';
+            content: "";
             display: block;
             transform: scaleX(0);
             height: 0.15rem;
-            background-color: colors.$moderate-red;
-            transition: transform $transition-time ease-out;
+            background-color: var(--highlight-color-container-primary);
+            transition: transform 0.5s ease-out;
         }
     }
 
-    &:hover, &:focus {
-        .nav-elem-icon {
-            fill: colors.$moderate-red;
+    &:hover,
+    &:focus {
+        .nav-elem-icon-stroke {
+            stroke: var(--icon-color-highlight);
+        }
+
+        .nav-elem-icon-fill {
+            fill: var(--icon-color-highlight);
         }
 
         .nav-elem-description {
-            color: colors.$moderate-red;
+            color: var(--text-color-highlight);
         }
 
         &:is(.border-animation) {
-            border-left: 0.2rem colors.$moderate-red solid;
+            border-left: 0.2rem var(--border-color-secondary) solid;
             padding-left: 0.5rem;
         }
 
@@ -53,10 +64,14 @@ $transition-time: 0.5s;
 }
 
 .active {
-    color: colors.$moderate-red;
+    color: var(--text-color-highlight);
 
-    .nav-elem-icon {
-        fill: colors.$moderate-red;
+    .nav-elem-icon-stroke {
+        stroke: var(--icon-color-highlight);
+    }
+
+    .nav-elem-icon-fill {
+        fill: var(--icon-color-highlight);
     }
 
     &:is(.underline-animation) {

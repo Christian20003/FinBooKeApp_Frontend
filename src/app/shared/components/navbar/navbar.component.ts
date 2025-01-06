@@ -2,13 +2,16 @@ import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { selectUser } from '../../stores/UserStore/User.selector';
 import { moveDown } from '../..';
+import { NavElementsComponent } from './nav-elements/nav-elements.component';
+import { SharedModule } from '../shared.module';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
+  imports: [NavElementsComponent, SharedModule, RouterLink, RouterLinkActive],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
   animations: [moveDown],
-  standalone: false,
 })
 export class NavbarComponent implements OnInit {
   public imagePath: WritableSignal<string> = signal('');

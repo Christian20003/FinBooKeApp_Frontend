@@ -20,6 +20,14 @@
             "missing": "Please enter the complete code"
         }
     },
+    "navbar": {
+        "dashboard": "Dashboard",
+        "finances": "Finances",
+        "accounts": "Accounts",
+        "profile": "Profile",
+        "settings": "Settings",
+        "logout": "Logout"
+    },
     "loading-screen": {
         "header": "Please wait...",
         "send": "Data is transmitted",

@@ -1,7 +1,8 @@
+import { DebugElement } from '@angular/core';
+import { provideHttpClient } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router, RouterLinkWithHref, RouterModule } from '@angular/router';
-import { NavElementsComponent } from './nav-elements.component';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
 import {
@@ -16,7 +17,8 @@ import { AuthenticationService } from 'src/app/auth/auth-overview/authentication
 import { deleteUser } from 'src/app/shared';
 import { getNativeElement } from 'src/app/testing/testing-support';
 import { loginPath } from 'src/app/auth/auth-routing-module';
-import { DebugElement } from '@angular/core';
+import { getTranslocoModule } from 'src/app/testing/transloco-testing.module';
+import { NavElementsComponent } from './nav-elements.component';
 
 describe('NavElementsComponent - Unit Tests', () => {
   let component: NavElementsComponent;
@@ -35,11 +37,15 @@ describe('NavElementsComponent - Unit Tests', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [NavElementsComponent],
-      imports: [RouterModule.forRoot(routes)],
+      imports: [
+        NavElementsComponent,
+        RouterModule.forRoot(routes),
+        getTranslocoModule(),
+      ],
       providers: [
         { provide: AuthenticationService, useValue: stubService },
         provideMockStore(),
+        provideHttpClient(),
       ],
     }).compileComponents();
 

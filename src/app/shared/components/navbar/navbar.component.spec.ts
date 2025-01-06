@@ -1,18 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { RouterLinkWithHref, RouterModule } from '@angular/router';
+import { provideRouter, RouterLinkWithHref } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { provideHttpClient } from '@angular/common/http';
 import { MemoizedSelector } from '@ngrx/store';
-import { MockComponent } from 'ng-mocks';
+import { MockComponent, MockModule } from 'ng-mocks';
 import { dashboardPath, routes } from 'src/app/routing/app-routing.module';
 import {
   getNativeElement,
   getNativeElements,
 } from 'src/app/testing/testing-support';
+import { getTranslocoModule } from 'src/app/testing/transloco-testing.module';
 import { NavbarComponent } from './navbar.component';
-import { LogoComponent } from '../logo/logo.component';
 import { NavElementsComponent } from './nav-elements/nav-elements.component';
+import { SharedModule } from '../shared.module';
 import { TestUser, User } from '../../models/User';
 import { selectUser } from '../../stores/UserStore/User.selector';
 
@@ -24,14 +26,30 @@ describe('NavbarComponent - Unit Tests', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
+      imports: [
         NavbarComponent,
-        MockComponent(LogoComponent),
-        MockComponent(NavElementsComponent),
+        NavElementsComponent,
+        BrowserAnimationsModule,
+        SharedModule,
+        getTranslocoModule(),
       ],
-      imports: [RouterModule.forRoot(routes), BrowserAnimationsModule],
-      providers: [provideMockStore()],
+      providers: [
+        provideMockStore(),
+        provideHttpClient(),
+        provideRouter(routes),
+      ],
     }).compileComponents();
+
+    // Currently MockComponent() not directly usable in imports field
+    TestBed.overrideComponent(NavElementsComponent, {
+      remove: { imports: [NavElementsComponent, SharedModule] },
+      add: {
+        imports: [
+          MockComponent(NavElementsComponent),
+          MockModule(SharedModule),
+        ],
+      },
+    });
 
     store = TestBed.inject(MockStore);
     selector = store.overrideSelector(selectUser, TestUser);

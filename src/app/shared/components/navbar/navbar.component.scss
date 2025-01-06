@@ -1,30 +1,26 @@
-@use '../../styles/colors.scss';
-@use '../../styles/container.scss';
-
-$desktop-screen-width: 46rem;
-$shadow-effect: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+@use "../../styles/others/shadow" as shadow;
+@use "../../styles/container-mixin/circle" as circle;
 
 nav {
     position: sticky;
     top: 0;
     // Delete margin added by the browser
     margin: -0.5rem;
-    box-shadow: $shadow-effect;
+    @include shadow.border-shadow-outside();
 
     .nav-container {
         display: flex;
         gap: 1.6rem;
         justify-content: center;
-        background-color: colors.$black;
+        background-color: var(--background-color-container-primary);
 
-        $boundary: 1.0rem;
         :first-child {
             padding-top: 0.2rem;
-            margin-left: $boundary;
+            margin-left: 1rem;
             margin-right: auto;
         }
         :last-child:not(.profile-box) {
-            margin-right: $boundary;
+            margin-right: 1rem;
             margin-left: auto;
         }
 
@@ -35,23 +31,26 @@ nav {
             cursor: pointer;
 
             .profile-btn {
-                @include container.circle-container($line-height: 2.15rem);
                 margin: auto;
-                color: colors.$moderate-red;
+                color: var(--text-color-highlight);
+                @include circle.circle-container($line-height: 2.15rem);
             }
         }
     }
-    .vertical-secondary-nav, .vertical-primary-nav {
+    .vertical-secondary-nav,
+    .vertical-primary-nav {
         position: absolute;
         top: 4rem;
         right: 1rem;
         width: 11rem;
-        background-color: colors.$black;
-        border: 0.1rem colors.$moderate-red solid;
+        background-color: var(--background-color-container-primary);
+        border: 0.1rem var(--border-color-secondary) solid;
         padding: 0.5rem 1.8rem 0.5rem 0.8rem;
-        box-shadow: $shadow-effect;
+        @include shadow.border-shadow-outside();
     }
 }
+
+$desktop-screen-width: 46rem;
 
 @media (min-width: $desktop-screen-width) {
     .vertical-primary-nav {

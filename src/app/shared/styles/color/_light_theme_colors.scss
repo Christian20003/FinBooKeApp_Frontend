@@ -8,8 +8,11 @@
 
     --text-color-primary: #{mat.get-theme-color(app-theme.$application-theme, neutral, 6)};
     --text-color-complement: #{mat.get-theme-color(app-theme.$application-theme, neutral, 95)};
+    --text-color-highlight: #{mat.get-theme-color(app-theme.$application-theme, primary, 50)};
 
     --icon-color-primary: #{mat.get-theme-color(app-theme.$application-theme, neutral, 6)};
+    --icon-color-complement: #{mat.get-theme-color(app-theme.$application-theme, neutral, 95)};
+    --icon-color-highlight: #{mat.get-theme-color(app-theme.$application-theme, primary, 50)};
     --icon-color-warning: rgb(188, 139, 18);
     --icon-color-success: rgb(0, 128, 0);
     --icon-color-error: rgb(191, 52, 59);

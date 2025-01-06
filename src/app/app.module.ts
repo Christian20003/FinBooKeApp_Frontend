@@ -14,6 +14,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { HttpClientModule } from '@angular/common/http';
 import { TranslocoRootModule } from './transloco-root.module';
 import { ToastsComponent } from './shared/components/toasts/toasts.component';
+import { NavbarComponent } from './shared/components/navbar/navbar.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,6 +29,7 @@ import { ToastsComponent } from './shared/components/toasts/toasts.component';
     HttpClientModule,
     TranslocoRootModule,
     ToastsComponent,
+    NavbarComponent,
   ],
   providers: [provideAnimationsAsync()],
   bootstrap: [AppComponent],

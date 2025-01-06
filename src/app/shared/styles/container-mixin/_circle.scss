@@ -21,3 +21,27 @@
         height: $width-small;
     }
 }
+
+@mixin circle-container(
+    $width: 2.5rem,
+    $line-height: 2rem,
+    $background-color: var(--background-color-container-secondary),
+    $withAnimation: true
+) {
+    width: $width;
+    height: $width;
+    background-color: $background-color;
+    line-height: $line-height;
+    text-align: center;
+    border-radius: 50%;
+    transition: opacity 0.5s;
+
+    & > svg {
+        margin-top: 20%;
+    }
+    @if ($withAnimation) {
+        &:where(:hover, :focus) {
+            opacity: 50%;
+        }
+    }
+}

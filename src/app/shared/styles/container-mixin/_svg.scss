@@ -4,3 +4,9 @@
     stroke: $stroke;
     fill: $fill;
 }
+
+@mixin svg-container($width: 2rem, $stroke: var(--icon-color-primary), $fill: none) {
+    width: $width;
+    stroke: $stroke;
+    fill: $fill;
+}
