@@ -1,5 +1,5 @@
-@use '../../shared/styles/container.scss';
-@use '../../shared/styles/text.scss';
+@use "../../shared/styles/container-mixin/box" as box;
+@use "../../shared/styles/others/font" as font;
 
 .dashboard-container {
     margin-top: 1rem;
@@ -19,12 +19,12 @@
         }
 
         .message {
-            @include container.card-container();
-            @include text.description();
             width: 100%;
             height: 20rem;
             line-height: 20rem;
-            text-align: center;
+            color: var(--text-color-primary);
+            @include box.box-container();
+            @include font.description-font($align: center);
         }
     }
 }
