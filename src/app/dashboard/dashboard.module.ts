@@ -5,8 +5,12 @@ import { SharedModule } from '../shared/components/shared.module';
 import { DashboardActionsComponent } from './dashboard-overview/dashboard-actions/dashboard-actions.component';
 
 @NgModule({
-  declarations: [DashboardOverviewComponent, DashboardActionsComponent],
-  imports: [CommonModule, SharedModule],
+  imports: [
+    DashboardOverviewComponent,
+    DashboardActionsComponent,
+    CommonModule,
+    SharedModule,
+  ],
   exports: [DashboardOverviewComponent],
 })
 export class DashboardModule {}

@@ -1,14 +1,20 @@
 import { Component, OnInit, output, OutputEmitterRef } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { moveLeftToRight } from 'src/app/shared';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { moveLeftToRight, InvalidInputComponent } from 'src/app/shared';
 import { SecurityCode } from '../../models/securityCode';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-set-code',
   templateUrl: './set-code.component.html',
   styleUrls: ['./set-code.component.scss'],
+  imports: [TranslocoDirective, ReactiveFormsModule, InvalidInputComponent],
   animations: [moveLeftToRight],
-  standalone: false,
 })
 export class SetCodeComponent implements OnInit {
   // The formGroup which saves the user input with the code.
@@ -111,6 +117,6 @@ export class SetCodeComponent implements OnInit {
    */
   private getValue(key: string): string {
     const control = this.codeForm.get(key);
-    return control?.value ? control.value : 0;
+    return control?.value ? control.value : '0';
   }
 }

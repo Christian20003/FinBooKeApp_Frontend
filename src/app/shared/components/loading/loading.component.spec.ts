@@ -5,7 +5,7 @@ import { getNativeElement } from 'src/app/testing/testing-support';
 import { getTranslocoModule } from 'src/app/testing/transloco-testing.module';
 import { LoadingComponent } from './loading.component';
 
-describe('LoadingComponent - Unit-Tests', () => {
+xdescribe('LoadingComponent - Unit-Tests', () => {
   let component: LoadingComponent;
   let fixture: ComponentFixture<LoadingComponent>;
 

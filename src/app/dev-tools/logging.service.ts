@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { EnvironmentService } from './environment.service';
 
 enum LogTypes {
@@ -11,7 +11,7 @@ enum LogTypes {
   providedIn: 'root',
 })
 export class LoggerService {
-  constructor(private envService: EnvironmentService) {}
+  private envService = inject(EnvironmentService);
 
   /**
    * This method allows to create an `info` log message if logging is enabled.

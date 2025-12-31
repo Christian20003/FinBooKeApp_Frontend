@@ -1,7 +1,7 @@
-import { Component, input, InputSignal } from '@angular/core';
+import { Component, input, InputSignal, inject } from '@angular/core';
 import { MatIcon, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { TranslocoDirective } from '@ngneat/transloco';
+import { TranslocoDirective } from '@jsverse/transloco';
 import { growShrink } from '../../animations/growShrink';
 import { moveLeftToRight } from '../../animations/slideLeftRight';
 
@@ -13,12 +13,12 @@ import { moveLeftToRight } from '../../animations/slideLeftRight';
   animations: [growShrink, moveLeftToRight],
 })
 export class LoadingComponent {
+  private matIconRegistry = inject(MatIconRegistry);
+  private domSanitizer = inject(DomSanitizer);
+
   public readonly message: InputSignal<string> = input('');
 
-  constructor(
-    private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
-  ) {
+  constructor() {
     this.matIconRegistry.addSvgIcon(
       'coins',
       this.domSanitizer.bypassSecurityTrustResourceUrl(

@@ -1,23 +1,39 @@
-import { Component, OnInit, output, OutputEmitterRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  output,
+  OutputEmitterRef,
+  inject,
+} from '@angular/core';
 import {
   AbstractControl,
   FormControl,
   FormGroup,
+  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatIconRegistry } from '@angular/material/icon';
+import { MatIconRegistry, MatIcon } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { moveLeftToRight } from 'src/app/shared/index';
+import { moveLeftToRight, InvalidInputComponent } from 'src/app/shared/index';
 import { LoginData } from '../../models/loginData';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   animations: [moveLeftToRight],
-  standalone: false,
+  imports: [
+    InvalidInputComponent,
+    MatIcon,
+    TranslocoDirective,
+    ReactiveFormsModule,
+  ],
 })
 export class LoginComponent implements OnInit {
+  private matIconRegistry = inject(MatIconRegistry);
+  private domSanitizer = inject(DomSanitizer);
+
   //Output signal to sent the entered login data to the parent component.
   public login: OutputEmitterRef<LoginData> = output();
   // Output signal to signal the parent component that the user forgot his password.
@@ -26,10 +42,7 @@ export class LoginComponent implements OnInit {
   // The reactive login form
   loginForm!: FormGroup;
 
-  constructor(
-    private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
-  ) {
+  constructor() {
     this.matIconRegistry.addSvgIcon(
       'password',
       this.domSanitizer.bypassSecurityTrustResourceUrl(

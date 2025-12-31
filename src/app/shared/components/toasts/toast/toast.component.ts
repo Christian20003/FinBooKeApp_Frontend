@@ -6,6 +6,7 @@ import {
   OnInit,
   output,
   OutputEmitterRef,
+  inject,
 } from '@angular/core';
 import { MatIcon, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -18,6 +19,9 @@ import { Toast, ToastRemoveType, ToastTypes } from 'src/app/shared';
   styleUrl: './toast.component.scss',
 })
 export class ToastComponent implements OnInit {
+  private matIconRegistry = inject(MatIconRegistry);
+  private domSanitizer = inject(DomSanitizer);
+
   /** The actual toast object */
   public readonly toast: InputSignal<Toast> = input.required();
   /** The enumeration of all possible toast types */
@@ -25,10 +29,7 @@ export class ToastComponent implements OnInit {
   /** An emitter to inform the parent component to remove this child */
   public readonly removeToast: OutputEmitterRef<Toast> = output();
 
-  public constructor(
-    private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
-  ) {
+  public constructor() {
     this.matIconRegistry.addSvgIcon(
       'error',
       this.domSanitizer.bypassSecurityTrustResourceUrl(

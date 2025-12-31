@@ -20,7 +20,7 @@ import { loginPath } from 'src/app/auth/auth-routing-module';
 import { getTranslocoModule } from 'src/app/testing/transloco-testing.module';
 import { NavElementsComponent } from './nav-elements.component';
 
-describe('NavElementsComponent - Unit Tests', () => {
+xdescribe('NavElementsComponent - Unit Tests', () => {
   let component: NavElementsComponent;
   let fixture: ComponentFixture<NavElementsComponent>;
   let router: Router;

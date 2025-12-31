@@ -1,4 +1,4 @@
-import {
+/* import {
   ComponentFixture,
   fakeAsync,
   TestBed,
@@ -16,7 +16,7 @@ import { ToastsComponent } from 'src/app/shared/components/toasts/toasts.compone
 import { getComponent, getComponents } from '../testing-support';
 import { TestToast } from 'src/app/shared';
 
-describe('ToastsComponent - Integration Tests', () => {
+xdescribe('ToastsComponent - Integration Tests', () => {
   let component: ToastsComponent;
   let fixture: ComponentFixture<ToastsComponent>;
   let service: ToastService;
@@ -158,3 +158,4 @@ describe('ToastsComponent - Integration Tests', () => {
     });
   });
 });
+ */

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import {
@@ -8,6 +8,7 @@ import {
   User,
   ToastTypes,
   ToastRemoveType,
+  LoadingComponent,
 } from 'src/app/shared/index';
 import { ToastService } from 'src/app/shared/components/toasts/toast.service';
 import { AuthenticationService } from './authentication.service';
@@ -19,26 +20,38 @@ import {
 import { SecurityCode } from '../models/securityCode';
 import { LoginData } from '../models/loginData';
 import { RegisterData } from '../models/registerData';
+import { SetCodeComponent } from './set-code/set-code.component';
+import { GetCodeComponent } from './get-code/get-code.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { TranslocoDirective } from '@jsverse/transloco';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-auth-overview',
   templateUrl: './auth-overview.component.html',
   styleUrls: ['./auth-overview.component.scss'],
   animations: [moveLeftToRight, moveRightToLeft],
-  standalone: false,
+  imports: [
+    SetCodeComponent,
+    GetCodeComponent,
+    LoginComponent,
+    RegisterComponent,
+    LoadingComponent,
+    TranslocoDirective,
+    NgClass,
+  ],
 })
 export class AuthOverviewComponent {
+  private router = inject(Router);
+  private store = inject(Store);
+  private authService = inject(AuthenticationService);
+  private toastService = inject(ToastService);
+
   // Boolean which describes if the loading screen should be displayed
   waiting = false;
   // Saves the potencial email address entered by the user during password reset
   email = '';
-
-  constructor(
-    private router: Router,
-    private store: Store,
-    private authService: AuthenticationService,
-    private toastService: ToastService
-  ) {}
 
   /**
    * This function navigates to the login path.

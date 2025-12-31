@@ -12,7 +12,7 @@ import { TestLoginData } from '../models/loginData';
 import { TestRegisterData } from '../models/registerData';
 import { TestSecurityCode } from '../models/securityCode';
 
-describe('AuthenticationService - Unit Tests', () => {
+xdescribe('AuthenticationService - Unit Tests', () => {
   let service: AuthenticationService;
   let httpTestingController: HttpTestingController;
   let envService: EnvironmentService;

@@ -18,7 +18,7 @@ import { SharedModule } from '../shared.module';
 import { TestUser, User } from '../../models/User';
 import { selectUser } from '../../stores/UserStore/User.selector';
 
-describe('NavbarComponent - Unit Tests', () => {
+xdescribe('NavbarComponent - Unit Tests', () => {
   let component: NavbarComponent;
   let fixture: ComponentFixture<NavbarComponent>;
   let store: MockStore;

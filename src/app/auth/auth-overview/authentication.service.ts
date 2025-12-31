@@ -1,9 +1,9 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { User } from 'src/app/shared/index';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { SecurityCode } from '../models/securityCode';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { EnvironmentService } from 'src/app/dev-tools/environment.service';
 import { LoginData } from '../models/loginData';
 import { LoggerService } from 'src/app/dev-tools/logging.service';
@@ -13,16 +13,14 @@ import { RegisterData } from '../models/registerData';
   providedIn: 'root',
 })
 export class AuthenticationService {
+  private http = inject(HttpClient);
+  private transloco = inject(TranslocoService);
+  private logger = inject(LoggerService);
+  private envService = inject(EnvironmentService);
+
   private readonly LOGIN_PATH: string = '/login';
   private readonly REGISTER_PATH: string = '/register';
   private readonly CODE_PATH: string = '/login/code';
-
-  constructor(
-    private http: HttpClient,
-    private transloco: TranslocoService,
-    private logger: LoggerService,
-    private envService: EnvironmentService
-  ) {}
 
   /**
    * This function makes a POST request via HTTP to try a login with the given data. If the request was successfull it will return an

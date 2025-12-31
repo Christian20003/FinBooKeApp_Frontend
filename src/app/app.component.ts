@@ -1,27 +1,30 @@
-import { Component, ElementRef, Renderer2 } from '@angular/core';
+import { Component, ElementRef, Renderer2, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { selectUser, setUser } from './shared';
 import { ChildrenOutletContexts, Router } from '@angular/router';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { loginPath, registerPath } from './auth/auth-routing-module';
 import { routingAnimation } from './routing/routing-animation';
+import { NavbarComponent } from './shared/components/navbar/navbar.component';
+import { ToastsComponent } from './shared/components/toasts/toasts.component';
+import { ɵɵRouterOutlet } from '@angular/router/testing';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  standalone: false,
   animations: [routingAnimation],
+  imports: [NavbarComponent, ToastsComponent, ɵɵRouterOutlet],
 })
 export class AppComponent {
-  constructor(
-    private store: Store,
-    private router: Router,
-    private elementRef: ElementRef,
-    private renderer: Renderer2,
-    private translocoService: TranslocoService,
-    private contexts: ChildrenOutletContexts
-  ) {
+  private store = inject(Store);
+  private router = inject(Router);
+  private elementRef = inject(ElementRef);
+  private renderer = inject(Renderer2);
+  private translocoService = inject(TranslocoService);
+  private contexts = inject(ChildrenOutletContexts);
+
+  constructor() {
     const data = this.store.select(selectUser);
     data.subscribe(state => {
       if (state.id <= 0) {

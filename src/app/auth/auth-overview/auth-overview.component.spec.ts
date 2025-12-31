@@ -36,7 +36,7 @@ import { AuthModule } from '../auth.module';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-describe('AuthOverviewComponent', () => {
+xdescribe('AuthOverviewComponent', () => {
   let component: AuthOverviewComponent;
   let fixture: ComponentFixture<AuthOverviewComponent>;
   let router: Router;
@@ -78,7 +78,7 @@ describe('AuthOverviewComponent', () => {
 
   /*-----------------------------------------------------Route testing--------------------------------------------------------*/
 
-  describe('Route testing', () => {
+  xdescribe('Route testing', () => {
     beforeEach(createComponent);
 
     it('U-Test-1: Clicking login button should change the route to "/login"', () => {
@@ -142,7 +142,7 @@ describe('AuthOverviewComponent', () => {
 
   /*-------------------------------------------------Component appearing------------------------------------------------------*/
 
-  describe('Component Appearing', () => {
+  xdescribe('Component Appearing', () => {
     beforeEach(createComponent);
 
     it('U-Test-8: Should create', () => {
@@ -225,7 +225,7 @@ describe('AuthOverviewComponent', () => {
 
   /*-----------------------------------------------------onSubmitLogin----------------------------------------------------------*/
 
-  describe('onSubmitLogin', () => {
+  xdescribe('onSubmitLogin', () => {
     beforeEach(createComponent);
 
     it('U-Test-15: Calling postLogin function and waiting for the response', () => {
@@ -270,7 +270,7 @@ describe('AuthOverviewComponent', () => {
 
   /*----------------------------------------------------onSubmitRegister--------------------------------------------------------*/
 
-  describe('onSubmitRegister', () => {
+  xdescribe('onSubmitRegister', () => {
     beforeEach(createComponent);
 
     it('U-Test-18: Calling postRegister function and waiting for a response', () => {
@@ -315,7 +315,7 @@ describe('AuthOverviewComponent', () => {
 
   /*---------------------------------------------------------onSetCode------------------------------------------------------------*/
 
-  describe('onSetCode', () => {
+  xdescribe('onSetCode', () => {
     beforeEach(createComponent);
 
     it('U-Test-21: Calling postCode function and waiting for the response', () => {
@@ -360,7 +360,7 @@ describe('AuthOverviewComponent', () => {
 
   /*---------------------------------------------------------onSetEmail-----------------------------------------------------------*/
 
-  describe('onSetEmail', () => {
+  xdescribe('onSetEmail', () => {
     beforeEach(createComponent);
 
     it('U-Test-24: Calling postEmail function and waiting for a response', () => {

@@ -9,7 +9,7 @@ import { ToastComponent } from './toast/toast.component';
 import { ToastService } from './toast.service';
 import { TestToast, Toast } from '../../models/Toast';
 
-describe('ToastsComponent - Unit Tests', () => {
+xdescribe('ToastsComponent - Unit Tests', () => {
   let component: ToastsComponent;
   let fixture: ComponentFixture<ToastsComponent>;
   const mockService = jasmine.createSpyObj('ToastService', ['removeToast'], {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { transition, trigger, useAnimation } from '@angular/animations';
 import { Toast } from '../../models/Toast';
 import { shrinkHeight, slideInY } from '../..';
@@ -31,10 +31,12 @@ import { ToastComponent } from './toast/toast.component';
   ],
 })
 export class ToastsComponent {
+  private toastService = inject(ToastService);
+
   /** A list of toasts which should be displayed */
   public toasts: Toast[] = [];
 
-  public constructor(private toastService: ToastService) {
+  public constructor() {
     this.toastService.toastStore$.subscribe(data => {
       this.toasts = data;
     });

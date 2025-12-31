@@ -4,6 +4,5 @@ import { Component } from '@angular/core';
   selector: 'app-logo',
   templateUrl: './logo.component.svg',
   styleUrls: ['./logo.component.scss'],
-  standalone: false,
 })
 export class LogoComponent {}

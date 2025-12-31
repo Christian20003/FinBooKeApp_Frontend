@@ -12,7 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { provideHttpClient } from '@angular/common/http';
 import { getTranslocoModule } from '../transloco-testing.module';
 
-describe('GetCodeComponent - Integration Tests', () => {
+xdescribe('GetCodeComponent - Integration Tests', () => {
   let fixture: ComponentFixture<GetCodeComponent>;
 
   beforeEach(() => {

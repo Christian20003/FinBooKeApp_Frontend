@@ -1,16 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ToastRemoveType } from 'src/app/shared';
 import { ToastTypes } from 'src/app/shared';
 import { ToastService } from 'src/app/shared/components/toasts/toast.service';
+import { DashboardActionsComponent } from './dashboard-actions/dashboard-actions.component';
 
 @Component({
   selector: 'app-dashboard-overview',
   templateUrl: './dashboard-overview.component.html',
   styleUrl: './dashboard-overview.component.scss',
-  standalone: false,
+  imports: [DashboardActionsComponent],
 })
 export class DashboardOverviewComponent {
-  constructor(private service: ToastService) {}
+  private service = inject(ToastService);
 
   onAdd() {
     this.service.addToast(

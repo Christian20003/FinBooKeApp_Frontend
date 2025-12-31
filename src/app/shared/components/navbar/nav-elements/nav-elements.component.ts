@@ -1,9 +1,9 @@
 import { NgClass } from '@angular/common';
-import { Component, input, InputSignal } from '@angular/core';
+import { Component, input, InputSignal, inject } from '@angular/core';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { TranslocoDirective } from '@ngneat/transloco';
+import { TranslocoDirective } from '@jsverse/transloco';
 import { Store } from '@ngrx/store';
 import { AuthenticationService } from 'src/app/auth/auth-overview/authentication.service';
 import { loginPath } from 'src/app/auth/auth-routing-module';
@@ -24,17 +24,17 @@ import { ToastService } from '../../toasts/toast.service';
   styleUrl: './nav-elements.component.scss',
 })
 export class NavElementsComponent {
+  private authService = inject(AuthenticationService);
+  private toastService = inject(ToastService);
+  private store = inject(Store);
+  private router = inject(Router);
+  private matIconRegistry = inject(MatIconRegistry);
+  private domSanitizer = inject(DomSanitizer);
+
   public type: InputSignal<string> = input<string>('dashboard');
   public borderAnimation: InputSignal<boolean> = input<boolean>(false);
 
-  constructor(
-    private authService: AuthenticationService,
-    private toastService: ToastService,
-    private store: Store,
-    private router: Router,
-    private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
-  ) {
+  constructor() {
     this.matIconRegistry.addSvgIcon(
       'dashboard',
       this.domSanitizer.bypassSecurityTrustResourceUrl(

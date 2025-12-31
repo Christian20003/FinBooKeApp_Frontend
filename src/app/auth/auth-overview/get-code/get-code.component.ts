@@ -5,25 +5,36 @@ import {
   OnInit,
   output,
   OutputEmitterRef,
+  inject,
 } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
   FormGroup,
+  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatIconRegistry } from '@angular/material/icon';
+import { MatIconRegistry, MatIcon } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { moveLeftToRight } from 'src/app/shared';
+import { TranslocoDirective } from '@jsverse/transloco';
+import { moveLeftToRight, InvalidInputComponent } from 'src/app/shared';
 
 @Component({
   selector: 'app-get-code',
   templateUrl: './get-code.component.html',
   styleUrls: ['./get-code.component.scss'],
   animations: [moveLeftToRight],
-  standalone: false,
+  imports: [
+    MatIcon,
+    InvalidInputComponent,
+    TranslocoDirective,
+    ReactiveFormsModule,
+  ],
 })
 export class GetCodeComponent implements OnInit {
+  private iconRegistry = inject(MatIconRegistry);
+  private domSanitizer = inject(DomSanitizer);
+
   // The option to get an existing email address
   public readonly emailValue: InputSignal<string> = input('');
   // EventEmitter to send the email address to the parent component
@@ -31,10 +42,7 @@ export class GetCodeComponent implements OnInit {
   // Form to be able to enter an email address
   public emailForm!: FormGroup;
 
-  constructor(
-    private iconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
-  ) {
+  constructor() {
     this.iconRegistry.addSvgIcon(
       'email',
       this.domSanitizer.bypassSecurityTrustResourceUrl(

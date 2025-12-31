@@ -1,4 +1,10 @@
-import { Component, OnInit, signal, WritableSignal } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  signal,
+  WritableSignal,
+  inject,
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { selectUser } from '../../stores/UserStore/User.selector';
 import { moveDown } from '../..';
@@ -14,11 +20,11 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   animations: [moveDown],
 })
 export class NavbarComponent implements OnInit {
+  private store = inject(Store);
+
   public imagePath: WritableSignal<string> = signal('');
   public firstLetter: WritableSignal<string> = signal('');
   public activeProfile: WritableSignal<boolean> = signal(false);
-
-  constructor(private store: Store) {}
 
   ngOnInit(): void {
     const data = this.store.select(selectUser);

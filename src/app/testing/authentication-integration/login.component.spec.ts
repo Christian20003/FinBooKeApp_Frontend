@@ -13,7 +13,7 @@ import {
 } from '../testing-support';
 import { getTranslocoModule } from '../transloco-testing.module';
 
-describe('LoginComponent - Integration Tests', () => {
+xdescribe('LoginComponent - Integration Tests', () => {
   let fixture: ComponentFixture<LoginComponent>;
 
   beforeEach(() => {

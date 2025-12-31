@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { of, switchMap, tap } from 'rxjs';
@@ -14,6 +14,9 @@ import { concatLatestFrom } from '@ngrx/operators';
 
 @Injectable()
 export class userEffects {
+  private actions$ = inject(Actions);
+  private store = inject(Store);
+
   // Save the user object on local storage after initialization
   saveUserData$ = createEffect(
     () => {
@@ -55,9 +58,4 @@ export class userEffects {
     },
     { dispatch: false }
   );
-
-  constructor(
-    private actions$: Actions,
-    private store: Store
-  ) {}
 }

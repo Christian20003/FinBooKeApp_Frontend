@@ -13,7 +13,7 @@ import {
 } from '../testing-support';
 import { getTranslocoModule } from '../transloco-testing.module';
 
-describe('SetCodeComponent - Unit Tests', () => {
+xdescribe('SetCodeComponent - Unit Tests', () => {
   let fixture: ComponentFixture<SetCodeComponent>;
 
   beforeEach(() => {

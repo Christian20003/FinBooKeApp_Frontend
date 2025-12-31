@@ -5,8 +5,7 @@ import { LogoComponent } from './logo/logo.component';
 import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
-  declarations: [InvalidInputComponent, LogoComponent],
-  imports: [CommonModule, MatIconModule],
+  imports: [InvalidInputComponent, LogoComponent, CommonModule, MatIconModule],
   exports: [InvalidInputComponent, LogoComponent],
 })
 export class SharedModule {}
