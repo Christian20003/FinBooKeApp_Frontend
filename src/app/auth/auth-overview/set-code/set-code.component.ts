@@ -1,122 +1,145 @@
-import { Component, OnInit, output, OutputEmitterRef } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  OnInit,
+  output,
+  OutputEmitterRef,
+} from '@angular/core';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { moveLeftToRight, InvalidInputComponent } from 'src/app/shared';
-import { SecurityCode } from '../../models/securityCode';
 import { TranslocoDirective } from '@jsverse/transloco';
+import { InvalidInputComponent } from 'src/app/shared';
 
 @Component({
   selector: 'app-set-code',
   templateUrl: './set-code.component.html',
   styleUrls: ['./set-code.component.scss'],
   imports: [TranslocoDirective, ReactiveFormsModule, InvalidInputComponent],
-  animations: [moveLeftToRight],
 })
 export class SetCodeComponent implements OnInit {
-  // The formGroup which saves the user input with the code.
-  public codeForm!: FormGroup;
-  // The output signal which sends the entered code to the parent component
-  public readonly sendCode: OutputEmitterRef<SecurityCode> = output();
-  // Bool which identifies if a complete access code has been entered
-  public isInvalid = false;
+  // The output signal to emit security code
+  public readonly send: OutputEmitterRef<string> = output();
+  // The security code size
+  public readonly size: number = 6;
+  // If the form is valid
+  public isValid: boolean = true;
+  // The form
+  public form!: FormGroup;
+  // Access to DOM
+  private readonly elementRef = inject(ElementRef);
 
   ngOnInit(): void {
-    this.codeForm = new FormGroup({
-      value1: new FormControl(null, [
+    const group: { [key: string]: FormControl } = {};
+
+    for (let i = 0; i < this.size; i++) {
+      const key = this.getKey(i);
+      group[key] = new FormControl(null, [
         Validators.required,
         Validators.maxLength(1),
-      ]),
-      value2: new FormControl(null, [
-        Validators.required,
-        Validators.maxLength(1),
-      ]),
-      value3: new FormControl(null, [
-        Validators.required,
-        Validators.maxLength(1),
-      ]),
-      value4: new FormControl(null, [
-        Validators.required,
-        Validators.maxLength(1),
-      ]),
-      value5: new FormControl(null, [
-        Validators.required,
-        Validators.maxLength(1),
-      ]),
-      value6: new FormControl(null, [
-        Validators.required,
-        Validators.maxLength(1),
-      ]),
-    });
+      ]);
+    }
+
+    this.form = new FormGroup(group);
   }
 
   /**
    * This function validates the input of the code input element. If the value
    * is a lower case letter, it will be changed to an upper case letter. If the
    * value is not a letter `(A-Z)` or number `(0-9)`, it will be removed. After
-   * recognizing a correct value it will switch to the next input element.
+   * recognizing a correct value it will switch to the next input element if
+   * it exist.
    *
-   * @param currrent  - The current input element which received an `input` event
-   * @param next      - The next input element which should be focused
+   * @param index The index of the `input` element which received an `input` event.
    */
-  validate(current: HTMLInputElement, next: HTMLInputElement): void {
-    let value = current.value;
+  onInput(index: number): void {
+    const element = this.elementRef.nativeElement.querySelector(
+      `#${this.getKey(index)}`
+    );
+    const nextElement = this.elementRef.nativeElement.querySelector(
+      `#${this.getKey(index + 1)}`
+    );
     const isLowerLetter = new RegExp('[a-z]');
     const isValid = new RegExp('[A-Z0-9]');
-    if (isLowerLetter.test(value)) {
-      value = value.toUpperCase();
-      current.value = value;
+    if (isLowerLetter.test(element.value)) {
+      element.value = element.value.toUpperCase();
     }
-    if (isValid.test(value)) {
-      next.focus();
-    } else {
-      current.value = '';
+    if (!isValid.test(element.value)) {
+      element.value = '';
+    } else if (nextElement !== null) {
+      nextElement.focus();
     }
-    if (this.codeForm.valid) {
-      this.isInvalid = false;
+  }
+
+  /**
+   * This function validates a pressed key. If a key is pressed to delete
+   * the content, it will move to the previous `input` element if it exist.
+   *
+   * @param event The {@link KeyboardEvent} that has been triggered.
+   * @param index The index of the `input` element.
+   */
+  onKeydown(event: KeyboardEvent, index: number): void {
+    if (event.key === 'Delete' || event.key === 'Backspace') {
+      const element = this.elementRef.nativeElement.querySelector(
+        `#${this.getKey(index)}`
+      );
+      const prev = this.elementRef.nativeElement.querySelector(
+        `#${this.getKey(index - 1)}`
+      );
+      if (prev !== null) {
+        element.value = '';
+        prev.focus();
+      }
     }
   }
 
   /**
    * This function selects the complete content of the input element.
    *
-   * @param current   - The current input element which received a `focus` event.
+   * @param current The index of the `input` element.
    */
-  onFocus(current: HTMLInputElement): void {
-    current.select();
+  onFocus(index: number): void {
+    const key = this.getKey(index);
+    const element = this.elementRef.nativeElement.querySelector(`#${key}`);
+    element.select();
   }
 
   /**
-   * This function sends a message to the parent component with all 6 entered values of the form.
+   * This function sends a message to the parent component with all entered values of the form.
    * If the user does not completely fill out the form an error message will be displayed.
    */
   onSubmit(): void {
-    if (this.codeForm.valid) {
-      this.sendCode.emit({
-        value1: this.getValue('value1'),
-        value2: this.getValue('value2'),
-        value3: this.getValue('value3'),
-        value4: this.getValue('value4'),
-        value5: this.getValue('value5'),
-        value6: this.getValue('value6'),
-      });
+    if (this.form.valid) {
+      this.isValid = true;
+      let code = '';
+      for (let i = 0; i < this.size; i++) {
+        const key = this.getKey(i);
+        code += this.form.get(key)?.value;
+      }
+      this.send.emit(code);
     } else {
-      this.isInvalid = true;
+      this.isValid = false;
     }
   }
 
   /**
-   * This function returns the value from the {@link FormControl} with the corresponding key. If the entered
-   * key does not exist in the {@link codeForm} it will return 0.
+   * This function returns the key of a specific `input` element.
    *
-   * @param key   - The key of the {@link FormControl} element
-   * @returns       The stored value if the {@link FormControl} exist, otherwise 0
+   * @param idx The index of the `input` element.
+   * @returns The corresponding key.
    */
-  private getValue(key: string): string {
-    const control = this.codeForm.get(key);
-    return control?.value ? control.value : '0';
+  getKey(idx: number): string {
+    return `value${idx + 1}`;
+  }
+
+  /**
+   * This function returns a list of all `input` element keys.
+   */
+  getKeys(): Array<string> {
+    return Array.from({ length: this.size }, (_, idx) => this.getKey(idx));
   }
 }

@@ -1,3 +1,5 @@
+@use '../others/shadow' as shadow;
+
 @mixin input-container($hasLabel: false) {
     padding: 0.4rem;
     width: 96%;
@@ -31,16 +33,18 @@
 }
 
 @mixin digit-box-container(){
-    width: 2rem;
-    height: 3rem;
+    width: 2.5rem;
+    height: 2.5rem;
     color: var(--text-color-primary);
-    background-color: var(--background-color-container-secondary);
-    border: 0.2rem var(--border-color-primary) solid;
-    border-radius: 0.5rem;
+    background-color: var(--background-color-container-primary);
     outline: none;
-    transition: border-color 0.5s; 
-    
+    border: none;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    @include shadow.border-shadow-outside();
+
     &:focus{
-        border-color: var(--highlight-color-container-primary);
+        @include shadow.border-shadow-outside-highlight();
+        outline: none;
     }
 }

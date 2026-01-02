@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MockComponent } from 'ng-mocks';
 import { SetCodeComponent } from './set-code.component';
 import { InvalidInputComponent } from 'src/app/shared';
@@ -10,90 +9,90 @@ import {
   triggerInput,
 } from 'src/app/testing/testing-support';
 import { getTranslocoModule } from 'src/app/testing/transloco-testing.module';
+import { provideZonelessChangeDetection } from '@angular/core';
 
-xdescribe('SetCodeComponent - Unit Tests', () => {
+describe('SetCodeComponent - Unit Tests', () => {
   let component: SetCodeComponent;
   let fixture: ComponentFixture<SetCodeComponent>;
+  let nativeElements: HTMLInputElement[];
+  let nativeButton: HTMLButtonElement;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [SetCodeComponent, MockComponent(InvalidInputComponent)],
-      imports: [
-        ReactiveFormsModule,
-        BrowserAnimationsModule,
-        getTranslocoModule(),
-      ],
+      imports: [ReactiveFormsModule, getTranslocoModule()],
+      providers: [provideZonelessChangeDetection()],
     });
     fixture = TestBed.createComponent(SetCodeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    nativeButton = getNativeElement<SetCodeComponent, HTMLButtonElement>(
+      fixture,
+      '#proof-code-button'
+    );
+    nativeElements = getNativeElements<SetCodeComponent, HTMLInputElement>(
+      fixture,
+      '.key-field'
+    );
+    for (const element of nativeElements) {
+      element.value = '1';
+    }
+    triggerInput(nativeElements);
+    fixture.detectChanges();
   });
 
-  it('U-Test-1: Should create', () => {
+  it('U-Test-1: Component should exist', () => {
     expect(component).withContext('SetCodeComponent should exist').toBeTruthy();
   });
 
   /*--------------------------------------------------Input-Elements--------------------------------------------------------------*/
 
-  it('U-Test-2: Code form should consists of 6 input elements', () => {
-    const codeInput = getNativeElements<SetCodeComponent, HTMLInputElement>(
-      fixture,
-      '.key-field'
-    );
-    for (let i = 1; i < 7; i++) {
-      expect(component.codeForm.get('value' + i))
-        .withContext('Input element for code value ' + i + 'must exist')
+  it('U-Test-2: FormGroup should have defined number of FormControls', () => {
+    for (let i = 0; i < component.size; i++) {
+      const key = `value${i + 1}`;
+      expect(component.form.get(key))
+        .withContext(`Form control for code ${key} must exist`)
         .toBeTruthy();
     }
-    expect(codeInput.length)
+  });
+
+  it('U-Test-3: Template should have defined number of input elements', () => {
+    expect(nativeElements.length)
       .withContext(
         'Template does not contain the specified amount of input elements'
       )
-      .toBe(6);
+      .toBe(component.size);
   });
 
-  it('U-Test-3: If a lower case letter is entered, it should change automatically to an upper case letter', () => {
-    const codeInput = getNativeElements<SetCodeComponent, HTMLInputElement>(
-      fixture,
-      '.key-field'
-    );
-    const element = codeInput[0];
-    element.value = 'a';
-    triggerInput([element]);
+  it('U-Test-4: A lower case letter should change automatically to an upper case letter', () => {
+    for (const element of nativeElements) {
+      element.value = 'a';
+    }
+    triggerInput(nativeElements);
     fixture.detectChanges();
-    expect(element.value)
-      .withContext('This should be a upper case A')
-      .toBe('A');
+
+    for (const element of nativeElements) {
+      expect(element.value).withContext('Should be a upper case A').toBe('A');
+    }
   });
 
-  it('U-Test-4: An input element should remain blank if a non-permitted character is entered.', () => {
-    const codeInput = getNativeElements<SetCodeComponent, HTMLInputElement>(
-      fixture,
-      '.key-field'
-    );
-    for (const element of codeInput) {
+  it('U-Test-5: An input element should remain blank if a non-permitted character is entered.', () => {
+    for (const element of nativeElements) {
       element.value = '}';
     }
-    triggerInput([...codeInput]);
+    triggerInput(nativeElements);
     fixture.detectChanges();
-    for (const element of codeInput) {
+
+    for (const element of nativeElements) {
       expect(element.value)
         .withContext('Content of the input element should be empty string')
         .toBe('');
     }
   });
 
-  it('U-Test-5: Only numbers between 0 and 9 can be entered on a single input element', () => {
-    const codeInput = getNativeElements<SetCodeComponent, HTMLInputElement>(
-      fixture,
-      '.key-field'
-    );
-    for (const element of codeInput) {
-      element.value = '1';
-    }
-    triggerInput([...codeInput]);
+  it('U-Test-6: Input elements should contain only single characters', () => {
     let previous = undefined;
-    for (const element of codeInput) {
+    for (const element of nativeElements) {
       element.value = '123';
       if (previous) {
         previous.value = '1';
@@ -102,29 +101,48 @@ xdescribe('SetCodeComponent - Unit Tests', () => {
         triggerInput([element]);
       }
       fixture.detectChanges();
-      expect(component.codeForm.valid)
+
+      expect(component.form.valid)
         .withContext('Form should be invalid because of breaking length rule')
         .toBeFalse();
+
       previous = element;
     }
   });
 
-  it('U-Test-6: After entering a valid value to an input element, the focus should switch to the next element', () => {
-    const size = 6;
-    const codeInput = getNativeElements<SetCodeComponent, HTMLInputElement>(
-      fixture,
-      '.key-field'
-    );
-    for (let i = 0; i < size; i++) {
-      if (codeInput[i + 1]) {
-        spyOn(codeInput[i + 1], 'focus');
+  it('U-Test-7: Change focus to next element after entering valid character', () => {
+    for (let i = 0; i < component.size; i++) {
+      const current = nativeElements[i];
+      const next = nativeElements[i + 1];
+      if (next) {
+        spyOn(next, 'focus');
       }
-      codeInput[i].value = '1';
-      triggerInput([codeInput[i]]);
+      current.value = '1';
+      triggerInput([current]);
       fixture.detectChanges();
-      if (codeInput[i + 1]) {
-        expect(codeInput[i + 1].focus)
+
+      if (next) {
+        expect(next.focus)
           .withContext('Next input element should be focused')
+          .toHaveBeenCalled();
+      }
+    }
+  });
+
+  it('U-Test-8: Change focus to previous element after deleting a character', () => {
+    const event = new KeyboardEvent('keydown', { key: 'Delete' });
+    for (let i = component.size - 1; i >= 0; i--) {
+      const current = nativeElements[i];
+      const prev = nativeElements[i - 1];
+      if (prev) {
+        spyOn(prev, 'focus');
+      }
+      current.dispatchEvent(event);
+      fixture.detectChanges();
+
+      if (prev) {
+        expect(prev.focus)
+          .withContext('Previous input element should be focused')
           .toHaveBeenCalled();
       }
     }
@@ -132,53 +150,37 @@ xdescribe('SetCodeComponent - Unit Tests', () => {
 
   /*--------------------------------------------------Invalid-Form-Behaviour------------------------------------------------------*/
 
-  it('U-Test-7: If code is incomplete after clicking submit button an invalid-error message should appear', () => {
-    const codeInput = getNativeElements<SetCodeComponent, HTMLInputElement>(
-      fixture,
-      '.key-field'
-    );
-    const button = getNativeElement<SetCodeComponent, HTMLButtonElement>(
-      fixture,
-      '#proof-code-button'
-    );
-    codeInput[0].value = '1';
-    codeInput[1].value = '2';
-    triggerInput(codeInput);
-    button.click();
+  it('U-Test-9: Invalid-error message should appear after clicking submit button on invalid form', () => {
+    nativeElements[0].value = '';
+    triggerInput(nativeElements);
+    nativeButton.click();
     fixture.detectChanges();
     const errorElement = getNativeElements<
       SetCodeComponent,
       InvalidInputComponent
     >(fixture, 'app-invalid-input');
+
     expect(errorElement)
       .withContext('An InvalidInputComponent should exist')
       .toBeTruthy();
-    expect(component.isInvalid)
-      .withContext('The isInvalid boolean should be set to true')
-      .toBeTrue();
+    expect(component.isValid)
+      .withContext('The isValid boolean should be set to false')
+      .toBeFalse();
   });
 
-  it('U-Test-8: If code is incomplete after clicking submit button nothing should be emitted', () => {
-    spyOn(component.sendCode, 'emit');
-    const codeInput = getNativeElements<SetCodeComponent, HTMLInputElement>(
-      fixture,
-      '.key-field'
-    );
-    const button = getNativeElement<SetCodeComponent, HTMLButtonElement>(
-      fixture,
-      '#proof-code-button'
-    );
-    codeInput[0].value = '1';
-    codeInput[1].value = '2';
-    triggerInput(codeInput);
-    button.click();
+  it('U-Test-10: If code is incomplete after clicking submit button nothing should be emitted', () => {
+    spyOn(component.send, 'emit');
+    nativeElements[0].value = '';
+    triggerInput(nativeElements);
+    nativeButton.click();
     fixture.detectChanges();
-    expect(component.sendCode.emit)
+
+    expect(component.send.emit)
       .withContext('Invalid code should not been emitted')
       .not.toHaveBeenCalled();
   });
 
-  it('U-Test-9: Initial incomplete code form should not display any error', () => {
+  it('U-Test-11: Initial form should not display any error', () => {
     const errorMsg = getNativeElement<SetCodeComponent, InvalidInputComponent>(
       fixture,
       'app-invalid-input'
@@ -192,45 +194,10 @@ xdescribe('SetCodeComponent - Unit Tests', () => {
 
   /*--------------------------------------------------Valid-Form-Behaviour--------------------------------------------------------*/
 
-  it('U-Test-10: After improving the invalid code, the error message should disappear', () => {
-    const codeInput = getNativeElements<SetCodeComponent, HTMLInputElement>(
-      fixture,
-      '.key-field'
-    );
-    codeInput[0].value = '1';
-    triggerInput([codeInput[0]]);
-    fixture.detectChanges();
-    for (const element of codeInput) {
-      element.value = '1';
-    }
-    triggerInput(codeInput);
-    fixture.detectChanges();
-    const errorMsg = getNativeElement<SetCodeComponent, InvalidInputComponent>(
-      fixture,
-      'app-invalid-input'
-    );
-    expect(errorMsg)
-      .withContext('InvalidInputComponent should disappear')
-      .toBeFalsy();
-  });
-
-  it('U-Test-11: The emit function should be called if a valid input was entered and the submit button was clicked', () => {
-    spyOn(component.sendCode, 'emit');
-    const codeInput = getNativeElements<SetCodeComponent, HTMLInputElement>(
-      fixture,
-      '.key-field'
-    );
-    const button = getNativeElement<SetCodeComponent, HTMLButtonElement>(
-      fixture,
-      '#proof-code-button'
-    );
-    for (const element of codeInput) {
-      element.value = '1';
-    }
-    triggerInput(codeInput);
-    fixture.detectChanges();
-    button.click();
-    expect(component.sendCode.emit)
+  it('U-Test-12: The emit function should be called if a valid input was entered', () => {
+    spyOn(component.send, 'emit');
+    nativeButton.click();
+    expect(component.send.emit)
       .withContext('Valid code should be emitted')
       .toHaveBeenCalled();
   });

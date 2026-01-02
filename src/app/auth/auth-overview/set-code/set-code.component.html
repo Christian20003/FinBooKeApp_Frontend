@@ -1,66 +1,31 @@
 <!-- The form to entere the access code -->
 <form
   id="code-form"
-  [formGroup]="codeForm"
+  [formGroup]="form"
   *transloco="let text"
   (submit)="onSubmit()">
   <div id="input-container">
-    <input
-      class="key-field"
-      type="text"
-      maxlength="1"
-      formControlName="value1"
-      #value1
-      (input)="validate(value1, value2)"
-      (focus)="onFocus(value1)" />
-    <input
-      class="key-field"
-      type="text"
-      maxlength="1"
-      formControlName="value2"
-      #value2
-      (input)="validate(value2, value3)"
-      (focus)="onFocus(value2)" />
-    <input
-      class="key-field"
-      type="text"
-      maxlength="1"
-      formControlName="value3"
-      #value3
-      (input)="validate(value3, value4)"
-      (focus)="onFocus(value3)" />
-    <input
-      class="key-field"
-      type="text"
-      maxlength="1"
-      formControlName="value4"
-      #value4
-      (input)="validate(value4, value5)"
-      (focus)="onFocus(value4)" />
-    <input
-      class="key-field"
-      type="text"
-      maxlength="1"
-      formControlName="value5"
-      #value5
-      (input)="validate(value5, value6)"
-      (focus)="onFocus(value5)" />
-    <input
-      class="key-field"
-      type="text"
-      maxlength="1"
-      formControlName="value6"
-      #value6
-      (input)="validate(value6, value6)"
-      (focus)="onFocus(value6)" />
+    @for (key of getKeys(); track key; let index = $index) {
+      <input
+        [id]="key"
+        class="key-field"
+        type="text"
+        maxlength="1"
+        [formControlName]="key"
+        (input)="onInput(index)"
+        (keydown)="onKeydown($event, index)"
+        (focus)="onFocus(index)"
+        placeholder="0" />
+    }
   </div>
   <!-- Element with the error message -->
   <div id="relative-container">
-    @if (isInvalid) {
+    @if (!isValid) {
       <app-invalid-input
         id="missing"
         [message]="text('auth.code.missing')"
-        [@moveLeftToRight]></app-invalid-input>
+        animate.enter="enterX"
+        animate.leave="leaveX"></app-invalid-input>
     }
   </div>
   <!-- Button to emit the entered access code -->

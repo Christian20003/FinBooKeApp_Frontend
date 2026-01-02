@@ -17,7 +17,6 @@ import {
   registerPath,
   resetPasswordPath,
 } from '../auth-routing-module';
-import { SecurityCode } from '../models/securityCode';
 import { LoginData } from '../models/loginData';
 import { RegisterData } from '../models/registerData';
 import { SetCodeComponent } from './set-code/set-code.component';
@@ -104,7 +103,7 @@ export class AuthOverviewComponent {
    *
    * @param code   - The security code which should be sent
    */
-  onSetCode(code: SecurityCode) {
+  onSetCode(code: string) {
     this.waiting = true;
     this.authService.postCode(code).subscribe({
       next: () => {

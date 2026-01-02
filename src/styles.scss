@@ -1,4 +1,5 @@
 @use "@angular/material" as mat;
+@use "./app/shared/styles/animations/slideAnimation" as animations;
 @use "./app/shared/styles/color/light_theme_colors" as light-theme;
 @use "./app/shared/styles/color/dark_theme_colors" as dark-theme;
 @use "./app/shared/styles/color/theme" as theme-obj;
@@ -19,4 +20,22 @@ body {
 
 :root body.dark {
   @include dark-theme.dark-theme-color-vars();
+}
+
+// Animation classes
+
+.enterX {
+  @include animations.slideXIn();
+}
+
+.leaveX {
+  @include animations.slideXOut();
+}
+
+.enterY {
+  @include animations.slideYIn();
+}
+
+.leaveY {
+  @include animations.slideYOut();
 }

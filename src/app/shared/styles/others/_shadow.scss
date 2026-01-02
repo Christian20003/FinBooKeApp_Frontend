@@ -4,6 +4,11 @@
         var(--shadow-color-primary) 0rem 1.1rem 2.2rem -1.1rem;
 }
 
+@mixin border-shadow-outside-highlight() {
+    box-shadow:
+        var(--highlight-color-container-primary) 0.625rem 0.625rem 1.5625rem,
+}
+
 @mixin border-shadow-strong() {
     box-shadow: 10px 10px var(--shadow-color-highlight);
 }
