@@ -14,7 +14,7 @@ export class InvalidInputComponent {
   // Dependency to access SVG resource
   private readonly domSanitizer = inject(DomSanitizer);
   // Message that should be displayed
-  message = input.required();
+  readonly message = input.required<string>();
 
   constructor() {
     this.iconRegistry.addSvgIcon(
