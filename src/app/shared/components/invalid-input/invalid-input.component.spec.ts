@@ -2,16 +2,16 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatIconModule } from '@angular/material/icon';
 import { InvalidInputComponent } from './invalid-input.component';
 import { provideHttpClient } from '@angular/common/http';
+import { provideZonelessChangeDetection } from '@angular/core';
 
-xdescribe('InvalidInputComponent - Unit Tests', () => {
+describe('InvalidInputComponent - Unit Tests', () => {
   let component: InvalidInputComponent;
   let fixture: ComponentFixture<InvalidInputComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [InvalidInputComponent],
-      imports: [MatIconModule],
-      providers: [provideHttpClient()],
+      imports: [MatIconModule, InvalidInputComponent],
+      providers: [provideHttpClient(), provideZonelessChangeDetection()],
     });
     fixture = TestBed.createComponent(InvalidInputComponent);
     fixture.componentRef.setInput('message', 'Error message');
@@ -19,7 +19,7 @@ xdescribe('InvalidInputComponent - Unit Tests', () => {
     fixture.detectChanges();
   });
 
-  it('U-Test-1: Should create', () => {
+  it('U-Test-1: Component should exist', () => {
     expect(component).withContext('This component should exist').toBeTruthy();
   });
 });

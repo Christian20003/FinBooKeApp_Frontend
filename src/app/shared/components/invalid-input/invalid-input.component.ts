@@ -1,4 +1,4 @@
-import { Component, input, InputSignal, inject } from '@angular/core';
+import { Component, input, inject } from '@angular/core';
 import { MatIconRegistry, MatIcon } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -9,10 +9,12 @@ import { DomSanitizer } from '@angular/platform-browser';
   imports: [MatIcon],
 })
 export class InvalidInputComponent {
-  private iconRegistry = inject(MatIconRegistry);
-  private domSanitizer = inject(DomSanitizer);
-
-  public message: InputSignal<string> = input.required();
+  // Dependency to register icons
+  private readonly iconRegistry = inject(MatIconRegistry);
+  // Dependency to access SVG resource
+  private readonly domSanitizer = inject(DomSanitizer);
+  // Message that should be displayed
+  message = input.required();
 
   constructor() {
     this.iconRegistry.addSvgIcon(

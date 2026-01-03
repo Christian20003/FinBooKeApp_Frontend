@@ -5,8 +5,14 @@
     display: flex;
     color: var(--icon-color-error);
     @include font.label-font();
+
+    #message {
+        align-self: center;
+        margin: 0;
+    }
+
+    #icon {
+        @include svg.svg-label-container($width: 1.3rem, $fill: var(--icon-color-error), $stroke: none);
+    }
 }
 
-#icon {
-    @include svg.svg-label-container($width: 1.5rem, $fill: var(--icon-color-error), $stroke: none);
-}
