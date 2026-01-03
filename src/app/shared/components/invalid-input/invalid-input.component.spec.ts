@@ -3,6 +3,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { InvalidInputComponent } from './invalid-input.component';
 import { provideHttpClient } from '@angular/common/http';
 import { provideZonelessChangeDetection } from '@angular/core';
+import { getNativeElement } from 'src/app/testing/testing-support';
 
 describe('InvalidInputComponent - Unit Tests', () => {
   let component: InvalidInputComponent;
@@ -21,5 +22,13 @@ describe('InvalidInputComponent - Unit Tests', () => {
 
   it('U-Test-1: Component should exist', () => {
     expect(component).withContext('This component should exist').toBeTruthy();
+  });
+
+  it('U-Test-2: Message should be displayed', () => {
+    const element = getNativeElement<
+      InvalidInputComponent,
+      HTMLParagraphElement
+    >(fixture, 'p');
+    expect(element.innerText).toBe(component.message());
   });
 });
