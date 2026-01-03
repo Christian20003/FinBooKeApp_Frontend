@@ -1,29 +1,23 @@
-import { Component, input, InputSignal, inject } from '@angular/core';
-import { MatIcon, MatIconRegistry } from '@angular/material/icon';
-import { DomSanitizer } from '@angular/platform-browser';
+import { Component, input, inject } from '@angular/core';
+import { MatIcon } from '@angular/material/icon';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { growShrink } from '../../animations/growShrink';
-import { moveLeftToRight } from '../../animations/slideLeftRight';
+import { IconService } from '../../services/icon/icon.service';
 
 @Component({
   selector: 'app-loading',
-  imports: [TranslocoDirective, MatIcon],
   templateUrl: './loading.component.html',
   styleUrls: ['./loading.component.scss'],
-  animations: [growShrink, moveLeftToRight],
+  imports: [TranslocoDirective, MatIcon],
 })
 export class LoadingComponent {
-  private matIconRegistry = inject(MatIconRegistry);
-  private domSanitizer = inject(DomSanitizer);
-
-  public readonly message: InputSignal<string> = input('');
+  // Dependency to register SVG icon
+  private readonly iconService = inject(IconService);
+  // The icon name
+  protected readonly iconName = 'loading';
+  // The message which should be displayed.
+  readonly message = input<string>('');
 
   constructor() {
-    this.matIconRegistry.addSvgIcon(
-      'coins',
-      this.domSanitizer.bypassSecurityTrustResourceUrl(
-        '../../../../../assets/icons/coins.svg'
-      )
-    );
+    this.iconService.registerIcon(this.iconName);
   }
 }

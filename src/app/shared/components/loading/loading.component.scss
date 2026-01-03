@@ -1,5 +1,9 @@
 @use "../../styles/container-mixin/blur" as blur;
+@use "../../styles/container-mixin/svg" as svg;
+@use "../../styles/animations/rotateAnimation" as animation;
 @use "../../styles/others/font" as font;
+
+$icon-width: 2rem;
 
 .container {
     display: grid;
@@ -14,27 +18,27 @@
         .inner-circle {
             background-color: var(--highlight-color-container-primary);
             padding: 0.5rem;
+            width: $icon-width;
+            height: $icon-width;
             border-radius: 50%;
 
             .icon {
-                width: 2rem;
-                height: 2rem;
-                fill: var(--background-color-container-primary);
+                @include svg.svg-container($width: $icon-width, $stroke: none, $fill: var(--background-color-container-primary));
             }
         }
 
         &::after {
             content: "";
             position: absolute;
-            top: 0.22rem;
+            top: 0.12rem;
             left: 0.1rem;
-            width: 4rem;
-            height: 4rem;
+            width: calc($icon-width * 2);
+            height: calc($icon-width * 2);
             border-radius: 50%;
             border: 0.2rem solid;
-            border-color: var(--border-color-complement) var(--border-color-secondary) var(--border-color-secondary)
+            border-color: var(--border-color-primary) var(--border-color-secondary) var(--border-color-secondary)
                 var(--border-color-secondary);
-            animation: spin 1.2s linear infinite;
+            @include animation.spin();
         }
     }
 
@@ -43,23 +47,14 @@
         margin-top: 0.5rem;
 
         .loading-title {
-            color: white;
+            color: var(--text-color-primary);
             font-weight: 900;
             @include font.description-font($align: center);
         }
 
         .loading-text {
-            color: white;
+            color: var(--text-color-primary);
             @include font.description-font($align: center);
         }
-    }
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
     }
 }

@@ -17,6 +17,10 @@ export class IconService {
       name: 'warning',
       path: 'assets/icons/action-results/warning.svg',
     },
+    loading: {
+      name: 'loading',
+      path: 'assets/icons/symbols/coins.svg',
+    },
   };
 
   /**
