@@ -1,5 +1,6 @@
 @use "@angular/material" as mat;
-@use "./app/shared/styles/animations/slideAnimation" as animations;
+@use "./app/shared/styles/animations/slideAnimation" as animations-slide;
+@use "./app/shared/styles/animations/sizeAnimation" as animations-size;
 @use "./app/shared/styles/color/light_theme_colors" as light-theme;
 @use "./app/shared/styles/color/dark_theme_colors" as dark-theme;
 @use "./app/shared/styles/color/theme" as theme-obj;
@@ -25,17 +26,25 @@ body {
 // Animation classes
 
 .enterX {
-  @include animations.slideXIn();
+  @include animations-slide.slideXIn();
 }
 
 .leaveX {
-  @include animations.slideXOut();
+  @include animations-slide.slideXOut();
 }
 
 .enterY {
-  @include animations.slideYIn();
+  @include animations-slide.slideYIn();
 }
 
 .leaveY {
-  @include animations.slideYOut();
+  @include animations-slide.slideYOut();
+}
+
+.grow {
+  @include animations-size.growUp();
+}
+
+.shrink {
+  @include animations-size.shrinkDown();
 }

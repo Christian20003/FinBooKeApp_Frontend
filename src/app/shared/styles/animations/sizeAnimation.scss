@@ -1,0 +1,25 @@
+@mixin growUp {
+    animation: grow 1s;
+}
+
+@mixin shrinkDown {
+    animation: shrink 1s;
+}
+
+@keyframes grow {
+    from {
+        scale: 0;
+    }
+    to {
+        scale: 1;
+    }
+}
+
+@keyframes shrink {
+    from {
+        scale: 1;
+    }
+    to {
+        scale: 0;
+    }
+}
