@@ -5,12 +5,10 @@ import {
   setUser,
   moveLeftToRight,
   moveRightToLeft,
-  User,
-  ToastType,
-  ToastLifeTime,
   LoadingComponent,
 } from 'src/app/shared/index';
-import { ToastService } from 'src/app/shared/services/toast/toast-service';
+import { User, ToastLifeTime, ToastType } from 'src/app/core/index';
+import { ToastService } from 'src/app/core/services/toast/toast-service';
 import { AuthenticationService } from './authentication.service';
 import {
   loginPath,

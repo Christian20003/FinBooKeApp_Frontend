@@ -4,7 +4,7 @@ import {
   provideHttpClientTesting,
 } from '@angular/common/http/testing';
 import { HttpErrorResponse, provideHttpClient } from '@angular/common/http';
-import { TestUser, User } from 'src/app/shared';
+import { TestUser, User } from 'src/app/core';
 import { EnvironmentService } from 'src/app/dev-tools/environment.service';
 import { AuthenticationService } from './authentication.service';
 import { TestLoginData } from '../models/loginData';

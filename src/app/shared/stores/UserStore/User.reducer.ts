@@ -7,7 +7,7 @@ import {
   setUserName,
   setUserSession,
 } from './User.actions';
-import { User } from '../../models/User';
+import { User } from 'src/app/core';
 
 /** This object represents the initial state of a user in the store */
 export const initialState: User = {

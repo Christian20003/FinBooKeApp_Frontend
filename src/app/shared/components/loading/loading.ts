@@ -1,7 +1,7 @@
 import { Component, input, inject } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { IconService } from '../../services/icon/icon-service';
+import { IconService } from 'src/app/core/';
 
 @Component({
   selector: 'app-loading',

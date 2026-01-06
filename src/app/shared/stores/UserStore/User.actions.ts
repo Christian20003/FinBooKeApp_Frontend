@@ -1,6 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { User } from '../../models/User';
-import { Session } from '../../models/Session';
+import { User, Session } from 'src/app/core';
 
 /**
  * This action can be used to set the user-object of the corresponding store.

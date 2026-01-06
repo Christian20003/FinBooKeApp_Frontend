@@ -5,10 +5,14 @@ import {
   HttpTestingController,
   provideHttpClientTesting,
 } from '@angular/common/http/testing';
-import { ToastService } from 'src/app/shared/services/toast/toast-service';
 import { ToastComponent } from 'src/app/shared/components/toasts/toast/toast';
 import { ToastsComponent } from 'src/app/shared/components/toasts/toasts';
-import { IconService, TestToast, ToastLifeTime } from 'src/app/shared';
+import {
+  IconService,
+  TestToast,
+  ToastLifeTime,
+  ToastService,
+} from 'src/app/core';
 import { getHTMLElement } from 'src/app/testing/helper/get-html-element';
 import { getComponents } from 'src/app/testing/helper/get-component';
 

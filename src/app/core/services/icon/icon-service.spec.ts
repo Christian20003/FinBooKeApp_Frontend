@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { provideZonelessChangeDetection } from '@angular/core';
-import { IconDictionary } from 'src/app/shared/models/Icon';
+import { IconDictionary } from 'src/app/core/models/Icon';
 import { IconService } from './icon-service';
 
 describe('IconService - Unit Tests', () => {

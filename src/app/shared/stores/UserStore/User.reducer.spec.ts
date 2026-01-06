@@ -1,4 +1,4 @@
-import { TestUser } from '../../models/User';
+import { TestUser } from 'src/app/core';
 import {
   deleteUser,
   setEmail,

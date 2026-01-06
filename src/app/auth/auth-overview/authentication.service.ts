@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { User } from 'src/app/shared/index';
+import { User } from 'src/app/core';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { TranslocoService } from '@jsverse/transloco';
 import { EnvironmentService } from 'src/app/dev-tools/environment.service';

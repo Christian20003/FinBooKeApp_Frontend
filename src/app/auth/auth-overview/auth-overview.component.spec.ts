@@ -8,15 +8,10 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { MockModule } from 'ng-mocks';
 import { of, throwError } from 'rxjs';
 import { getNativeElement } from 'src/app/testing/testing-support';
-import { ToastService } from 'src/app/shared/services/toast/toast-service';
+import { ToastService } from 'src/app/core/services/toast/toast-service';
 import { routes } from 'src/app/routing/app-routing.module';
-import {
-  LoadingComponent,
-  TestUser,
-  ToastLifeTime,
-  ToastType,
-  initialState,
-} from 'src/app/shared/index';
+import { LoadingComponent, initialState } from 'src/app/shared/index';
+import { TestUser, ToastLifeTime, ToastType } from 'src/app/core/index';
 import { AuthOverviewComponent } from './auth-overview.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';

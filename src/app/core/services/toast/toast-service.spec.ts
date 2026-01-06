@@ -9,7 +9,7 @@ import {
   Toast,
   ToastLifeTime,
   ToastType,
-} from 'src/app/shared//models/Toast';
+} from 'src/app/core/models/Toast';
 import { ToastService } from './toast-service';
 
 describe('ToastService - Unit Tests', () => {

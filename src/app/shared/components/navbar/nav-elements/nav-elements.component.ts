@@ -8,8 +8,8 @@ import { Store } from '@ngrx/store';
 import { AuthenticationService } from 'src/app/auth/auth-overview/authentication.service';
 import { loginPath } from 'src/app/auth/auth-routing-module';
 import { deleteUser } from 'src/app/shared/stores/UserStore/User.actions';
-import { ToastLifeTime, ToastType } from 'src/app/shared/models/Toast';
-import { ToastService } from '../../../services/toast/toast-service';
+import { ToastLifeTime, ToastType } from 'src/app/core/models/Toast';
+import { ToastService } from 'src/app/core';
 
 @Component({
   selector: 'app-nav-elements',

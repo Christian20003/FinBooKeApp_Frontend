@@ -8,7 +8,7 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
-import { IconService, Toast, ToastLifeTime, ToastType } from 'src/app/shared';
+import { IconService, Toast, ToastLifeTime, ToastType } from 'src/app/core';
 
 @Component({
   selector: 'app-toast',

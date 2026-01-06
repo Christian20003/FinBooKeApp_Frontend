@@ -14,7 +14,7 @@ import {
 import { NavbarComponent } from './navbar.component';
 import { NavElementsComponent } from './nav-elements/nav-elements.component';
 import { SharedModule } from '../shared.module';
-import { TestUser, User } from '../../models/User';
+import { TestUser, User } from 'src/app/core';
 import { selectUser } from '../../stores/UserStore/User.selector';
 
 xdescribe('NavbarComponent - Unit Tests', () => {

@@ -1,4 +1,4 @@
-import { TestUser } from '../../models/User';
+import { TestUser } from 'src/app/core';
 import { selectSession, selectUser } from './User.selector';
 
 xdescribe('User-Store Selectors - Unit Tests', () => {

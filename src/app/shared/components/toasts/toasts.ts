@@ -1,6 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { Toast } from 'src/app/shared/models/Toast';
-import { ToastService } from 'src/app/shared/services/toast/toast-service';
+import { Toast, ToastService } from 'src/app/core';
 import { ToastComponent } from './toast/toast';
 
 @Component({
