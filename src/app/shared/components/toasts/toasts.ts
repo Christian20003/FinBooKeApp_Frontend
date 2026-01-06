@@ -1,12 +1,12 @@
 import { Component, inject, signal } from '@angular/core';
 import { Toast } from 'src/app/shared/models/Toast';
-import { ToastService } from 'src/app/shared/services/toast/toast.service';
-import { ToastComponent } from './toast/toast.component';
+import { ToastService } from 'src/app/shared/services/toast/toast-service';
+import { ToastComponent } from './toast/toast';
 
 @Component({
   selector: 'app-toasts',
-  templateUrl: './toasts.component.html',
-  styleUrl: './toasts.component.scss',
+  templateUrl: './toasts.html',
+  styleUrl: './toasts.scss',
   imports: [ToastComponent],
 })
 export class ToastsComponent {

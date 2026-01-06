@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { provideHttpClient } from '@angular/common/http';
 import { MockComponent } from 'ng-mocks';
 import { LoginComponent } from './login.component';
-import { InvalidInputComponent } from 'src/app/shared/index';
+import { FormInputErrorComponent } from 'src/app/shared/index';
 import {
   getNativeElement,
   getNativeElements,
@@ -20,7 +20,7 @@ xdescribe('LoginComponent - Unit Tests', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [LoginComponent, MockComponent(InvalidInputComponent)],
+      declarations: [LoginComponent, MockComponent(FormInputErrorComponent)],
       imports: [
         ReactiveFormsModule,
         BrowserAnimationsModule,
@@ -81,13 +81,13 @@ xdescribe('LoginComponent - Unit Tests', () => {
 
   it('U-TEST-4: Validation of empty email before interaction', () => {
     const emailControl = component.loginForm.get('email');
-    const invalidComp = getNativeElement<LoginComponent, InvalidInputComponent>(
-      fixture,
-      'app-invalid-input'
-    );
+    const invalidComp = getNativeElement<
+      LoginComponent,
+      FormInputErrorComponent
+    >(fixture, 'app-form-input-error');
     expect(invalidComp)
       .withContext(
-        'InvalidInputComponent should not appear of untouched email input element'
+        'FormInputErrorComponent should not appear of untouched email input element'
       )
       .toBeFalsy();
     expect(emailControl?.errors?.['required'])
@@ -105,13 +105,13 @@ xdescribe('LoginComponent - Unit Tests', () => {
     fixture.detectChanges();
 
     const emailControl = component.loginForm.get('email');
-    const invalidComp = getNativeElement<LoginComponent, InvalidInputComponent>(
-      fixture,
-      'app-invalid-input'
-    );
+    const invalidComp = getNativeElement<
+      LoginComponent,
+      FormInputErrorComponent
+    >(fixture, 'app-form-input-error');
     expect(invalidComp)
       .withContext(
-        'InvalidInputComponent should appear after touching the email input element with false value'
+        'FormInputErrorComponent should appear after touching the email input element with false value'
       )
       .toBeTruthy();
     expect(emailControl?.errors?.['required'])
@@ -131,13 +131,13 @@ xdescribe('LoginComponent - Unit Tests', () => {
     fixture.detectChanges();
 
     const emailControl = component.loginForm.get('email');
-    const invalidComp = getNativeElement<LoginComponent, InvalidInputComponent>(
-      fixture,
-      'app-invalid-input'
-    );
+    const invalidComp = getNativeElement<
+      LoginComponent,
+      FormInputErrorComponent
+    >(fixture, 'app-form-input-error');
     expect(invalidComp)
       .withContext(
-        'InvalidInputComponent should appear after entering a invalid email value'
+        'FormInputErrorComponent should appear after entering a invalid email value'
       )
       .toBeTruthy();
     expect(emailControl?.errors?.['email'])
@@ -149,13 +149,13 @@ xdescribe('LoginComponent - Unit Tests', () => {
 
   it('U-TEST-7: Validation of empty password before interaction', () => {
     const emailFormGroup = component.loginForm.get('password');
-    const invalidComp = getNativeElement<LoginComponent, InvalidInputComponent>(
-      fixture,
-      'app-invalid-input'
-    );
+    const invalidComp = getNativeElement<
+      LoginComponent,
+      FormInputErrorComponent
+    >(fixture, 'app-form-input-error');
     expect(invalidComp)
       .withContext(
-        'InvalidInputComponent should not appear of untouched password input element'
+        'FormInputErrorComponent should not appear of untouched password input element'
       )
       .toBeFalsy();
     expect(emailFormGroup?.errors?.['required'])
@@ -173,14 +173,14 @@ xdescribe('LoginComponent - Unit Tests', () => {
     fixture.detectChanges();
 
     const passwordControl = component.loginForm.get('password');
-    const invalidComp = getNativeElement<LoginComponent, InvalidInputComponent>(
-      fixture,
-      'app-invalid-input'
-    );
+    const invalidComp = getNativeElement<
+      LoginComponent,
+      FormInputErrorComponent
+    >(fixture, 'app-form-input-error');
 
     expect(invalidComp)
       .withContext(
-        'InvalidInputComponent should appear after touching the email input element with an empty value'
+        'FormInputErrorComponent should appear after touching the email input element with an empty value'
       )
       .toBeTruthy();
     expect(passwordControl?.errors?.['required'])
@@ -203,17 +203,17 @@ xdescribe('LoginComponent - Unit Tests', () => {
     passwordInput.value = 'examplePassword';
     triggerInput([emailInput, passwordInput]);
     fixture.detectChanges();
-    const invalidComp = getNativeElement<LoginComponent, InvalidInputComponent>(
-      fixture,
-      'app-invalid-input'
-    );
+    const invalidComp = getNativeElement<
+      LoginComponent,
+      FormInputErrorComponent
+    >(fixture, 'app-form-input-error');
 
     expect(component.loginForm.valid)
       .withContext('FormGroup should be valid if all values are correct')
       .toBeTruthy();
     expect(invalidComp)
       .withContext(
-        'InvalidInputComponent should not appear if all value are correct'
+        'FormInputErrorComponent should not appear if all value are correct'
       )
       .toBeFalsy();
   });
@@ -240,8 +240,8 @@ xdescribe('LoginComponent - Unit Tests', () => {
 
     const invalidComp = getNativeElements<
       LoginComponent,
-      InvalidInputComponent
-    >(fixture, 'app-invalid-input');
+      FormInputErrorComponent
+    >(fixture, 'app-form-input-error');
     const length = invalidComp.length;
     expect(component.loginForm.invalid)
       .withContext('FormGroup should be invalid')
@@ -251,7 +251,7 @@ xdescribe('LoginComponent - Unit Tests', () => {
       .not.toHaveBeenCalled();
     expect(length)
       .withContext(
-        'There should be a InvalidInputComponent for incorrect email and password'
+        'There should be a FormInputErrorComponent for incorrect email and password'
       )
       .toEqual(2);
   });
@@ -276,10 +276,10 @@ xdescribe('LoginComponent - Unit Tests', () => {
     loginButton.click();
     fixture.detectChanges();
 
-    const invalidComp = getNativeElement<LoginComponent, InvalidInputComponent>(
-      fixture,
-      'app-invalid-input'
-    );
+    const invalidComp = getNativeElement<
+      LoginComponent,
+      FormInputErrorComponent
+    >(fixture, 'app-form-input-error');
     expect(component.loginForm.valid)
       .withContext('FormGroup should be valid')
       .toBeTruthy();
@@ -288,7 +288,7 @@ xdescribe('LoginComponent - Unit Tests', () => {
       .toHaveBeenCalled();
     expect(invalidComp)
       .withContext(
-        'There should not any InvalidInputComponent in correct submission'
+        'There should not any FormInputErrorComponent in correct submission'
       )
       .toBeFalsy();
   });

@@ -1,14 +1,14 @@
 import { Component, input, inject } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
-import { IconService } from '../../services/icon/icon.service';
+import { IconService } from '../../services/icon/icon-service';
 
 @Component({
-  selector: 'app-invalid-input',
-  templateUrl: './invalid-input.component.html',
-  styleUrls: ['./invalid-input.component.scss'],
+  selector: 'app-form-input-error',
+  templateUrl: './form-input-error.html',
+  styleUrls: ['./form-input-error.scss'],
   imports: [MatIcon],
 })
-export class InvalidInputComponent {
+export class FormInputErrorComponent {
   // Service to register required SVG icon
   private readonly iconService = inject(IconService);
   // Name of the icon

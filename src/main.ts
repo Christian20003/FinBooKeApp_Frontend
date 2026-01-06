@@ -15,7 +15,7 @@ import {
   withInterceptorsFromDi,
 } from '@angular/common/http';
 import { config } from './app/transloco-root.module';
-import { ToastsComponent } from './app/shared/components/toasts/toasts.component';
+import { ToastsComponent } from './app/shared/components/toasts/toasts';
 import { NavbarComponent } from './app/shared/components/navbar/navbar.component';
 import { provideTransloco } from '@jsverse/transloco';
 import { provideRouter } from '@angular/router';

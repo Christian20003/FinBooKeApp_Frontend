@@ -17,7 +17,7 @@ import {
 import { MatIconRegistry, MatIcon } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { moveLeftToRight, InvalidInputComponent } from 'src/app/shared';
+import { moveLeftToRight, FormInputErrorComponent } from 'src/app/shared';
 
 @Component({
   selector: 'app-get-code',
@@ -26,7 +26,7 @@ import { moveLeftToRight, InvalidInputComponent } from 'src/app/shared';
   animations: [moveLeftToRight],
   imports: [
     MatIcon,
-    InvalidInputComponent,
+    FormInputErrorComponent,
     TranslocoDirective,
     ReactiveFormsModule,
   ],

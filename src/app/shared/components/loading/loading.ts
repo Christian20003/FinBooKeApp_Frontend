@@ -1,12 +1,12 @@
 import { Component, input, inject } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { IconService } from '../../services/icon/icon.service';
+import { IconService } from '../../services/icon/icon-service';
 
 @Component({
   selector: 'app-loading',
-  templateUrl: './loading.component.html',
-  styleUrls: ['./loading.component.scss'],
+  templateUrl: './loading.html',
+  styleUrls: ['./loading.scss'],
   imports: [TranslocoDirective, MatIcon],
 })
 export class LoadingComponent {

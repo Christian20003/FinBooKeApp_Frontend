@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { provideHttpClient } from '@angular/common/http';
 import { SetCodeComponent } from 'src/app/auth/auth-overview/set-code/set-code.component';
-import { InvalidInputComponent } from 'src/app/shared';
+import { FormInputErrorComponent } from 'src/app/shared';
 import {
   getComponent,
   getNativeElement,
@@ -18,7 +18,7 @@ xdescribe('SetCodeComponent - Unit Tests', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SetCodeComponent, InvalidInputComponent],
+      declarations: [SetCodeComponent, FormInputErrorComponent],
       imports: [
         ReactiveFormsModule,
         BrowserAnimationsModule,
@@ -38,9 +38,9 @@ xdescribe('SetCodeComponent - Unit Tests', () => {
     );
     button.click();
     fixture.detectChanges();
-    const invalidComp = getComponent<SetCodeComponent, InvalidInputComponent>(
+    const invalidComp = getComponent<SetCodeComponent, FormInputErrorComponent>(
       fixture,
-      InvalidInputComponent
+      FormInputErrorComponent
     );
     expect(invalidComp.componentInstance.message())
       .withContext('Error message is not as defined')
@@ -61,9 +61,9 @@ xdescribe('SetCodeComponent - Unit Tests', () => {
     triggerInput([codeInput[0], codeInput[1]]);
     button.click();
     fixture.detectChanges();
-    const invalidComp = getComponent<SetCodeComponent, InvalidInputComponent>(
+    const invalidComp = getComponent<SetCodeComponent, FormInputErrorComponent>(
       fixture,
-      InvalidInputComponent
+      FormInputErrorComponent
     );
     expect(invalidComp.componentInstance.message())
       .withContext('Error message is not as defined')

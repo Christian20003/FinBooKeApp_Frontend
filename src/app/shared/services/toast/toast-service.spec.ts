@@ -10,7 +10,7 @@ import {
   ToastLifeTime,
   ToastType,
 } from 'src/app/shared//models/Toast';
-import { ToastService } from './toast.service';
+import { ToastService } from './toast-service';
 
 describe('ToastService - Unit Tests', () => {
   let service: ToastService;

@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GetCodeComponent } from 'src/app/auth/auth-overview/get-code/get-code.component';
-import { InvalidInputComponent } from 'src/app/shared';
+import { FormInputErrorComponent } from 'src/app/shared';
 import {
   getComponent,
   getNativeElement,
@@ -17,7 +17,7 @@ xdescribe('GetCodeComponent - Integration Tests', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [GetCodeComponent, InvalidInputComponent],
+      declarations: [GetCodeComponent, FormInputErrorComponent],
       imports: [
         ReactiveFormsModule,
         BrowserAnimationsModule,
@@ -37,13 +37,13 @@ xdescribe('GetCodeComponent - Integration Tests', () => {
     );
     button.click();
     fixture.detectChanges();
-    const invalidComp = getComponent<GetCodeComponent, InvalidInputComponent>(
+    const invalidComp = getComponent<GetCodeComponent, FormInputErrorComponent>(
       fixture,
-      InvalidInputComponent
+      FormInputErrorComponent
     );
     expect(invalidComp.componentInstance.message())
       .withContext(
-        'InvalidInputComponent should appear with the defined message'
+        'FormInputErrorComponent should appear with the defined message'
       )
       .toBe('Empty e-mail address');
   });
@@ -61,13 +61,13 @@ xdescribe('GetCodeComponent - Integration Tests', () => {
     triggerInput([emailInput]);
     button.click();
     fixture.detectChanges();
-    const invalidComp = getComponent<GetCodeComponent, InvalidInputComponent>(
+    const invalidComp = getComponent<GetCodeComponent, FormInputErrorComponent>(
       fixture,
-      InvalidInputComponent
+      FormInputErrorComponent
     );
     expect(invalidComp.componentInstance.message())
       .withContext(
-        'InvalidInputComponent should appear with the defined message'
+        'FormInputErrorComponent should appear with the defined message'
       )
       .toBe('Invalid e-mail address');
   });

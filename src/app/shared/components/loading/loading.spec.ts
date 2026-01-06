@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { getNativeElement } from 'src/app/testing/testing-support';
 import { getTranslocoModule } from 'src/app/testing/transloco-testing.module';
-import { LoadingComponent } from './loading.component';
+import { LoadingComponent } from './loading';
 import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('LoadingComponent - Unit-Tests', () => {

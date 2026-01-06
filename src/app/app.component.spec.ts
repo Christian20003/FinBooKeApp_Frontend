@@ -6,7 +6,7 @@ import { StoreModule } from '@ngrx/store';
 import { userReducer } from './shared/index';
 import { SharedModule } from './shared/components/shared.module';
 import { TranslocoRootModule } from './transloco-root.module';
-import { ToastsComponent } from './shared/components/toasts/toasts.component';
+import { ToastsComponent } from './shared/components/toasts/toasts';
 
 describe('Dummy', () => {
   it('Test', () => {

@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { ToastLifeTime } from 'src/app/shared';
 import { ToastType } from 'src/app/shared';
-import { ToastService } from 'src/app/shared/services/toast/toast.service';
+import { ToastService } from 'src/app/shared/services/toast/toast-service';
 import { DashboardActionsComponent } from './dashboard-actions/dashboard-actions.component';
 
 @Component({

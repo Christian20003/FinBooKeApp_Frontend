@@ -9,7 +9,7 @@ import { AuthenticationService } from 'src/app/auth/auth-overview/authentication
 import { loginPath } from 'src/app/auth/auth-routing-module';
 import { deleteUser } from 'src/app/shared/stores/UserStore/User.actions';
 import { ToastLifeTime, ToastType } from 'src/app/shared/models/Toast';
-import { ToastService } from '../../../services/toast/toast.service';
+import { ToastService } from '../../../services/toast/toast-service';
 
 @Component({
   selector: 'app-nav-elements',

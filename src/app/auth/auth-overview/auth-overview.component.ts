@@ -10,7 +10,7 @@ import {
   ToastLifeTime,
   LoadingComponent,
 } from 'src/app/shared/index';
-import { ToastService } from 'src/app/shared/services/toast/toast.service';
+import { ToastService } from 'src/app/shared/services/toast/toast-service';
 import { AuthenticationService } from './authentication.service';
 import {
   loginPath,

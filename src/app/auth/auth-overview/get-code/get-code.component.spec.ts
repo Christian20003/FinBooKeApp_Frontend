@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { provideHttpClient } from '@angular/common/http';
 import { GetCodeComponent } from './get-code.component';
 import { MockComponent } from 'ng-mocks';
-import { InvalidInputComponent } from 'src/app/shared';
+import { FormInputErrorComponent } from 'src/app/shared';
 import {
   triggerInput,
   getNativeElement,
@@ -18,7 +18,7 @@ xdescribe('GetCodeComponent - Unit Tests', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [GetCodeComponent, MockComponent(InvalidInputComponent)],
+      declarations: [GetCodeComponent, MockComponent(FormInputErrorComponent)],
       imports: [
         ReactiveFormsModule,
         BrowserAnimationsModule,
@@ -53,10 +53,10 @@ xdescribe('GetCodeComponent - Unit Tests', () => {
   it('U-Test-3: Initial empty email address should not have an error message', () => {
     const invalidComp = getNativeElement<
       GetCodeComponent,
-      InvalidInputComponent
-    >(fixture, 'app-invalid-input');
+      FormInputErrorComponent
+    >(fixture, 'app-form-input-error');
     expect(invalidComp)
-      .withContext('InvalidInputComponent should not exist')
+      .withContext('FormInputErrorComponent should not exist')
       .toBeFalsy();
   });
 
@@ -86,10 +86,10 @@ xdescribe('GetCodeComponent - Unit Tests', () => {
     fixture.detectChanges();
     const invalidComp = getNativeElement<
       GetCodeComponent,
-      InvalidInputComponent
-    >(fixture, 'app-invalid-input');
+      FormInputErrorComponent
+    >(fixture, 'app-form-input-error');
     expect(invalidComp)
-      .withContext('InvalidInputComponent should appear')
+      .withContext('FormInputErrorComponent should appear')
       .toBeTruthy();
   });
 
@@ -103,10 +103,10 @@ xdescribe('GetCodeComponent - Unit Tests', () => {
     fixture.detectChanges();
     const invalidComp = getNativeElement<
       GetCodeComponent,
-      InvalidInputComponent
-    >(fixture, 'app-invalid-input');
+      FormInputErrorComponent
+    >(fixture, 'app-form-input-error');
     expect(invalidComp)
-      .withContext('InvalidInputComponent should appear')
+      .withContext('FormInputErrorComponent should appear')
       .toBeTruthy();
   });
 
@@ -145,8 +145,8 @@ xdescribe('GetCodeComponent - Unit Tests', () => {
     fixture.detectChanges();
     const invalidComp = getNativeElement<
       GetCodeComponent,
-      InvalidInputComponent
-    >(fixture, 'app-invalid-input');
+      FormInputErrorComponent
+    >(fixture, 'app-form-input-error');
     expect(component.setEmail.emit)
       .withContext('Valid email should be emitted')
       .toHaveBeenCalled();
@@ -154,7 +154,7 @@ xdescribe('GetCodeComponent - Unit Tests', () => {
       .withContext('Emitted email should be that string')
       .toHaveBeenCalledWith('test@test.com');
     expect(invalidComp)
-      .withContext('InvalidInputComponent should not appear')
+      .withContext('FormInputErrorComponent should not appear')
       .toBeFalsy();
   });
 });

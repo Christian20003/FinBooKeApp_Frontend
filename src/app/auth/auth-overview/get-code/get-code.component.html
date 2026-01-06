@@ -15,16 +15,16 @@
   <div class="relative-container">
     <!-- The element with the information about missing email address -->
     @if (email?.errors?.['required'] && email?.touched) {
-      <app-invalid-input
+      <app-form-input-error
         class="missing"
         [message]="text('auth.email.missing')"
-        [@moveLeftToRight]></app-invalid-input>
+        [@moveLeftToRight]></app-form-input-error>
       <!-- The element with the information about invalid email address -->
     } @else if (email?.errors?.['email'] && email?.touched) {
-      <app-invalid-input
+      <app-form-input-error
         class="missing"
         [message]="text('auth.email.invalid')"
-        [@moveLeftToRight]></app-invalid-input>
+        [@moveLeftToRight]></app-form-input-error>
     }
   </div>
   <!-- Button to send the email address -->

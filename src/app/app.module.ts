@@ -12,7 +12,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { SharedModule } from './shared/components/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslocoRootModule } from './transloco-root.module';
-import { ToastsComponent } from './shared/components/toasts/toasts.component';
+import { ToastsComponent } from './shared/components/toasts/toasts';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 
 /* @NgModule({

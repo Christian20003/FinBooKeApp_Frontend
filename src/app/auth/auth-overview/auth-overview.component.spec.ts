@@ -8,7 +8,7 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { MockModule } from 'ng-mocks';
 import { of, throwError } from 'rxjs';
 import { getNativeElement } from 'src/app/testing/testing-support';
-import { ToastService } from 'src/app/shared/services/toast/toast.service';
+import { ToastService } from 'src/app/shared/services/toast/toast-service';
 import { getTranslocoModule } from 'src/app/testing/transloco-testing.module';
 import { routes } from 'src/app/routing/app-routing.module';
 import {

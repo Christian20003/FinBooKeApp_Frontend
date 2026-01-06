@@ -14,7 +14,7 @@ import {
 } from '@angular/forms';
 import { MatIconRegistry, MatIcon } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { moveLeftToRight, InvalidInputComponent } from 'src/app/shared/index';
+import { moveLeftToRight, FormInputErrorComponent } from 'src/app/shared/index';
 import { LoginData } from '../../models/loginData';
 import { TranslocoDirective } from '@jsverse/transloco';
 
@@ -24,7 +24,7 @@ import { TranslocoDirective } from '@jsverse/transloco';
   styleUrls: ['./login.component.scss'],
   animations: [moveLeftToRight],
   imports: [
-    InvalidInputComponent,
+    FormInputErrorComponent,
     MatIcon,
     TranslocoDirective,
     ReactiveFormsModule,

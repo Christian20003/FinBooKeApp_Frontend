@@ -13,13 +13,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { InvalidInputComponent } from 'src/app/shared';
+import { FormInputErrorComponent } from 'src/app/shared';
 
 @Component({
   selector: 'app-set-code',
   templateUrl: './set-code.component.html',
   styleUrls: ['./set-code.component.scss'],
-  imports: [TranslocoDirective, ReactiveFormsModule, InvalidInputComponent],
+  imports: [TranslocoDirective, ReactiveFormsModule, FormInputErrorComponent],
 })
 export class SetCodeComponent implements OnInit {
   // The output signal to emit security code

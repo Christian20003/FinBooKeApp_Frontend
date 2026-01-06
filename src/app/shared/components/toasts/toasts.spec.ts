@@ -5,9 +5,9 @@ import {
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponent } from 'ng-mocks';
-import { ToastsComponent } from './toasts.component';
-import { ToastComponent } from './toast/toast.component';
-import { ToastService } from 'src/app/shared/services/toast/toast.service';
+import { ToastsComponent } from './toasts';
+import { ToastComponent } from './toast/toast';
+import { ToastService } from 'src/app/shared/services/toast/toast-service';
 import { TestToast, Toast } from 'src/app/shared/models/Toast';
 import { getComponents } from 'src/app/testing/helper/get-component';
 

@@ -21,11 +21,11 @@
   <!-- Element with the error message -->
   <div id="relative-container">
     @if (!isValid) {
-      <app-invalid-input
+      <app-form-input-error
         id="missing"
         [message]="text('auth.code.missing')"
         animate.enter="enterX"
-        animate.leave="leaveX"></app-invalid-input>
+        animate.leave="leaveX"></app-form-input-error>
     }
   </div>
   <!-- Button to emit the entered access code -->

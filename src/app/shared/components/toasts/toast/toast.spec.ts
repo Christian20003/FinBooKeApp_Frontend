@@ -2,13 +2,13 @@ import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatIcon } from '@angular/material/icon';
 import { MockComponent } from 'ng-mocks';
-import { ToastComponent } from './toast.component';
+import { ToastComponent } from './toast';
 import {
   TestToast,
   ToastLifeTime,
   ToastType,
 } from 'src/app/shared/models/Toast';
-import { IconService } from 'src/app/shared/services/icon/icon.service';
+import { IconService } from 'src/app/shared/services/icon/icon-service';
 import { setInputSignal } from 'src/app/testing/helper/set-input-signal';
 import { getHTMLElement } from 'src/app/testing/helper/get-html-element';
 

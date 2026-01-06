@@ -12,8 +12,8 @@ import { IconService, Toast, ToastLifeTime, ToastType } from 'src/app/shared';
 
 @Component({
   selector: 'app-toast',
-  templateUrl: './toast.component.html',
-  styleUrl: './toast.component.scss',
+  templateUrl: './toast.html',
+  styleUrl: './toast.scss',
   imports: [NgClass, MatIcon],
 })
 export class ToastComponent implements OnInit, OnDestroy {

@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { provideHttpClient } from '@angular/common/http';
 import { LoginComponent } from 'src/app/auth/auth-overview/login/login.component';
-import { InvalidInputComponent } from 'src/app/shared';
+import { FormInputErrorComponent } from 'src/app/shared';
 import {
   getComponent,
   getComponents,
@@ -18,7 +18,7 @@ xdescribe('LoginComponent - Integration Tests', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [LoginComponent, InvalidInputComponent],
+      declarations: [LoginComponent, FormInputErrorComponent],
       imports: [
         ReactiveFormsModule,
         BrowserAnimationsModule,
@@ -40,13 +40,13 @@ xdescribe('LoginComponent - Integration Tests', () => {
     triggerInput([emailInput]);
     fixture.detectChanges();
 
-    const invalidComp = getComponent<LoginComponent, InvalidInputComponent>(
+    const invalidComp = getComponent<LoginComponent, FormInputErrorComponent>(
       fixture,
-      InvalidInputComponent
+      FormInputErrorComponent
     );
     expect(invalidComp.componentInstance.message())
       .withContext(
-        'The displayed message of InvalidInputComponent should be "Please enter an e-mail address"'
+        'The displayed message of FormInputErrorComponent should be "Please enter an e-mail address"'
       )
       .toBe('Empty e-mail address');
   });
@@ -60,13 +60,13 @@ xdescribe('LoginComponent - Integration Tests', () => {
     triggerInput([emailInput]);
     fixture.detectChanges();
 
-    const invalidComp = getComponent<LoginComponent, InvalidInputComponent>(
+    const invalidComp = getComponent<LoginComponent, FormInputErrorComponent>(
       fixture,
-      InvalidInputComponent
+      FormInputErrorComponent
     );
     expect(invalidComp.componentInstance.message())
       .withContext(
-        'The displayed message of InvalidInputComponent should be "Invalid e-mail address"'
+        'The displayed message of FormInputErrorComponent should be "Invalid e-mail address"'
       )
       .toBe('Invalid e-mail address');
   });
@@ -80,13 +80,13 @@ xdescribe('LoginComponent - Integration Tests', () => {
     triggerInput([passwordInput]);
     fixture.detectChanges();
 
-    const invalidComp = getComponent<LoginComponent, InvalidInputComponent>(
+    const invalidComp = getComponent<LoginComponent, FormInputErrorComponent>(
       fixture,
-      InvalidInputComponent
+      FormInputErrorComponent
     );
     expect(invalidComp.componentInstance.message())
       .withContext(
-        'The displayed message of InvalidInputComponent should be "Please enter a password"'
+        'The displayed message of FormInputErrorComponent should be "Please enter a password"'
       )
       .toBe('Empty password');
   });
@@ -99,18 +99,18 @@ xdescribe('LoginComponent - Integration Tests', () => {
     button.click();
     fixture.detectChanges();
 
-    const invalidComp = getComponents<LoginComponent, InvalidInputComponent>(
+    const invalidComp = getComponents<LoginComponent, FormInputErrorComponent>(
       fixture,
-      InvalidInputComponent
+      FormInputErrorComponent
     );
     expect(invalidComp[0].componentInstance.message())
       .withContext(
-        'The displayed message of InvalidInputComponent should be "Please enter an e-mail address"'
+        'The displayed message of FormInputErrorComponent should be "Please enter an e-mail address"'
       )
       .toBe('Empty e-mail address');
     expect(invalidComp[1].componentInstance.message())
       .withContext(
-        'The displayed message of InvalidInputComponent should be "Please enter a password"'
+        'The displayed message of FormInputErrorComponent should be "Please enter a password"'
       )
       .toBe('Empty password');
   });
@@ -129,18 +129,18 @@ xdescribe('LoginComponent - Integration Tests', () => {
     button.click();
     fixture.detectChanges();
 
-    const invalidComp = getComponents<LoginComponent, InvalidInputComponent>(
+    const invalidComp = getComponents<LoginComponent, FormInputErrorComponent>(
       fixture,
-      InvalidInputComponent
+      FormInputErrorComponent
     );
     expect(invalidComp[0].componentInstance.message())
       .withContext(
-        'The displayed message of InvalidInputComponent should be "Invalid e-mail address"'
+        'The displayed message of FormInputErrorComponent should be "Invalid e-mail address"'
       )
       .toBe('Invalid e-mail address');
     expect(invalidComp[1].componentInstance.message())
       .withContext(
-        'The displayed message of InvalidInputComponent should be "Please enter a password"'
+        'The displayed message of FormInputErrorComponent should be "Please enter a password"'
       )
       .toBe('Empty password');
   });

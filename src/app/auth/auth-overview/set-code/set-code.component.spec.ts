@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MockComponent } from 'ng-mocks';
 import { SetCodeComponent } from './set-code.component';
-import { InvalidInputComponent } from 'src/app/shared';
+import { FormInputErrorComponent } from 'src/app/shared';
 import {
   getNativeElement,
   getNativeElements,
@@ -19,7 +19,7 @@ describe('SetCodeComponent - Unit Tests', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SetCodeComponent, MockComponent(InvalidInputComponent)],
+      declarations: [SetCodeComponent, MockComponent(FormInputErrorComponent)],
       imports: [ReactiveFormsModule, getTranslocoModule()],
       providers: [provideZonelessChangeDetection()],
     });
@@ -157,11 +157,11 @@ describe('SetCodeComponent - Unit Tests', () => {
     fixture.detectChanges();
     const errorElement = getNativeElements<
       SetCodeComponent,
-      InvalidInputComponent
-    >(fixture, 'app-invalid-input');
+      FormInputErrorComponent
+    >(fixture, 'app-form-input-error');
 
     expect(errorElement)
-      .withContext('An InvalidInputComponent should exist')
+      .withContext('An FormInputErrorComponent should exist')
       .toBeTruthy();
     expect(component.isValid)
       .withContext('The isValid boolean should be set to false')
@@ -181,13 +181,13 @@ describe('SetCodeComponent - Unit Tests', () => {
   });
 
   it('U-Test-11: Initial form should not display any error', () => {
-    const errorMsg = getNativeElement<SetCodeComponent, InvalidInputComponent>(
-      fixture,
-      'app-invalid-input'
-    );
+    const errorMsg = getNativeElement<
+      SetCodeComponent,
+      FormInputErrorComponent
+    >(fixture, 'app-form-input-error');
     expect(errorMsg)
       .withContext(
-        'InvalidInputComponent should not appear after first rendering'
+        'FormInputErrorComponent should not appear after first rendering'
       )
       .toBeFalsy();
   });

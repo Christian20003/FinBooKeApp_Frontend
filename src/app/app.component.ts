@@ -6,7 +6,7 @@ import { TranslocoService } from '@jsverse/transloco';
 import { loginPath, registerPath } from './auth/auth-routing-module';
 import { routingAnimation } from './routing/routing-animation';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
-import { ToastsComponent } from './shared/components/toasts/toasts.component';
+import { ToastsComponent } from './shared/components/toasts/toasts';
 import { ɵɵRouterOutlet } from '@angular/router/testing';
 
 @Component({

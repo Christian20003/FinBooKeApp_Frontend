@@ -1,11 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { InvalidInputComponent } from './invalid-input/invalid-input.component';
+import { FormInputErrorComponent } from './form-input-error/form-input-error';
 import { LogoComponent } from './logo/logo.component';
 import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
-  imports: [InvalidInputComponent, LogoComponent, CommonModule, MatIconModule],
-  exports: [InvalidInputComponent, LogoComponent],
+  imports: [
+    FormInputErrorComponent,
+    LogoComponent,
+    CommonModule,
+    MatIconModule,
+  ],
+  exports: [FormInputErrorComponent, LogoComponent],
 })
 export class SharedModule {}
