@@ -1,83 +1,69 @@
+import {
+  provideZonelessChangeDetection,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { provideHttpClient } from '@angular/common/http';
 import { MockComponent } from 'ng-mocks';
-import { of } from 'rxjs';
-import { getComponents } from 'src/app/testing/testing-support';
 import { ToastsComponent } from './toasts.component';
 import { ToastComponent } from './toast/toast.component';
-import { ToastService } from './toast.service';
-import { TestToast, Toast } from '../../models/Toast';
+import { ToastService } from 'src/app/shared/services/toast/toast.service';
+import { TestToast, Toast } from 'src/app/shared/models/Toast';
+import { getComponents } from 'src/app/testing/helper/get-component';
 
-xdescribe('ToastsComponent - Unit Tests', () => {
+describe('ToastsComponent - Unit Tests', () => {
   let component: ToastsComponent;
   let fixture: ComponentFixture<ToastsComponent>;
-  const mockService = jasmine.createSpyObj('ToastService', ['removeToast'], {
-    toastStore$: of(),
-  });
+  let toastService: jasmine.SpyObj<ToastService>;
+  let store: WritableSignal<Toast[]>;
 
-  const setValue = (toasts: Toast[]) => {
-    component.toasts = toasts;
-  };
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [ToastComponent, BrowserAnimationsModule, ToastsComponent],
-      providers: [
-        provideHttpClient(),
-        { provide: ToastService, useValue: mockService },
-      ],
-    }).compileComponents();
-
-    // Currently MockComponent() not directly usable in imports field
-    TestBed.overrideComponent(ToastComponent, {
-      remove: { imports: [ToastComponent] },
-      add: { imports: [MockComponent(ToastComponent)] },
+  beforeEach(() => {
+    store = signal<Toast[]>([TestToast]);
+    toastService = jasmine.createSpyObj('ToastService', ['removeToast'], {
+      store: store.asReadonly(),
     });
+    toastService.removeToast.and.callFake(id => {
+      store.update(value => value.filter(toast => toast.id !== id));
+    });
+
+    TestBed.configureTestingModule({
+      imports: [MockComponent(ToastComponent), ToastsComponent],
+      providers: [provideZonelessChangeDetection()],
+    });
+    TestBed.overrideProvider(ToastService, { useValue: toastService });
 
     fixture = TestBed.createComponent(ToastsComponent);
     component = fixture.componentInstance;
-    setValue([TestToast]);
     fixture.detectChanges();
   });
 
-  it('U-Test-1: ToastsComponent should create', () => {
-    expect(component).withContext('ToastsComponent should exist').toBeTruthy();
+  it('U-Test-1: Component should exist', () => {
+    expect(component).toBeTruthy();
   });
 
-  it('U-Test-2: Correct amount of toasts should appear according to the toast service', () => {
-    const element = getComponents<ToastsComponent, ToastComponent>(
-      fixture,
-      ToastComponent
-    );
-    expect(element)
-      .withContext('A list of toast objects should exist in the template')
-      .toBeTruthy();
-    expect(element)
-      .withContext(
-        'The list should contain a single toast element in the template'
-      )
-      .toHaveSize(1);
-    expect(component.toasts)
-      .withContext('The list variable should contain a single toast element')
-      .toHaveSize(1);
+  it('U-Test-2: Component should have read the state from the toast service', () => {
+    // @ts-expect-error Get the toast list state from component
+    const state = component.toasts;
+
+    expect(state()).toHaveSize(store().length);
+    expect(state()).toContain(TestToast);
   });
 
-  it('U-Test-3: Calling the onRemoveToast function', () => {
-    mockService.removeToast.and.callFake(() => {
-      setValue([]);
-    });
+  it('U-Test-3: Component should display correct number of toast components', () => {
+    const elements = getComponents<ToastComponent>(fixture, ToastComponent);
+
+    expect(elements).toHaveSize(store().length);
+  });
+
+  it('U-Test-4: Component should remove toast', () => {
     component.onRemoveToast(TestToast);
     fixture.detectChanges();
-    const element = getComponents<ToastsComponent, ToastComponent>(
-      fixture,
-      ToastComponent
-    );
-    expect(element)
-      .withContext('The list should be empty in the template')
-      .toHaveSize(0);
-    expect(component.toasts)
-      .withContext('The list variable should be empty')
-      .toHaveSize(0);
+
+    // @ts-expect-error Get the toast list state from component
+    const state = component.toasts;
+    const elements = getComponents<ToastComponent>(fixture, ToastComponent);
+
+    expect(elements).toHaveSize(0);
+    expect(state()).toHaveSize(0);
   });
 });

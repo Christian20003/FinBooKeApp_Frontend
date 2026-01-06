@@ -8,14 +8,14 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { MockModule } from 'ng-mocks';
 import { of, throwError } from 'rxjs';
 import { getNativeElement } from 'src/app/testing/testing-support';
-import { ToastService } from 'src/app/shared/components/toasts/toast.service';
+import { ToastService } from 'src/app/shared/services/toast/toast.service';
 import { getTranslocoModule } from 'src/app/testing/transloco-testing.module';
 import { routes } from 'src/app/routing/app-routing.module';
 import {
   LoadingComponent,
   TestUser,
-  ToastRemoveType,
-  ToastTypes,
+  ToastLifeTime,
+  ToastType,
   initialState,
 } from 'src/app/shared/index';
 import { AuthOverviewComponent } from './auth-overview.component';
@@ -31,7 +31,6 @@ import {
 } from '../auth-routing-module';
 import { TestLoginData } from '../models/loginData';
 import { TestRegisterData } from '../models/registerData';
-import { TestSecurityCode } from '../models/securityCode';
 import { AuthModule } from '../auth.module';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -264,7 +263,7 @@ xdescribe('AuthOverviewComponent', () => {
         .toBeFalse();
       expect(toastService.addToast)
         .withContext('Error-Toast should be created')
-        .toHaveBeenCalledWith(errorMsg, ToastTypes.ERROR, ToastRemoveType.NONE);
+        .toHaveBeenCalledWith(errorMsg, ToastType.ERROR, ToastLifeTime.NONE);
     });
   });
 
@@ -309,13 +308,13 @@ xdescribe('AuthOverviewComponent', () => {
         .toBeFalse();
       expect(toastService.addToast)
         .withContext('Error-Toast should be created')
-        .toHaveBeenCalledWith(errorMsg, ToastTypes.ERROR, ToastRemoveType.NONE);
+        .toHaveBeenCalledWith(errorMsg, ToastType.ERROR, ToastLifeTime.NONE);
     });
   });
 
   /*---------------------------------------------------------onSetCode------------------------------------------------------------*/
 
-  xdescribe('onSetCode', () => {
+  /* xdescribe('onSetCode', () => {
     beforeEach(createComponent);
 
     it('U-Test-21: Calling postCode function and waiting for the response', () => {
@@ -356,7 +355,7 @@ xdescribe('AuthOverviewComponent', () => {
         .withContext('Error-Toast should be created')
         .toHaveBeenCalledWith(errorMsg, ToastTypes.ERROR, ToastRemoveType.NONE);
     });
-  });
+  }); */
 
   /*---------------------------------------------------------onSetEmail-----------------------------------------------------------*/
 
@@ -398,7 +397,7 @@ xdescribe('AuthOverviewComponent', () => {
         .toBeFalse();
       expect(toastService.addToast)
         .withContext('Error-Toast should be created')
-        .toHaveBeenCalledWith(errorMsg, ToastTypes.ERROR, ToastRemoveType.NONE);
+        .toHaveBeenCalledWith(errorMsg, ToastType.ERROR, ToastLifeTime.NONE);
     });
   });
 });

@@ -1,45 +1,22 @@
-import { Component, inject } from '@angular/core';
-import { transition, trigger, useAnimation } from '@angular/animations';
-import { Toast } from '../../models/Toast';
-import { shrinkHeight, slideInY } from '../..';
-import { ToastService } from './toast.service';
+import { Component, inject, signal } from '@angular/core';
+import { Toast } from 'src/app/shared/models/Toast';
+import { ToastService } from 'src/app/shared/services/toast/toast.service';
 import { ToastComponent } from './toast/toast.component';
 
 @Component({
   selector: 'app-toasts',
-  imports: [ToastComponent],
   templateUrl: './toasts.component.html',
   styleUrl: './toasts.component.scss',
-  animations: [
-    trigger('toastAnimation', [
-      transition(':enter', [
-        useAnimation(slideInY, {
-          params: {
-            length: '-50px',
-            time: '1s',
-          },
-        }),
-      ]),
-      transition(':leave', [
-        useAnimation(shrinkHeight, {
-          params: {
-            time: '0.3s',
-          },
-        }),
-      ]),
-    ]),
-  ],
+  imports: [ToastComponent],
 })
 export class ToastsComponent {
-  private toastService = inject(ToastService);
+  // Dependency to get toast store
+  private readonly toastService = inject(ToastService);
+  // A list of toasts which should be displayed
+  protected toasts = signal<Toast[]>([]).asReadonly();
 
-  /** A list of toasts which should be displayed */
-  public toasts: Toast[] = [];
-
-  public constructor() {
-    this.toastService.toastStore$.subscribe(data => {
-      this.toasts = data;
-    });
+  constructor() {
+    this.toasts = this.toastService.store;
   }
 
   /**

@@ -1,264 +1,284 @@
-/* import {
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick,
-} from '@angular/core/testing';
+import { provideZonelessChangeDetection } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatIcon } from '@angular/material/icon';
+import { MockComponent } from 'ng-mocks';
 import { ToastComponent } from './toast.component';
 import {
   TestToast,
-  Toast,
-  ToastRemoveType,
-  ToastTypes,
+  ToastLifeTime,
+  ToastType,
 } from 'src/app/shared/models/Toast';
-import { getNativeElement } from 'src/app/testing/testing-support';
-import { provideHttpClient } from '@angular/common/http';
+import { IconService } from 'src/app/shared/services/icon/icon.service';
+import { setInputSignal } from 'src/app/testing/helper/set-input-signal';
+import { getHTMLElement } from 'src/app/testing/helper/get-html-element';
 
 describe('ToastComponent - Unit Tests', () => {
   let component: ToastComponent;
   let fixture: ComponentFixture<ToastComponent>;
 
-  const setInput = (toast: Toast) => {
-    fixture.componentRef.setInput('toast', toast);
-  };
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [ToastComponent],
-      providers: [provideHttpClient()],
-    }).compileComponents();
-
+  beforeEach(() => {
+    const service = jasmine.createSpyObj('IconService', ['registerIcons']);
+    TestBed.configureTestingModule({
+      imports: [ToastComponent, MockComponent(MatIcon)],
+      providers: [provideZonelessChangeDetection()],
+    });
+    TestBed.overrideProvider(IconService, { useValue: service });
     fixture = TestBed.createComponent(ToastComponent);
     component = fixture.componentInstance;
-    setInput(TestToast);
+    TestToast.lifetime = ToastLifeTime.NONE;
+  });
+
+  it('U-Test-1: Component should exist', () => {
+    setInputSignal(fixture, 'toast', TestToast);
     fixture.detectChanges();
+
+    expect(component).toBeTruthy();
   });
 
-  it('U-Test-1: Should create', () => {
-    expect(component).withContext('Component should exist').toBeTruthy();
-  });
+  it('U-Test-2: Toast short lifetime should call remove automatically', () => {
+    jasmine.clock().install();
+    const emit = spyOn(component.remove, 'emit');
+    // @ts-expect-error Get lifetime
+    const time = component.shortLifetime;
+    TestToast.lifetime = ToastLifeTime.SHORT;
+    setInputSignal(fixture, 'toast', TestToast);
+    fixture.detectChanges();
 
-  it('U-Test-2: With ToastRemoveType = SHORT it should call its remove function after 10 seconds', fakeAsync(() => {
-    const removeCall = spyOn(component, 'onRemove');
     component.ngOnInit();
-    tick(10000);
-    expect(removeCall)
-      .withContext('Should call the onRemove() function after 10 seconds')
-      .toHaveBeenCalled();
-  }));
+    jasmine.clock().tick(time);
 
-  it('U-Test-3: With ToastRemoveType = LONG it should call its remove function after 15 seconds', fakeAsync(() => {
-    const removeCall = spyOn(component, 'onRemove');
-    const toast = { ...TestToast };
-    toast.autoRemove = ToastRemoveType.LONG;
-    setInput(toast);
+    expect(emit).toHaveBeenCalled();
+    jasmine.clock().uninstall();
+  });
+
+  it('U-Test-3: Toast long lifetime should call remove automatically', () => {
+    jasmine.clock().install();
+    const emit = spyOn(component.remove, 'emit');
+    // @ts-expect-error Get lifetime
+    const time = component.longLifetime;
+    TestToast.lifetime = ToastLifeTime.LONG;
+    setInputSignal(fixture, 'toast', TestToast);
+    fixture.detectChanges();
+
     component.ngOnInit();
-    tick(15000);
-    expect(removeCall)
-      .withContext('Should call the onRemove() function after 15 seconds')
-      .toHaveBeenCalled();
-  }));
+    jasmine.clock().tick(time);
 
-  it('U-Test-3: With ToastRemoveType = NONE it should not call its remove function after some time', () => {
-    const timeoutCall = spyOn(component, 'onRemove');
-    const toast = { ...TestToast };
-    toast.autoRemove = ToastRemoveType.NONE;
-    setInput(toast);
-    component.ngOnInit();
-    expect(timeoutCall)
-      .withContext('Timeout should not be initialised')
-      .not.toHaveBeenCalled();
+    expect(emit).toHaveBeenCalled();
+    jasmine.clock().uninstall();
   });
 
-  it('U-Test-5: Clicking close button should call the onRemove function', () => {
-    const button = getNativeElement<ToastComponent, HTMLButtonElement>(
-      fixture,
-      '.close'
-    );
-    const removeCall = spyOn(component, 'onRemove');
-    button.click();
-    expect(removeCall)
-      .withContext(
-        'Clicking the close button should call the onRemove() function'
-      )
-      .toHaveBeenCalled();
-  });
-
-  it('U-Test-5: The remove function should call the remove emitter with the received toast object', () => {
-    const removeEmit = spyOn(component.removeToast, 'emit');
-    component.onRemove();
-    expect(removeEmit)
-      .withContext('The onRemove() function should call an emitter')
-      .toHaveBeenCalledOnceWith(TestToast);
-  });
-
-  it('U-Test-6: An error toast should get error css classes', () => {
-    const boxElement = getNativeElement<ToastComponent, HTMLSpanElement>(
-      fixture,
-      '.box'
-    );
-    const svgElement = getNativeElement<ToastComponent, HTMLOrSVGElement>(
-      fixture,
-      '.error-icon'
-    );
-    const lineElement = getNativeElement<ToastComponent, HTMLSpanElement>(
-      fixture,
-      '.time-line'
-    );
-    expect(svgElement).withContext('The error icon should appear').toBeTruthy();
-    expect(boxElement.className)
-      .withContext(
-        'Class "error-box" should be in the class list of the <span class="box"> element'
-      )
-      .toContain('error-box');
-    expect(lineElement.className)
-      .withContext(
-        'Class "error-box" should be in the class list of the <span class="time-line"> element'
-      )
-      .toContain('error-box');
-  });
-
-  it('U-Test-7: An warning toast should get warning css classes', () => {
-    const toast = { ...TestToast };
-    toast.type = ToastTypes.WARNING;
-    setInput(toast);
+  it('U-Test-4: Clicking close button should call remove', () => {
+    setInputSignal(fixture, 'toast', TestToast);
     fixture.detectChanges();
-    const boxElement = getNativeElement<ToastComponent, HTMLSpanElement>(
-      fixture,
-      '.box'
-    );
-    const svgElement = getNativeElement<ToastComponent, HTMLOrSVGElement>(
-      fixture,
-      '.warning-icon'
-    );
-    const lineElement = getNativeElement<ToastComponent, HTMLSpanElement>(
-      fixture,
-      '.time-line'
-    );
-    expect(svgElement)
-      .withContext('The warning icon should appear')
-      .toBeTruthy();
-    expect(boxElement.className)
-      .withContext(
-        'Class "warning-box" should be in the class list of the <span class="box"> element'
-      )
-      .toContain('warning-box');
-    expect(lineElement.className)
-      .withContext(
-        'Class "warning-box" should be in the class list of the <span class="time-line"> element'
-      )
-      .toContain('warning-box');
+
+    const button = getHTMLElement<HTMLButtonElement>(fixture, '.close');
+    const emit = spyOn(component.remove, 'emit');
+    button!.click();
+
+    expect(emit).toHaveBeenCalled();
   });
 
-  it('U-Test-8: An success toast should get success css classes', () => {
-    const toast = { ...TestToast };
-    toast.type = ToastTypes.SUCCESS;
-    setInput(toast);
+  it('U-Test-5: Toast type error should return assigned css classes', () => {
+    TestToast.type = ToastType.ERROR;
+    setInputSignal(fixture, 'toast', TestToast);
     fixture.detectChanges();
-    const boxElement = getNativeElement<ToastComponent, HTMLSpanElement>(
-      fixture,
-      '.box'
-    );
-    const svgElement = getNativeElement<ToastComponent, HTMLOrSVGElement>(
-      fixture,
-      '.success-icon'
-    );
-    const lineElement = getNativeElement<ToastComponent, HTMLSpanElement>(
-      fixture,
-      '.time-line'
-    );
-    expect(svgElement)
-      .withContext('The success icon should appear')
-      .toBeTruthy();
-    expect(boxElement.className)
-      .withContext(
-        'Class "success-box" should be in the class list of the <span class="box"> element'
-      )
-      .toContain('success-box');
-    expect(lineElement.className)
-      .withContext(
-        'Class "success-box" should be in the class list of the <span class="time-line"> element'
-      )
-      .toContain('success-box');
+
+    const boxColor = component.getBoxColor();
+    const iconColor = component.getIconColor();
+
+    expect(boxColor).toBe('error-box');
+    expect(iconColor).toBe('error-icon');
   });
 
-  it('U-Test-9: An abitrary toast should get info css classes', () => {
-    const toast = { ...TestToast };
-    toast.type = ToastTypes.NONE;
-    setInput(toast);
+  it('U-Test-6: Toast type error should return assigned icon name', () => {
+    TestToast.type = ToastType.ERROR;
+    setInputSignal(fixture, 'toast', TestToast);
     fixture.detectChanges();
-    const boxElement = getNativeElement<ToastComponent, HTMLSpanElement>(
-      fixture,
-      '.box'
-    );
-    const svgElement = getNativeElement<ToastComponent, HTMLOrSVGElement>(
-      fixture,
-      '.info-icon'
-    );
-    const lineElement = getNativeElement<ToastComponent, HTMLSpanElement>(
-      fixture,
-      '.time-line'
-    );
-    expect(svgElement).withContext('The info icon should appear').toBeTruthy();
-    expect(boxElement.className)
-      .withContext(
-        'Class "info-box" should be in the class list of the <span class="box"> element'
-      )
-      .toContain('info-box');
-    expect(lineElement.className)
-      .withContext(
-        'Class "info-box" should be in the class list of the <span class="time-line"> element'
-      )
-      .toContain('info-box');
+
+    const iconName = component.getSvgName();
+
+    expect(iconName).toBe('error');
   });
 
-  it('U-Test-10: With ToastRemoveType = SHORT the component should have a short lifing time-line', () => {
-    const lineElement = getNativeElement<ToastComponent, HTMLSpanElement>(
-      fixture,
-      '.time-line'
-    );
-    expect(lineElement.className)
-      .withContext(
-        'Class "short-time" should be in the class list of the <span class="time-line"> element'
-      )
-      .toContain('short-time');
-  });
-
-  it('U-Test-11: With ToastRemoveType = LONG the component should have a long lifing time-line', () => {
-    const toast = { ...TestToast };
-    toast.autoRemove = ToastRemoveType.LONG;
-    setInput(toast);
+  it('U-Test-7: Toast type error should assign correct css classes in template', () => {
+    TestToast.type = ToastType.ERROR;
+    setInputSignal(fixture, 'toast', TestToast);
     fixture.detectChanges();
-    const lineElement = getNativeElement<ToastComponent, HTMLSpanElement>(
-      fixture,
-      '.time-line'
-    );
-    expect(lineElement.className)
-      .withContext(
-        'Class "long-time" should be in the class list of the <span class="time-line"> element'
-      )
-      .toContain('long-time');
+
+    const box = getHTMLElement<HTMLSpanElement>(fixture, '.error-box');
+    const svg = getHTMLElement<MatIcon>(fixture, '.error-icon');
+    const line = getHTMLElement<HTMLSpanElement>(fixture, '.time-line');
+
+    expect(box).toBeTruthy();
+    expect(svg).toBeTruthy();
+    expect(line!.className).toContain('error-box');
   });
 
-  it('U-Test-12: With ToastRemoveType = NONE the component should have a permanent time-line', () => {
-    const toast = { ...TestToast };
-    toast.autoRemove = ToastRemoveType.NONE;
-    setInput(toast);
+  it('U-Test-8: Toast type warning should return assigned css classes', () => {
+    TestToast.type = ToastType.WARNING;
+    setInputSignal(fixture, 'toast', TestToast);
     fixture.detectChanges();
-    const lineElement = getNativeElement<ToastComponent, HTMLSpanElement>(
-      fixture,
-      '.time-line'
-    );
-    expect(lineElement.className)
-      .withContext(
-        'Class "long-time" should not be in the class list of the <span class="time-line"> element'
-      )
-      .not.toContain('long-time');
-    expect(lineElement.className)
-      .withContext(
-        'Class "short-time" should not be in the class list of the <span class="time-line"> element'
-      )
-      .not.toContain('short-time');
+
+    const boxColor = component.getBoxColor();
+    const iconColor = component.getIconColor();
+
+    expect(boxColor).toBe('warning-box');
+    expect(iconColor).toBe('warning-icon');
+  });
+
+  it('U-Test-9: Toast type warning should return assigned icon name', () => {
+    TestToast.type = ToastType.WARNING;
+    setInputSignal(fixture, 'toast', TestToast);
+    fixture.detectChanges();
+
+    const iconName = component.getSvgName();
+
+    expect(iconName).toBe('warning');
+  });
+
+  it('U-Test-10: Toast type warning should assign correct css classes in template', () => {
+    TestToast.type = ToastType.WARNING;
+    setInputSignal(fixture, 'toast', TestToast);
+    fixture.detectChanges();
+
+    const box = getHTMLElement<HTMLSpanElement>(fixture, '.warning-box');
+    const svg = getHTMLElement<MatIcon>(fixture, '.warning-icon');
+    const line = getHTMLElement<HTMLSpanElement>(fixture, '.time-line');
+
+    expect(box).toBeTruthy();
+    expect(svg).toBeTruthy();
+    expect(line!.className).toContain('warning-box');
+  });
+
+  it('U-Test-11: Toast type info should return assigned css classes', () => {
+    TestToast.type = ToastType.INFO;
+    setInputSignal(fixture, 'toast', TestToast);
+    fixture.detectChanges();
+
+    const boxColor = component.getBoxColor();
+    const iconColor = component.getIconColor();
+
+    expect(boxColor).toBe('info-box');
+    expect(iconColor).toBe('info-icon');
+  });
+
+  it('U-Test-12: Toast type info should return assigned icon name', () => {
+    TestToast.type = ToastType.INFO;
+    setInputSignal(fixture, 'toast', TestToast);
+    fixture.detectChanges();
+
+    const iconName = component.getSvgName();
+
+    expect(iconName).toBe('info');
+  });
+
+  it('U-Test-13: Toast type info should assign correct css classes in template', () => {
+    TestToast.type = ToastType.INFO;
+    setInputSignal(fixture, 'toast', TestToast);
+    fixture.detectChanges();
+
+    const box = getHTMLElement<HTMLSpanElement>(fixture, '.info-box');
+    const svg = getHTMLElement<MatIcon>(fixture, '.info-icon');
+    const line = getHTMLElement<HTMLSpanElement>(fixture, '.time-line');
+
+    expect(box).toBeTruthy();
+    expect(svg).toBeTruthy();
+    expect(line!.className).toContain('info-box');
+  });
+
+  it('U-Test-14: Toast type success should return assigned css classes', () => {
+    TestToast.type = ToastType.SUCCESS;
+    setInputSignal(fixture, 'toast', TestToast);
+    fixture.detectChanges();
+
+    const boxColor = component.getBoxColor();
+    const iconColor = component.getIconColor();
+
+    expect(boxColor).toBe('success-box');
+    expect(iconColor).toBe('success-icon');
+  });
+
+  it('U-Test-15: Toast type success should return assigned icon name', () => {
+    TestToast.type = ToastType.SUCCESS;
+    setInputSignal(fixture, 'toast', TestToast);
+    fixture.detectChanges();
+
+    const iconName = component.getSvgName();
+
+    expect(iconName).toBe('success');
+  });
+
+  it('U-Test-16: Toast type success should assign correct css classes in template', () => {
+    TestToast.type = ToastType.SUCCESS;
+    setInputSignal(fixture, 'toast', TestToast);
+    fixture.detectChanges();
+
+    const box = getHTMLElement<HTMLSpanElement>(fixture, '.success-box');
+    const svg = getHTMLElement<MatIcon>(fixture, '.success-icon');
+    const line = getHTMLElement<HTMLSpanElement>(fixture, '.time-line');
+
+    expect(box).toBeTruthy();
+    expect(svg).toBeTruthy();
+    expect(line!.className).toContain('success-box');
+  });
+
+  it('U-Test-17: Toast lifetime type short should return assigned css class', () => {
+    TestToast.lifetime = ToastLifeTime.SHORT;
+    setInputSignal(fixture, 'toast', TestToast);
+    fixture.detectChanges();
+
+    const value = component.getLifetime();
+
+    expect(value).toBe('short-time');
+  });
+
+  it('U-Test-18: Toast lifetime type short assign correct css class in template', () => {
+    TestToast.lifetime = ToastLifeTime.SHORT;
+    setInputSignal(fixture, 'toast', TestToast);
+    fixture.detectChanges();
+
+    const line = getHTMLElement<HTMLSpanElement>(fixture, '.short-time');
+
+    expect(line).toBeTruthy();
+  });
+
+  it('U-Test-19: Toast lifetime type long should return assigned css class', () => {
+    TestToast.lifetime = ToastLifeTime.LONG;
+    setInputSignal(fixture, 'toast', TestToast);
+    fixture.detectChanges();
+
+    const value = component.getLifetime();
+
+    expect(value).toBe('long-time');
+  });
+
+  it('U-Test-20: Toast lifetime type long should assign correct css class in template', () => {
+    TestToast.lifetime = ToastLifeTime.LONG;
+    setInputSignal(fixture, 'toast', TestToast);
+    fixture.detectChanges();
+
+    const line = getHTMLElement<HTMLSpanElement>(fixture, '.long-time');
+
+    expect(line).toBeTruthy();
+  });
+
+  it('U-Test-21: Toast lifetime type none should return assigned css class', () => {
+    TestToast.lifetime = ToastLifeTime.NONE;
+    setInputSignal(fixture, 'toast', TestToast);
+    fixture.detectChanges();
+
+    const value = component.getLifetime();
+
+    expect(value).toBe('infinite-time');
+  });
+
+  it('U-Test-22: Toast lifetime type none should assign correct css class in template', () => {
+    TestToast.lifetime = ToastLifeTime.NONE;
+    setInputSignal(fixture, 'toast', TestToast);
+    fixture.detectChanges();
+
+    const line = getHTMLElement<HTMLSpanElement>(fixture, '.infinite-time');
+
+    expect(line).toBeTruthy();
   });
 });
- */

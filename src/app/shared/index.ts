@@ -3,7 +3,7 @@ export { LoadingComponent } from './components/loading/loading.component';
 export { Icon } from './models/Icon';
 export { User, TestUser } from './models/User';
 export { Session, TestSession } from './models/Session';
-export { Toast, ToastTypes, ToastRemoveType, TestToast } from './models/Toast';
+export { Toast, ToastType, ToastLifeTime, TestToast } from './models/Toast';
 export {
   slideInX,
   slideOutX,
@@ -24,3 +24,4 @@ export { initialState, userReducer } from './stores/UserStore/User.reducer';
 export { userEffects } from './stores/UserStore/User.effects';
 export { selectUser, selectSession } from './stores/UserStore/User.selector';
 export { IconService } from './services/icon/icon.service';
+export { ToastService } from './services/toast/toast.service';

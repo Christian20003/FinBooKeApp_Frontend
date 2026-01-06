@@ -6,11 +6,11 @@ import {
   moveLeftToRight,
   moveRightToLeft,
   User,
-  ToastTypes,
-  ToastRemoveType,
+  ToastType,
+  ToastLifeTime,
   LoadingComponent,
 } from 'src/app/shared/index';
-import { ToastService } from 'src/app/shared/components/toasts/toast.service';
+import { ToastService } from 'src/app/shared/services/toast/toast.service';
 import { AuthenticationService } from './authentication.service';
 import {
   loginPath,
@@ -90,8 +90,8 @@ export class AuthOverviewComponent {
         this.waiting = false;
         this.toastService.addToast(
           error.message,
-          ToastTypes.ERROR,
-          ToastRemoveType.NONE
+          ToastType.ERROR,
+          ToastLifeTime.NONE
         );
       },
     });
@@ -114,8 +114,8 @@ export class AuthOverviewComponent {
         this.waiting = false;
         this.toastService.addToast(
           error.message,
-          ToastTypes.ERROR,
-          ToastRemoveType.NONE
+          ToastType.ERROR,
+          ToastLifeTime.NONE
         );
       },
     });
@@ -140,8 +140,8 @@ export class AuthOverviewComponent {
         this.waiting = false;
         this.toastService.addToast(
           error.message,
-          ToastTypes.ERROR,
-          ToastRemoveType.NONE
+          ToastType.ERROR,
+          ToastLifeTime.NONE
         );
       },
     });
@@ -166,8 +166,8 @@ export class AuthOverviewComponent {
         this.waiting = false;
         this.toastService.addToast(
           error.message,
-          ToastTypes.ERROR,
-          ToastRemoveType.NONE
+          ToastType.ERROR,
+          ToastLifeTime.NONE
         );
       },
     });

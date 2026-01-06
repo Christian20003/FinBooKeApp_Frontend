@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { ToastRemoveType } from 'src/app/shared';
-import { ToastTypes } from 'src/app/shared';
-import { ToastService } from 'src/app/shared/components/toasts/toast.service';
+import { ToastLifeTime } from 'src/app/shared';
+import { ToastType } from 'src/app/shared';
+import { ToastService } from 'src/app/shared/services/toast/toast.service';
 import { DashboardActionsComponent } from './dashboard-actions/dashboard-actions.component';
 
 @Component({
@@ -16,8 +16,8 @@ export class DashboardOverviewComponent {
   onAdd() {
     this.service.addToast(
       'Hello World. I am living',
-      ToastTypes.SUCCESS,
-      ToastRemoveType.LONG
+      ToastType.SUCCESS,
+      ToastLifeTime.LONG
     );
   }
 }

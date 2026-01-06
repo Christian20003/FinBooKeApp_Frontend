@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
-import { IconService } from './icon.service';
-import { IconDictionary } from '../../models/Icon';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { provideZonelessChangeDetection } from '@angular/core';
+import { IconDictionary } from 'src/app/shared/models/Icon';
+import { IconService } from './icon.service';
 
 describe('IconService - Unit Tests', () => {
   let service: IconService;
@@ -56,5 +56,10 @@ describe('IconService - Unit Tests', () => {
       domSanitizerSpy.bypassSecurityTrustResourceUrl
     ).not.toHaveBeenCalled();
     expect(iconRegistrySpy.addSvgIcon).not.toHaveBeenCalled();
+  });
+
+  it('U-Test-3: Should register multiple icons', () => {
+    service.registerIcons(['icon1', 'icon2']);
+    expect(iconRegistrySpy.addSvgIcon).toHaveBeenCalledTimes(2);
   });
 });

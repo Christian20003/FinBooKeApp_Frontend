@@ -8,8 +8,8 @@ import { Store } from '@ngrx/store';
 import { AuthenticationService } from 'src/app/auth/auth-overview/authentication.service';
 import { loginPath } from 'src/app/auth/auth-routing-module';
 import { deleteUser } from 'src/app/shared/stores/UserStore/User.actions';
-import { ToastRemoveType, ToastTypes } from 'src/app/shared/models/Toast';
-import { ToastService } from '../../toasts/toast.service';
+import { ToastLifeTime, ToastType } from 'src/app/shared/models/Toast';
+import { ToastService } from '../../../services/toast/toast.service';
 
 @Component({
   selector: 'app-nav-elements',
@@ -82,8 +82,8 @@ export class NavElementsComponent {
       error: error => {
         this.toastService.addToast(
           error.message,
-          ToastTypes.ERROR,
-          ToastRemoveType.NONE
+          ToastType.ERROR,
+          ToastLifeTime.NONE
         );
       },
     });

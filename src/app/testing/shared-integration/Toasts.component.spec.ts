@@ -1,161 +1,90 @@
-/* import {
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick,
-} from '@angular/core/testing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { provideZonelessChangeDetection } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import {
   HttpTestingController,
   provideHttpClientTesting,
 } from '@angular/common/http/testing';
-import { ToastService } from 'src/app/shared/components/toasts/toast.service';
+import { ToastService } from 'src/app/shared/services/toast/toast.service';
 import { ToastComponent } from 'src/app/shared/components/toasts/toast/toast.component';
 import { ToastsComponent } from 'src/app/shared/components/toasts/toasts.component';
-import { getComponent, getComponents } from '../testing-support';
-import { TestToast } from 'src/app/shared';
+import { IconService, TestToast, ToastLifeTime } from 'src/app/shared';
+import { getHTMLElement } from 'src/app/testing/helper/get-html-element';
+import { getComponents } from 'src/app/testing/helper/get-component';
 
-xdescribe('ToastsComponent - Integration Tests', () => {
-  let component: ToastsComponent;
+describe('ToastsComponent - Integration Tests', () => {
   let fixture: ComponentFixture<ToastsComponent>;
-  let service: ToastService;
+  let toastService: ToastService;
   let controller: HttpTestingController;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [BrowserAnimationsModule, ToastsComponent, ToastComponent],
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [ToastsComponent, ToastComponent],
       providers: [
+        ToastService,
+        IconService,
         provideHttpClient(),
         provideHttpClientTesting(),
-        ToastService,
+        provideZonelessChangeDetection(),
       ],
-    }).compileComponents();
+    });
 
     fixture = TestBed.createComponent(ToastsComponent);
+    toastService = TestBed.inject(ToastService);
     controller = TestBed.inject(HttpTestingController);
-    component = fixture.componentInstance;
-    service = TestBed.inject(ToastService);
     fixture.detectChanges();
+
+    jasmine.clock().install();
+    controller.match(() => true);
   });
 
-  it('I-Test-1: Empty intialization state', () => {
-    const toastComponents = getComponents<ToastsComponent, ToastComponent>(
-      fixture,
-      ToastComponent
-    );
-    expect(toastComponents)
-      .withContext(
-        'ToastComponents should not appear in the template after initialization'
-      )
-      .toHaveSize(0);
-    expect(component.toasts)
-      .withContext('List of toast objects should be empty')
-      .toHaveSize(0);
-    service.toastStore$.subscribe(data => {
-      expect(data)
-        .withContext('List of toast objects in ToastService should be empty')
-        .toHaveSize(0);
-    });
+  afterEach(() => {
+    jasmine.clock().uninstall();
   });
 
-  it('I-Test-2: Add new toast through the ToastService', () => {
-    service.addToast(TestToast.message, TestToast.type, TestToast.autoRemove);
-    fixture.detectChanges();
-    const toastComponents = getComponents<ToastsComponent, ToastComponent>(
-      fixture,
-      ToastComponent
+  it('I-Test-1: Add new toast through the ToastService', () => {
+    toastService.addToast(
+      TestToast.message,
+      TestToast.type,
+      TestToast.lifetime
     );
-    const toast = toastComponents[0].componentInstance;
-    expect(toastComponents)
-      .withContext('Single ToastComponent should appear in the template')
-      .toHaveSize(1);
-    expect(toast.toast())
-      .withContext(
-        'Toast instance in the ToastComponent should have the following structure'
-      )
-      .toEqual(TestToast);
-    expect(component.toasts)
-      .withContext('List of toast objects should contain single element')
-      .toHaveSize(1);
-    expect(component.toasts[0])
-      .withContext(
-        'Toast instance in the ToastsComponent should have the following structure'
-      )
-      .toEqual(TestToast);
-    service.toastStore$.subscribe(data => {
-      expect(data)
-        .withContext(
-          'List of toast objects in ToastService contains single element'
-        )
-        .toHaveSize(1);
-      expect(data[0])
-        .withContext(
-          'Toast instance in the ToastService should have the following structure'
-        )
-        .toEqual(TestToast);
-    });
+    fixture.detectChanges();
+
+    const toasts = getComponents<ToastComponent>(fixture, ToastComponent);
+    const toast = toasts[0];
+
+    expect(toasts).toHaveSize(1);
+    expect(toast.toast()).toEqual(TestToast);
   });
 
-  it('I-Test-3: After adding a new toast, it should automatically remove itself', fakeAsync(() => {
-    service.addToast(TestToast.message, TestToast.type, TestToast.autoRemove);
-    fixture.detectChanges();
-    // Mocking request otherwise not working in fakeAsync
-    const req = controller.expectOne('../../../../../assets/icons/error.svg');
-    req.flush('<svg></svg>');
-    tick(15000);
-    fixture.detectChanges();
-    const toastComponents = getComponents<ToastsComponent, ToastComponent>(
-      fixture,
-      ToastComponent
+  it('I-Test-2: Add new toast that should remove itself automatically', () => {
+    toastService.addToast(
+      TestToast.message,
+      TestToast.type,
+      ToastLifeTime.SHORT
     );
-    expect(toastComponents)
-      .withContext(
-        'ToastComponents should not appear in the template after automatic remove'
-      )
-      .toHaveSize(0);
-    expect(component.toasts)
-      .withContext(
-        'List of toast objects should be empty after automatic remove'
-      )
-      .toHaveSize(0);
-    service.toastStore$.subscribe(data => {
-      expect(data)
-        .withContext(
-          'List of toast objects in ToastService should be empty after automatic remove'
-        )
-        .toHaveSize(0);
-    });
-  }));
+    fixture.detectChanges();
 
-  it('I-Test-4: Remove an existing toast from the list through the ToastComponent', () => {
-    service.addToast(TestToast.message, TestToast.type, TestToast.autoRemove);
+    jasmine.clock().tick(10000);
     fixture.detectChanges();
-    const toast = getComponent<ToastsComponent, ToastComponent>(
-      fixture,
-      ToastComponent
+    const toasts = getComponents<ToastComponent>(fixture, ToastComponent);
+
+    expect(toasts).toHaveSize(0);
+  });
+
+  it('I-Test-4: Add new toast that should be removed manually', () => {
+    toastService.addToast(
+      TestToast.message,
+      TestToast.type,
+      ToastLifeTime.NONE
     );
-    toast.componentInstance.onRemove();
     fixture.detectChanges();
-    const toastComponents = getComponents<ToastsComponent, ToastComponent>(
-      fixture,
-      ToastComponent
-    );
-    expect(toastComponents)
-      .withContext(
-        'ToastComponents should not appear in the template after manual remove'
-      )
-      .toHaveSize(0);
-    expect(component.toasts)
-      .withContext('List of toast objects should be empty after manual remove')
-      .toHaveSize(0);
-    service.toastStore$.subscribe(data => {
-      expect(data)
-        .withContext(
-          'List of toast objects in ToastService should be empty after manual remove'
-        )
-        .toHaveSize(0);
-    });
+
+    const button = getHTMLElement<HTMLButtonElement>(fixture, 'button');
+    button!.click();
+    fixture.detectChanges();
+    const toasts = getComponents<ToastComponent>(fixture, ToastComponent);
+
+    expect(toasts).toHaveSize(0);
   });
 });
- */

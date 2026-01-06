@@ -1,5 +1,6 @@
 @use "../../../styles/others/font" as font;
 @use "../../../styles/container-mixin/box" as box;
+@use "../../../styles/animations/sizeAnimation" as animations;
 @use "../../../styles/container-mixin/svg" as svg;
 
 .toast-content {
@@ -16,8 +17,7 @@
     .error-icon,
     .warning-icon,
     .info-icon,
-    .box,
-    .close {
+    .box {
         flex: 0 0 auto;
     }
 
@@ -29,7 +29,7 @@
     }
 
     .success-icon {
-        @include svg.svg-label-container($stroke: none, $fill: var(--icon-color-success));
+        @include svg.svg-label-container($stroke: var(--icon-color-success), $fill: none);
     }
 
     .success-box {
@@ -37,7 +37,7 @@
     }
 
     .error-icon {
-        @include svg.svg-label-container($stroke: none, $fill: var(--icon-color-error));
+        @include svg.svg-label-container($stroke: var(--icon-color-error), $fill: none);
     }
 
     .error-box {
@@ -69,11 +69,11 @@
     }
 
     .short-time {
-        animation: increase 10s forwards;
+        @include animations.growWidth(10s);
     }
 
     .long-time {
-        animation: increase 15s forwards;
+        @include animations.growWidth(15s);
     }
 
     .infinite-time {
@@ -85,16 +85,16 @@
     }
 
     .close {
-        background: none;
-        color: inherit;
         border: none;
+        background: none;
+        width: 2rem;
+        height: 100%;
         cursor: pointer;
-        margin-right: 0.5rem;
+        margin-right: 0.25rem;
 
         .close-icon {
             border-radius: 0.3rem;
             @include svg.svg-label-container($stroke: var(--icon-color-primary));
-            margin-right: 0;
             transition: 0.5s background-color;
         }
 
@@ -110,14 +110,5 @@
                 background-color: var(--background-color-button-active);
             }
         }
-    }
-}
-
-@keyframes increase {
-    0% {
-        width: 0;
-    }
-    100% {
-        width: 100%;
     }
 }

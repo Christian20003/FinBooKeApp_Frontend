@@ -1,19 +1,19 @@
 <div class="toast-content">
-  <span class="box" [ngClass]="getColor()"></span>
-  @if (toast().type === types.SUCCESS) {
-    <mat-icon class="success-icon" svgIcon="success" [inline]="true"></mat-icon>
-  } @else if (toast().type === types.ERROR) {
-    <mat-icon class="error-icon" svgIcon="error" [inline]="true"></mat-icon>
-  } @else if (toast().type === types.WARNING) {
-    <mat-icon class="warning-icon" svgIcon="warning" [inline]="true"></mat-icon>
-  } @else {
-    <mat-icon class="info-icon" svgIcon="info" [inline]="true"></mat-icon>
-  }
+  <span class="box" [ngClass]="getBoxColor()"></span>
+  <mat-icon
+    [class]="getIconColor()"
+    [svgIcon]="getSvgName()"
+    [inline]="true"></mat-icon>
   <p class="description">
     {{ toast().message }}
   </p>
   <button class="close" (click)="onRemove()">
-    <mat-icon class="close-icon" svgIcon="close" [inline]="true"></mat-icon>
+    <mat-icon
+      class="close-icon"
+      [svgIcon]="iconNames[4]"
+      [inline]="true"></mat-icon>
   </button>
-  <span class="time-line" [ngClass]="getColor() + ' ' + getRemoveTime()"></span>
+  <span
+    class="time-line"
+    [ngClass]="getBoxColor() + ' ' + getLifetime()"></span>
 </div>
