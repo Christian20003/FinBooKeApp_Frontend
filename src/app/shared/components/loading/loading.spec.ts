@@ -1,13 +1,16 @@
+import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { getNativeElement } from 'src/app/testing/testing-support';
-import { getTranslocoModule } from 'src/app/testing/transloco-testing.module';
 import { LoadingComponent } from './loading';
-import { provideZonelessChangeDetection } from '@angular/core';
+import { setInputSignal } from 'src/app/testing/helper/set-input-signal';
+import { getTranslocoModule } from 'src/app/shared/localization/transloco-testing';
 
 describe('LoadingComponent - Unit-Tests', () => {
   let component: LoadingComponent;
   let fixture: ComponentFixture<LoadingComponent>;
+
+  const message = 'This is a test';
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -16,6 +19,7 @@ describe('LoadingComponent - Unit-Tests', () => {
     });
     fixture = TestBed.createComponent(LoadingComponent);
     component = fixture.componentInstance;
+    setInputSignal(fixture, 'message', message);
     fixture.detectChanges();
   });
 
@@ -24,8 +28,6 @@ describe('LoadingComponent - Unit-Tests', () => {
   });
 
   it('U-Test-2: Message property should be displayed', () => {
-    const message = 'This is a test';
-    fixture.componentRef.setInput('message', message);
     fixture.detectChanges();
     const element = getNativeElement<LoadingComponent, HTMLParagraphElement>(
       fixture,

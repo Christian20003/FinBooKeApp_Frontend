@@ -10,7 +10,6 @@ import {
 } from '../testing-support';
 import { MatIconModule } from '@angular/material/icon';
 import { provideHttpClient } from '@angular/common/http';
-import { getTranslocoModule } from '../transloco-testing.module';
 
 xdescribe('GetCodeComponent - Integration Tests', () => {
   let fixture: ComponentFixture<GetCodeComponent>;
@@ -18,12 +17,7 @@ xdescribe('GetCodeComponent - Integration Tests', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [GetCodeComponent, FormInputErrorComponent],
-      imports: [
-        ReactiveFormsModule,
-        BrowserAnimationsModule,
-        MatIconModule,
-        getTranslocoModule(),
-      ],
+      imports: [ReactiveFormsModule, BrowserAnimationsModule, MatIconModule],
       providers: [provideHttpClient()],
     });
     fixture = TestBed.createComponent(GetCodeComponent);

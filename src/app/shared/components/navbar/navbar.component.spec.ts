@@ -11,7 +11,6 @@ import {
   getNativeElement,
   getNativeElements,
 } from 'src/app/testing/testing-support';
-import { getTranslocoModule } from 'src/app/testing/transloco-testing.module';
 import { NavbarComponent } from './navbar.component';
 import { NavElementsComponent } from './nav-elements/nav-elements.component';
 import { SharedModule } from '../shared.module';
@@ -31,7 +30,6 @@ xdescribe('NavbarComponent - Unit Tests', () => {
         NavElementsComponent,
         BrowserAnimationsModule,
         SharedModule,
-        getTranslocoModule(),
       ],
       providers: [
         provideMockStore(),

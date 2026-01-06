@@ -14,7 +14,7 @@ import {
   provideHttpClient,
   withInterceptorsFromDi,
 } from '@angular/common/http';
-import { config } from './app/transloco-root.module';
+import { config } from './app/shared/localization/transloco-config';
 import { ToastsComponent } from './app/shared/components/toasts/toasts';
 import { NavbarComponent } from './app/shared/components/navbar/navbar.component';
 import { provideTransloco } from '@jsverse/transloco';

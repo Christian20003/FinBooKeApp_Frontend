@@ -2,7 +2,6 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { User } from 'src/app/shared/index';
 import { Observable, catchError, map, throwError } from 'rxjs';
-import { SecurityCode } from '../models/securityCode';
 import { TranslocoService } from '@jsverse/transloco';
 import { EnvironmentService } from 'src/app/dev-tools/environment.service';
 import { LoginData } from '../models/loginData';
@@ -108,7 +107,7 @@ export class AuthenticationService {
    * @param data      - The code data as a {@link securityCode} object.
    * @returns           An observable either with a string message after success or an {@link Error} object after failure.
    */
-  postCode(data: SecurityCode): Observable<string | Error> {
+  postCode(data: string): Observable<string | Error> {
     const path = this.envService.apiUrl + this.CODE_PATH;
     this.logger.logInfo('PUT to ' + path, data);
     return this.http.put<string>(path, data).pipe(

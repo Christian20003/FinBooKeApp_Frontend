@@ -6,11 +6,9 @@ import {
 import { HttpErrorResponse, provideHttpClient } from '@angular/common/http';
 import { TestUser, User } from 'src/app/shared';
 import { EnvironmentService } from 'src/app/dev-tools/environment.service';
-import { getTranslocoModule } from 'src/app/testing/transloco-testing.module';
 import { AuthenticationService } from './authentication.service';
 import { TestLoginData } from '../models/loginData';
 import { TestRegisterData } from '../models/registerData';
-import { TestSecurityCode } from '../models/securityCode';
 
 xdescribe('AuthenticationService - Unit Tests', () => {
   let service: AuthenticationService;
@@ -24,7 +22,6 @@ xdescribe('AuthenticationService - Unit Tests', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [getTranslocoModule()],
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
@@ -131,7 +128,7 @@ xdescribe('AuthenticationService - Unit Tests', () => {
 
   it('U-Test-5: A successful postCode request', () => {
     spyOnProperty(envService, 'apiUrl', 'get').and.returnValue(api);
-    service.postCode(TestSecurityCode).subscribe({
+    service.postCode('TODO').subscribe({
       next: response => {
         expect(response)
           .withContext('Success response should exist')
@@ -235,7 +232,7 @@ xdescribe('AuthenticationService - Unit Tests', () => {
 
   it('U-Test-10: A faulty postCode request', () => {
     spyOnProperty(envService, 'apiUrl', 'get').and.returnValue(api);
-    service.postCode(TestSecurityCode).subscribe({
+    service.postCode('TODO').subscribe({
       error: error => {
         expect(error)
           .withContext('Error object should be present')

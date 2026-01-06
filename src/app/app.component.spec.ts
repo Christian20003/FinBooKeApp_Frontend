@@ -5,7 +5,6 @@ import { AuthModule } from './auth/auth.module';
 import { StoreModule } from '@ngrx/store';
 import { userReducer } from './shared/index';
 import { SharedModule } from './shared/components/shared.module';
-import { TranslocoRootModule } from './transloco-root.module';
 import { ToastsComponent } from './shared/components/toasts/toasts';
 
 describe('Dummy', () => {
@@ -22,7 +21,6 @@ xdescribe('AppComponent', () => {
         AuthModule,
         StoreModule.forRoot({ user: userReducer }, {}),
         SharedModule,
-        TranslocoRootModule,
         ToastsComponent,
       ],
       declarations: [AppComponent],

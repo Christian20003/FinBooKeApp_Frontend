@@ -1,4 +1,4 @@
-import { provideZonelessChangeDetection } from '@angular/core';
+/* import { provideZonelessChangeDetection } from '@angular/core';
 import { bootstrapApplication, BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './routing/app-routing.module';
@@ -11,9 +11,8 @@ import { userEffects } from './shared/stores/UserStore/User.effects';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { SharedModule } from './shared/components/shared.module';
 import { HttpClientModule } from '@angular/common/http';
-import { TranslocoRootModule } from './transloco-root.module';
 import { ToastsComponent } from './shared/components/toasts/toasts';
-import { NavbarComponent } from './shared/components/navbar/navbar.component';
+import { NavbarComponent } from './shared/components/navbar/navbar.component'; */
 
 /* @NgModule({
   imports: [
@@ -33,7 +32,7 @@ import { NavbarComponent } from './shared/components/navbar/navbar.component';
   providers: [provideAnimationsAsync(), provideZonelessChangeDetection()],
 })
 export class AppModule {} */
-bootstrapApplication(AppComponent, {
+/* bootstrapApplication(AppComponent, {
   providers: [
     BrowserModule,
     AppRoutingModule,
@@ -43,9 +42,8 @@ bootstrapApplication(AppComponent, {
     provideStore({ user: userReducer }),
     provideEffects([userEffects]),
     HttpClientModule,
-    TranslocoRootModule,
     ToastsComponent,
     NavbarComponent,
     provideZonelessChangeDetection(),
   ],
-});
+}); */

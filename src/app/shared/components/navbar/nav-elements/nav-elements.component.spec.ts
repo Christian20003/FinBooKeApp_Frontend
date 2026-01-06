@@ -17,7 +17,6 @@ import { AuthenticationService } from 'src/app/auth/auth-overview/authentication
 import { deleteUser } from 'src/app/shared';
 import { getNativeElement } from 'src/app/testing/testing-support';
 import { loginPath } from 'src/app/auth/auth-routing-module';
-import { getTranslocoModule } from 'src/app/testing/transloco-testing.module';
 import { NavElementsComponent } from './nav-elements.component';
 
 xdescribe('NavElementsComponent - Unit Tests', () => {
@@ -37,11 +36,7 @@ xdescribe('NavElementsComponent - Unit Tests', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        NavElementsComponent,
-        RouterModule.forRoot(routes),
-        getTranslocoModule(),
-      ],
+      imports: [NavElementsComponent, RouterModule.forRoot(routes)],
       providers: [
         { provide: AuthenticationService, useValue: stubService },
         provideMockStore(),

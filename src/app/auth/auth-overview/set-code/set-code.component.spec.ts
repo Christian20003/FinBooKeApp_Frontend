@@ -1,3 +1,4 @@
+import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MockComponent } from 'ng-mocks';
@@ -8,8 +9,7 @@ import {
   getNativeElements,
   triggerInput,
 } from 'src/app/testing/testing-support';
-import { getTranslocoModule } from 'src/app/testing/transloco-testing.module';
-import { provideZonelessChangeDetection } from '@angular/core';
+import { getTranslocoModule } from 'src/app/shared/localization/transloco-testing';
 
 describe('SetCodeComponent - Unit Tests', () => {
   let component: SetCodeComponent;

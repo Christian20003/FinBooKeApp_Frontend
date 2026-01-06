@@ -11,7 +11,6 @@ import {
   getNativeElements,
   triggerInput,
 } from '../testing-support';
-import { getTranslocoModule } from '../transloco-testing.module';
 
 xdescribe('SetCodeComponent - Unit Tests', () => {
   let fixture: ComponentFixture<SetCodeComponent>;
@@ -19,12 +18,7 @@ xdescribe('SetCodeComponent - Unit Tests', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [SetCodeComponent, FormInputErrorComponent],
-      imports: [
-        ReactiveFormsModule,
-        BrowserAnimationsModule,
-        MatIconModule,
-        getTranslocoModule(),
-      ],
+      imports: [ReactiveFormsModule, BrowserAnimationsModule, MatIconModule],
       providers: [provideHttpClient()],
     });
     fixture = TestBed.createComponent(SetCodeComponent);
