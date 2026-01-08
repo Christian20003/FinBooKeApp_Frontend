@@ -34,6 +34,9 @@
               "src/styles.scss"
             ],
             "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src"]
+            },
             "browser": "src/main.ts"
           },
           "configurations": {
@@ -101,6 +104,9 @@
               "src/styles.scss"
             ],
             "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src"]
+            },
             "karmaConfig": "karma.conf.js"
           }
         },

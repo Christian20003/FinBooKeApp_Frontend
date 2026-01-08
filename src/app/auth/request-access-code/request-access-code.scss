@@ -1,7 +1,7 @@
-@use "../../shared/styles/container-mixin/input" as input;
-@use "../../shared/styles/container-mixin/svg" as svg;
-@use "../../shared/styles/container-mixin/button" as button;
-@use "../../shared/styles/others/font" as font;
+@use "app/shared/styles/container-mixin/input" as input;
+@use "app/shared/styles/container-mixin/svg" as svg;
+@use "app/shared/styles/container-mixin/button" as button;
+@use "app/shared/styles/others/font" as font;
 
 #email-form {
     display: grid;

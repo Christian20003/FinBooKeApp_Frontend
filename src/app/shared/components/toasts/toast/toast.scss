@@ -1,7 +1,7 @@
-@use "../../../styles/others/font" as font;
-@use "../../../styles/container-mixin/box" as box;
-@use "../../../styles/animations/sizeAnimation" as animations;
-@use "../../../styles/container-mixin/svg" as svg;
+@use "app/shared/styles/others/font" as font;
+@use "app/shared/styles/container-mixin/box" as box;
+@use "app/shared/styles/animations/sizeAnimation" as animations;
+@use "app/shared/styles/container-mixin/svg" as svg;
 
 .toast-content {
     display: flex;

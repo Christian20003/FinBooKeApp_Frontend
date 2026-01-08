@@ -1,6 +1,6 @@
-@use "src/app/shared/styles/container-mixin/input" as input;
-@use "src/app/shared/styles/container-mixin/button" as button;
-@use "src/app/shared/styles/others/font" as font;
+@use "app/shared/styles/container-mixin/input" as input;
+@use "app/shared/styles/container-mixin/button" as button;
+@use "app/shared/styles/others/font" as font;
 
 #code-form {
     position: relative;

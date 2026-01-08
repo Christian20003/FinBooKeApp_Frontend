@@ -1,7 +1,7 @@
-@use "../../styles/container-mixin/blur" as blur;
-@use "../../styles/container-mixin/svg" as svg;
-@use "../../styles/animations/rotateAnimation" as animation;
-@use "../../styles/others/font" as font;
+@use "app/shared/styles/container-mixin/blur" as blur;
+@use "app/shared/styles/container-mixin/svg" as svg;
+@use "app/shared/styles/animations/rotateAnimation" as animation;
+@use "app/shared/styles/others/font" as font;
 
 $icon-width: 2rem;
 
