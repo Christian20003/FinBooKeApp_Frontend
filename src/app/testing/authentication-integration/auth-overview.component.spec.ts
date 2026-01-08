@@ -20,7 +20,7 @@ import { AuthenticationService } from 'src/app/auth/auth-overview/authentication
 import { RequestAccessCodeComponent } from 'src/app/auth/auth-overview/get-code/get-code.component';
 import { LoginComponent } from 'src/app/auth/auth-overview/login/login.component';
 import { RegisterComponent } from 'src/app/auth/auth-overview/register/register.component';
-import { SetCodeComponent } from 'src/app/auth/auth-overview/set-code/set-code.component';
+import { SetAccessCodeComponent } from 'src/app/auth/auth-overview/set-code/set-code.component';
 import { loginPath } from 'src/app/auth/auth-routing-module';
 import {
   LoadingComponent,
@@ -58,7 +58,7 @@ describe('AuthOverviewComponent', () => {
         AuthOverviewComponent,
         LoginComponent,
         RegisterComponent,
-        SetCodeComponent,
+        SetAccessCodeComponent,
         RequestAccessCodeComponent,
       ],
       imports: [

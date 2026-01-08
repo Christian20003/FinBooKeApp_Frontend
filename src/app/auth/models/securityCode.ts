@@ -1,5 +1,5 @@
 /**
- * This interface represents the structure of data which will be emitted by the SetCodeComponent.
+ * This interface represents the structure of data which will be emitted by the SetAccessCodeComponent.
  * It consists of all code values.
  *
  * @property {string} value1  - The first code value

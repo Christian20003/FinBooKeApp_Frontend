@@ -8,7 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthRoutingModule } from './auth-routing-module';
 // import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { RequestAccessCodeComponent } from './request-access-code/request-access-code';
-import { SetCodeComponent } from './auth-overview/set-code/set-code.component';
+import { SetAccessCodeComponent } from './set-access-code/set-access-code';
 // import { authInterceptor } from './auth-interceptor';
 import { SharedModule } from '../shared/components/shared.module';
 import { MatIconModule } from '@angular/material/icon';
@@ -21,7 +21,7 @@ import { LoadingComponent } from '../shared';
     LoginComponent,
     RegisterComponent,
     RequestAccessCodeComponent,
-    SetCodeComponent,
+    SetAccessCodeComponent,
     CommonModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,

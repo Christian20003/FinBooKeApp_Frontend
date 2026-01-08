@@ -17,7 +17,7 @@ import {
 } from '../auth-routing-module';
 import { LoginData } from '../models/loginData';
 import { RegisterData } from '../models/registerData';
-import { SetCodeComponent } from './set-code/set-code.component';
+import { SetAccessCodeComponent } from '../set-access-code/set-access-code';
 import { RequestAccessCodeComponent } from '../request-access-code/request-access-code';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -30,7 +30,7 @@ import { NgClass } from '@angular/common';
   styleUrls: ['./auth-overview.component.scss'],
   animations: [moveLeftToRight, moveRightToLeft],
   imports: [
-    SetCodeComponent,
+    SetAccessCodeComponent,
     RequestAccessCodeComponent,
     LoginComponent,
     RegisterComponent,

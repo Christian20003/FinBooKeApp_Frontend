@@ -1,11 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  inject,
-  OnInit,
-  output,
-  OutputEmitterRef,
-} from '@angular/core';
+import { Component, ElementRef, inject, OnInit, output } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -16,22 +9,22 @@ import { TranslocoDirective } from '@jsverse/transloco';
 import { FormInputErrorComponent } from 'src/app/shared';
 
 @Component({
-  selector: 'app-set-code',
-  templateUrl: './set-code.component.html',
-  styleUrls: ['./set-code.component.scss'],
+  selector: 'app-set-access-code',
+  templateUrl: './set-access-code.html',
+  styleUrls: ['./set-access-code.scss'],
   imports: [TranslocoDirective, ReactiveFormsModule, FormInputErrorComponent],
 })
-export class SetCodeComponent implements OnInit {
-  // The output signal to emit security code
-  public readonly send: OutputEmitterRef<string> = output();
-  // The security code size
-  public readonly size: number = 6;
-  // If the form is valid
-  public isValid: boolean = true;
-  // The form
-  public form!: FormGroup;
+export class SetAccessCodeComponent implements OnInit {
   // Access to DOM
   private readonly elementRef = inject(ElementRef);
+  // The security code size
+  private readonly size = 6;
+  // If the form is valid
+  protected isValid: boolean = true;
+  // The form
+  protected form!: FormGroup;
+  // The output signal to emit security code
+  readonly send = output<string>();
 
   ngOnInit(): void {
     const group: { [key: string]: FormControl } = {};

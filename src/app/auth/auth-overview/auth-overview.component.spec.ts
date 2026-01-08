@@ -17,7 +17,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthenticationService } from './authentication.service';
 import { RequestAccessCodeComponent } from '../request-access-code/request-access-code';
-import { SetCodeComponent } from './set-code/set-code.component';
+import { SetAccessCodeComponent } from '../set-access-code/set-access-code';
 import {
   loginPath,
   registerPath,
@@ -185,10 +185,10 @@ xdescribe('AuthOverviewComponent', () => {
       fixture.detectChanges();
       const setCodeComp = getNativeElement<
         AuthOverviewComponent,
-        SetCodeComponent
-      >(fixture, 'app-set-code');
+        SetAccessCodeComponent
+      >(fixture, 'app-set-access-code');
       expect(setCodeComp)
-        .withContext('SetCodeComponent should be present')
+        .withContext('SetAccessCodeComponent should be present')
         .toBeTruthy();
     });
 

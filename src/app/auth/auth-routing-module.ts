@@ -3,7 +3,7 @@ import { LoginComponent } from './auth-overview/login/login.component';
 import { RegisterComponent } from './auth-overview/register/register.component';
 import { NgModule } from '@angular/core';
 import { RequestAccessCodeComponent } from './request-access-code/request-access-code';
-import { SetCodeComponent } from './auth-overview/set-code/set-code.component';
+import { SetAccessCodeComponent } from './set-access-code/set-access-code';
 
 export const loginPath = 'login';
 export const registerPath = 'register';
@@ -15,7 +15,7 @@ export const authRoutes: Routes = [
     component: LoginComponent,
     children: [
       { path: resetPasswordPath, component: RequestAccessCodeComponent },
-      { path: resetPasswordPath, component: SetCodeComponent },
+      { path: resetPasswordPath, component: SetAccessCodeComponent },
     ],
   },
   { path: registerPath, component: RegisterComponent },

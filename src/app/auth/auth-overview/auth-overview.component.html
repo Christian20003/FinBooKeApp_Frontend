@@ -17,9 +17,9 @@
     @if (isLogin()) {
       <!-- Set email for reset password screen -->
       @if (isCode() && email) {
-        <app-set-code
+        <app-set-access-code
           [@moveLeftToRight]
-          (send)="onSetCode($event)"></app-set-code>
+          (send)="onSetCode($event)"></app-set-access-code>
         <!-- Set security code screen -->
       } @else if (isCode() && !email) {
         <app-request-access-code
