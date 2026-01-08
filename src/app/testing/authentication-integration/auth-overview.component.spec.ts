@@ -17,7 +17,7 @@ import { HttpErrorResponse, provideHttpClient } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthOverviewComponent } from 'src/app/auth/auth-overview/auth-overview.component';
 import { AuthenticationService } from 'src/app/auth/auth-overview/authentication.service';
-import { GetCodeComponent } from 'src/app/auth/auth-overview/get-code/get-code.component';
+import { RequestAccessCodeComponent } from 'src/app/auth/auth-overview/get-code/get-code.component';
 import { LoginComponent } from 'src/app/auth/auth-overview/login/login.component';
 import { RegisterComponent } from 'src/app/auth/auth-overview/register/register.component';
 import { SetCodeComponent } from 'src/app/auth/auth-overview/set-code/set-code.component';
@@ -59,7 +59,7 @@ describe('AuthOverviewComponent', () => {
         LoginComponent,
         RegisterComponent,
         SetCodeComponent,
-        GetCodeComponent,
+        RequestAccessCodeComponent,
       ],
       imports: [
         LoadingComponent,

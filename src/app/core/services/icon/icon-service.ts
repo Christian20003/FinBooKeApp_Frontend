@@ -37,6 +37,10 @@ export class IconService {
       name: 'loading',
       path: 'assets/icons/symbols/coins.svg',
     },
+    email: {
+      name: 'email',
+      path: 'assets/icons/symbols/email.svg',
+    },
   };
 
   /**

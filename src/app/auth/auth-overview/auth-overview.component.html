@@ -22,10 +22,10 @@
           (send)="onSetCode($event)"></app-set-code>
         <!-- Set security code screen -->
       } @else if (isCode() && !email) {
-        <app-get-code
+        <app-request-access-code
           [@moveLeftToRight]
-          [emailValue]="email"
-          (setEmail)="onSetEmail($event)"></app-get-code>
+          [email]="email"
+          (send)="onSetEmail($event)"></app-request-access-code>
         <!-- Login screen -->
       } @else {
         <app-login

@@ -16,7 +16,7 @@ import { AuthOverviewComponent } from './auth-overview.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthenticationService } from './authentication.service';
-import { GetCodeComponent } from './get-code/get-code.component';
+import { RequestAccessCodeComponent } from '../request-access-code/request-access-code';
 import { SetCodeComponent } from './set-code/set-code.component';
 import {
   loginPath,
@@ -172,10 +172,10 @@ xdescribe('AuthOverviewComponent', () => {
       fixture.detectChanges();
       const getCodeComp = getNativeElement<
         AuthOverviewComponent,
-        GetCodeComponent
-      >(fixture, 'app-get-code');
+        RequestAccessCodeComponent
+      >(fixture, 'app-request-access-code');
       expect(getCodeComp)
-        .withContext('GetCodeComponent should be present')
+        .withContext('RequestAccessCodeComponent should be present')
         .toBeTruthy();
     });
 

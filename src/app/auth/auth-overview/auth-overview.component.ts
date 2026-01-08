@@ -18,7 +18,7 @@ import {
 import { LoginData } from '../models/loginData';
 import { RegisterData } from '../models/registerData';
 import { SetCodeComponent } from './set-code/set-code.component';
-import { GetCodeComponent } from './get-code/get-code.component';
+import { RequestAccessCodeComponent } from '../request-access-code/request-access-code';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { TranslocoDirective } from '@jsverse/transloco';
@@ -31,7 +31,7 @@ import { NgClass } from '@angular/common';
   animations: [moveLeftToRight, moveRightToLeft],
   imports: [
     SetCodeComponent,
-    GetCodeComponent,
+    RequestAccessCodeComponent,
     LoginComponent,
     RegisterComponent,
     LoadingComponent,
