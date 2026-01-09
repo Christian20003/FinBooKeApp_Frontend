@@ -8,27 +8,28 @@ import {
   LoadingComponent,
   TRANSLATION_KEYS,
 } from 'src/app/shared/index';
-import { User, ToastLifeTime, ToastType } from 'src/app/core/index';
-import { ToastService } from 'src/app/core/services/toast/toast-service';
-import { AuthenticationService } from './authentication.service';
 import {
-  loginPath,
-  registerPath,
-  resetPasswordPath,
-} from '../auth-routing-module';
-import { LoginData } from '../models/loginData';
-import { RegisterData } from '../models/registerData';
+  User,
+  ToastLifeTime,
+  ToastType,
+  AuthenticationService,
+  ILoginDTO,
+  IRegisterDTO,
+  PATHS,
+} from 'src/app/core/index';
+import { ToastService } from 'src/app/core/services/toast/toast-service';
 import { SetAccessCodeComponent } from '../set-access-code/set-access-code';
 import { RequestAccessCodeComponent } from '../request-access-code/request-access-code';
 import { LoginComponent } from '../login/login';
-import { RegisterComponent } from './register/register.component';
+import { RegisterComponent } from '../register/register';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-auth-overview',
-  templateUrl: './auth-overview.component.html',
-  styleUrls: ['./auth-overview.component.scss'],
+  templateUrl: './auth-overview.html',
+  styleUrls: ['./auth-overview.scss'],
+  standalone: true,
   animations: [moveLeftToRight, moveRightToLeft],
   imports: [
     SetAccessCodeComponent,
@@ -58,21 +59,21 @@ export class AuthOverviewComponent {
    * This function navigates to the login path.
    */
   onLogin() {
-    this.router.navigate([loginPath]);
+    this.router.navigate([PATHS.login]);
   }
 
   /**
    * This function navigates to the register path
    */
   onRegister() {
-    this.router.navigate([registerPath]);
+    this.router.navigate([PATHS.register]);
   }
 
   /**
    * This function navigates to the reset password path
    */
   onForgetPwd() {
-    this.router.navigate([loginPath, resetPasswordPath]);
+    this.router.navigate([PATHS.login, PATHS.forgotPwd]);
   }
 
   /**
@@ -110,7 +111,7 @@ export class AuthOverviewComponent {
     this.authService.postCode(code).subscribe({
       next: () => {
         this.waiting = false;
-        this.router.navigate([loginPath]);
+        this.router.navigate([PATHS.login]);
       },
       error: error => {
         this.waiting = false;
@@ -129,14 +130,14 @@ export class AuthOverviewComponent {
    *
    * @param data    - The login data which should be sent
    */
-  onSubmitLogin(data: LoginData) {
+  onSubmitLogin(data: ILoginDTO) {
     this.waiting = true;
     this.authService.postLogin(data).subscribe({
       next: response => {
         this.waiting = false;
         this.store.dispatch(setUser({ user: response as User }));
         // Do not use dashboardPath, otherwise Tests will not execute
-        this.router.navigate(['dashboard']);
+        this.router.navigate([PATHS.dashboard]);
       },
       error: error => {
         this.waiting = false;
@@ -155,14 +156,14 @@ export class AuthOverviewComponent {
    *
    * @param data    - The login data which should be sent
    */
-  onSubmitRegister(data: RegisterData) {
+  onSubmitRegister(data: IRegisterDTO) {
     this.waiting = true;
     this.authService.postRegister(data).subscribe({
       next: response => {
         this.waiting = false;
         this.store.dispatch(setUser({ user: response as User }));
         // Do not use dashboardPath, otherwise Tests will not execute
-        this.router.navigate(['dashboard']);
+        this.router.navigate([PATHS.dashboard]);
       },
       error: error => {
         this.waiting = false;
@@ -176,10 +177,10 @@ export class AuthOverviewComponent {
   }
 
   isLogin() {
-    return this.router.url.includes(loginPath);
+    return this.router.url.includes(PATHS.login);
   }
 
   isCode() {
-    return this.router.url.includes(resetPasswordPath);
+    return this.router.url.includes(PATHS.forgotPwd);
   }
 }

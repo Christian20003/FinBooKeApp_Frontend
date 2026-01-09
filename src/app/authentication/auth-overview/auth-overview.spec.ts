@@ -5,27 +5,25 @@ import { provideHttpClient } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { MockModule } from 'ng-mocks';
 import { of, throwError } from 'rxjs';
 import { getNativeElement } from 'src/app/testing/testing-support';
 import { ToastService } from 'src/app/core/services/toast/toast-service';
-import { routes } from 'src/app/routing/app-routing.module';
 import { LoadingComponent, initialState } from 'src/app/shared/index';
-import { TestUser, ToastLifeTime, ToastType } from 'src/app/core/index';
-import { AuthOverviewComponent } from './auth-overview.component';
+import {
+  AuthenticationService,
+  PATHS,
+  TestLoginDTO,
+  TestRegisterDTO,
+  TestUser,
+  ToastLifeTime,
+  ToastType,
+} from 'src/app/core/index';
+import { AuthOverviewComponent } from './auth-overview';
 import { LoginComponent } from '../login/login';
-import { RegisterComponent } from './register/register.component';
-import { AuthenticationService } from './authentication.service';
+import { RegisterComponent } from '../register/register';
 import { RequestAccessCodeComponent } from '../request-access-code/request-access-code';
 import { SetAccessCodeComponent } from '../set-access-code/set-access-code';
-import {
-  loginPath,
-  registerPath,
-  resetPasswordPath,
-} from '../auth-routing-module';
-import { TestLoginData } from '../models/loginData';
-import { TestRegisterData } from '../models/registerData';
-import { AuthModule } from '../auth.module';
+import { routes } from 'src/app/core/routing/routes';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -48,7 +46,6 @@ xdescribe('AuthOverviewComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [AuthOverviewComponent],
       imports: [
-        MockModule(AuthModule),
         BrowserAnimationsModule,
         RouterModule.forRoot(routes),
         ReactiveFormsModule,
@@ -82,7 +79,7 @@ xdescribe('AuthOverviewComponent', () => {
       button.click();
       expect(navigateSpy)
         .withContext('App should be at route /login')
-        .toHaveBeenCalledWith([loginPath]);
+        .toHaveBeenCalledWith([PATHS.login]);
     });
 
     it('U-Test-2: Clicking register button should change the route to "/register"', () => {
@@ -94,7 +91,7 @@ xdescribe('AuthOverviewComponent', () => {
       button.click();
       expect(navigateSpy)
         .withContext('App should be at route /register')
-        .toHaveBeenCalledWith([registerPath]);
+        .toHaveBeenCalledWith([PATHS.register]);
     });
 
     it('U-Test-3: The onForgetPwd function should change the route to "/login/resetPassword"', () => {
@@ -102,11 +99,11 @@ xdescribe('AuthOverviewComponent', () => {
       component.onForgetPwd();
       expect(navigateSpy)
         .withContext('App should be at route /login/forgetPassword')
-        .toHaveBeenCalledWith([loginPath, resetPasswordPath]);
+        .toHaveBeenCalledWith([PATHS.login, PATHS.forgotPwd]);
     });
 
     it('U-Test-4: The isLogin function should return true if the keyword "login" is in the path', async () => {
-      await router.navigate([loginPath]);
+      await router.navigate([PATHS.login]);
       expect(component.isLogin())
         .withContext('isLogin function should return true')
         .toBeTrue();
@@ -119,7 +116,7 @@ xdescribe('AuthOverviewComponent', () => {
     });
 
     it('U-Test-6: The isCode function should return true if the keyword "resetPassword" is in the path', async () => {
-      await router.navigate([loginPath, resetPasswordPath]);
+      await router.navigate([PATHS.login, PATHS.forgotPwd]);
       expect(component.isCode())
         .withContext('isCode function should return true')
         .toBeTrue();
@@ -144,7 +141,7 @@ xdescribe('AuthOverviewComponent', () => {
     });
 
     it('U-Test-9: Login component should appear after navigating to "/login"', async () => {
-      await router.navigate([loginPath]);
+      await router.navigate([PATHS.login]);
       fixture.detectChanges();
       const loginComp = getNativeElement<AuthOverviewComponent, LoginComponent>(
         fixture,
@@ -181,7 +178,7 @@ xdescribe('AuthOverviewComponent', () => {
 
     it('U-Test-12: SetCode component should appear after navigating to "/login/resetPassword" and not empty email', async () => {
       component.email = 'max@mustermann.com';
-      await router.navigate([loginPath, resetPasswordPath]);
+      await router.navigate([PATHS.login, PATHS.forgotPwd]);
       fixture.detectChanges();
       const setCodeComp = getNativeElement<
         AuthOverviewComponent,
@@ -222,7 +219,7 @@ xdescribe('AuthOverviewComponent', () => {
 
     it('U-Test-15: Calling postLogin function and waiting for the response', () => {
       authService.postLogin.and.returnValue(of());
-      component.onSubmitLogin(TestLoginData);
+      component.onSubmitLogin(TestLoginDTO);
       fixture.detectChanges();
       expect(component.waiting)
         .withContext('Waiting flag should be true')
@@ -232,7 +229,7 @@ xdescribe('AuthOverviewComponent', () => {
     it('U-Test-16: Calling postLogin function and getting a success result', () => {
       const spy = spyOn(mockStore, 'dispatch');
       authService.postLogin.and.returnValue(of(TestUser));
-      component.onSubmitLogin(TestLoginData);
+      component.onSubmitLogin(TestLoginDTO);
       fixture.detectChanges();
       expect(component.waiting)
         .withContext('Waiting flag should be false')
@@ -249,7 +246,7 @@ xdescribe('AuthOverviewComponent', () => {
           return new Error(errorMsg);
         })
       );
-      component.onSubmitLogin(TestLoginData);
+      component.onSubmitLogin(TestLoginDTO);
       fixture.detectChanges();
       expect(component.waiting)
         .withContext('Waiting flag should be false')
@@ -267,7 +264,7 @@ xdescribe('AuthOverviewComponent', () => {
 
     it('U-Test-18: Calling postRegister function and waiting for a response', () => {
       authService.postRegister.and.returnValue(of());
-      component.onSubmitRegister(TestRegisterData);
+      component.onSubmitRegister(TestRegisterDTO);
       fixture.detectChanges();
       expect(component.waiting)
         .withContext('Waiting flag should be true')
@@ -277,7 +274,7 @@ xdescribe('AuthOverviewComponent', () => {
     it('U-Test-19: Calling postResgister function and getting a success result', () => {
       const spy = spyOn(mockStore, 'dispatch');
       authService.postRegister.and.returnValue(of(TestUser));
-      component.onSubmitRegister(TestRegisterData);
+      component.onSubmitRegister(TestRegisterDTO);
       fixture.detectChanges();
       expect(component.waiting)
         .withContext('Waiting flag should be false')
@@ -294,7 +291,7 @@ xdescribe('AuthOverviewComponent', () => {
           return new Error(errorMsg);
         })
       );
-      component.onSubmitRegister(TestRegisterData);
+      component.onSubmitRegister(TestRegisterDTO);
       fixture.detectChanges();
       expect(component.waiting)
         .withContext('Waiting flag should be false')
@@ -329,7 +326,7 @@ xdescribe('AuthOverviewComponent', () => {
         .toBeFalse();
       expect(navigateSpy)
         .withContext('The route should be changed to /login')
-        .toHaveBeenCalledWith([loginPath]);
+        .toHaveBeenCalledWith([PATHS.login]);
     });
 
     it('U-Test-23: Calling postCode function and getting an error', () => {

@@ -3,12 +3,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MockComponent } from 'ng-mocks';
 import { LoginComponent } from './login';
-import { IconService } from 'src/app/core';
+import { IconService, TestLoginDTO } from 'src/app/core';
 import { FormInputErrorComponent } from 'src/app/shared/index';
 import { getHTMLElement } from 'src/app/testing/helper/get-html-element';
 import { getComponent } from 'src/app/testing/helper/get-component';
 import { setInputValues } from 'src/app/testing/helper/set-input-values';
-import { TestLoginDTO } from 'src/app/core/models/authentication/loginDTO';
 import { getTranslocoModule } from 'src/app/shared/localization/transloco-testing';
 
 describe('LoginComponent - Unit Tests', () => {

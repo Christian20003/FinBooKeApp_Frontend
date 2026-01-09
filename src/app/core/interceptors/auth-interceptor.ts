@@ -5,15 +5,16 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { Session, User } from '../shared';
 import { Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { loginPath } from './auth-routing-module';
 import {
   deleteUser,
   setUserSession,
-} from '../shared/stores/UserStore/User.actions';
+} from '../../shared/stores/UserStore/User.actions';
+import { User } from '../models/User';
+import { Session } from '../models/Session';
+import { PATHS } from '../routing/paths';
 
 /**
  * This function should intercept all requests sent to the backend of this application. It will append the authentication token
@@ -45,7 +46,7 @@ export function authInterceptor(
     tap(event => {
       if (event.type === HttpEventType.Response) {
         if (event.status === 401) {
-          router.navigate([loginPath]);
+          router.navigate([PATHS.login]);
           store.dispatch(deleteUser());
         } else {
           const token = event.headers.get('Authentication-Token');

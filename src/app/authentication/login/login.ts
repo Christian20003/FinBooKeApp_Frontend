@@ -12,8 +12,7 @@ import {
   TRANSLATION_KEYS,
 } from 'src/app/shared/index';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { ICON_NAMES, IconService } from 'src/app/core';
-import { ILoginDTO } from 'src/app/core/models/authentication/loginDTO';
+import { ICON_NAMES, IconService, ILoginDTO } from 'src/app/core';
 
 @Component({
   selector: 'app-login',

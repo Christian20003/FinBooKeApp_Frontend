@@ -5,19 +5,11 @@ import { By } from '@angular/platform-browser';
 import { Router, RouterLinkWithHref, RouterModule } from '@angular/router';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
-import {
-  accountsPath,
-  dashboardPath,
-  financesPath,
-  profilePath,
-  routes,
-  settingsPath,
-} from 'src/app/routing/app-routing.module';
-import { AuthenticationService } from 'src/app/auth/auth-overview/authentication.service';
 import { deleteUser } from 'src/app/shared';
 import { getNativeElement } from 'src/app/testing/testing-support';
-import { loginPath } from 'src/app/auth/auth-routing-module';
 import { NavElementsComponent } from './nav-elements.component';
+import { AuthenticationService, PATHS } from 'src/app/core';
+import { routes } from 'src/app/core/routing/routes';
 
 xdescribe('NavElementsComponent - Unit Tests', () => {
   let component: NavElementsComponent;
@@ -60,7 +52,7 @@ xdescribe('NavElementsComponent - Unit Tests', () => {
     fixture.detectChanges();
     const debugElement = getAnchorElem();
     const routerLink = debugElement.injector.get(RouterLinkWithHref);
-    expect(routerLink['href']).toEqual('/' + dashboardPath);
+    expect(routerLink['href']).toEqual('/' + PATHS.dashboard);
   });
 
   it('U-Test-3: Anchor "finances" should link to the finances route', () => {
@@ -68,7 +60,7 @@ xdescribe('NavElementsComponent - Unit Tests', () => {
     fixture.detectChanges();
     const debugElement = getAnchorElem();
     const routerLink = debugElement.injector.get(RouterLinkWithHref);
-    expect(routerLink['href']).toEqual('/' + financesPath);
+    expect(routerLink['href']).toEqual('/' + PATHS.finances);
   });
 
   it('U-Test-4: Anchor "accounts" should link to the accounts route', () => {
@@ -76,7 +68,7 @@ xdescribe('NavElementsComponent - Unit Tests', () => {
     fixture.detectChanges();
     const debugElement = getAnchorElem();
     const routerLink = debugElement.injector.get(RouterLinkWithHref);
-    expect(routerLink['href']).toEqual('/' + accountsPath);
+    expect(routerLink['href']).toEqual('/' + PATHS.accounts);
   });
 
   it('U-Test-5: Anchor "profile" should link to the profile route', () => {
@@ -84,7 +76,7 @@ xdescribe('NavElementsComponent - Unit Tests', () => {
     fixture.detectChanges();
     const debugElement = getAnchorElem();
     const routerLink = debugElement.injector.get(RouterLinkWithHref);
-    expect(routerLink['href']).toEqual('/' + profilePath);
+    expect(routerLink['href']).toEqual('/' + PATHS.profile);
   });
 
   it('U-Test-6: Anchor "settings" should link to the settings route', () => {
@@ -92,7 +84,7 @@ xdescribe('NavElementsComponent - Unit Tests', () => {
     fixture.detectChanges();
     const debugElement = getAnchorElem();
     const routerLink = debugElement.injector.get(RouterLinkWithHref);
-    expect(routerLink['href']).toEqual('/' + settingsPath);
+    expect(routerLink['href']).toEqual('/' + PATHS.settings);
   });
 
   it('U-Test-7: After clicking the logout anchor element, the dispatch function should be called with delete action', () => {
@@ -118,6 +110,6 @@ xdescribe('NavElementsComponent - Unit Tests', () => {
       'a'
     );
     element.click();
-    expect(router.navigate).toHaveBeenCalledOnceWith([loginPath]);
+    expect(router.navigate).toHaveBeenCalledOnceWith([PATHS.login]);
   });
 });

@@ -1,12 +1,12 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { User } from 'src/app/core';
+import { User } from 'src/app/core/models/User';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { TranslocoService } from '@jsverse/transloco';
 import { EnvironmentService } from 'src/app/dev-tools/environment.service';
-import { LoginData } from '../models/loginData';
 import { LoggerService } from 'src/app/dev-tools/logging.service';
-import { RegisterData } from '../models/registerData';
+import { ILoginDTO } from 'src/app/core/models/authentication/loginDTO';
+import { IRegisterDTO } from 'src/app/core/models/authentication/registerDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +29,7 @@ export class AuthenticationService {
    * @param data      - The login data as a {@link loginData} object.
    * @returns           An observable either with a {@link User} object after success or an {@link Error} object after failure.
    */
-  postLogin(data: LoginData): Observable<User | Error> {
+  postLogin(data: ILoginDTO): Observable<User | Error> {
     const path = this.envService.apiUrl + this.LOGIN_PATH;
     this.logger.logInfo('POST to ' + path, data);
     return this.http.post<User>(path, data).pipe(
@@ -58,7 +58,7 @@ export class AuthenticationService {
    * @param data      - The registration data as a {@link registerData} object.
    * @returns           An observable either with a {@link User} object after success or an {@link Error} object after failure.
    */
-  postRegister(data: RegisterData): Observable<User | Error> {
+  postRegister(data: IRegisterDTO): Observable<User | Error> {
     const path = this.envService.apiUrl + this.REGISTER_PATH;
     this.logger.logInfo('POST to ' + path, data);
     return this.http.post<User>(path, data).pipe(

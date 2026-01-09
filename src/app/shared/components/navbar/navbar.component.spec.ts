@@ -6,7 +6,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideHttpClient } from '@angular/common/http';
 import { MemoizedSelector } from '@ngrx/store';
 import { MockComponent, MockModule } from 'ng-mocks';
-import { dashboardPath, routes } from 'src/app/routing/app-routing.module';
 import {
   getNativeElement,
   getNativeElements,
@@ -14,8 +13,9 @@ import {
 import { NavbarComponent } from './navbar.component';
 import { NavElementsComponent } from './nav-elements/nav-elements.component';
 import { SharedModule } from '../shared.module';
-import { TestUser, User } from 'src/app/core';
+import { PATHS, TestUser, User } from 'src/app/core';
 import { selectUser } from '../../stores/UserStore/User.selector';
+import { routes } from 'src/app/core/routing/routes';
 
 xdescribe('NavbarComponent - Unit Tests', () => {
   let component: NavbarComponent;
@@ -67,7 +67,7 @@ xdescribe('NavbarComponent - Unit Tests', () => {
   it('U-Test-2: The logo (first) anchor element should link to the dashboard route', () => {
     const debugElement = fixture.debugElement.query(By.css('a'));
     const routerLink = debugElement.injector.get(RouterLinkWithHref);
-    expect(routerLink['href']).toEqual('/' + dashboardPath);
+    expect(routerLink['href']).toEqual('/' + PATHS.dashboard);
   });
 
   it('U-Test-3: An image should appear as profile button if an url is provided', () => {

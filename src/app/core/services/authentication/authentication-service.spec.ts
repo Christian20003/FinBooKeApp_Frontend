@@ -4,11 +4,11 @@ import {
   provideHttpClientTesting,
 } from '@angular/common/http/testing';
 import { HttpErrorResponse, provideHttpClient } from '@angular/common/http';
-import { TestUser, User } from 'src/app/core';
+import { TestLoginDTO } from 'src/app/core/models/authentication/loginDTO';
+import { TestRegisterDTO } from 'src/app/core/models/authentication/registerDTO';
+import { User, TestUser } from 'src/app/core/models/User';
 import { EnvironmentService } from 'src/app/dev-tools/environment.service';
-import { AuthenticationService } from './authentication.service';
-import { TestLoginData } from '../models/loginData';
-import { TestRegisterData } from '../models/registerData';
+import { AuthenticationService } from './authentication-service';
 
 xdescribe('AuthenticationService - Unit Tests', () => {
   let service: AuthenticationService;
@@ -48,7 +48,7 @@ xdescribe('AuthenticationService - Unit Tests', () => {
 
   it('U-Test-2: A successful login request', () => {
     spyOnProperty(envService, 'apiUrl', 'get').and.returnValue(api);
-    service.postLogin(TestLoginData).subscribe({
+    service.postLogin(TestLoginDTO).subscribe({
       next: response => {
         const user = response as User;
         expect(user.name)
@@ -79,7 +79,7 @@ xdescribe('AuthenticationService - Unit Tests', () => {
 
   it('U-Test-3: A successful register request', () => {
     spyOnProperty(envService, 'apiUrl', 'get').and.returnValue(api);
-    service.postRegister(TestRegisterData).subscribe({
+    service.postRegister(TestRegisterDTO).subscribe({
       next: response => {
         const user = response as User;
         expect(user.name)
@@ -166,7 +166,7 @@ xdescribe('AuthenticationService - Unit Tests', () => {
 
   it('U-Test-7: A faulty login request', () => {
     spyOnProperty(envService, 'apiUrl', 'get').and.returnValue(api);
-    service.postLogin(TestLoginData).subscribe({
+    service.postLogin(TestLoginDTO).subscribe({
       error: error => {
         expect(error)
           .withContext('Error object should be present')
@@ -188,7 +188,7 @@ xdescribe('AuthenticationService - Unit Tests', () => {
 
   it('U-Test-8: A faulty register request', () => {
     spyOnProperty(envService, 'apiUrl', 'get').and.returnValue(api);
-    service.postRegister(TestRegisterData).subscribe({
+    service.postRegister(TestRegisterDTO).subscribe({
       error: error => {
         expect(error)
           .withContext('Error object should be present')

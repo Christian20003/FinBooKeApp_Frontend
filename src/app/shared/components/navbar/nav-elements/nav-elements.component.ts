@@ -5,11 +5,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { Store } from '@ngrx/store';
-import { AuthenticationService } from 'src/app/auth/auth-overview/authentication.service';
-import { loginPath } from 'src/app/auth/auth-routing-module';
 import { deleteUser } from 'src/app/shared/stores/UserStore/User.actions';
 import { ToastLifeTime, ToastType } from 'src/app/core/models/Toast';
-import { ToastService } from 'src/app/core';
+import { AuthenticationService, PATHS, ToastService } from 'src/app/core';
 import { TRANSLATION_KEYS } from 'src/app/shared/localization/translation-keys';
 
 @Component({
@@ -81,7 +79,7 @@ export class NavElementsComponent {
     this.authService.deleteLogin().subscribe({
       next: () => {
         this.store.dispatch(deleteUser());
-        this.router.navigate([loginPath]);
+        this.router.navigate([PATHS.login]);
       },
       error: error => {
         this.toastService.addToast(

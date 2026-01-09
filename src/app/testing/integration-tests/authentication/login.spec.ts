@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { provideHttpClient } from '@angular/common/http';
 import { TranslocoService } from '@jsverse/transloco';
-import { LoginComponent } from 'src/app/auth/login/login';
+import { LoginComponent } from 'src/app/authentication/login/login';
 import { FormInputErrorComponent, TRANSLATION_KEYS } from 'src/app/shared';
 import { getComponent } from 'src/app/testing/testing-support';
 import { getHTMLElement } from 'src/app/testing/helper/get-html-element';

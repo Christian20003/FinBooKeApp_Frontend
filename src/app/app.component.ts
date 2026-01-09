@@ -1,20 +1,17 @@
 import { Component, ElementRef, Renderer2, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { selectUser, setUser } from './shared';
-import { ChildrenOutletContexts, Router } from '@angular/router';
+import { ChildrenOutletContexts, Router, RouterOutlet } from '@angular/router';
 import { TranslocoService } from '@jsverse/transloco';
-import { loginPath, registerPath } from './auth/auth-routing-module';
-import { routingAnimation } from './routing/routing-animation';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { ToastsComponent } from './shared/components/toasts/toasts';
-import { ɵɵRouterOutlet } from '@angular/router/testing';
+import { PATHS } from './core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  animations: [routingAnimation],
-  imports: [NavbarComponent, ToastsComponent, ɵɵRouterOutlet],
+  imports: [NavbarComponent, ToastsComponent, RouterOutlet],
 })
 export class AppComponent {
   private store = inject(Store);
@@ -28,15 +25,15 @@ export class AppComponent {
     const data = this.store.select(selectUser);
     data.subscribe(state => {
       if (state.id <= 0) {
-        this.router.navigate(['login']);
+        this.router.navigate([PATHS.login]);
       }
     });
   }
 
   isAuthPath(): boolean {
     return (
-      this.router.url.includes(loginPath) ||
-      this.router.url.includes(registerPath)
+      this.router.url.includes(PATHS.login) ||
+      this.router.url.includes(PATHS.register)
     );
   }
 
