@@ -10,6 +10,7 @@ import { loginPath } from 'src/app/auth/auth-routing-module';
 import { deleteUser } from 'src/app/shared/stores/UserStore/User.actions';
 import { ToastLifeTime, ToastType } from 'src/app/core/models/Toast';
 import { ToastService } from 'src/app/core';
+import { TRANSLATION_KEYS } from 'src/app/shared/localization/translation-keys';
 
 @Component({
   selector: 'app-nav-elements',
@@ -33,6 +34,9 @@ export class NavElementsComponent {
 
   public type: InputSignal<string> = input<string>('dashboard');
   public borderAnimation: InputSignal<boolean> = input<boolean>(false);
+
+  // Keys for translated text
+  protected readonly translationKeys = TRANSLATION_KEYS;
 
   constructor() {
     this.matIconRegistry.addSvgIcon(

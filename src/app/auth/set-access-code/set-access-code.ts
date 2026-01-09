@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { FormInputErrorComponent } from 'src/app/shared';
+import { TRANSLATION_KEYS } from 'src/app/shared/localization/translation-keys';
 
 @Component({
   selector: 'app-set-access-code',
@@ -23,6 +24,8 @@ export class SetAccessCodeComponent implements OnInit {
   protected isValid: boolean = true;
   // The form
   protected form!: FormGroup;
+  // Keys for translated text
+  protected readonly translationKeys = TRANSLATION_KEYS;
   // The output signal to emit security code
   readonly send = output<string>();
 

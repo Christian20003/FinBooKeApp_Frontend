@@ -12,7 +12,7 @@
         class="icon-stroke"
         [svgIcon]="emailIcon"
         [inline]="true"></mat-icon>
-      <p>{{ text('auth.email.label') }}</p>
+      <p>{{ text(translationKeys.auth.email.label) }}</p>
     </div>
   </div>
   <div class="relative-container">
@@ -20,14 +20,14 @@
     @if (email?.errors?.['required'] && email?.touched) {
       <app-form-input-error
         class="missing"
-        [message]="text('auth.email.missing')"
+        [message]="text(translationKeys.auth.email.missing)"
         animate.enter="enterX"
         animate.leave="leaveX"></app-form-input-error>
       <!-- The element with the information about invalid email address -->
     } @else if (email?.errors?.['email'] && email?.touched) {
       <app-form-input-error
         class="missing"
-        [message]="text('auth.email.invalid')"
+        [message]="text(translationKeys.auth.email.invalid)"
         animate.enter="enterX"
         animate.leave="leaveX"></app-form-input-error>
     }
@@ -45,7 +45,7 @@
         class="icon-fill"
         [svgIcon]="passwordIcon"
         [inline]="true"></mat-icon>
-      <p>{{ text('auth.password.label') }}</p>
+      <p>{{ text(translationKeys.auth.password.label) }}</p>
     </div>
   </div>
   <div class="relative-container">
@@ -53,17 +53,17 @@
     @if (!password?.valid && password?.touched) {
       <app-form-input-error
         class="missing"
-        [message]="text('auth.password.missing')"
+        [message]="text(translationKeys.auth.password.missing)"
         animate.enter="enterX"
         animate.leave="leaveX"></app-form-input-error>
     }
   </div>
   <!-- The login button -->
   <button id="login-button">
-    {{ text('auth.actions.login') }}
+    {{ text(translationKeys.auth.actions.login) }}
   </button>
 </form>
 <!-- The forget pasword button -->
 <button id="forget-pwd" *transloco="let text" (click)="onForgetPassword()">
-  {{ text('auth.actions.forgotPwd') }}
+  {{ text(translationKeys.auth.actions.forgotPwd) }}
 </button>

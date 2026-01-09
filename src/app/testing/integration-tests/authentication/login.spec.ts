@@ -12,6 +12,7 @@ import { IconService } from 'src/app/core';
 import { getTranslocoModule } from 'src/app/shared/localization/transloco-testing';
 import { setInputValues } from 'src/app/testing/helper/set-input-values';
 import { TestLoginDTO } from 'src/app/core/models/authentication/loginDTO';
+import { TRANSLATION_KEYS } from 'src/app/shared/localization/translation-keys';
 
 describe('LoginComponent - Integration Tests', () => {
   let fixture: ComponentFixture<LoginComponent>;
@@ -49,7 +50,9 @@ describe('LoginComponent - Integration Tests', () => {
 
     const error = getComponent(fixture, FormInputErrorComponent);
     const actual = error.componentInstance.message();
-    const expected = translocoService.translate('auth.email.missing');
+    const expected = translocoService.translate(
+      TRANSLATION_KEYS.auth.email.missing
+    );
 
     expect(actual).toBe(expected);
   });
@@ -62,7 +65,9 @@ describe('LoginComponent - Integration Tests', () => {
 
     const error = getComponent(fixture, FormInputErrorComponent);
     const actual = error.componentInstance.message();
-    const expected = translocoService.translate('auth.email.invalid');
+    const expected = translocoService.translate(
+      TRANSLATION_KEYS.auth.email.invalid
+    );
 
     expect(actual).toBe(expected);
   });
@@ -75,7 +80,9 @@ describe('LoginComponent - Integration Tests', () => {
 
     const error = getComponent(fixture, FormInputErrorComponent);
     const actual = error.componentInstance.message();
-    const expected = translocoService.translate('auth.password.missing');
+    const expected = translocoService.translate(
+      TRANSLATION_KEYS.auth.password.missing
+    );
 
     expect(actual).toBe(expected);
   });

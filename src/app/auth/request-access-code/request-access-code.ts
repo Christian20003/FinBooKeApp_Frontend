@@ -10,6 +10,7 @@ import { MatIcon } from '@angular/material/icon';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { IconService } from 'src/app/core';
 import { FormInputErrorComponent } from 'src/app/shared';
+import { TRANSLATION_KEYS } from 'src/app/shared/localization/translation-keys';
 
 @Component({
   selector: 'app-request-access-code',
@@ -33,6 +34,8 @@ export class RequestAccessCodeComponent implements OnInit {
   readonly send = output<string>();
   // Form to be able to enter an email address
   protected form!: FormGroup;
+  // Keys for translated text
+  protected readonly translationKeys = TRANSLATION_KEYS;
 
   constructor() {
     this.iconSerive.registerIcon(this.iconName);

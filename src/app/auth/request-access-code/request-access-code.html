@@ -9,7 +9,7 @@
     <!-- The label for the email element with an SVG -->
     <div id="label-email" class="label">
       <mat-icon class="icon" [svgIcon]="iconName" [inline]="true"></mat-icon>
-      <p>{{ text('auth.email.label') }}</p>
+      <p>{{ text(translationKeys.auth.email.label) }}</p>
     </div>
   </div>
   <div class="relative-container">
@@ -18,20 +18,20 @@
     @if (field?.errors?.['required'] && field?.touched) {
       <app-form-input-error
         class="missing"
-        [message]="text('auth.email.missing')"
+        [message]="text(translationKeys.auth.email.missing)"
         animate.enter="enterX"
         animate.leave="leaveX"></app-form-input-error>
       <!-- The element with the information about invalid email address -->
     } @else if (field?.errors?.['email'] && field?.touched) {
       <app-form-input-error
         class="missing"
-        [message]="text('auth.email.invalid')"
+        [message]="text(text(translationKeys.auth.email.invalid))"
         animate.enter="enterX"
         animate.leave="leaveX"></app-form-input-error>
     }
   </div>
   <!-- Button to send the email address -->
   <button id="send-code-button">
-    {{ text('auth.actions.sendCode') }}
+    {{ text(text(translationKeys.auth.actions.sendCode)) }}
   </button>
 </form>

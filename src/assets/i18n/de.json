@@ -1,6 +1,6 @@
 {
+    "title": "Willkommen zur FinBoKeApp",
     "auth": {
-        "title": "Willkommen zur FinBoKeApp",
         "actions": {
             "login": "Anmelden",
             "register": "Registrieren",

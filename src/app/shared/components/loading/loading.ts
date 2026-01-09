@@ -2,6 +2,7 @@ import { Component, input, inject } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { IconService } from 'src/app/core/';
+import { TRANSLATION_KEYS } from 'src/app/shared/localization/translation-keys';
 
 @Component({
   selector: 'app-loading',
@@ -14,6 +15,8 @@ export class LoadingComponent {
   private readonly iconService = inject(IconService);
   // The icon name
   protected readonly iconName = 'loading';
+  // Keys for translated text
+  protected readonly translationKeys = TRANSLATION_KEYS;
   // The message which should be displayed.
   readonly message = input<string>('');
 

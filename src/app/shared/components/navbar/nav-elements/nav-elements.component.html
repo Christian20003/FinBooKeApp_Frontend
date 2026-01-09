@@ -11,7 +11,9 @@
         class="nav-elem-icon-fill"
         svgIcon="dashboard"
         [inline]="true"></mat-icon>
-      <p class="nav-elem-description">{{ text('navbar.dashboard') }}</p>
+      <p class="nav-elem-description">
+        {{ text(translationKeys.navbar.dashboard) }}
+      </p>
     </a>
   } @else if (type() === 'finances') {
     <a
@@ -25,7 +27,9 @@
         class="nav-elem-icon-stroke"
         svgIcon="finances"
         [inline]="true"></mat-icon>
-      <p class="nav-elem-description">{{ text('navbar.finances') }}</p>
+      <p class="nav-elem-description">
+        {{ text(translationKeys.navbar.finances) }}
+      </p>
     </a>
   } @else if (type() === 'accounts') {
     <a
@@ -39,7 +43,9 @@
         class="nav-elem-icon-fill"
         svgIcon="accounts"
         [inline]="true"></mat-icon>
-      <p class="nav-elem-description">{{ text('navbar.accounts') }}</p>
+      <p class="nav-elem-description">
+        {{ text(translationKeys.navbar.accounts) }}
+      </p>
     </a>
   } @else if (type() === 'profile') {
     <a
@@ -53,7 +59,9 @@
         class="nav-elem-icon-fill"
         svgIcon="profile"
         [inline]="true"></mat-icon>
-      <p class="nav-elem-description">{{ text('navbar.profile') }}</p>
+      <p class="nav-elem-description">
+        {{ text(translationKeys.navbar.profile) }}
+      </p>
     </a>
   } @else if (type() === 'settings') {
     <a
@@ -67,7 +75,9 @@
         class="nav-elem-icon-stroke"
         svgIcon="settings"
         [inline]="true"></mat-icon>
-      <p class="nav-elem-description">{{ text('navbar.settings') }}</p>
+      <p class="nav-elem-description">
+        {{ text(translationKeys.navbar.settings) }}
+      </p>
     </a>
   } @else if (type() === 'logout') {
     <a
@@ -81,7 +91,9 @@
         class="nav-elem-icon-fill"
         svgIcon="logout"
         [inline]="true"></mat-icon>
-      <p class="nav-elem-description">{{ text('navbar.logout') }}</p>
+      <p class="nav-elem-description">
+        {{ text(translationKeys.navbar.logout) }}
+      </p>
     </a>
   }
 </div>

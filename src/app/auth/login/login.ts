@@ -11,6 +11,7 @@ import { FormInputErrorComponent } from 'src/app/shared/index';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { IconService } from 'src/app/core';
 import { ILoginDTO } from 'src/app/core/models/authentication/loginDTO';
+import { TRANSLATION_KEYS } from 'src/app/shared/localization/translation-keys';
 
 @Component({
   selector: 'app-login',
@@ -28,6 +29,8 @@ export class LoginComponent {
   private readonly iconService = inject(IconService);
   protected readonly emailIcon = 'email';
   protected readonly passwordIcon = 'password';
+  // Keys for translated text
+  protected readonly translationKeys = TRANSLATION_KEYS;
   // Signal to send login data
   readonly login = output<ILoginDTO>();
   // Signal if forgot password link has been clicked

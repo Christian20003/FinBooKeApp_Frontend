@@ -23,6 +23,7 @@ import { LoginComponent } from '../login/login';
 import { RegisterComponent } from './register/register.component';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { NgClass } from '@angular/common';
+import { TRANSLATION_KEYS } from 'src/app/shared/localization/translation-keys';
 
 @Component({
   selector: 'app-auth-overview',
@@ -44,6 +45,9 @@ export class AuthOverviewComponent {
   private store = inject(Store);
   private authService = inject(AuthenticationService);
   private toastService = inject(ToastService);
+
+  // Keys for translated text
+  protected readonly translationKeys = TRANSLATION_KEYS;
 
   // Boolean which describes if the loading screen should be displayed
   waiting = false;

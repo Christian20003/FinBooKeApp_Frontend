@@ -9,7 +9,9 @@
     *transloco="let text"
     animate.enter="enterX"
     animate.leave="leaveX">
-    <h3 class="loading-title">{{ text('loading-screen.header') }}</h3>
+    <h3 class="loading-title">
+      {{ text(translationKeys.loadingScreen.header) }}
+    </h3>
     <p class="loading-text">{{ message() }}</p>
   </div>
 </div>

@@ -23,11 +23,13 @@
     @if (!isValid) {
       <app-form-input-error
         id="missing"
-        [message]="text('auth.code.missing')"
+        [message]="text(translationKeys.auth.code.missing)"
         animate.enter="enterX"
         animate.leave="leaveX"></app-form-input-error>
     }
   </div>
   <!-- Button to emit the entered access code -->
-  <button id="proof-code-button">{{ text('auth.actions.sendCode') }}</button>
+  <button id="proof-code-button">
+    {{ text(translationKeys.auth.actions.sendCode) }}
+  </button>
 </form>
