@@ -5,14 +5,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { provideHttpClient } from '@angular/common/http';
 import { TranslocoService } from '@jsverse/transloco';
 import { LoginComponent } from 'src/app/auth/login/login';
-import { FormInputErrorComponent } from 'src/app/shared';
+import { FormInputErrorComponent, TRANSLATION_KEYS } from 'src/app/shared';
 import { getComponent } from 'src/app/testing/testing-support';
 import { getHTMLElement } from 'src/app/testing/helper/get-html-element';
 import { IconService } from 'src/app/core';
 import { getTranslocoModule } from 'src/app/shared/localization/transloco-testing';
 import { setInputValues } from 'src/app/testing/helper/set-input-values';
 import { TestLoginDTO } from 'src/app/core/models/authentication/loginDTO';
-import { TRANSLATION_KEYS } from 'src/app/shared/localization/translation-keys';
 
 describe('LoginComponent - Integration Tests', () => {
   let fixture: ComponentFixture<LoginComponent>;

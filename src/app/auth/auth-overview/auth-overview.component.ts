@@ -6,6 +6,7 @@ import {
   moveLeftToRight,
   moveRightToLeft,
   LoadingComponent,
+  TRANSLATION_KEYS,
 } from 'src/app/shared/index';
 import { User, ToastLifeTime, ToastType } from 'src/app/core/index';
 import { ToastService } from 'src/app/core/services/toast/toast-service';
@@ -23,7 +24,6 @@ import { LoginComponent } from '../login/login';
 import { RegisterComponent } from './register/register.component';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { NgClass } from '@angular/common';
-import { TRANSLATION_KEYS } from 'src/app/shared/localization/translation-keys';
 
 @Component({
   selector: 'app-auth-overview',

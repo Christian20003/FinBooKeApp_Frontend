@@ -8,9 +8,8 @@ import {
 } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { IconService } from 'src/app/core';
-import { FormInputErrorComponent } from 'src/app/shared';
-import { TRANSLATION_KEYS } from 'src/app/shared/localization/translation-keys';
+import { ICON_NAMES, IconService } from 'src/app/core';
+import { FormInputErrorComponent, TRANSLATION_KEYS } from 'src/app/shared';
 
 @Component({
   selector: 'app-request-access-code',
@@ -27,7 +26,7 @@ export class RequestAccessCodeComponent implements OnInit {
   // Dependency to register SVG icon
   private readonly iconSerive = inject(IconService);
   // Name of the SVG icon
-  readonly iconName = 'email';
+  readonly iconNames = ICON_NAMES;
   // The email address
   readonly email = input<string>('');
   // The output signal to emit entered email address
@@ -38,7 +37,7 @@ export class RequestAccessCodeComponent implements OnInit {
   protected readonly translationKeys = TRANSLATION_KEYS;
 
   constructor() {
-    this.iconSerive.registerIcon(this.iconName);
+    this.iconSerive.registerIcon(this.iconNames.email);
   }
 
   ngOnInit(): void {

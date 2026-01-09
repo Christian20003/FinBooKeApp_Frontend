@@ -6,8 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { FormInputErrorComponent } from 'src/app/shared';
-import { TRANSLATION_KEYS } from 'src/app/shared/localization/translation-keys';
+import { FormInputErrorComponent, TRANSLATION_KEYS } from 'src/app/shared';
 
 @Component({
   selector: 'app-set-access-code',

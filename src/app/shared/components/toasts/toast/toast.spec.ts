@@ -4,7 +4,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MockComponent } from 'ng-mocks';
 import { ToastComponent } from './toast';
 import { TestToast, ToastLifeTime, ToastType } from 'src/app/core/models/Toast';
-import { IconService } from 'src/app/core';
+import { ICON_NAMES, IconService } from 'src/app/core';
 import { setInputSignal } from 'src/app/testing/helper/set-input-signal';
 import { getHTMLElement } from 'src/app/testing/helper/get-html-element';
 
@@ -93,7 +93,7 @@ describe('ToastComponent - Unit Tests', () => {
 
     const iconName = component.getSvgName();
 
-    expect(iconName).toBe('error');
+    expect(iconName).toBe(ICON_NAMES.error);
   });
 
   it('U-Test-7: Toast type error should assign correct css classes in template', () => {
@@ -129,7 +129,7 @@ describe('ToastComponent - Unit Tests', () => {
 
     const iconName = component.getSvgName();
 
-    expect(iconName).toBe('warning');
+    expect(iconName).toBe(ICON_NAMES.warning);
   });
 
   it('U-Test-10: Toast type warning should assign correct css classes in template', () => {
@@ -165,7 +165,7 @@ describe('ToastComponent - Unit Tests', () => {
 
     const iconName = component.getSvgName();
 
-    expect(iconName).toBe('info');
+    expect(iconName).toBe(ICON_NAMES.info);
   });
 
   it('U-Test-13: Toast type info should assign correct css classes in template', () => {
@@ -201,7 +201,7 @@ describe('ToastComponent - Unit Tests', () => {
 
     const iconName = component.getSvgName();
 
-    expect(iconName).toBe('success');
+    expect(iconName).toBe(ICON_NAMES.success);
   });
 
   it('U-Test-16: Toast type success should assign correct css classes in template', () => {

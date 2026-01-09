@@ -2,6 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Icon, IconDictionary } from 'src/app/core/models/Icon';
+import { ICON_NAMES } from './icon-names';
+import { ICON_PATHS } from './icon-paths';
 
 @Injectable({
   providedIn: 'root',
@@ -12,40 +14,16 @@ export class IconService {
   // Dependency to access SVG resource
   private readonly domSanitizer = inject(DomSanitizer);
   // A list of all icons available
-  private readonly icons: IconDictionary = {
-    success: {
-      name: 'success',
-      path: 'assets/icons/action-results/success.svg',
-    },
-    error: {
-      name: 'error',
-      path: 'assets/icons/action-results/error.svg',
-    },
-    info: {
-      name: 'info',
-      path: 'assets/icons/action-results/info.svg',
-    },
-    warning: {
-      name: 'warning',
-      path: 'assets/icons/action-results/warning.svg',
-    },
-    close: {
-      name: 'close',
-      path: 'assets/icons/actions/close.svg',
-    },
-    loading: {
-      name: 'loading',
-      path: 'assets/icons/symbols/coins.svg',
-    },
-    email: {
-      name: 'email',
-      path: 'assets/icons/symbols/email.svg',
-    },
-    password: {
-      name: 'password',
-      path: 'assets/icons/symbols/password.svg',
-    },
-  };
+  private readonly icons: IconDictionary = {};
+
+  constructor() {
+    for (const [, name] of Object.entries(ICON_NAMES)) {
+      this.icons[name] = {
+        name: name,
+        path: ICON_PATHS[name],
+      };
+    }
+  }
 
   /**
    * This method registers a specific SVG icon, so that it can

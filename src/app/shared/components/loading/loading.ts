@@ -1,7 +1,7 @@
 import { Component, input, inject } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { IconService } from 'src/app/core/';
+import { ICON_NAMES, IconService } from 'src/app/core/';
 import { TRANSLATION_KEYS } from 'src/app/shared/localization/translation-keys';
 
 @Component({
@@ -13,14 +13,14 @@ import { TRANSLATION_KEYS } from 'src/app/shared/localization/translation-keys';
 export class LoadingComponent {
   // Dependency to register SVG icon
   private readonly iconService = inject(IconService);
-  // The icon name
-  protected readonly iconName = 'loading';
+  // The icon names
+  protected readonly iconNames = ICON_NAMES;
   // Keys for translated text
   protected readonly translationKeys = TRANSLATION_KEYS;
   // The message which should be displayed.
   readonly message = input<string>('');
 
   constructor() {
-    this.iconService.registerIcon(this.iconName);
+    this.iconService.registerIcon(this.iconNames.loading);
   }
 }

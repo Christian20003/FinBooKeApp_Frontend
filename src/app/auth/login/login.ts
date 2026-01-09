@@ -7,11 +7,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
-import { FormInputErrorComponent } from 'src/app/shared/index';
+import {
+  FormInputErrorComponent,
+  TRANSLATION_KEYS,
+} from 'src/app/shared/index';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { IconService } from 'src/app/core';
+import { ICON_NAMES, IconService } from 'src/app/core';
 import { ILoginDTO } from 'src/app/core/models/authentication/loginDTO';
-import { TRANSLATION_KEYS } from 'src/app/shared/localization/translation-keys';
 
 @Component({
   selector: 'app-login',
@@ -27,8 +29,7 @@ import { TRANSLATION_KEYS } from 'src/app/shared/localization/translation-keys';
 export class LoginComponent {
   // Dependency to register icons
   private readonly iconService = inject(IconService);
-  protected readonly emailIcon = 'email';
-  protected readonly passwordIcon = 'password';
+  protected readonly iconNames = ICON_NAMES;
   // Keys for translated text
   protected readonly translationKeys = TRANSLATION_KEYS;
   // Signal to send login data
@@ -49,7 +50,10 @@ export class LoginComponent {
   });
 
   constructor() {
-    this.iconService.registerIcons([this.emailIcon, this.passwordIcon]);
+    this.iconService.registerIcons([
+      this.iconNames.email,
+      this.iconNames.password,
+    ]);
   }
 
   /**

@@ -8,7 +8,13 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
-import { IconService, Toast, ToastLifeTime, ToastType } from 'src/app/core';
+import {
+  ICON_NAMES,
+  IconService,
+  Toast,
+  ToastLifeTime,
+  ToastType,
+} from 'src/app/core';
 
 @Component({
   selector: 'app-toast',
@@ -24,20 +30,20 @@ export class ToastComponent implements OnInit, OnDestroy {
   private readonly longLifetime = 15000;
   private lifetime!: ReturnType<typeof setTimeout>;
   // Names of all icons that must be registered
-  protected readonly iconNames = [
-    'error',
-    'warning',
-    'success',
-    'info',
-    'close',
-  ];
+  protected readonly iconNames = ICON_NAMES;
   // The actual toast object
   readonly toast = input.required<Toast>();
   // An emitter to remove this child
   readonly remove = output<Toast>();
 
   constructor() {
-    this.iconService.registerIcons(this.iconNames);
+    this.iconService.registerIcons([
+      this.iconNames.info,
+      this.iconNames.success,
+      this.iconNames.warning,
+      this.iconNames.error,
+      this.iconNames.close,
+    ]);
   }
 
   ngOnInit(): void {
@@ -129,13 +135,13 @@ export class ToastComponent implements OnInit, OnDestroy {
     const type = this.toast().type;
     switch (type) {
       case ToastType.SUCCESS:
-        return this.iconNames[2];
+        return this.iconNames.success;
       case ToastType.ERROR:
-        return this.iconNames[0];
+        return this.iconNames.error;
       case ToastType.WARNING:
-        return this.iconNames[1];
+        return this.iconNames.warning;
       default:
-        return this.iconNames[3];
+        return this.iconNames.info;
     }
   }
 }

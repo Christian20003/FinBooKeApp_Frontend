@@ -1,6 +1,6 @@
 import { Component, input, inject } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
-import { IconService } from 'src/app/core';
+import { ICON_NAMES, IconService } from 'src/app/core';
 
 @Component({
   selector: 'app-form-input-error',
@@ -11,12 +11,12 @@ import { IconService } from 'src/app/core';
 export class FormInputErrorComponent {
   // Service to register required SVG icon
   private readonly iconService = inject(IconService);
-  // Name of the icon
-  protected readonly iconName = 'warning';
+  // Names of the icons
+  protected readonly iconNames = ICON_NAMES;
   // Message that should be displayed
   readonly message = input.required<string>();
 
   constructor() {
-    this.iconService.registerIcon(this.iconName);
+    this.iconService.registerIcon(this.iconNames.warning);
   }
 }

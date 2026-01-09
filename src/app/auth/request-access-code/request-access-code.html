@@ -8,7 +8,10 @@
     <input id="email" class="input" type="email" formControlName="email" />
     <!-- The label for the email element with an SVG -->
     <div id="label-email" class="label">
-      <mat-icon class="icon" [svgIcon]="iconName" [inline]="true"></mat-icon>
+      <mat-icon
+        class="icon"
+        [svgIcon]="iconNames.email"
+        [inline]="true"></mat-icon>
       <p>{{ text(translationKeys.auth.email.label) }}</p>
     </div>
   </div>

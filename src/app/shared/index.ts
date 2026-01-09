@@ -8,6 +8,7 @@ export {
 } from './animations/slideLeftRight';
 export { slideInY, slideOutY, moveDown } from './animations/slideUpDown';
 export { growShrink, shrinkHeight } from './animations/growShrink';
+export { TRANSLATION_KEYS } from 'src/app/shared/localization/translation-keys';
 export {
   setUser,
   setUserName,
