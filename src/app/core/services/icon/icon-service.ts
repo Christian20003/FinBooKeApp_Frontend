@@ -41,6 +41,10 @@ export class IconService {
       name: 'email',
       path: 'assets/icons/symbols/email.svg',
     },
+    password: {
+      name: 'password',
+      path: 'assets/icons/symbols/password.svg',
+    },
   };
 
   /**

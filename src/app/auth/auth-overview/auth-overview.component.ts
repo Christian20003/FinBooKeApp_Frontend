@@ -19,7 +19,7 @@ import { LoginData } from '../models/loginData';
 import { RegisterData } from '../models/registerData';
 import { SetAccessCodeComponent } from '../set-access-code/set-access-code';
 import { RequestAccessCodeComponent } from '../request-access-code/request-access-code';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from '../login/login';
 import { RegisterComponent } from './register/register.component';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { NgClass } from '@angular/common';

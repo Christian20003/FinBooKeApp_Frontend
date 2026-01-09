@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthOverviewComponent } from './auth-overview/auth-overview.component';
-import { LoginComponent } from './auth-overview/login/login.component';
+import { LoginComponent } from './login/login';
 import { RegisterComponent } from './auth-overview/register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthRoutingModule } from './auth-routing-module';

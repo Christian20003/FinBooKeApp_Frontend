@@ -1,5 +1,5 @@
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './auth-overview/login/login.component';
+import { LoginComponent } from './login/login';
 import { RegisterComponent } from './auth-overview/register/register.component';
 import { NgModule } from '@angular/core';
 import { RequestAccessCodeComponent } from './request-access-code/request-access-code';

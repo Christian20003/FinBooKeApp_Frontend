@@ -1,12 +1,12 @@
-@use "../../../shared/styles/container-mixin/input" as input;
-@use "../../../shared/styles/container-mixin/svg" as svg;
-@use "../../../shared/styles/container-mixin/button" as button;
-@use "../../../shared/styles/others/font" as font;
+@use "app/shared/styles/container-mixin/input" as input;
+@use "app/shared/styles/container-mixin/svg" as svg;
+@use "app/shared/styles/container-mixin/button" as button;
+@use "app/shared/styles/others/font" as font;
 
 #login-form {
     display: grid;
     gap: 2rem;
-    margin-top: 1.5rem;
+    margin-top: 2.5rem;
 
     .relative-container {
         position: relative;
@@ -34,7 +34,7 @@
 
         .missing {
             position: absolute;
-            bottom: -0.5rem;
+            bottom: 0rem;
         }
     }
 

@@ -1,6 +1,6 @@
 <form
   id="login-form"
-  [formGroup]="loginForm"
+  [formGroup]="form"
   *transloco="let text"
   (submit)="onSubmit()">
   <div class="relative-container">
@@ -8,7 +8,10 @@
     <input id="email" class="input" type="email" formControlName="email" />
     <!-- The label for the email element with an SVG -->
     <div id="label-email" class="label">
-      <mat-icon class="icon-stroke" svgIcon="email" [inline]="true"></mat-icon>
+      <mat-icon
+        class="icon-stroke"
+        [svgIcon]="emailIcon"
+        [inline]="true"></mat-icon>
       <p>{{ text('auth.email.label') }}</p>
     </div>
   </div>
@@ -18,13 +21,15 @@
       <app-form-input-error
         class="missing"
         [message]="text('auth.email.missing')"
-        [@moveLeftToRight]></app-form-input-error>
+        animate.enter="enterX"
+        animate.leave="leaveX"></app-form-input-error>
       <!-- The element with the information about invalid email address -->
     } @else if (email?.errors?.['email'] && email?.touched) {
       <app-form-input-error
         class="missing"
         [message]="text('auth.email.invalid')"
-        [@moveLeftToRight]></app-form-input-error>
+        animate.enter="enterX"
+        animate.leave="leaveX"></app-form-input-error>
     }
   </div>
   <div class="relative-container">
@@ -36,7 +41,10 @@
       formControlName="password" />
     <!-- The label for the password field with an SVG -->
     <div id="label-password" class="label">
-      <mat-icon class="icon-fill" svgIcon="password" [inline]="true"></mat-icon>
+      <mat-icon
+        class="icon-fill"
+        [svgIcon]="passwordIcon"
+        [inline]="true"></mat-icon>
       <p>{{ text('auth.password.label') }}</p>
     </div>
   </div>
@@ -46,7 +54,8 @@
       <app-form-input-error
         class="missing"
         [message]="text('auth.password.missing')"
-        [@moveLeftToRight]></app-form-input-error>
+        animate.enter="enterX"
+        animate.leave="leaveX"></app-form-input-error>
     }
   </div>
   <!-- The login button -->

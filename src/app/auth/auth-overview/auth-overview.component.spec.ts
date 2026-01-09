@@ -13,7 +13,7 @@ import { routes } from 'src/app/routing/app-routing.module';
 import { LoadingComponent, initialState } from 'src/app/shared/index';
 import { TestUser, ToastLifeTime, ToastType } from 'src/app/core/index';
 import { AuthOverviewComponent } from './auth-overview.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from '../login/login';
 import { RegisterComponent } from './register/register.component';
 import { AuthenticationService } from './authentication.service';
 import { RequestAccessCodeComponent } from '../request-access-code/request-access-code';

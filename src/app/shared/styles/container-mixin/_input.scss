@@ -16,7 +16,7 @@
 
     @if ($hasLabel) {
         &:where(:focus, .ng-dirty) ~ .label {
-            transform: translateY(-50%);
+            transform: translateY(-60%);
         }
     }
 }
