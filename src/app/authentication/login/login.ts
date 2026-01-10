@@ -14,6 +14,9 @@ import {
 import { TranslocoDirective } from '@jsverse/transloco';
 import { ICON_NAMES, IconService, ILoginDTO } from 'src/app/core';
 
+/**
+ * Component for the login view.
+ */
 @Component({
   selector: 'app-login',
   templateUrl: './login.html',
@@ -26,14 +29,12 @@ import { ICON_NAMES, IconService, ILoginDTO } from 'src/app/core';
   ],
 })
 export class LoginComponent {
-  // Dependency to register icons
   private readonly iconService = inject(IconService);
+
   protected readonly iconNames = ICON_NAMES;
-  // Keys for translated text
   protected readonly translationKeys = TRANSLATION_KEYS;
-  // Signal to send login data
+
   readonly login = output<ILoginDTO>();
-  // Signal if forgot password link has been clicked
   readonly forgotPwd = output<void>();
 
   // The login form
@@ -57,6 +58,7 @@ export class LoginComponent {
 
   /**
    * This function returns the email value of the corresponding element in the form.
+   *
    * @returns The control object of email from the form
    */
   protected get email(): AbstractControl<string, string> | null {
@@ -65,6 +67,7 @@ export class LoginComponent {
 
   /**
    * This function returns the password value of the corresponding element in the form.
+   *
    * @returns The control object of password from the form
    */
   protected get password(): AbstractControl<string, string> | null {

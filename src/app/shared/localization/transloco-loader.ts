@@ -2,6 +2,9 @@ import { inject, Injectable } from '@angular/core';
 import { Translation, TranslocoLoader } from '@jsverse/transloco';
 import { HttpClient } from '@angular/common/http';
 
+/**
+ * Service to load translation files for the Transloco localization library.
+ */
 @Injectable({ providedIn: 'root' })
 export class TranslocoHttpLoader implements TranslocoLoader {
   private http = inject(HttpClient);

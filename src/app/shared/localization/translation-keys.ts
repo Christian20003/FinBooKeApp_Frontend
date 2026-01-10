@@ -1,3 +1,6 @@
+/**
+ * Translation keys used throughout the application for localization.
+ */
 export const TRANSLATION_KEYS = {
   title: 'title',
   auth: {

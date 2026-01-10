@@ -11,6 +11,10 @@ import { TranslocoDirective } from '@jsverse/transloco';
 import { ICON_NAMES, IconService } from 'src/app/core';
 import { FormInputErrorComponent, TRANSLATION_KEYS } from 'src/app/shared';
 
+/**
+ * This component provides a form for users to request an access code by entering their email address.
+ * It includes input validation and error handling to ensure a valid email is provided.
+ */
 @Component({
   selector: 'app-request-access-code',
   templateUrl: './request-access-code.html',
@@ -23,21 +27,17 @@ import { FormInputErrorComponent, TRANSLATION_KEYS } from 'src/app/shared';
   ],
 })
 export class RequestAccessCodeComponent implements OnInit {
-  // Dependency to register SVG icon
-  private readonly iconSerive = inject(IconService);
-  // Name of the SVG icon
-  readonly iconNames = ICON_NAMES;
-  // The email address
-  readonly email = input<string>('');
-  // The output signal to emit entered email address
-  readonly send = output<string>();
-  // Form to be able to enter an email address
-  protected form!: FormGroup;
-  // Keys for translated text
+  private readonly iconService = inject(IconService);
+
   protected readonly translationKeys = TRANSLATION_KEYS;
+  protected readonly iconNames = ICON_NAMES;
+  protected form!: FormGroup;
+
+  readonly email = input<string>('');
+  readonly send = output<string>();
 
   constructor() {
-    this.iconSerive.registerIcon(this.iconNames.email);
+    this.iconService.registerIcon(this.iconNames.email);
   }
 
   ngOnInit(): void {
@@ -51,9 +51,10 @@ export class RequestAccessCodeComponent implements OnInit {
 
   /**
    * This function returns the email value of the corresponding element in the form.
+   *
    * @returns The control object of email from the form.
    */
-  get field(): AbstractControl<string, string> | null {
+  protected get field(): AbstractControl<string, string> | null {
     return this.form.get('email');
   }
   /**

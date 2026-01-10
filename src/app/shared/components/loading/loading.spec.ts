@@ -1,10 +1,10 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
-import { getNativeElement } from 'src/app/testing/testing-support';
 import { LoadingComponent } from './loading';
 import { setInputSignal } from 'src/app/testing/helper/set-input-signal';
 import { getTranslocoModule } from 'src/app/shared/localization/transloco-testing';
+import { getHTMLElement } from 'src/app/testing/helper/get-html-element';
 
 describe('LoadingComponent - Unit-Tests', () => {
   let component: LoadingComponent;
@@ -29,10 +29,10 @@ describe('LoadingComponent - Unit-Tests', () => {
 
   it('U-Test-2: Message property should be displayed', () => {
     fixture.detectChanges();
-    const element = getNativeElement<LoadingComponent, HTMLParagraphElement>(
+    const element = getHTMLElement<HTMLParagraphElement>(
       fixture,
       '.loading-text'
-    );
+    )!;
     expect(element.innerText).toBe(message);
   });
 });

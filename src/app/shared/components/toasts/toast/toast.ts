@@ -16,6 +16,11 @@ import {
   ToastType,
 } from 'src/app/core';
 
+/**
+ * This component represents a single toast message that can be displayed to the user.
+ * It includes functionality for displaying different types of toasts (info, success, warning, error)
+ * and automatically removes itself after a specified lifetime.
+ */
 @Component({
   selector: 'app-toast',
   templateUrl: './toast.html',
@@ -23,17 +28,13 @@ import {
   imports: [NgClass, MatIcon],
 })
 export class ToastComponent implements OnInit, OnDestroy {
-  // Dependency to register SVG icons
   private readonly iconService = inject(IconService);
-  // Time when the toast should remove itself
   private readonly shortLifetime = 10000;
   private readonly longLifetime = 15000;
   private lifetime!: ReturnType<typeof setTimeout>;
-  // Names of all icons that must be registered
   protected readonly iconNames = ICON_NAMES;
-  // The actual toast object
+
   readonly toast = input.required<IToast>();
-  // An emitter to remove this child
   readonly remove = output<IToast>();
 
   constructor() {
@@ -75,6 +76,7 @@ export class ToastComponent implements OnInit, OnDestroy {
 
   /**
    * This method identifies, which css class should be selected for the background color of certain elements.
+   *
    * @returns The name of the corresponding css class.
    */
   getBoxColor(): string {
@@ -93,6 +95,7 @@ export class ToastComponent implements OnInit, OnDestroy {
 
   /**
    * This method identifies, which css class should be selected for the color of the SVG icon.
+   *
    * @returns The name of the corresponding css class.
    */
   getIconColor(): string {
@@ -121,6 +124,7 @@ export class ToastComponent implements OnInit, OnDestroy {
         return 'long-time';
       case ToastLifeTime.SHORT:
         return 'short-time';
+      default:
       case ToastLifeTime.NONE:
         return 'infinite-time';
     }

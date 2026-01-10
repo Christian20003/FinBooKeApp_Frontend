@@ -1,3 +1,6 @@
+/**
+ * Application routing paths
+ */
 export const PATHS = {
   login: 'login',
   register: 'register',

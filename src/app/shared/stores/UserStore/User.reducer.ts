@@ -22,6 +22,9 @@ export const initialState: IUser = {
   },
 };
 
+/**
+ * Reducer function to manage user state in the store.
+ */
 export const userReducer = createReducer(
   initialState,
   on(setUser, (_, action): IUser => action.user),

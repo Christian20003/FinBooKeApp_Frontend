@@ -5,14 +5,15 @@ import {
   ToastType,
 } from 'src/app/core/models/toast/toast';
 
+/**
+ * Service to manage toast notifications within the application.
+ */
 @Injectable({
   providedIn: 'root',
 })
 export class ToastService {
-  // Signal storing toast objects
   private readonly list = signal<IToast[]>([]);
-  // Signal to access toast list
-  public readonly store = computed(() => this.list());
+  readonly store = computed(() => this.list());
 
   /**
    * This function adds a new {@link Toast} to the toast store.

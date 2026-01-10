@@ -8,6 +8,11 @@ import {
 import { TranslocoDirective } from '@jsverse/transloco';
 import { FormInputErrorComponent, TRANSLATION_KEYS } from 'src/app/shared';
 
+/**
+ * This component allows the user to enter an access code consisting of
+ * multiple single-character input fields. It provides functionality for
+ * input validation, navigation between fields, and submission of the code.
+ */
 @Component({
   selector: 'app-set-access-code',
   templateUrl: './set-access-code.html',
@@ -15,17 +20,13 @@ import { FormInputErrorComponent, TRANSLATION_KEYS } from 'src/app/shared';
   imports: [TranslocoDirective, ReactiveFormsModule, FormInputErrorComponent],
 })
 export class SetAccessCodeComponent implements OnInit {
-  // Access to DOM
   private readonly elementRef = inject(ElementRef);
-  // The security code size
   private readonly size = 6;
-  // If the form is valid
+
   protected isValid: boolean = true;
-  // The form
   protected form!: FormGroup;
-  // Keys for translated text
   protected readonly translationKeys = TRANSLATION_KEYS;
-  // The output signal to emit security code
+
   readonly send = output<string>();
 
   ngOnInit(): void {

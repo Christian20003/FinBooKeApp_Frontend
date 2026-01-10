@@ -3,6 +3,9 @@ import { AuthOverviewComponent } from 'src/app/authentication/auth-overview/auth
 import { DashboardOverviewComponent } from 'src/app/dashboard/dashboard-overview/dashboard-overview.component';
 import { PATHS } from './paths';
 
+/**
+ * Application routes
+ */
 export const routes: Routes = [
   {
     path: PATHS.login,

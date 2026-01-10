@@ -3,7 +3,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormInputErrorComponent } from './form-input-error';
 import { provideHttpClient } from '@angular/common/http';
 import { provideZonelessChangeDetection } from '@angular/core';
-import { getNativeElement } from 'src/app/testing/testing-support';
+import { getHTMLElement } from 'src/app/testing/helper/get-html-element';
 
 describe('FormInputErrorComponent - Unit Tests', () => {
   let component: FormInputErrorComponent;
@@ -25,10 +25,7 @@ describe('FormInputErrorComponent - Unit Tests', () => {
   });
 
   it('U-Test-2: Message should be displayed', () => {
-    const element = getNativeElement<
-      FormInputErrorComponent,
-      HTMLParagraphElement
-    >(fixture, 'p');
+    const element = getHTMLElement<HTMLParagraphElement>(fixture, 'p')!;
     expect(element.innerText).toBe(component.message());
   });
 });

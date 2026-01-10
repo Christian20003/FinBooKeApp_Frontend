@@ -5,15 +5,15 @@ import { IIcon, IconDictionary } from 'src/app/core/models/icon/icon';
 import { ICON_NAMES } from './icon-names';
 import { ICON_PATHS } from './icon-paths';
 
+/**
+ * Service to manage SVG icons within the application.
+ */
 @Injectable({
   providedIn: 'root',
 })
 export class IconService {
-  // Dependency to register icons
   private readonly iconRegistry = inject(MatIconRegistry);
-  // Dependency to access SVG resource
   private readonly domSanitizer = inject(DomSanitizer);
-  // A list of all icons available
   private readonly icons: IconDictionary = {};
 
   constructor() {
