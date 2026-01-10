@@ -7,13 +7,13 @@ import { HttpErrorResponse, provideHttpClient } from '@angular/common/http';
 import { TestLoginDTO } from 'src/app/core/models/authentication/loginDTO';
 import { TestRegisterDTO } from 'src/app/core/models/authentication/registerDTO';
 import { User, TestUser } from 'src/app/core/models/User';
-import { EnvironmentService } from 'src/app/dev-tools/environment.service';
+import { EnvironmentService } from 'src/app/core/services/environment/environment-service';
 import { AuthenticationService } from './authentication-service';
 
 xdescribe('AuthenticationService - Unit Tests', () => {
   let service: AuthenticationService;
   let httpTestingController: HttpTestingController;
-  let envService: EnvironmentService;
+  let environment: EnvironmentService;
   const loggingServie = jasmine.createSpyObj('LoggingService', [
     'logInfo',
     'logError',
@@ -30,7 +30,7 @@ xdescribe('AuthenticationService - Unit Tests', () => {
       ],
     });
     service = TestBed.inject(AuthenticationService);
-    envService = TestBed.inject(EnvironmentService);
+    environment = TestBed.inject(EnvironmentService);
     httpTestingController = TestBed.inject(HttpTestingController);
   });
 
@@ -47,7 +47,7 @@ xdescribe('AuthenticationService - Unit Tests', () => {
   });
 
   it('U-Test-2: A successful login request', () => {
-    spyOnProperty(envService, 'apiUrl', 'get').and.returnValue(api);
+    spyOnProperty(environment, 'apiUrl', 'get').and.returnValue(api);
     service.postLogin(TestLoginDTO).subscribe({
       next: response => {
         const user = response as User;
@@ -78,7 +78,7 @@ xdescribe('AuthenticationService - Unit Tests', () => {
   });
 
   it('U-Test-3: A successful register request', () => {
-    spyOnProperty(envService, 'apiUrl', 'get').and.returnValue(api);
+    spyOnProperty(environment, 'apiUrl', 'get').and.returnValue(api);
     service.postRegister(TestRegisterDTO).subscribe({
       next: response => {
         const user = response as User;
@@ -109,7 +109,7 @@ xdescribe('AuthenticationService - Unit Tests', () => {
   });
 
   it('U-Test-4: A successful postEmail request', () => {
-    spyOnProperty(envService, 'apiUrl', 'get').and.returnValue(api);
+    spyOnProperty(environment, 'apiUrl', 'get').and.returnValue(api);
     service.postEmail(TestUser.email).subscribe({
       next: response => {
         expect(response)
@@ -127,7 +127,7 @@ xdescribe('AuthenticationService - Unit Tests', () => {
   });
 
   it('U-Test-5: A successful postCode request', () => {
-    spyOnProperty(envService, 'apiUrl', 'get').and.returnValue(api);
+    spyOnProperty(environment, 'apiUrl', 'get').and.returnValue(api);
     service.postCode('TODO').subscribe({
       next: response => {
         expect(response)
@@ -145,7 +145,7 @@ xdescribe('AuthenticationService - Unit Tests', () => {
   });
 
   it('U-Test-6: A successful logout request', () => {
-    spyOnProperty(envService, 'apiUrl', 'get').and.returnValue(api);
+    spyOnProperty(environment, 'apiUrl', 'get').and.returnValue(api);
     service.deleteLogin().subscribe({
       next: response => {
         expect(response)
@@ -165,7 +165,7 @@ xdescribe('AuthenticationService - Unit Tests', () => {
   /*-----------------------------------------------Unsuccessful-Requests----------------------------------------------------------*/
 
   it('U-Test-7: A faulty login request', () => {
-    spyOnProperty(envService, 'apiUrl', 'get').and.returnValue(api);
+    spyOnProperty(environment, 'apiUrl', 'get').and.returnValue(api);
     service.postLogin(TestLoginDTO).subscribe({
       error: error => {
         expect(error)
@@ -187,7 +187,7 @@ xdescribe('AuthenticationService - Unit Tests', () => {
   });
 
   it('U-Test-8: A faulty register request', () => {
-    spyOnProperty(envService, 'apiUrl', 'get').and.returnValue(api);
+    spyOnProperty(environment, 'apiUrl', 'get').and.returnValue(api);
     service.postRegister(TestRegisterDTO).subscribe({
       error: error => {
         expect(error)
@@ -209,7 +209,7 @@ xdescribe('AuthenticationService - Unit Tests', () => {
   });
 
   it('U-Test-9: A faulty postEmail request', () => {
-    spyOnProperty(envService, 'apiUrl', 'get').and.returnValue(api);
+    spyOnProperty(environment, 'apiUrl', 'get').and.returnValue(api);
     service.postEmail(TestUser.email).subscribe({
       error: error => {
         expect(error)
@@ -231,7 +231,7 @@ xdescribe('AuthenticationService - Unit Tests', () => {
   });
 
   it('U-Test-10: A faulty postCode request', () => {
-    spyOnProperty(envService, 'apiUrl', 'get').and.returnValue(api);
+    spyOnProperty(environment, 'apiUrl', 'get').and.returnValue(api);
     service.postCode('TODO').subscribe({
       error: error => {
         expect(error)
@@ -253,7 +253,7 @@ xdescribe('AuthenticationService - Unit Tests', () => {
   });
 
   it('U-Test-11: A faulty logout request', () => {
-    spyOnProperty(envService, 'apiUrl', 'get').and.returnValue(api);
+    spyOnProperty(environment, 'apiUrl', 'get').and.returnValue(api);
     service.deleteLogin().subscribe({
       error: error => {
         expect(error)

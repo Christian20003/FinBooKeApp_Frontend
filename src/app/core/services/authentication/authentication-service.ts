@@ -3,8 +3,8 @@ import { Injectable, inject } from '@angular/core';
 import { User } from 'src/app/core/models/User';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { TranslocoService } from '@jsverse/transloco';
-import { EnvironmentService } from 'src/app/dev-tools/environment.service';
-import { LoggerService } from 'src/app/dev-tools/logging.service';
+import { EnvironmentService } from 'src/app/core/services/environment/environment-service';
+import { LoggerService } from 'src/app/core/services/logging/logging-service';
 import { ILoginDTO } from 'src/app/core/models/authentication/loginDTO';
 import { IRegisterDTO } from 'src/app/core/models/authentication/registerDTO';
 

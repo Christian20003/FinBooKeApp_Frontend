@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://my-dev-api',
+  apiUrl: 'http://localhost',
   enableLogging: true,
 };
