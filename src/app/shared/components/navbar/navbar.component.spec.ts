@@ -13,7 +13,7 @@ import {
 import { NavbarComponent } from './navbar.component';
 import { NavElementsComponent } from './nav-elements/nav-elements.component';
 import { SharedModule } from '../shared.module';
-import { PATHS, TestUser, User } from 'src/app/core';
+import { PATHS, TestUser, IUser } from 'src/app/core';
 import { selectUser } from '../../stores/UserStore/User.selector';
 import { routes } from 'src/app/core/routing/routes';
 
@@ -21,7 +21,7 @@ xdescribe('NavbarComponent - Unit Tests', () => {
   let component: NavbarComponent;
   let fixture: ComponentFixture<NavbarComponent>;
   let store: MockStore;
-  let selector: MemoizedSelector<object, User>;
+  let selector: MemoizedSelector<object, IUser>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

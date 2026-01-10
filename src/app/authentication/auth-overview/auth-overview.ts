@@ -9,7 +9,7 @@ import {
   TRANSLATION_KEYS,
 } from 'src/app/shared/index';
 import {
-  User,
+  IUser,
   ToastLifeTime,
   ToastType,
   AuthenticationService,
@@ -135,7 +135,7 @@ export class AuthOverviewComponent {
     this.authService.postLogin(data).subscribe({
       next: response => {
         this.waiting = false;
-        this.store.dispatch(setUser({ user: response as User }));
+        this.store.dispatch(setUser({ user: response as IUser }));
         // Do not use dashboardPath, otherwise Tests will not execute
         this.router.navigate([PATHS.dashboard]);
       },
@@ -161,7 +161,7 @@ export class AuthOverviewComponent {
     this.authService.postRegister(data).subscribe({
       next: response => {
         this.waiting = false;
-        this.store.dispatch(setUser({ user: response as User }));
+        this.store.dispatch(setUser({ user: response as IUser }));
         // Do not use dashboardPath, otherwise Tests will not execute
         this.router.navigate([PATHS.dashboard]);
       },

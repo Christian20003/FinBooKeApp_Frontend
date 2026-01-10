@@ -1,9 +1,13 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { User } from 'src/app/core';
+import { IUser } from 'src/app/core';
 
-const selectState = createFeatureSelector<User>('user');
-export const selectUser = createSelector(selectState, (user: User) => user);
+const selectState = createFeatureSelector<IUser>('user');
+
+/** This selector allows to select the user object from the store. */
+export const selectUser = createSelector(selectState, (user: IUser) => user);
+
+/** This selector allows to select the session object from the store. */
 export const selectSession = createSelector(
   selectState,
-  (user: User) => user.session
+  (user: IUser) => user.session
 );

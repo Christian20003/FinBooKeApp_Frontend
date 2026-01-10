@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Icon, IconDictionary } from 'src/app/core/models/Icon';
+import { IIcon, IconDictionary } from 'src/app/core/models/icon/icon';
 import { ICON_NAMES } from './icon-names';
 import { ICON_PATHS } from './icon-paths';
 
@@ -56,7 +56,7 @@ export class IconService {
    * This method returns a list of all available icons that have been
    * added to this application.
    */
-  getAvailableIcons(): Icon[] {
+  getAvailableIcons(): IIcon[] {
     const result = [];
     for (const key in this.icons) {
       result.push(this.icons[key]);

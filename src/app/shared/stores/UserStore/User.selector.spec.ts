@@ -1,16 +1,14 @@
 import { TestUser } from 'src/app/core';
 import { selectSession, selectUser } from './User.selector';
 
-xdescribe('User-Store Selectors - Unit Tests', () => {
+describe('User-Store Selectors - Unit Tests', () => {
   it('U-Test-1: Should select the user object', () => {
     const result = selectUser.projector(TestUser);
-    expect(result.name).toBe(TestUser.name);
-    expect(result.session.token).toBe(TestUser.session.token);
+    expect(result).toEqual(TestUser);
   });
 
   it('U-Test-2: Should select the session object', () => {
     const result = selectSession.projector(TestUser);
-    expect(result.token).toBe(TestUser.session.token);
-    expect(result.expire).toBe(TestUser.session.expire);
+    expect(result).toEqual(TestUser.session);
   });
 });

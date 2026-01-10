@@ -1,6 +1,6 @@
 import { Component, ElementRef, Renderer2, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { selectUser, setUser } from './shared';
+import { initialState, selectUser, setUser } from './shared';
 import { ChildrenOutletContexts, Router, RouterOutlet } from '@angular/router';
 import { TranslocoService } from '@jsverse/transloco';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
@@ -24,7 +24,7 @@ export class AppComponent {
   constructor() {
     const data = this.store.select(selectUser);
     data.subscribe(state => {
-      if (state.id <= 0) {
+      if (state === initialState) {
         this.router.navigate([PATHS.login]);
       }
     });
@@ -48,14 +48,15 @@ export class AppComponent {
     this.store.dispatch(
       setUser({
         user: {
-          id: 1,
           name: 'Günther',
           email: 'test',
           imagePath:
             'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimg.welt.de%2Fimg%2Fdebatte%2Fkommentare%2Fmobile233911782%2F7072501947-ci102l-w1024%2FFDP-Bundesvorsitzender-Christian-Lindner.jpg&f=1&nofb=1&ipt=a83d5fe2d5140ca24dbe2ab4184ba93abc314d4c02f898609808373da747e7f1&ipo=images',
           session: {
-            token: 'ggggg',
-            expire: 44,
+            jwtToken: 'ggggg',
+            jwtExpire: 44,
+            refreshToken: 'gdfds',
+            refreshExpire: 44,
           },
         },
       })

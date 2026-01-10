@@ -12,8 +12,8 @@ import {
   deleteUser,
   setUserSession,
 } from '../../shared/stores/UserStore/User.actions';
-import { User } from '../models/User';
-import { Session } from '../models/Session';
+import { User } from '../models/authentication/user';
+import { Session } from '../models/authentication/session';
 import { PATHS } from '../routing/paths';
 
 /**

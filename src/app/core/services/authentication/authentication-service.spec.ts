@@ -6,7 +6,7 @@ import {
 import { HttpErrorResponse, provideHttpClient } from '@angular/common/http';
 import { TestLoginDTO } from 'src/app/core/models/authentication/loginDTO';
 import { TestRegisterDTO } from 'src/app/core/models/authentication/registerDTO';
-import { User, TestUser } from 'src/app/core/models/User';
+import { IUser, TestUser } from 'src/app/core/models/authentication/user';
 import { EnvironmentService } from 'src/app/core/services/environment/environment-service';
 import { AuthenticationService } from './authentication-service';
 
@@ -50,12 +50,9 @@ xdescribe('AuthenticationService - Unit Tests', () => {
     spyOnProperty(environment, 'apiUrl', 'get').and.returnValue(api);
     service.postLogin(TestLoginDTO).subscribe({
       next: response => {
-        const user = response as User;
+        const user = response as IUser;
         expect(user.name)
           .withContext('Responding user object should have a name')
-          .toBeTruthy();
-        expect(user.id)
-          .withContext('Responding user object should have an id')
           .toBeTruthy();
         expect(user.imagePath)
           .withContext('Responding user object should have an imagePath')
@@ -81,12 +78,9 @@ xdescribe('AuthenticationService - Unit Tests', () => {
     spyOnProperty(environment, 'apiUrl', 'get').and.returnValue(api);
     service.postRegister(TestRegisterDTO).subscribe({
       next: response => {
-        const user = response as User;
+        const user = response as IUser;
         expect(user.name)
           .withContext('Responding user object should have a name')
-          .toBeTruthy();
-        expect(user.id)
-          .withContext('Responding user object should have an id')
           .toBeTruthy();
         expect(user.imagePath)
           .withContext('Responding user object should have an imagePath')

@@ -9,7 +9,7 @@ import {
 } from './User.actions';
 import { initialState, userReducer } from './User.reducer';
 
-xdescribe('User-Store Reducer - Unit Tests', () => {
+describe('User-Store Reducer - Unit Tests', () => {
   it('U-Test-1: setUser should set the value of the store', () => {
     const action = setUser({ user: TestUser });
     let state = userReducer(initialState, action);

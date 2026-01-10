@@ -14,8 +14,8 @@ import { concatLatestFrom } from '@ngrx/operators';
 
 @Injectable()
 export class userEffects {
-  private actions$ = inject(Actions);
-  private store = inject(Store);
+  private readonly actions$ = inject(Actions);
+  private readonly store = inject(Store);
 
   // Save the user object on local storage after initialization
   saveUserData$ = createEffect(

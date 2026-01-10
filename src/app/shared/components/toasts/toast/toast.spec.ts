@@ -3,7 +3,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatIcon } from '@angular/material/icon';
 import { MockComponent } from 'ng-mocks';
 import { ToastComponent } from './toast';
-import { TestToast, ToastLifeTime, ToastType } from 'src/app/core/models/Toast';
+import {
+  TestToast,
+  ToastLifeTime,
+  ToastType,
+} from 'src/app/core/models/toast/toast';
 import { ICON_NAMES, IconService } from 'src/app/core';
 import { setInputSignal } from 'src/app/testing/helper/set-input-signal';
 import { getHTMLElement } from 'src/app/testing/helper/get-html-element';

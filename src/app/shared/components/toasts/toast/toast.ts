@@ -11,7 +11,7 @@ import { MatIcon } from '@angular/material/icon';
 import {
   ICON_NAMES,
   IconService,
-  Toast,
+  IToast,
   ToastLifeTime,
   ToastType,
 } from 'src/app/core';
@@ -32,9 +32,9 @@ export class ToastComponent implements OnInit, OnDestroy {
   // Names of all icons that must be registered
   protected readonly iconNames = ICON_NAMES;
   // The actual toast object
-  readonly toast = input.required<Toast>();
+  readonly toast = input.required<IToast>();
   // An emitter to remove this child
-  readonly remove = output<Toast>();
+  readonly remove = output<IToast>();
 
   constructor() {
     this.iconService.registerIcons([

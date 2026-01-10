@@ -7,50 +7,51 @@ import {
   setUserName,
   setUserSession,
 } from './User.actions';
-import { User } from 'src/app/core';
+import { IUser } from 'src/app/core';
 
 /** This object represents the initial state of a user in the store */
-export const initialState: User = {
-  id: 0,
+export const initialState: IUser = {
   name: '',
   email: '',
   imagePath: '',
   session: {
-    token: '',
-    expire: 0,
+    jwtToken: '',
+    jwtExpire: 0,
+    refreshToken: '',
+    refreshExpire: 0,
   },
 };
 
 export const userReducer = createReducer(
   initialState,
-  on(setUser, (_, action): User => action.user),
+  on(setUser, (_, action): IUser => action.user),
   on(
     setUserName,
-    (state, action): User => ({
+    (state, action): IUser => ({
       ...state,
       name: action.name,
     })
   ),
   on(
     setEmail,
-    (state, action): User => ({
+    (state, action): IUser => ({
       ...state,
       email: action.email,
     })
   ),
   on(
     setUserImagePath,
-    (state, action): User => ({
+    (state, action): IUser => ({
       ...state,
       imagePath: action.imagePath,
     })
   ),
   on(
     setUserSession,
-    (state, action): User => ({
+    (state, action): IUser => ({
       ...state,
       session: action.session,
     })
   ),
-  on(deleteUser, (): User => initialState)
+  on(deleteUser, (): IUser => initialState)
 );

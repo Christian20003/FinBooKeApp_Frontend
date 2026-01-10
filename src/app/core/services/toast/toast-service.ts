@@ -1,12 +1,16 @@
 import { computed, Injectable, signal } from '@angular/core';
-import { Toast, ToastLifeTime, ToastType } from 'src/app/core/models/Toast';
+import {
+  IToast,
+  ToastLifeTime,
+  ToastType,
+} from 'src/app/core/models/toast/toast';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ToastService {
   // Signal storing toast objects
-  private readonly list = signal<Toast[]>([]);
+  private readonly list = signal<IToast[]>([]);
   // Signal to access toast list
   public readonly store = computed(() => this.list());
 

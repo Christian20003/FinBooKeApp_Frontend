@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { User } from 'src/app/core/models/User';
+import { IUser } from 'src/app/core/models/authentication/user';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { TranslocoService } from '@jsverse/transloco';
 import { EnvironmentService } from 'src/app/core/services/environment/environment-service';
@@ -29,17 +29,12 @@ export class AuthenticationService {
    * @param data      - The login data as a {@link loginData} object.
    * @returns           An observable either with a {@link User} object after success or an {@link Error} object after failure.
    */
-  postLogin(data: ILoginDTO): Observable<User | Error> {
+  postLogin(data: ILoginDTO): Observable<IUser | Error> {
     const path = this.envService.apiUrl + this.LOGIN_PATH;
     this.logger.logInfo('POST to ' + path, data);
-    return this.http.post<User>(path, data).pipe(
+    return this.http.post<IUser>(path, data).pipe(
       map(response => {
-        if (
-          response.name &&
-          response.email &&
-          response.id &&
-          response.session
-        ) {
+        if (response.name && response.email && response.session) {
           this.logger.logInfo('Success of POST to ' + path, response);
           return response;
         }
@@ -58,17 +53,12 @@ export class AuthenticationService {
    * @param data      - The registration data as a {@link registerData} object.
    * @returns           An observable either with a {@link User} object after success or an {@link Error} object after failure.
    */
-  postRegister(data: IRegisterDTO): Observable<User | Error> {
+  postRegister(data: IRegisterDTO): Observable<IUser | Error> {
     const path = this.envService.apiUrl + this.REGISTER_PATH;
     this.logger.logInfo('POST to ' + path, data);
-    return this.http.post<User>(path, data).pipe(
+    return this.http.post<IUser>(path, data).pipe(
       map(response => {
-        if (
-          response.name &&
-          response.email &&
-          response.id &&
-          response.session
-        ) {
+        if (response.name && response.email && response.session) {
           this.logger.logInfo('Success of POST to ' + path, response);
           return response;
         }

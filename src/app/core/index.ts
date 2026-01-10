@@ -3,10 +3,15 @@ export {
   IRegisterDTO,
   TestRegisterDTO,
 } from './models/authentication/registerDTO';
-export { Icon, IconDictionary } from './models/Icon';
-export { Session, TestSession } from './models/Session';
-export { Toast, ToastType, ToastLifeTime, TestToast } from './models/Toast';
-export { User, TestUser } from './models/User';
+export { IIcon, IconDictionary } from './models/icon/icon';
+export { ISession, TestSession } from './models/authentication/session';
+export {
+  IToast,
+  ToastType,
+  ToastLifeTime,
+  TestToast,
+} from './models/toast/toast';
+export { IUser, TestUser } from './models/authentication/user';
 export { PATHS } from './routing/paths';
 export { ICON_NAMES } from './services/icon/icon-names';
 export { IconService } from './services/icon/icon-service';

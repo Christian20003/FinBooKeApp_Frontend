@@ -6,23 +6,14 @@ import { Observable, of } from 'rxjs';
 import { userEffects } from './User.effects';
 import { selectUser } from './User.selector';
 import { initialState } from './User.reducer';
+import { TestUser } from 'src/app/core';
+import { provideZonelessChangeDetection } from '@angular/core';
 
-xdescribe('User-Store Effects - Unit Tests', () => {
+describe('User-Store Effects - Unit Tests', () => {
   let actions$: Observable<Action>;
   let effects: userEffects;
   let store: MockStore;
   let localStoreMock: { [key: string]: string | null };
-
-  const userState = {
-    id: 5,
-    name: 'Max',
-    email: 'max-mustermann@gmail.com',
-    imagePath: 'example.com',
-    session: {
-      token: 'abcdefg',
-      expire: 200,
-    },
-  };
 
   beforeEach(() => {
     actions$ = new Observable<Action>();
@@ -31,13 +22,14 @@ xdescribe('User-Store Effects - Unit Tests', () => {
     TestBed.configureTestingModule({
       providers: [
         userEffects,
+        provideZonelessChangeDetection(),
         provideMockActions(() => actions$),
         provideMockStore({
           selectors: [
             {
               selector: selectUser,
               value: {
-                user: userState,
+                user: TestUser,
               },
             },
           ],
@@ -71,7 +63,7 @@ xdescribe('User-Store Effects - Unit Tests', () => {
     const user = localStorage.getItem('user') as string;
 
     expect(JSON.parse(user)).toBeTruthy();
-    expect(JSON.parse(user).user).toEqual(userState);
+    expect(JSON.parse(user).user).toEqual(TestUser);
   });
 
   it('U-Test-2: setUserSession should add the user object on local storage', () => {
@@ -80,16 +72,16 @@ xdescribe('User-Store Effects - Unit Tests', () => {
     const user = localStorage.getItem('user') as string;
 
     expect(JSON.parse(user)).toBeTruthy();
-    expect(JSON.parse(user).user).toEqual(userState);
+    expect(JSON.parse(user).user).toEqual(TestUser);
   });
 
   it('U-Test-3: loadSession should trigger setUser action with given storage data', () => {
     actions$ = of({ type: '[User] Load session' });
-    localStorage.setItem('user', JSON.stringify(userState));
+    localStorage.setItem('user', JSON.stringify(TestUser));
     effects.loadUserData$.subscribe(action => {
       expect(action).toEqual({
         type: '[User] Set',
-        user: userState,
+        user: TestUser,
       });
     });
   });

@@ -7,17 +7,17 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponent } from 'ng-mocks';
 import { ToastsComponent } from './toasts';
 import { ToastComponent } from './toast/toast';
-import { ToastService, TestToast, Toast } from 'src/app/core';
+import { ToastService, TestToast, IToast } from 'src/app/core';
 import { getComponents } from 'src/app/testing/helper/get-component';
 
 describe('ToastsComponent - Unit Tests', () => {
   let component: ToastsComponent;
   let fixture: ComponentFixture<ToastsComponent>;
   let toastService: jasmine.SpyObj<ToastService>;
-  let store: WritableSignal<Toast[]>;
+  let store: WritableSignal<IToast[]>;
 
   beforeEach(() => {
-    store = signal<Toast[]>([TestToast]);
+    store = signal<IToast[]>([TestToast]);
     toastService = jasmine.createSpyObj('ToastService', ['removeToast'], {
       store: store.asReadonly(),
     });

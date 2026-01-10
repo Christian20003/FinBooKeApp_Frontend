@@ -1,12 +1,12 @@
 import { createAction, props } from '@ngrx/store';
-import { User, Session } from 'src/app/core';
+import { IUser, ISession } from 'src/app/core';
 
 /**
  * This action can be used to set the user-object of the corresponding store.
  *
- * @param user - The {@link User} object which should be saved.
+ * @param user The user object which should be saved.
  */
-export const setUser = createAction('[User] Set', props<{ user: User }>());
+export const setUser = createAction('[User] Set', props<{ user: IUser }>());
 
 /**
  * This action can be used to delete the user-object in the store.
@@ -14,7 +14,7 @@ export const setUser = createAction('[User] Set', props<{ user: User }>());
 export const deleteUser = createAction('[User] Delete');
 
 /**
- * This action can be used to change the name of the {@link User} object.
+ * This action can be used to change the name of the user object.
  *
  * @param name - The new name of the user.
  */
@@ -24,7 +24,7 @@ export const setUserName = createAction(
 );
 
 /**
- * This action can be used to change the email address of the {@link User} object.
+ * This action can be used to change the email address of the user object.
  *
  * @param email - The new email of the user.
  */
@@ -34,7 +34,7 @@ export const setEmail = createAction(
 );
 
 /**
- * This action can be used to change the image path (profile image) of the {@link User} object.
+ * This action can be used to change the image path (profile image) of the user object.
  *
  * @param imagePath - The new image path.
  */
@@ -44,16 +44,16 @@ export const setUserImagePath = createAction(
 );
 
 /**
- * This action can be used to change the {@link Session} object of the {@link User} object.
+ * This action can be used to change the session object of the user object.
  *
  * @param session - The new session object.
  */
 export const setUserSession = createAction(
   '[User] Set session',
-  props<{ session: Session }>()
+  props<{ session: ISession }>()
 );
 
 /**
- * This action can be used to load the {@link Session} object from local storage.
+ * This action can be used to load the session object from local storage.
  */
 export const loadUserSession = createAction('[User] Load session');

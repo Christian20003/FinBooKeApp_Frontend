@@ -21,7 +21,7 @@ export const enum ToastLifeTime {
  * @property {ToastTypes} type - The type of the toast
  * @property {ToastRemoveType} lifetime - Amount of time (in seconds) in which this toast exist. `-1` if infinite
  */
-export interface Toast {
+export interface IToast {
   id: number;
   message: string;
   type: ToastType;
@@ -29,7 +29,7 @@ export interface Toast {
 }
 
 /** A example object for a toast (usable for testing) */
-export const TestToast: Toast = {
+export const TestToast: IToast = {
   id: 1,
   message: 'This is a test message',
   type: ToastType.ERROR,

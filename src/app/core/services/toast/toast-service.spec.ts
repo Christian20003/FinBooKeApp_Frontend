@@ -6,15 +6,15 @@ import {
 } from '@angular/core';
 import {
   TestToast,
-  Toast,
+  IToast,
   ToastLifeTime,
   ToastType,
-} from 'src/app/core/models/Toast';
+} from 'src/app/core/models/toast/toast';
 import { ToastService } from './toast-service';
 
 describe('ToastService - Unit Tests', () => {
   let service: ToastService;
-  let store: WritableSignal<Toast[]>;
+  let store: WritableSignal<IToast[]>;
   const toast = {
     message: 'Message',
     type: ToastType.SUCCESS,
@@ -26,7 +26,7 @@ describe('ToastService - Unit Tests', () => {
       providers: [provideZonelessChangeDetection()],
     });
     service = TestBed.inject(ToastService);
-    store = signal<Toast[]>([TestToast]);
+    store = signal<IToast[]>([TestToast]);
     // @ts-expect-error Access private member to override start state
     service.list = store;
   });
