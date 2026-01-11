@@ -11,7 +11,8 @@ export {
   ToastLifeTime,
   TestToast,
 } from './models/toast/toast';
-export { IUser, TestUser } from './models/authentication/user';
+export { IUser, isIUser, TestUser } from './models/authentication/user';
+export { API_PATHS, buildApiUrl } from './routing/api-paths';
 export { PATHS } from './routing/paths';
 export { ICON_NAMES } from './services/icon/icon-names';
 export { IconService } from './services/icon/icon-service';

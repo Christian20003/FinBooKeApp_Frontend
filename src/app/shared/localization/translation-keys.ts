@@ -39,7 +39,7 @@ export const TRANSLATION_KEYS = {
   httpError: {
     invalid: 'http-error.invalid',
     credentials: 'http-error.credentials',
-    userName: 'http-error.user-name',
+    locked: 'http-error.locked',
     unauthorized: 'http-error.unautherized',
     notFound: 'http-error.not-found',
     unavailable: 'http-error.unavailable',

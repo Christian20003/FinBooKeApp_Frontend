@@ -84,10 +84,9 @@ export class AuthOverviewComponent {
    */
   onSetEmail(email: string) {
     this.waiting = true;
-    this.authService.postEmail(email).subscribe({
-      next: response => {
+    this.authService.postForgotPwd(email).subscribe({
+      next: () => {
         this.waiting = false;
-        this.email = response as string;
       },
       error: error => {
         this.waiting = false;
@@ -108,7 +107,7 @@ export class AuthOverviewComponent {
    */
   onSetCode(code: string) {
     this.waiting = true;
-    this.authService.postCode(code).subscribe({
+    this.authService.postAccessCode(code).subscribe({
       next: () => {
         this.waiting = false;
         this.router.navigate([PATHS.login]);

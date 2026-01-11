@@ -36,7 +36,7 @@
     "http-error": {
         "invalid": "Die übergebenen Daten konnten nicht verarbeitet werden",
         "credentials": "Die angegebenen Account-Daten sind fehlerhaft",
-        "user-name": "Der angegebene Benutzername ist bereits vergeben",
+        "locked": "Die angefragte Resource ist gesperrt. Bitte versuche es später erneut",
         "unautherized": "Sie sind für diese Aktion nicht autorisiert",
         "not-found": "Die angeforderte Ressource konnte nicht gefunden werden",
         "unavailable": "Der angeforderte Service ist zurzeit nicht erreichbar",

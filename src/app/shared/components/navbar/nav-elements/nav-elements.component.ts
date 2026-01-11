@@ -76,7 +76,7 @@ export class NavElementsComponent {
   }
 
   onLogout(): void {
-    this.authService.deleteLogin().subscribe({
+    this.authService.postLogout().subscribe({
       next: () => {
         this.store.dispatch(deleteUser());
         this.router.navigate([PATHS.login]);

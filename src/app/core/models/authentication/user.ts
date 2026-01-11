@@ -15,6 +15,33 @@ export interface IUser {
   session: ISession;
 }
 
+/**
+ * This function validates if the provied object is of type
+ * {@link IUser} at runtime.
+ *
+ * @param obj The object that should be checked.
+ * @returns `true` if the object is of type {@link IUser},
+ * otherwise `false`.
+ */
+export function isIUser(obj: unknown): obj is IUser {
+  if (obj === null && typeof obj !== 'object') {
+    return false;
+  }
+
+  const user = obj as IUser;
+
+  return (
+    typeof user.name === 'string' &&
+    typeof user.email === 'string' &&
+    typeof user.imagePath === 'string' &&
+    typeof user.session === 'object' &&
+    typeof user.session.jwtToken === 'string' &&
+    typeof user.session.jwtExpire === 'number' &&
+    typeof user.session.refreshToken === 'string' &&
+    typeof user.session.refreshExpire === 'number'
+  );
+}
+
 /** Example object for a user (usable for testing) */
 export const TestUser: IUser = {
   name: 'Max',
