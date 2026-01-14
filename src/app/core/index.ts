@@ -18,3 +18,4 @@ export { ICON_NAMES } from './services/icon/icon-names';
 export { IconService } from './services/icon/icon-service';
 export { ToastService } from './services/toast/toast-service';
 export { AuthenticationService } from './services/authentication/authentication-service';
+export { EnvironmentService } from './services/environment/environment-service';
