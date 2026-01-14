@@ -14,32 +14,30 @@
     </button>
   </div>
   <div class="overlap-grid-container">
-    @if (isLogin()) {
-      <!-- Set email for reset password screen -->
-      @if (isCode() && email) {
-        <app-set-access-code
-          [@moveLeftToRight]
-          (send)="onSetCode($event)"></app-set-access-code>
-        <!-- Set security code screen -->
-      } @else if (isCode() && !email) {
-        <app-request-access-code
-          [@moveLeftToRight]
-          [email]="email"
-          (send)="onSetEmail($event)"></app-request-access-code>
-        <!-- Login screen -->
-      } @else {
-        <app-login
-          [@moveLeftToRight]
-          (login)="onSubmitLogin($event)"
-          (forgotPwd)="onForgetPwd()"></app-login>
-      }
-      <!-- Register screen -->
+    @if (isLogin() && isForgotPwd()) {
+      <app-request-access-code
+        [email]="email()"
+        (send)="onSendEmail($event)"
+        animate.enter="enterX"
+        animate.leave="leaveXOverlap"></app-request-access-code>
+    } @else if (isLogin() && isResetPwd()) {
+      <app-set-access-code
+        (send)="onSendAccessCode($event)"
+        animate.enter="enterX"
+        animate.leave="leaveXOverlap"></app-set-access-code>
+    } @else if (isLogin()) {
+      <app-login
+        (login)="onSubmitLogin($event)"
+        (forgotPwd)="onForgetPwd()"
+        animate.enter="enterX"
+        animate.leave="leaveXOverlap"></app-login>
     } @else {
-      <app-register [@moveLeftToRight]></app-register>
+      <app-register
+        animate.enter="enterX"
+        animate.leave="leaveXOverlap"></app-register>
     }
   </div>
-  <!-- Loading screen -->
-  @if (waiting) {
+  @if (loading()) {
     <app-loading
       id="loading"
       [message]="text(translationKeys.loadingScreen.send)"></app-loading>

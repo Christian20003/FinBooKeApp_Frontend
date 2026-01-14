@@ -47,6 +47,9 @@ export class RequestAccessCodeComponent implements OnInit {
         Validators.email,
       ]),
     });
+    if (this.email() !== '') {
+      this.field?.markAsDirty();
+    }
   }
 
   /**

@@ -5,6 +5,7 @@ export const PATHS = {
   login: 'login',
   register: 'register',
   forgotPwd: 'forgotPwd',
+  resetPwd: 'resetPwd',
   dashboard: 'dashboard',
   finances: 'finances',
   accounts: 'accounts',

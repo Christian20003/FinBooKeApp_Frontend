@@ -33,12 +33,20 @@ body {
   @include animations-slide.slideXOut();
 }
 
+.leaveXOverlap {
+  @include animations-slide.slideXOut($overlap: true);
+}
+
 .enterY {
   @include animations-slide.slideYIn();
 }
 
 .leaveY {
   @include animations-slide.slideYOut();
+}
+
+.leaveYOverlap {
+  @include animations-slide.slideYOut($overlap: true);
 }
 
 .grow {

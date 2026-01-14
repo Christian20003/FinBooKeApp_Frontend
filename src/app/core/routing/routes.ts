@@ -2,24 +2,36 @@ import { Routes } from '@angular/router';
 import { AuthOverviewComponent } from 'src/app/authentication/auth-overview/auth-overview';
 import { DashboardOverviewComponent } from 'src/app/dashboard/dashboard-overview/dashboard-overview.component';
 import { PATHS } from './paths';
+import { LoginComponent } from 'src/app/authentication/login/login';
+import { RegisterComponent } from 'src/app/authentication/register/register';
 
 /**
  * Application routes
  */
 export const routes: Routes = [
   {
-    path: PATHS.login,
+    path: '',
     component: AuthOverviewComponent,
     children: [
       {
-        path: PATHS.forgotPwd,
-        component: AuthOverviewComponent,
+        path: PATHS.login,
+        component: LoginComponent,
+        children: [
+          {
+            path: PATHS.forgotPwd,
+            component: AuthOverviewComponent,
+          },
+          {
+            path: PATHS.resetPwd,
+            component: AuthOverviewComponent,
+          },
+        ],
+      },
+      {
+        path: PATHS.register,
+        component: RegisterComponent,
       },
     ],
-  },
-  {
-    path: PATHS.register,
-    component: AuthOverviewComponent,
   },
   // TODO: Replace components
   {
@@ -42,5 +54,5 @@ export const routes: Routes = [
     path: PATHS.settings,
     component: DashboardOverviewComponent,
   },
-  { path: '', redirectTo: PATHS.login, pathMatch: 'full' },
+  //{ path: '', redirectTo: PATHS.login, pathMatch: 'full' },
 ];

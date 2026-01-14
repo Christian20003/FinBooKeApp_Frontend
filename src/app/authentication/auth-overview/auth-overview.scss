@@ -1,5 +1,5 @@
-@use "../../shared/styles/container-mixin/box" as box;
-@use "../../shared/styles/others/font" as font;
+@use "app/shared/styles/container-mixin/box" as box;
+@use "app/shared/styles/others/font" as font;
 
 #title {
     color: var(--highlight-color-container-primary);
@@ -8,8 +8,6 @@
 
 .container {
     display: grid;
-    grid-row: 2;
-    grid-column: 1;
     width: fit-content;
     margin: 0 auto;
     @include box.box-container();
@@ -18,23 +16,21 @@
         display: grid;
         grid-row: 1;
         grid-column: 1;
+        grid-auto-flow: column;
         transition: grid-template-columns 0.5s;
 
-        @media (min-width: 26rem) {
-            grid-auto-flow: column;
-            &:has(#login.inactive) {
-                grid-template-columns: 50% 50%;
-                overflow: hidden;
-            }
-            &:has(#register.inactive) {
-                grid-template-columns: 50% 50%;
-            }
-            &:has(#register.inactive:is(:hover, :focus)) {
-                grid-template-columns: 0% 100%;
-            }
-            &:has(#login.inactive:is(:hover, :focus)) {
-                grid-template-columns: 100% 0%;
-            }
+        &:has(#login.inactive) {
+            grid-template-columns: 50% 50%;
+            overflow: hidden;
+        }
+        &:has(#register.inactive) {
+            grid-template-columns: 50% 50%;
+        }
+        &:has(#register.inactive:is(:hover, :focus)) {
+            grid-template-columns: 0% 100%;
+        }
+        &:has(#login.inactive:is(:hover, :focus)) {
+            grid-template-columns: 100% 0%;
         }
 
         #login,
@@ -46,17 +42,18 @@
             border-radius: 0.3rem;
             background-color: inherit;
             color: var(--text-color-primary);
-            white-space: nowrap;
             @include font.description-font($align: center);
 
             &.inactive {
                 background-color: var(--background-color-container-complement);
+                opacity: 0.7;
                 color: var(--highlight-color-container-primary);
                 transition: all 0.5s;
             }
 
             &.inactive:is(:hover, :focus) {
                 background-color: var(--highlight-color-container-primary);
+                opacity: 1;
                 color: var(--text-color-primary);
             }
         }

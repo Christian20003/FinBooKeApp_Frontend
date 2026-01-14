@@ -2,7 +2,10 @@
     animation: XIn 1s;
 }
 
-@mixin slideXOut() {
+@mixin slideXOut($overlap: false) {
+    @if ($overlap) {
+        position: absolute;
+    }
     animation: XOut 1s;
 }
 
@@ -10,7 +13,10 @@
     animation: YIn 1s;
 }
 
-@mixin slideYOut() {
+@mixin slideYOut($overlap: false) {
+    @if ($overlap) {
+        position: absolute;
+    }
     animation: YOut 1s;
 }
 
