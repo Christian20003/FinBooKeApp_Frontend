@@ -6,12 +6,12 @@ import { provideHttpClient } from '@angular/common/http';
 import { TranslocoService } from '@jsverse/transloco';
 import { LoginComponent } from 'src/app/authentication/login/login';
 import { FormInputErrorComponent, TRANSLATION_KEYS } from 'src/app/shared';
-import { getComponent } from 'src/app/testing/testing-support';
 import { getHTMLElement } from 'src/app/testing/helper/get-html-element';
 import { IconService } from 'src/app/core';
 import { getTranslocoModule } from 'src/app/shared/localization/transloco-testing';
 import { setInputValues } from 'src/app/testing/helper/set-input-values';
 import { TestLoginDTO } from 'src/app/core/models/authentication/loginDTO';
+import { getComponent } from 'src/app/testing/helper/get-component';
 
 describe('LoginComponent - Integration Tests', () => {
   let fixture: ComponentFixture<LoginComponent>;
@@ -47,8 +47,8 @@ describe('LoginComponent - Integration Tests', () => {
     setInputValues([emailInput, passwordInput]);
     fixture.detectChanges();
 
-    const error = getComponent(fixture, FormInputErrorComponent);
-    const actual = error.componentInstance.message();
+    const error = getComponent(fixture, FormInputErrorComponent)!;
+    const actual = error.message();
     const expected = translocoService.translate(
       TRANSLATION_KEYS.auth.email.missing
     );
@@ -62,8 +62,8 @@ describe('LoginComponent - Integration Tests', () => {
     setInputValues([emailInput, passwordInput]);
     fixture.detectChanges();
 
-    const error = getComponent(fixture, FormInputErrorComponent);
-    const actual = error.componentInstance.message();
+    const error = getComponent(fixture, FormInputErrorComponent)!;
+    const actual = error.message();
     const expected = translocoService.translate(
       TRANSLATION_KEYS.auth.email.invalid
     );
@@ -77,8 +77,8 @@ describe('LoginComponent - Integration Tests', () => {
     setInputValues([emailInput, passwordInput]);
     fixture.detectChanges();
 
-    const error = getComponent(fixture, FormInputErrorComponent);
-    const actual = error.componentInstance.message();
+    const error = getComponent(fixture, FormInputErrorComponent)!;
+    const actual = error.message();
     const expected = translocoService.translate(
       TRANSLATION_KEYS.auth.password.missing
     );

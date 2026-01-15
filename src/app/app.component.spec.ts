@@ -1,31 +1,23 @@
 import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { StoreModule } from '@ngrx/store';
-import { userReducer } from './shared/index';
-import { SharedModule } from './shared/components/shared.module';
 import { ToastsComponent } from './shared/components/toasts/toasts';
+import { MockComponent } from 'ng-mocks';
+import { NavbarComponent } from './shared/components/navbar/navbar';
+import { provideZonelessChangeDetection } from '@angular/core';
 
-describe('Dummy', () => {
-  it('Test', () => {
-    expect(true).toBeTruthy();
-  });
-});
-
-xdescribe('AppComponent', () => {
+xdescribe('AppComponent - Unit Tests', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
-        StoreModule.forRoot({ user: userReducer }, {}),
-        SharedModule,
-        ToastsComponent,
+        AppComponent,
+        MockComponent(ToastsComponent),
+        MockComponent(NavbarComponent),
       ],
-      declarations: [AppComponent],
+      providers: [provideZonelessChangeDetection()],
     })
   );
 
-  it('should create the app', () => {
+  it('U-Test-1: Component should exist', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();

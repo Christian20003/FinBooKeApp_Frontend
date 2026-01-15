@@ -12,7 +12,6 @@ import {
 import { config } from './app/shared/localization/transloco-config';
 import { provideTransloco } from '@jsverse/transloco';
 import { provideRouter } from '@angular/router';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { routes } from './app/core/routing/routes';
 
 bootstrapApplication(AppComponent, {
@@ -23,6 +22,5 @@ bootstrapApplication(AppComponent, {
     provideTransloco(config),
     provideHttpClient(withInterceptorsFromDi()),
     provideZonelessChangeDetection(),
-    provideAnimationsAsync(),
   ],
 });

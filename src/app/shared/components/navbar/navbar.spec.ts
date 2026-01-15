@@ -2,20 +2,17 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { provideRouter, RouterLinkWithHref } from '@angular/router';
 import { By } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideHttpClient } from '@angular/common/http';
 import { MemoizedSelector } from '@ngrx/store';
-import { MockComponent, MockModule } from 'ng-mocks';
-import {
-  getNativeElement,
-  getNativeElements,
-} from 'src/app/testing/testing-support';
 import { NavbarComponent } from './navbar';
 import { NavElementComponent } from './nav-element/nav-element';
-import { SharedModule } from '../shared.module';
 import { PATHS, TestUser, IUser } from 'src/app/core';
 import { selectUser } from '../../stores/UserStore/User.selector';
 import { routes } from 'src/app/core/routing/routes';
+import {
+  getHTMLElement,
+  getHTMLElements,
+} from 'src/app/testing/helper/get-html-element';
 
 xdescribe('NavbarComponent - Unit Tests', () => {
   let component: NavbarComponent;
@@ -25,12 +22,7 @@ xdescribe('NavbarComponent - Unit Tests', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        NavbarComponent,
-        NavElementComponent,
-        BrowserAnimationsModule,
-        SharedModule,
-      ],
+      imports: [NavbarComponent, NavElementComponent],
       providers: [
         provideMockStore(),
         provideHttpClient(),
@@ -39,12 +31,12 @@ xdescribe('NavbarComponent - Unit Tests', () => {
     }).compileComponents();
 
     // Currently MockComponent() not directly usable in imports field
-    TestBed.overrideComponent(NavElementComponent, {
+    /* TestBed.overrideComponent(NavElementComponent, {
       remove: { imports: [NavElementComponent, SharedModule] },
       add: {
         imports: [MockComponent(NavElementComponent), MockModule(SharedModule)],
       },
-    });
+    }); */
 
     store = TestBed.inject(MockStore);
     selector = store.overrideSelector(selectUser, TestUser);
@@ -68,10 +60,7 @@ xdescribe('NavbarComponent - Unit Tests', () => {
   });
 
   it('U-Test-3: An image should appear as profile button if an url is provided', () => {
-    const element = getNativeElement<NavbarComponent, HTMLImageElement>(
-      fixture,
-      '.profile-btn'
-    );
+    const element = getHTMLElement<HTMLImageElement>(fixture, '.profile-btn');
     expect(element).toBeTruthy();
     expect(element).toBeInstanceOf(HTMLImageElement);
   });
@@ -82,7 +71,7 @@ xdescribe('NavbarComponent - Unit Tests', () => {
     selector.setResult(data);
     store.refreshState();
     fixture.detectChanges();
-    const element = getNativeElement<NavbarComponent, HTMLParagraphElement>(
+    const element = getHTMLElement<HTMLParagraphElement>(
       fixture,
       '.profile-btn'
     );
@@ -97,26 +86,23 @@ xdescribe('NavbarComponent - Unit Tests', () => {
     selector.setResult(data);
     store.refreshState();
     fixture.detectChanges();
-    const element = getNativeElement<NavbarComponent, HTMLParagraphElement>(
+    const element = getHTMLElement<HTMLParagraphElement>(
       fixture,
       '.profile-btn'
-    );
+    )!;
     expect(element.innerText).toBe('A');
   });
 
   it('U-Test-6: After clicking the profile button, another navbar should appear', () => {
-    const links = getNativeElements<NavbarComponent, HTMLAnchorElement>(
-      fixture,
-      'a'
-    );
+    const links = getHTMLElements<HTMLAnchorElement>(fixture, 'a');
     const lastLink = links[links.length - 1];
     lastLink.click();
     fixture.detectChanges();
-    const profileNavSmall = getNativeElement<NavbarComponent, HTMLDivElement>(
+    const profileNavSmall = getHTMLElement<HTMLDivElement>(
       fixture,
       '.vertical-secondary-nav'
     );
-    const profileNavLarge = getNativeElement<NavbarComponent, HTMLDivElement>(
+    const profileNavLarge = getHTMLElement<HTMLDivElement>(
       fixture,
       '.vertical-primary-nav'
     );
