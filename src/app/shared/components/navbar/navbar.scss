@@ -1,12 +1,13 @@
-@use "app/shared/styles/others/shadow" as shadow;
-@use "app/shared/styles/container-mixin/circle" as circle;
+@use "app/shared/styles/effects" as effects;
+@use "app/shared/styles/components" as components;
 
 nav {
     position: sticky;
     top: 0;
     // Delete margin added by the browser
     margin: -0.5rem;
-    @include shadow.border-shadow-outside();
+    z-index: 2;
+    @include effects.border-shadow-effect();
 
     .nav-container {
         display: flex;
@@ -31,9 +32,8 @@ nav {
             cursor: pointer;
 
             .profile-btn {
-                margin: auto;
                 color: var(--text-color-highlight);
-                @include circle.circle-container($line-height: 2.15rem);
+                @include components.circle-container();
             }
         }
     }
@@ -46,7 +46,7 @@ nav {
         background-color: var(--background-color-container-primary);
         border: 0.1rem var(--border-color-secondary) solid;
         padding: 0.5rem 1.8rem 0.5rem 0.8rem;
-        @include shadow.border-shadow-outside();
+        @include effects.border-shadow-effect();
     }
 }
 

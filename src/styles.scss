@@ -1,9 +1,6 @@
 @use "@angular/material" as mat;
-@use "./app/shared/styles/animations/slideAnimation" as animations-slide;
-@use "./app/shared/styles/animations/sizeAnimation" as animations-size;
-@use "./app/shared/styles/color/light_theme_colors" as light-theme;
-@use "./app/shared/styles/color/dark_theme_colors" as dark-theme;
-@use "./app/shared/styles/color/theme" as theme-obj;
+@use "app/shared/styles/animations" as animations;
+@use "app/shared/styles/theme" as theme;
 
 html,
 body {
@@ -12,47 +9,47 @@ body {
 
 body {
   background-color: var(--background-color-container-primary);
-  font-family: mat.get-theme-typography(theme-obj.$application-theme, display-large, font-family);
+  font-family: mat.get-theme-typography(theme.$application-theme, display-large, font-family);
 }
 
 :root {
-  @include light-theme.light-theme-color-vars();
+  @include theme.light-theme-color-vars();
 }
 
 :root body.dark {
-  @include dark-theme.dark-theme-color-vars();
+  @include theme.dark-theme-color-vars();
 }
 
 // Animation classes
 
 .enterX {
-  @include animations-slide.slideXIn();
+  @include animations.slideXIn();
 }
 
 .leaveX {
-  @include animations-slide.slideXOut();
+  @include animations.slideXOut();
 }
 
 .leaveXOverlap {
-  @include animations-slide.slideXOut($overlap: true);
+  @include animations.slideXOut($overlap: true);
 }
 
 .enterY {
-  @include animations-slide.slideYIn();
+  @include animations.slideYIn();
 }
 
 .leaveY {
-  @include animations-slide.slideYOut();
+  @include animations.slideYOut();
 }
 
 .leaveYOverlap {
-  @include animations-slide.slideYOut($overlap: true);
+  @include animations.slideYOut($overlap: true);
 }
 
 .grow {
-  @include animations-size.growUp();
+  @include animations.grow();
 }
 
 .shrink {
-  @include animations-size.shrinkDown();
+  @include animations.shrink();
 }

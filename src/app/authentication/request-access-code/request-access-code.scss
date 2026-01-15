@@ -1,7 +1,4 @@
-@use "app/shared/styles/container-mixin/input" as input;
-@use "app/shared/styles/container-mixin/svg" as svg;
-@use "app/shared/styles/container-mixin/button" as button;
-@use "app/shared/styles/others/font" as font;
+@use "app/shared/styles/components" as components;
 
 #email-form {
     display: grid;
@@ -12,22 +9,15 @@
         position: relative;
 
         .input {
-            @include input.input-container($hasLabel: true);
-            & {
-                @include font.description-font();
-            }
+            @include components.input-container();
         }
 
         #label-email {
-            //border: 2px red solid;
-            @include input.label-container();
-            & {
-                @include font.label-font();
-            }
+            @include components.label-container();
         }
 
         .icon {
-            @include svg.svg-label-container();
+            @include components.svg-container();
         }
 
         .missing {
@@ -37,10 +27,6 @@
     }
 
     #send-code-button {
-        padding: 1rem 2rem;
-        @include button.button();
-        & {
-            @include font.description-font($align: center);
-        }
+        @include components.major-button();
     }
 }

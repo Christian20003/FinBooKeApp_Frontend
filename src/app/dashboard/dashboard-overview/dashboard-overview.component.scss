@@ -1,5 +1,5 @@
-@use "../../shared/styles/container-mixin/box" as box;
-@use "../../shared/styles/others/font" as font;
+@use "../../shared/styles/components" as components;
+@use "../../shared/styles/typography/font" as font;
 
 .dashboard-container {
     margin-top: 1rem;
@@ -23,7 +23,7 @@
             height: 20rem;
             line-height: 20rem;
             color: var(--text-color-primary);
-            @include box.box-container();
+            @include components.box-container();
             @include font.description-font($align: center);
         }
     }

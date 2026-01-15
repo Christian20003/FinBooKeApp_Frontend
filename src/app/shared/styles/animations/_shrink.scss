@@ -1,0 +1,12 @@
+@mixin shrink {
+    animation: shrink 1s;
+}
+
+@keyframes shrink {
+    from {
+        scale: 1;
+    }
+    to {
+        scale: 0;
+    }
+}

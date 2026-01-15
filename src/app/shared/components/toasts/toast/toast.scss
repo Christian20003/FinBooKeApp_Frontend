@@ -1,16 +1,14 @@
-@use "app/shared/styles/others/font" as font;
-@use "app/shared/styles/container-mixin/box" as box;
-@use "app/shared/styles/animations/sizeAnimation" as animations;
-@use "app/shared/styles/container-mixin/svg" as svg;
+@use "app/shared/styles/typography/font" as font;
+@use "app/shared/styles/components" as components;
+@use "app/shared/styles/animations" as animations;
 
 .toast-content {
     display: flex;
     gap: 0.5rem;
     height: 100%;
     align-items: center;
-    position: relative;
     color: var(--text-color-primary);
-    @include box.box-container();
+    @include components.box-container();
     @include font.description-font();
 
     .success-icon,
@@ -29,7 +27,7 @@
     }
 
     .success-icon {
-        @include svg.svg-label-container($stroke: var(--icon-color-success), $fill: none);
+        @include components.svg-container($stroke: var(--icon-color-success), $fill: none);
     }
 
     .success-box {
@@ -37,7 +35,7 @@
     }
 
     .error-icon {
-        @include svg.svg-label-container($stroke: var(--icon-color-error), $fill: none);
+        @include components.svg-container($stroke: var(--icon-color-error), $fill: none);
     }
 
     .error-box {
@@ -45,7 +43,7 @@
     }
 
     .warning-icon {
-        @include svg.svg-label-container($stroke: none, $fill: var(--icon-color-warning));
+        @include components.svg-container($stroke: none, $fill: var(--icon-color-warning));
     }
 
     .warning-box {
@@ -53,7 +51,7 @@
     }
 
     .info-icon {
-        @include svg.svg-label-container($stroke: var(--icon-color-info));
+        @include components.svg-container($stroke: var(--icon-color-info));
     }
 
     .info-box {
@@ -69,11 +67,11 @@
     }
 
     .short-time {
-        @include animations.growWidth(10s);
+        @include animations.width(10s);
     }
 
     .long-time {
-        @include animations.growWidth(15s);
+        @include animations.width(15s);
     }
 
     .infinite-time {
@@ -94,7 +92,7 @@
 
         .close-icon {
             border-radius: 0.3rem;
-            @include svg.svg-label-container($stroke: var(--icon-color-primary));
+            @include components.svg-container($stroke: var(--icon-color-primary));
             transition: 0.5s background-color;
         }
 

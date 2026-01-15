@@ -1,7 +1,0 @@
-@mixin blur-container($height: 100%, $transform: translate(0, 0), $blur: blur(0.3rem)){
-    transform: $transform;
-    height: $height;
-    backdrop-filter: $blur;
-    border-radius: 1%;
-    background-color: var(--blur-background);
-}

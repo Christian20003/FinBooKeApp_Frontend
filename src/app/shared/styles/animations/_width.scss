@@ -1,0 +1,12 @@
+@mixin width($time: 1s){
+    animation: width $time;
+}
+
+@keyframes width {
+    from {
+        width: 0%;
+    }
+    to {
+        width: 100%;
+    }
+}

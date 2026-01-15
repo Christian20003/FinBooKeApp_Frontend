@@ -1,0 +1,12 @@
+@mixin grow{
+    animation: grow 1s;
+}
+
+@keyframes grow {
+    from {
+        scale: 0;
+    }
+    to {
+        scale: 1;
+    }
+}

@@ -1,6 +1,7 @@
-@use '../others/shadow' as shadow;
+@use 'app/shared/styles/effects' as effects;
+@use 'app/shared/styles/typography/font' as font;
 
-@mixin input-container($hasLabel: false) {
+@mixin input-container($hasLabel: true) {
     padding: 0.4rem;
     width: 93%;
     background-color: var(--background-color-container-secondary);
@@ -9,6 +10,7 @@
     border: none;
     border-bottom: 0.2rem var(--border-color-primary) solid;
     transition: border-color 0.5s ease-out;
+    @include font.description-font();
 
     &:focus {
         border-color: var(--border-color-secondary);
@@ -21,18 +23,7 @@
     }
 }
 
-@mixin label-container() {
-    display: flex;
-    position: absolute;
-    width: 100%;
-    color: var(--text-color-primary);
-    bottom: 0;
-    opacity: 0.4;
-    pointer-events: none;
-    transition: all 0.5s;
-}
-
-@mixin digit-box-container(){
+@mixin input-digit-container(){
     width: 2.5rem;
     height: 2.5rem;
     color: var(--text-color-primary);
@@ -41,10 +32,11 @@
     border: none;
     border-radius: 0.5rem;
     transition: all 0.3s ease;
-    @include shadow.border-shadow-outside();
+    @include font.header-font($align: center);
+    @include effects.border-shadow-effect();
 
     &:focus{
-        @include shadow.border-shadow-outside-highlight();
+        @include effects.border-shadow-effect();
         outline: none;
     }
 }

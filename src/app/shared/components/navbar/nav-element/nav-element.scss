@@ -1,5 +1,5 @@
-@use "app/shared/styles/others/font" as font;
-@use "app/shared/styles//container-mixin/svg" as svg;
+@use "app/shared/styles/typography/font" as font;
+@use "app/shared/styles//components" as components;
 
 .nav-elem {
     display: flex;
@@ -13,12 +13,12 @@
     @include font.description-font();
 
     .nav-elem-icon-stroke {
-        @include svg.svg-container($stroke: var(--icon-color-primary));
+        @include components.svg-container($stroke: var(--icon-color-primary));
         transition: stroke 0.5s;
     }
 
     .nav-elem-icon-fill {
-        @include svg.svg-container($stroke: none, $fill: var(--icon-color-primary));
+        @include components.svg-container($stroke: none, $fill: var(--icon-color-primary));
         transition: fill 0.5s;
     }
 

@@ -1,10 +1,8 @@
-@use "../../../shared/styles/container-mixin/circle" as circle;
-@use "../../../shared/styles/container-mixin/box" as box;
-@use "../../../shared/styles/container-mixin/svg" as svg;
-@use "../../../shared/styles/others/font" as font;
+@use "../../../shared/styles/components" as components;
+@use "../../../shared/styles/typography/font" as font;
 
 .action-block {
-    @include box.box-container();
+    @include components.box-container();
     display: flex;
     overflow-x: scroll;
     padding-left: 0.5rem;
@@ -40,10 +38,10 @@
         .icon-container {
             border-style: dashed;
             border-color: var(--background-color-container-complement);
-            @include circle.circle-container($width: 3.8rem, $withAnimation: false);
+            @include components.circle-container($width: 3.8rem, $animate: false);
 
             .icon {
-                @include svg.svg-container($width: 2.2rem, $stroke: var(--icon-color-primary));
+                @include components.svg-container($width: 2.2rem, $stroke: var(--icon-color-primary));
             }
         }
 

@@ -1,4 +1,4 @@
-@use "./shared/styles/container-mixin/circle" as circle;
+@use "app/shared/styles/effects" as effects;
 
 .small-shape-bottom,
 .large-shape-bottom {
@@ -20,24 +20,30 @@
 
 .small-shape-bottom,
 .small-shape-left {
+    width: 20rem;
+    height: 20rem;
+    border-radius: 100%;
+    background-color: var(--highlight-color-container-primary);
     z-index: -1;
-    @include circle.circle-shape(
-        $width: 20rem,
-        $width-small: 15rem,
-        $bg-color: var(--highlight-color-container-primary),
-        $screen-bounday: 60rem,
-        $hasShadow: true
-    );
+    @include effects.border-shadow-effect();
+
+    @media (max-width: 60rem) {
+        width: 15rem;
+        height: 15rem;
+    }
 }
 
 .large-shape-bottom,
 .large-shape-left {
+    width: 25rem;
+    height: 25rem;
+    border-radius: 100%;
+    background-color: var(--highlight-color-container-secondary);
     z-index: -2;
-    @include circle.circle-shape(
-        $width: 25rem,
-        $width-small: 20rem,
-        $bg-color: var(--highlight-color-container-secondary),
-        $screen-bounday: 60rem,
-        $hasShadow: true
-    );
+    @include effects.border-shadow-effect();
+
+    @media (max-width: 60rem) {
+        width: 20rem;
+        height: 20rem;
+    }
 }

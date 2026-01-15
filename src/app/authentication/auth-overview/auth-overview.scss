@@ -1,5 +1,5 @@
-@use "app/shared/styles/container-mixin/box" as box;
-@use "app/shared/styles/others/font" as font;
+@use "app/shared/styles/components" as components;
+@use "app/shared/styles/typography/font" as font;
 
 #title {
     color: var(--highlight-color-container-primary);
@@ -8,9 +8,7 @@
 
 .container {
     display: grid;
-    width: fit-content;
-    margin: 0 auto;
-    @include box.box-container();
+    @include components.box-container($fit-content: true);
 
     .grid-container {
         display: grid;

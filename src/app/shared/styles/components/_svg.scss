@@ -1,0 +1,6 @@
+@mixin svg-container($width: 2rem, $stroke: var(--icon-color-primary), $fill: none) {
+    width: $width;
+    margin-right: 0.5rem;
+    stroke: $stroke;
+    fill: $fill;
+}

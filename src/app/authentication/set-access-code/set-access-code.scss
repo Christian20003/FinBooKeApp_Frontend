@@ -1,6 +1,4 @@
-@use "app/shared/styles/container-mixin/input" as input;
-@use "app/shared/styles/container-mixin/button" as button;
-@use "app/shared/styles/others/font" as font;
+@use "app/shared/styles/components" as components;
 
 #code-form {
     position: relative;
@@ -14,10 +12,7 @@
         margin-top: 1.5rem;
 
         .key-field {
-            @include input.digit-box-container();
-            & {
-                @include font.header-font($align: center);
-            }
+            @include components.input-digit-container();
         }
     }
 
@@ -30,10 +25,6 @@
     }
 
     #proof-code-button {
-        padding: 1rem 2rem;
-        @include button.button();
-        & {
-            @include font.description-font($align: center);
-        }
+        @include components.major-button();
     }
 }

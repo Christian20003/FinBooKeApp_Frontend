@@ -1,5 +1,5 @@
-@use "app/shared/styles/container-mixin/svg" as svg;
-@use "app/shared/styles/others/font" as font;
+@use "app/shared/styles/components" as components;
+@use "app/shared/styles/typography/font" as font;
 
 #invalid-content-container {
     display: flex;
@@ -12,7 +12,7 @@
     }
 
     #icon {
-        @include svg.svg-label-container($width: 1.3rem, $fill: var(--icon-color-error), $stroke: none);
+        @include components.svg-container($width: 1.3rem, $fill: var(--icon-color-error), $stroke: none);
     }
 }
 
