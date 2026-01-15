@@ -10,8 +10,8 @@ import {
   getNativeElement,
   getNativeElements,
 } from 'src/app/testing/testing-support';
-import { NavbarComponent } from './navbar.component';
-import { NavElementsComponent } from './nav-elements/nav-elements.component';
+import { NavbarComponent } from './navbar';
+import { NavElementComponent } from './nav-element/nav-element';
 import { SharedModule } from '../shared.module';
 import { PATHS, TestUser, IUser } from 'src/app/core';
 import { selectUser } from '../../stores/UserStore/User.selector';
@@ -27,7 +27,7 @@ xdescribe('NavbarComponent - Unit Tests', () => {
     await TestBed.configureTestingModule({
       imports: [
         NavbarComponent,
-        NavElementsComponent,
+        NavElementComponent,
         BrowserAnimationsModule,
         SharedModule,
       ],
@@ -39,13 +39,10 @@ xdescribe('NavbarComponent - Unit Tests', () => {
     }).compileComponents();
 
     // Currently MockComponent() not directly usable in imports field
-    TestBed.overrideComponent(NavElementsComponent, {
-      remove: { imports: [NavElementsComponent, SharedModule] },
+    TestBed.overrideComponent(NavElementComponent, {
+      remove: { imports: [NavElementComponent, SharedModule] },
       add: {
-        imports: [
-          MockComponent(NavElementsComponent),
-          MockModule(SharedModule),
-        ],
+        imports: [MockComponent(NavElementComponent), MockModule(SharedModule)],
       },
     });
 

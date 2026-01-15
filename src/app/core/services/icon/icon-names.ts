@@ -10,4 +10,10 @@ export const ICON_NAMES = {
   loading: 'loading',
   email: 'email',
   password: 'password',
+  accounts: 'accounts',
+  dashboard: 'dashboard',
+  finances: 'finances',
+  profile: 'profile',
+  settings: 'settings',
+  logout: 'logout',
 } as const;

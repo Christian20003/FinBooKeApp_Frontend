@@ -1,5 +1,5 @@
-@use "../../../styles/others/font" as font;
-@use "../../../styles//container-mixin/svg" as svg;
+@use "app/shared/styles/others/font" as font;
+@use "app/shared/styles//container-mixin/svg" as svg;
 
 .nav-elem {
     display: flex;

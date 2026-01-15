@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { initialState, selectUser, setUser } from './shared';
 import { ChildrenOutletContexts, Router, RouterOutlet } from '@angular/router';
 import { TranslocoService } from '@jsverse/transloco';
-import { NavbarComponent } from './shared/components/navbar/navbar.component';
+import { NavbarComponent } from './shared/components/navbar/navbar';
 import { ToastsComponent } from './shared/components/toasts/toasts';
 import { PATHS } from './core';
 

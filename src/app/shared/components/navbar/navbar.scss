@@ -1,5 +1,5 @@
-@use "../../styles/others/shadow" as shadow;
-@use "../../styles/container-mixin/circle" as circle;
+@use "app/shared/styles/others/shadow" as shadow;
+@use "app/shared/styles/container-mixin/circle" as circle;
 
 nav {
     position: sticky;

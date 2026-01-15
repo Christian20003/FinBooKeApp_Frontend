@@ -1,0 +1,66 @@
+<nav>
+  <div class="nav-container">
+    <!-- Logo -->
+    <a class="nav-elem" routerLink="/dashboard" routerLinkActive="active">
+      <app-logo></app-logo>
+    </a>
+    <!-- Dashboard link -->
+    <app-nav-element type="dashboard" class="can-hide"></app-nav-element>
+    <!-- Finance link -->
+    <app-nav-element type="finances" class="can-hide"></app-nav-element>
+    <!-- Accounts link -->
+    <app-nav-element type="accounts" class="can-hide"></app-nav-element>
+    <!-- Profil button -->
+    <a
+      class="nav-elem"
+      role="button"
+      (click)="onProfile()"
+      (keydown.enter)="onProfile()"
+      tabindex="0">
+      @if (imagePath() !== '') {
+        <img class="profile-btn" [src]="imagePath()" alt="" />
+      } @else {
+        <p class="profile-btn">{{ firstLetter() }}</p>
+      }
+    </a>
+  </div>
+  <!-- Profile window -->
+  @if (activeProfile()) {
+    <div
+      class="vertical-secondary-nav"
+      animate.enter="enterY"
+      animate.leave="leaveY">
+      <app-nav-element
+        type="profile"
+        [borderAnimation]="true"></app-nav-element>
+      <app-nav-element
+        type="settings"
+        [borderAnimation]="true"></app-nav-element>
+      <app-nav-element type="logout" [borderAnimation]="true"></app-nav-element>
+    </div>
+    <div
+      class="vertical-primary-nav"
+      animate.enter="enterY"
+      animate.leave="leaveY">
+      <!-- Dashboard link -->
+      <app-nav-element
+        type="dashboard"
+        [borderAnimation]="true"></app-nav-element>
+      <!-- Finance link -->
+      <app-nav-element
+        type="finances"
+        [borderAnimation]="true"></app-nav-element>
+      <!-- Accounts link -->
+      <app-nav-element
+        type="accounts"
+        [borderAnimation]="true"></app-nav-element>
+      <app-nav-element
+        type="profile"
+        [borderAnimation]="true"></app-nav-element>
+      <app-nav-element
+        type="settings"
+        [borderAnimation]="true"></app-nav-element>
+      <app-nav-element type="logout" [borderAnimation]="true"></app-nav-element>
+    </div>
+  }
+</nav>
