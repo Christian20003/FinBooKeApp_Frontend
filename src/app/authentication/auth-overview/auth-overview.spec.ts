@@ -8,7 +8,7 @@ import { ToastService } from 'src/app/core/services/toast/toast-service';
 import {
   getTranslocoModule,
   initialState,
-  LoadingComponent,
+  Loading,
   setUser,
 } from 'src/app/shared';
 import {
@@ -17,18 +17,18 @@ import {
   TestLoginDTO,
   TestUser,
 } from 'src/app/core/index';
-import { AuthOverviewComponent } from './auth-overview';
-import { LoginComponent } from 'src/app/authentication/login/login';
-import { RegisterComponent } from 'src/app/authentication/register/register';
-import { RequestAccessCodeComponent } from 'src/app/authentication/request-access-code/request-access-code';
-import { SetAccessCodeComponent } from 'src/app/authentication/set-access-code/set-access-code';
+import { AuthOverview } from './auth-overview';
+import { Login } from 'src/app/authentication/login/login';
+import { Register } from 'src/app/authentication/register/register';
+import { RequestAccessCode } from 'src/app/authentication/request-access-code/request-access-code';
+import { SetAccessCode } from 'src/app/authentication/set-access-code/set-access-code';
 import { routes } from 'src/app/core/routing/routes';
 import { getHTMLElement } from 'src/app/testing/helper/get-html-element';
 import { getComponent } from 'src/app/testing/helper/get-component';
 import { NgClass } from '@angular/common';
 
-describe('AuthOverviewComponent - Unit Tests', () => {
-  let fixture: ComponentFixture<AuthOverviewComponent>;
+describe('AuthOverview - Unit Tests', () => {
+  let fixture: ComponentFixture<AuthOverview>;
   let router: Router;
   let store: MockStore;
   let authService: jasmine.SpyObj<AuthenticationService>;
@@ -45,14 +45,14 @@ describe('AuthOverviewComponent - Unit Tests', () => {
 
     TestBed.configureTestingModule({
       imports: [
-        AuthOverviewComponent,
+        AuthOverview,
         NgClass,
         getTranslocoModule(),
-        MockComponent(LoginComponent),
-        MockComponent(RegisterComponent),
-        MockComponent(SetAccessCodeComponent),
-        MockComponent(RequestAccessCodeComponent),
-        MockComponent(LoadingComponent),
+        MockComponent(Login),
+        MockComponent(Register),
+        MockComponent(SetAccessCode),
+        MockComponent(RequestAccessCode),
+        MockComponent(Loading),
       ],
       providers: [
         { provide: AuthenticationService, useValue: authService },
@@ -63,7 +63,7 @@ describe('AuthOverviewComponent - Unit Tests', () => {
       ],
     });
 
-    fixture = TestBed.createComponent(AuthOverviewComponent);
+    fixture = TestBed.createComponent(AuthOverview);
     router = TestBed.inject(Router);
     store = TestBed.inject(MockStore);
     await router.navigateByUrl(PATHS.login);
@@ -75,7 +75,7 @@ describe('AuthOverviewComponent - Unit Tests', () => {
     button.click();
     await fixture.whenStable();
 
-    const login = getComponent(fixture, LoginComponent);
+    const login = getComponent(fixture, Login);
 
     expect(login).toBeTruthy();
     expect(router.url.includes(PATHS.login)).toBeTrue();
@@ -86,7 +86,7 @@ describe('AuthOverviewComponent - Unit Tests', () => {
     button.click();
     await fixture.whenStable();
 
-    const register = getComponent(fixture, RegisterComponent);
+    const register = getComponent(fixture, Register);
 
     expect(register).toBeTruthy();
     expect(router.url.includes(PATHS.register)).toBeTrue();
@@ -97,11 +97,11 @@ describe('AuthOverviewComponent - Unit Tests', () => {
     button.click();
     await fixture.whenStable();
 
-    const login = getComponent(fixture, LoginComponent)!;
+    const login = getComponent(fixture, Login)!;
     login.forgotPwd.emit();
     await fixture.whenStable();
 
-    const forgotPwd = getComponent(fixture, RequestAccessCodeComponent)!;
+    const forgotPwd = getComponent(fixture, RequestAccessCode)!;
 
     expect(forgotPwd).toBeTruthy();
     expect(router.url.includes(PATHS.forgotPwd)).toBeTrue();
@@ -114,7 +114,7 @@ describe('AuthOverviewComponent - Unit Tests', () => {
     button.click();
     await fixture.whenStable();
 
-    const login = getComponent(fixture, LoginComponent)!;
+    const login = getComponent(fixture, Login)!;
     login.login.emit(TestLoginDTO);
     await fixture.whenStable();
 
@@ -127,7 +127,7 @@ describe('AuthOverviewComponent - Unit Tests', () => {
     button.click();
     await fixture.whenStable();
 
-    const login = getComponent(fixture, LoginComponent)!;
+    const login = getComponent(fixture, Login)!;
     login.login.emit(TestLoginDTO);
     await fixture.whenStable();
 
@@ -140,7 +140,7 @@ describe('AuthOverviewComponent - Unit Tests', () => {
     button.click();
     await fixture.whenStable();
 
-    const login = getComponent(fixture, LoginComponent)!;
+    const login = getComponent(fixture, Login)!;
     login.login.emit(TestLoginDTO);
     await fixture.whenStable();
 
@@ -155,11 +155,11 @@ describe('AuthOverviewComponent - Unit Tests', () => {
     button.click();
     await fixture.whenStable();
 
-    const login = getComponent(fixture, LoginComponent)!;
+    const login = getComponent(fixture, Login)!;
     login.forgotPwd.emit();
     await fixture.whenStable();
 
-    const forgotPwd = getComponent(fixture, RequestAccessCodeComponent)!;
+    const forgotPwd = getComponent(fixture, RequestAccessCode)!;
     forgotPwd.send.emit(TestUser.email);
     await fixture.whenStable();
 
@@ -173,15 +173,15 @@ describe('AuthOverviewComponent - Unit Tests', () => {
     button.click();
     await fixture.whenStable();
 
-    const login = getComponent(fixture, LoginComponent)!;
+    const login = getComponent(fixture, Login)!;
     login.forgotPwd.emit();
     await fixture.whenStable();
 
-    const forgotPwd = getComponent(fixture, RequestAccessCodeComponent)!;
+    const forgotPwd = getComponent(fixture, RequestAccessCode)!;
     forgotPwd.send.emit(TestUser.email);
     await fixture.whenStable();
 
-    const accessCode = getComponent(fixture, SetAccessCodeComponent)!;
+    const accessCode = getComponent(fixture, SetAccessCode)!;
     accessCode.send.emit('123456');
     await fixture.whenStable();
 
@@ -195,15 +195,15 @@ describe('AuthOverviewComponent - Unit Tests', () => {
     button.click();
     await fixture.whenStable();
 
-    const login = getComponent(fixture, LoginComponent)!;
+    const login = getComponent(fixture, Login)!;
     login.forgotPwd.emit();
     await fixture.whenStable();
 
-    const forgotPwd = getComponent(fixture, RequestAccessCodeComponent)!;
+    const forgotPwd = getComponent(fixture, RequestAccessCode)!;
     forgotPwd.send.emit(TestUser.email);
     await fixture.whenStable();
 
-    const accessCode = getComponent(fixture, SetAccessCodeComponent)!;
+    const accessCode = getComponent(fixture, SetAccessCode)!;
     accessCode.send.emit('123456');
     await fixture.whenStable();
 

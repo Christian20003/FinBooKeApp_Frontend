@@ -1,23 +1,17 @@
 import { Component, ElementRef, Renderer2, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import {
-  initialState,
-  selectUser,
-  setUser,
-  NavbarComponent,
-  ToastsComponent,
-} from './shared';
+import { initialState, selectUser, setUser, Navbar, Toasts } from './shared';
 import { ChildrenOutletContexts, Router, RouterOutlet } from '@angular/router';
 import { TranslocoService } from '@jsverse/transloco';
 import { PATHS } from './core';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  imports: [NavbarComponent, ToastsComponent, RouterOutlet],
+  templateUrl: './app.html',
+  styleUrls: ['./app.scss'],
+  imports: [Navbar, Toasts, RouterOutlet],
 })
-export class AppComponent {
+export class App {
   private store = inject(Store);
   private router = inject(Router);
   private elementRef = inject(ElementRef);

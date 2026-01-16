@@ -5,7 +5,7 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { MatIcon } from '@angular/material/icon';
 import { of, throwError } from 'rxjs';
 import { deleteUser, getTranslocoModule } from 'src/app/shared';
-import { NavElementComponent } from './nav-element';
+import { NavElement } from './nav-element';
 import {
   AuthenticationService,
   IconService,
@@ -18,8 +18,8 @@ import { getHTMLElement } from 'src/app/testing/helper/get-html-element';
 import { routes } from 'src/app/core/routing/routes';
 import { MockComponent } from 'ng-mocks';
 
-describe('NavElementComponent - Unit Tests', () => {
-  let fixture: ComponentFixture<NavElementComponent>;
+describe('NavElement - Unit Tests', () => {
+  let fixture: ComponentFixture<NavElement>;
   let router: Router;
   let store: MockStore;
   let authService: jasmine.SpyObj<AuthenticationService>;
@@ -47,11 +47,7 @@ describe('NavElementComponent - Unit Tests', () => {
     toastService = jasmine.createSpyObj(ToastService, ['addToast']);
 
     TestBed.configureTestingModule({
-      imports: [
-        NavElementComponent,
-        MockComponent(MatIcon),
-        getTranslocoModule(),
-      ],
+      imports: [NavElement, MockComponent(MatIcon), getTranslocoModule()],
       providers: [
         provideMockStore(),
         provideZonelessChangeDetection(),
@@ -62,7 +58,7 @@ describe('NavElementComponent - Unit Tests', () => {
       ],
     });
 
-    fixture = TestBed.createComponent(NavElementComponent);
+    fixture = TestBed.createComponent(NavElement);
     router = TestBed.inject(Router);
     store = TestBed.inject(MockStore);
   });

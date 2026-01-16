@@ -4,9 +4,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { provideHttpClient } from '@angular/common/http';
 import { TranslocoService } from '@jsverse/transloco';
-import { LoginComponent } from 'src/app/authentication/login/login';
+import { Login } from 'src/app/authentication/login/login';
 import {
-  FormInputErrorComponent,
+  FormInputError,
   getTranslocoModule,
   TRANSLATION_KEYS,
 } from 'src/app/shared';
@@ -16,8 +16,8 @@ import { setInputValues } from 'src/app/testing/helper/set-input-values';
 import { TestLoginDTO } from 'src/app/core/models/authentication/loginDTO';
 import { getComponent } from 'src/app/testing/helper/get-component';
 
-describe('LoginComponent - Integration Tests', () => {
-  let fixture: ComponentFixture<LoginComponent>;
+describe('Login - Integration Tests', () => {
+  let fixture: ComponentFixture<Login>;
   let translocoService: TranslocoService;
   let emailInput: HTMLInputElement;
   let passwordInput: HTMLInputElement;
@@ -25,8 +25,8 @@ describe('LoginComponent - Integration Tests', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        LoginComponent,
-        FormInputErrorComponent,
+        Login,
+        FormInputError,
         ReactiveFormsModule,
         getTranslocoModule(),
         MatIconModule,
@@ -37,7 +37,7 @@ describe('LoginComponent - Integration Tests', () => {
         IconService,
       ],
     });
-    fixture = TestBed.createComponent(LoginComponent);
+    fixture = TestBed.createComponent(Login);
     translocoService = TestBed.inject(TranslocoService);
     fixture.detectChanges();
     emailInput = getHTMLElement(fixture, '#email')!;
@@ -50,7 +50,7 @@ describe('LoginComponent - Integration Tests', () => {
     setInputValues([emailInput, passwordInput]);
     fixture.detectChanges();
 
-    const error = getComponent(fixture, FormInputErrorComponent)!;
+    const error = getComponent(fixture, FormInputError)!;
     const actual = error.message();
     const expected = translocoService.translate(
       TRANSLATION_KEYS.auth.email.missing
@@ -65,7 +65,7 @@ describe('LoginComponent - Integration Tests', () => {
     setInputValues([emailInput, passwordInput]);
     fixture.detectChanges();
 
-    const error = getComponent(fixture, FormInputErrorComponent)!;
+    const error = getComponent(fixture, FormInputError)!;
     const actual = error.message();
     const expected = translocoService.translate(
       TRANSLATION_KEYS.auth.email.invalid
@@ -80,7 +80,7 @@ describe('LoginComponent - Integration Tests', () => {
     setInputValues([emailInput, passwordInput]);
     fixture.detectChanges();
 
-    const error = getComponent(fixture, FormInputErrorComponent)!;
+    const error = getComponent(fixture, FormInputError)!;
     const actual = error.message();
     const expected = translocoService.translate(
       TRANSLATION_KEYS.auth.password.missing

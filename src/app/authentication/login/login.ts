@@ -7,10 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
-import {
-  FormInputErrorComponent,
-  TRANSLATION_KEYS,
-} from 'src/app/shared/index';
+import { FormInputError, TRANSLATION_KEYS } from 'src/app/shared/index';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { ICON_NAMES, IconService, ILoginDTO } from 'src/app/core';
 
@@ -21,14 +18,9 @@ import { ICON_NAMES, IconService, ILoginDTO } from 'src/app/core';
   selector: 'app-login',
   templateUrl: './login.html',
   styleUrls: ['./login.scss'],
-  imports: [
-    FormInputErrorComponent,
-    MatIcon,
-    TranslocoDirective,
-    ReactiveFormsModule,
-  ],
+  imports: [FormInputError, MatIcon, TranslocoDirective, ReactiveFormsModule],
 })
-export class LoginComponent {
+export class Login {
   private readonly iconService = inject(IconService);
 
   protected readonly iconNames = ICON_NAMES;
@@ -78,7 +70,7 @@ export class LoginComponent {
    * This function emits an event to the parent component with the entered data in the form. If one of the elements are not
    * valid the event will not be emitted and the user will be noticed with some error messages.
    */
-  onSubmit(): void {
+  protected onSubmit(): void {
     if (this.email?.valid && this.password?.valid) {
       this.login.emit({
         email: this.email.value,
@@ -98,7 +90,7 @@ export class LoginComponent {
   /**
    * This function emits an event to the parent component that the user has clicked the 'forget-pwd' element.
    */
-  onForgetPassword(): void {
+  protected onForgetPassword(): void {
     this.forgotPwd.emit();
   }
 }

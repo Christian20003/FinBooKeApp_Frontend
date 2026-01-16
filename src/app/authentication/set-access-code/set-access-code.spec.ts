@@ -2,8 +2,8 @@ import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MockComponent } from 'ng-mocks';
-import { SetAccessCodeComponent } from './set-access-code';
-import { FormInputErrorComponent, getTranslocoModule } from 'src/app/shared';
+import { SetAccessCode } from './set-access-code';
+import { FormInputError, getTranslocoModule } from 'src/app/shared';
 import {
   getHTMLElement,
   getHTMLElements,
@@ -11,9 +11,9 @@ import {
 import { setInputValues } from 'src/app/testing/helper/set-input-values';
 import { getComponent } from 'src/app/testing/helper/get-component';
 
-describe('SetAccessCodeComponent - Unit Tests', () => {
-  let component: SetAccessCodeComponent;
-  let fixture: ComponentFixture<SetAccessCodeComponent>;
+describe('SetAccessCode - Unit Tests', () => {
+  let component: SetAccessCode;
+  let fixture: ComponentFixture<SetAccessCode>;
   let nativeElements: HTMLInputElement[];
   let nativeButton: HTMLButtonElement | undefined;
   let formSize: number;
@@ -21,14 +21,14 @@ describe('SetAccessCodeComponent - Unit Tests', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        SetAccessCodeComponent,
-        MockComponent(FormInputErrorComponent),
+        SetAccessCode,
+        MockComponent(FormInputError),
         ReactiveFormsModule,
         getTranslocoModule(),
       ],
       providers: [provideZonelessChangeDetection()],
     });
-    fixture = TestBed.createComponent(SetAccessCodeComponent);
+    fixture = TestBed.createComponent(SetAccessCode);
     component = fixture.componentInstance;
     fixture.detectChanges();
     // @ts-expect-error Get size of form
@@ -62,31 +62,31 @@ describe('SetAccessCodeComponent - Unit Tests', () => {
     expect(nativeElements.length).toBe(formSize);
   });
 
-  it('U-Test-4: Component should change a lower case letter automatically to an upper case letter', () => {
+  it('U-Test-4: Component should change a lower case letter automatically to an upper case letter', async () => {
     for (const element of nativeElements) {
       element.value = 'a';
     }
     setInputValues(nativeElements);
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     for (const element of nativeElements) {
       expect(element.value).toBe('A');
     }
   });
 
-  it('U-Test-5: Component should ignore non-permitted character', () => {
+  it('U-Test-5: Component should ignore non-permitted character', async () => {
     for (const element of nativeElements) {
       element.value = '}';
     }
     setInputValues(nativeElements);
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     for (const element of nativeElements) {
       expect(element.value).toBe('');
     }
   });
 
-  it('U-Test-6: Component input elements should contain only single characters', () => {
+  it('U-Test-6: Component input elements should contain only single characters', async () => {
     // @ts-expect-error Get FormGroup
     const form = component.form;
     let previous = undefined;
@@ -98,14 +98,14 @@ describe('SetAccessCodeComponent - Unit Tests', () => {
       } else {
         setInputValues([element]);
       }
-      fixture.detectChanges();
+      await fixture.whenStable();
       previous = element;
 
       expect(form.valid).toBeFalse();
     }
   });
 
-  it('U-Test-7: Component should change focus to next element after entering valid character', () => {
+  it('U-Test-7: Component should change focus to next element after entering valid character', async () => {
     for (let i = 0; i < formSize; i++) {
       const current = nativeElements[i];
       const next = nativeElements[i + 1];
@@ -114,7 +114,7 @@ describe('SetAccessCodeComponent - Unit Tests', () => {
       }
       current.value = '1';
       setInputValues([current]);
-      fixture.detectChanges();
+      await fixture.whenStable();
 
       if (next) {
         expect(next.focus).toHaveBeenCalled();
@@ -122,7 +122,7 @@ describe('SetAccessCodeComponent - Unit Tests', () => {
     }
   });
 
-  it('U-Test-8: Component should change focus to previous element after deleting a character', () => {
+  it('U-Test-8: Component should change focus to previous element after deleting a character', async () => {
     const event = new KeyboardEvent('keydown', { key: 'Delete' });
     for (let i = formSize - 1; i >= 0; i--) {
       const current = nativeElements[i];
@@ -131,7 +131,7 @@ describe('SetAccessCodeComponent - Unit Tests', () => {
         spyOn(prev, 'focus');
       }
       current.dispatchEvent(event);
-      fixture.detectChanges();
+      await fixture.whenStable();
 
       if (prev) {
         expect(prev.focus).toHaveBeenCalled();
@@ -139,35 +139,29 @@ describe('SetAccessCodeComponent - Unit Tests', () => {
     }
   });
 
-  it('U-Test-9: Component should display FormInputErrorComponent after clicking submit button on invalid form', () => {
+  it('U-Test-9: Component should display FormInputError after clicking submit button on invalid form', async () => {
     nativeElements[0].value = '';
     setInputValues(nativeElements);
     nativeButton?.click();
-    fixture.detectChanges();
+    await fixture.whenStable();
 
-    const errorElement = getComponent<FormInputErrorComponent>(
-      fixture,
-      FormInputErrorComponent
-    );
+    const errorElement = getComponent<FormInputError>(fixture, FormInputError);
 
     expect(errorElement).toBeTruthy();
   });
 
-  it('U-Test-10: Component should not emit an invalid code', () => {
+  it('U-Test-10: Component should not emit an invalid code', async () => {
     spyOn(component.send, 'emit');
     nativeElements[0].value = '';
     setInputValues(nativeElements);
     nativeButton?.click();
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     expect(component.send.emit).not.toHaveBeenCalled();
   });
 
-  it('U-Test-11: Component should not display FormInputErrorComponent if any input field is not dirty', () => {
-    const errorMsg = getComponent<FormInputErrorComponent>(
-      fixture,
-      FormInputErrorComponent
-    );
+  it('U-Test-11: Component should not display FormInputError if any input field is not dirty', () => {
+    const errorMsg = getComponent<FormInputError>(fixture, FormInputError);
 
     expect(errorMsg).toBeFalsy();
   });

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatIconModule } from '@angular/material/icon';
-import { FormInputErrorComponent } from './form-input-error';
+import { FormInputError } from './form-input-error';
 import { provideHttpClient } from '@angular/common/http';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { getHTMLElement } from 'src/app/testing/helper/get-html-element';
 
-describe('FormInputErrorComponent - Unit Tests', () => {
-  let component: FormInputErrorComponent;
-  let fixture: ComponentFixture<FormInputErrorComponent>;
+describe('FormInputError - Unit Tests', () => {
+  let component: FormInputError;
+  let fixture: ComponentFixture<FormInputError>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [MatIconModule, FormInputErrorComponent],
+      imports: [MatIconModule, FormInputError],
       providers: [provideHttpClient(), provideZonelessChangeDetection()],
     });
-    fixture = TestBed.createComponent(FormInputErrorComponent);
+    fixture = TestBed.createComponent(FormInputError);
     fixture.componentRef.setInput('message', 'Error message');
     component = fixture.componentInstance;
     fixture.detectChanges();

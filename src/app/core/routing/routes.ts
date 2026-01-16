@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-import { AuthOverviewComponent } from 'src/app/authentication/auth-overview/auth-overview';
-import { DashboardOverviewComponent } from 'src/app/dashboard/dashboard-overview/dashboard-overview.component';
+import { AuthOverview } from 'src/app/authentication/auth-overview/auth-overview';
+import { DashboardOverview } from 'src/app/dashboard/dashboard-overview/dashboard-overview';
 import { PATHS } from './paths';
-import { LoginComponent } from 'src/app/authentication/login/login';
-import { RegisterComponent } from 'src/app/authentication/register/register';
+import { Login } from 'src/app/authentication/login/login';
+import { Register } from 'src/app/authentication/register/register';
 
 /**
  * Application routes
@@ -11,48 +11,48 @@ import { RegisterComponent } from 'src/app/authentication/register/register';
 export const routes: Routes = [
   {
     path: '',
-    component: AuthOverviewComponent,
+    component: AuthOverview,
     children: [
       {
         path: PATHS.login,
-        component: LoginComponent,
+        component: Login,
         children: [
           {
             path: PATHS.forgotPwd,
-            component: AuthOverviewComponent,
+            component: AuthOverview,
           },
           {
             path: PATHS.resetPwd,
-            component: AuthOverviewComponent,
+            component: AuthOverview,
           },
         ],
       },
       {
         path: PATHS.register,
-        component: RegisterComponent,
+        component: Register,
       },
     ],
   },
   // TODO: Replace components
   {
     path: PATHS.dashboard,
-    component: DashboardOverviewComponent,
+    component: DashboardOverview,
   },
   {
     path: PATHS.finances,
-    component: DashboardOverviewComponent,
+    component: DashboardOverview,
   },
   {
     path: PATHS.accounts,
-    component: DashboardOverviewComponent,
+    component: DashboardOverview,
   },
   {
     path: PATHS.profile,
-    component: DashboardOverviewComponent,
+    component: DashboardOverview,
   },
   {
     path: PATHS.settings,
-    component: DashboardOverviewComponent,
+    component: DashboardOverview,
   },
   //{ path: '', redirectTo: PATHS.login, pathMatch: 'full' },
 ];

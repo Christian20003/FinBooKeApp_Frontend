@@ -11,14 +11,14 @@ import { provideStore, Store } from '@ngrx/store';
 import { provideHttpClient } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import {
-  FormInputErrorComponent,
+  FormInputError,
   getTranslocoModule,
-  LoadingComponent,
+  Loading,
   selectUser,
   userEffects,
   userReducer,
 } from 'src/app/shared';
-import { AuthOverviewComponent } from 'src/app/authentication/auth-overview/auth-overview';
+import { AuthOverview } from 'src/app/authentication/auth-overview/auth-overview';
 import {
   API_PATHS,
   AuthenticationService,
@@ -28,10 +28,10 @@ import {
   TestUser,
   ToastService,
 } from 'src/app/core';
-import { LoginComponent } from 'src/app/authentication/login/login';
-import { RegisterComponent } from 'src/app/authentication/register/register';
-import { SetAccessCodeComponent } from 'src/app/authentication/set-access-code/set-access-code';
-import { RequestAccessCodeComponent } from 'src/app/authentication/request-access-code/request-access-code';
+import { Login } from 'src/app/authentication/login/login';
+import { Register } from 'src/app/authentication/register/register';
+import { SetAccessCode } from 'src/app/authentication/set-access-code/set-access-code';
+import { RequestAccessCode } from 'src/app/authentication/request-access-code/request-access-code';
 import { routes } from 'src/app/core/routing/routes';
 import {
   getHTMLElement,
@@ -39,8 +39,8 @@ import {
 } from 'src/app/testing/helper/get-html-element';
 import { setInputValues } from 'src/app/testing/helper/set-input-values';
 
-describe('AuthOverviewComponent', () => {
-  let fixture: ComponentFixture<AuthOverviewComponent>;
+describe('AuthOverview', () => {
+  let fixture: ComponentFixture<AuthOverview>;
   let router: Router;
   let store: Store;
   let controller: HttpTestingController;
@@ -60,13 +60,13 @@ describe('AuthOverviewComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        AuthOverviewComponent,
-        LoginComponent,
-        RegisterComponent,
-        SetAccessCodeComponent,
-        RequestAccessCodeComponent,
-        LoadingComponent,
-        FormInputErrorComponent,
+        AuthOverview,
+        Login,
+        Register,
+        SetAccessCode,
+        RequestAccessCode,
+        Loading,
+        FormInputError,
         ReactiveFormsModule,
         MatIconModule,
         getTranslocoModule(),
@@ -84,7 +84,7 @@ describe('AuthOverviewComponent', () => {
         provideZonelessChangeDetection(),
       ],
     });
-    fixture = TestBed.createComponent(AuthOverviewComponent);
+    fixture = TestBed.createComponent(AuthOverview);
     store = TestBed.inject(Store);
     router = TestBed.inject(Router);
     controller = TestBed.inject(HttpTestingController);

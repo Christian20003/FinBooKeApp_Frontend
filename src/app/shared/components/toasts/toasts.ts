@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { IToast, ToastService } from 'src/app/core';
-import { ToastComponent } from './toast/toast';
+import { Toast } from './toast/toast';
 
 /**
  * This component is responsible for displaying toasts in the application.
@@ -11,9 +11,9 @@ import { ToastComponent } from './toast/toast';
   selector: 'app-toasts',
   templateUrl: './toasts.html',
   styleUrl: './toasts.scss',
-  imports: [ToastComponent],
+  imports: [Toast],
 })
-export class ToastsComponent {
+export class Toasts {
   private readonly toastService = inject(ToastService);
   protected toasts = signal<IToast[]>([]).asReadonly();
 
@@ -25,7 +25,7 @@ export class ToastsComponent {
    * This function removes a toast from the `toasts` list as well as from the {@link ToastService}
    * @param toast The toast which should be removed
    */
-  public onRemoveToast(toast: IToast) {
+  protected onRemoveToast(toast: IToast) {
     this.toastService.removeToast(toast.id);
   }
 }

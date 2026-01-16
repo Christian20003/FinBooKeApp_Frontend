@@ -11,7 +11,7 @@ import { ICON_NAMES, IconService } from 'src/app/core';
   styleUrls: ['./form-input-error.scss'],
   imports: [MatIcon],
 })
-export class FormInputErrorComponent {
+export class FormInputError {
   private readonly iconService = inject(IconService);
   protected readonly iconNames = ICON_NAMES;
   readonly message = input.required<string>();

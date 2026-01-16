@@ -5,14 +5,17 @@ import {
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponent } from 'ng-mocks';
-import { ToastsComponent } from './toasts';
-import { ToastComponent } from './toast/toast';
+import { Toasts } from './toasts';
+import { Toast } from './toast/toast';
 import { ToastService, TestToast, IToast } from 'src/app/core';
-import { getComponents } from 'src/app/testing/helper/get-component';
+import {
+  getComponent,
+  getComponents,
+} from 'src/app/testing/helper/get-component';
 
-describe('ToastsComponent - Unit Tests', () => {
-  let component: ToastsComponent;
-  let fixture: ComponentFixture<ToastsComponent>;
+describe('Toasts - Unit Tests', () => {
+  let component: Toasts;
+  let fixture: ComponentFixture<Toasts>;
   let toastService: jasmine.SpyObj<ToastService>;
   let store: WritableSignal<IToast[]>;
 
@@ -26,12 +29,12 @@ describe('ToastsComponent - Unit Tests', () => {
     });
 
     TestBed.configureTestingModule({
-      imports: [MockComponent(ToastComponent), ToastsComponent],
+      imports: [MockComponent(Toast), Toasts],
       providers: [provideZonelessChangeDetection()],
     });
     TestBed.overrideProvider(ToastService, { useValue: toastService });
 
-    fixture = TestBed.createComponent(ToastsComponent);
+    fixture = TestBed.createComponent(Toasts);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -49,18 +52,19 @@ describe('ToastsComponent - Unit Tests', () => {
   });
 
   it('U-Test-3: Component should display correct number of toast components', () => {
-    const elements = getComponents<ToastComponent>(fixture, ToastComponent);
+    const elements = getComponents<Toast>(fixture, Toast);
 
     expect(elements).toHaveSize(store().length);
   });
 
-  it('U-Test-4: Component should remove toast', () => {
-    component.onRemoveToast(TestToast);
-    fixture.detectChanges();
+  it('U-Test-4: Component should remove toast', async () => {
+    const toast = getComponent(fixture, Toast)!;
+    toast.remove.emit(TestToast);
+    await fixture.whenStable();
 
     // @ts-expect-error Get the toast list state from component
     const state = component.toasts;
-    const elements = getComponents<ToastComponent>(fixture, ToastComponent);
+    const elements = getComponents<Toast>(fixture, Toast);
 
     expect(elements).toHaveSize(0);
     expect(state()).toHaveSize(0);

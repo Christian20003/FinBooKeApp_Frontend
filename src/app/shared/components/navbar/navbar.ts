@@ -1,17 +1,17 @@
 import { Component, OnInit, signal, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { selectUser } from 'src/app/shared/stores/UserStore/User.selector';
-import { NavElementComponent } from './nav-element/nav-element';
+import { NavElement } from './nav-element/nav-element';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { LogoComponent } from 'src/app/shared/components/logo/logo.component';
+import { Logo } from 'src/app/shared/components/logo/logo';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
-  imports: [NavElementComponent, RouterLink, RouterLinkActive, LogoComponent],
+  imports: [NavElement, RouterLink, RouterLinkActive, Logo],
 })
-export class NavbarComponent implements OnInit {
+export class Navbar implements OnInit {
   private readonly store = inject(Store);
 
   protected readonly imagePath = signal<string>('');

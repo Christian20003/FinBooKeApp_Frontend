@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { FormInputErrorComponent, TRANSLATION_KEYS } from 'src/app/shared';
+import { FormInputError, TRANSLATION_KEYS } from 'src/app/shared';
 
 /**
  * This component allows the user to enter an access code consisting of
@@ -17,9 +17,9 @@ import { FormInputErrorComponent, TRANSLATION_KEYS } from 'src/app/shared';
   selector: 'app-set-access-code',
   templateUrl: './set-access-code.html',
   styleUrls: ['./set-access-code.scss'],
-  imports: [TranslocoDirective, ReactiveFormsModule, FormInputErrorComponent],
+  imports: [TranslocoDirective, ReactiveFormsModule, FormInputError],
 })
-export class SetAccessCodeComponent implements OnInit {
+export class SetAccessCode implements OnInit {
   private readonly elementRef = inject(ElementRef);
   private readonly size = 6;
 
@@ -52,7 +52,7 @@ export class SetAccessCodeComponent implements OnInit {
    *
    * @param index The index of the `input` element which received an `input` event.
    */
-  onInput(index: number): void {
+  protected onInput(index: number): void {
     const element = this.elementRef.nativeElement.querySelector(
       `#${this.getKey(index)}`
     );
@@ -78,7 +78,7 @@ export class SetAccessCodeComponent implements OnInit {
    * @param event The {@link KeyboardEvent} that has been triggered.
    * @param index The index of the `input` element.
    */
-  onKeydown(event: KeyboardEvent, index: number): void {
+  protected onKeydown(event: KeyboardEvent, index: number): void {
     if (event.key === 'Delete' || event.key === 'Backspace') {
       const element = this.elementRef.nativeElement.querySelector(
         `#${this.getKey(index)}`
@@ -98,7 +98,7 @@ export class SetAccessCodeComponent implements OnInit {
    *
    * @param current The index of the `input` element.
    */
-  onFocus(index: number): void {
+  protected onFocus(index: number): void {
     const key = this.getKey(index);
     const element = this.elementRef.nativeElement.querySelector(`#${key}`);
     element.select();
@@ -108,7 +108,7 @@ export class SetAccessCodeComponent implements OnInit {
    * This function sends a message to the parent component with all entered values of the form.
    * If the user does not completely fill out the form an error message will be displayed.
    */
-  onSubmit(): void {
+  protected onSubmit(): void {
     if (this.form.valid) {
       this.isValid = true;
       let code = '';
@@ -128,14 +128,14 @@ export class SetAccessCodeComponent implements OnInit {
    * @param idx The index of the `input` element.
    * @returns The corresponding key.
    */
-  getKey(idx: number): string {
+  protected getKey(idx: number): string {
     return `value${idx + 1}`;
   }
 
   /**
    * This function returns a list of all `input` element keys.
    */
-  getKeys(): Array<string> {
+  protected getKeys(): Array<string> {
     return Array.from({ length: this.size }, (_, idx) => this.getKey(idx));
   }
 }

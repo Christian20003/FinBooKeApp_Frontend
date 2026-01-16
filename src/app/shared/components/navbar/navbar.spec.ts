@@ -4,8 +4,8 @@ import { provideRouter, RouterLinkWithHref } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { provideHttpClient } from '@angular/common/http';
 import { MemoizedSelector } from '@ngrx/store';
-import { NavbarComponent } from './navbar';
-import { NavElementComponent } from './nav-element/nav-element';
+import { Navbar } from './navbar';
+import { NavElement } from './nav-element/nav-element';
 import { PATHS, TestUser, IUser } from 'src/app/core';
 import { selectUser } from '../../stores/UserStore/User.selector';
 import { routes } from 'src/app/core/routing/routes';
@@ -13,34 +13,29 @@ import {
   getHTMLElement,
   getHTMLElements,
 } from 'src/app/testing/helper/get-html-element';
+import { provideZonelessChangeDetection } from '@angular/core';
+import { getTranslocoModule } from '../../localization/transloco-testing';
 
-xdescribe('NavbarComponent - Unit Tests', () => {
-  let component: NavbarComponent;
-  let fixture: ComponentFixture<NavbarComponent>;
+describe('Navbar - Unit Tests', () => {
+  let component: Navbar;
+  let fixture: ComponentFixture<Navbar>;
   let store: MockStore;
   let selector: MemoizedSelector<object, IUser>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NavbarComponent, NavElementComponent],
+      imports: [Navbar, NavElement, getTranslocoModule()],
       providers: [
         provideMockStore(),
         provideHttpClient(),
         provideRouter(routes),
+        provideZonelessChangeDetection(),
       ],
     }).compileComponents();
 
-    // Currently MockComponent() not directly usable in imports field
-    /* TestBed.overrideComponent(NavElementComponent, {
-      remove: { imports: [NavElementComponent, SharedModule] },
-      add: {
-        imports: [MockComponent(NavElementComponent), MockModule(SharedModule)],
-      },
-    }); */
-
     store = TestBed.inject(MockStore);
     selector = store.overrideSelector(selectUser, TestUser);
-    fixture = TestBed.createComponent(NavbarComponent);
+    fixture = TestBed.createComponent(Navbar);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

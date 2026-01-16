@@ -5,8 +5,8 @@ import {
   HttpTestingController,
   provideHttpClientTesting,
 } from '@angular/common/http/testing';
-import { ToastComponent } from 'src/app/shared/components/toasts/toast/toast';
-import { ToastsComponent } from 'src/app/shared/components/toasts/toasts';
+import { Toast } from 'src/app/shared/components/toasts/toast/toast';
+import { Toasts } from 'src/app/shared/components/toasts/toasts';
 import {
   IconService,
   TestToast,
@@ -16,14 +16,14 @@ import {
 import { getHTMLElement } from 'src/app/testing/helper/get-html-element';
 import { getComponents } from 'src/app/testing/helper/get-component';
 
-describe('ToastsComponent - Integration Tests', () => {
-  let fixture: ComponentFixture<ToastsComponent>;
+describe('Toasts - Integration Tests', () => {
+  let fixture: ComponentFixture<Toasts>;
   let toastService: ToastService;
   let controller: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ToastsComponent, ToastComponent],
+      imports: [Toasts, Toast],
       providers: [
         ToastService,
         IconService,
@@ -33,7 +33,7 @@ describe('ToastsComponent - Integration Tests', () => {
       ],
     });
 
-    fixture = TestBed.createComponent(ToastsComponent);
+    fixture = TestBed.createComponent(Toasts);
     toastService = TestBed.inject(ToastService);
     controller = TestBed.inject(HttpTestingController);
     fixture.detectChanges();
@@ -54,7 +54,7 @@ describe('ToastsComponent - Integration Tests', () => {
     );
     fixture.detectChanges();
 
-    const toasts = getComponents<ToastComponent>(fixture, ToastComponent);
+    const toasts = getComponents<Toast>(fixture, Toast);
     const toast = toasts[0];
 
     expect(toasts).toHaveSize(1);
@@ -71,7 +71,7 @@ describe('ToastsComponent - Integration Tests', () => {
 
     jasmine.clock().tick(10000);
     fixture.detectChanges();
-    const toasts = getComponents<ToastComponent>(fixture, ToastComponent);
+    const toasts = getComponents<Toast>(fixture, Toast);
 
     expect(toasts).toHaveSize(0);
   });
@@ -87,7 +87,7 @@ describe('ToastsComponent - Integration Tests', () => {
     const button = getHTMLElement<HTMLButtonElement>(fixture, 'button');
     button!.click();
     fixture.detectChanges();
-    const toasts = getComponents<ToastComponent>(fixture, ToastComponent);
+    const toasts = getComponents<Toast>(fixture, Toast);
 
     expect(toasts).toHaveSize(0);
   });

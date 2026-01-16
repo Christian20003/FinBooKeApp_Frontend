@@ -4,11 +4,7 @@ import { Store } from '@ngrx/store';
 import { NgClass } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslocoDirective } from '@jsverse/transloco';
-import {
-  setUser,
-  LoadingComponent,
-  TRANSLATION_KEYS,
-} from 'src/app/shared/index';
+import { setUser, Loading, TRANSLATION_KEYS } from 'src/app/shared/index';
 import {
   ToastLifeTime,
   ToastType,
@@ -18,26 +14,29 @@ import {
   PATHS,
 } from 'src/app/core/index';
 import { ToastService } from 'src/app/core/services/toast/toast-service';
-import { SetAccessCodeComponent } from 'src/app/authentication/set-access-code/set-access-code';
-import { RequestAccessCodeComponent } from 'src/app/authentication/request-access-code/request-access-code';
-import { LoginComponent } from 'src/app/authentication/login/login';
-import { RegisterComponent } from 'src/app/authentication/register/register';
+import { SetAccessCode } from 'src/app/authentication/set-access-code/set-access-code';
+import { RequestAccessCode } from 'src/app/authentication/request-access-code/request-access-code';
+import { Login } from 'src/app/authentication/login/login';
+import { Register } from 'src/app/authentication/register/register';
 
+/**
+ * Component that represent the authentication view.
+ */
 @Component({
   selector: 'app-auth-overview',
   templateUrl: './auth-overview.html',
   styleUrls: ['./auth-overview.scss'],
   imports: [
-    SetAccessCodeComponent,
-    RequestAccessCodeComponent,
-    LoginComponent,
-    RegisterComponent,
-    LoadingComponent,
+    SetAccessCode,
+    RequestAccessCode,
+    Login,
+    Register,
+    Loading,
     TranslocoDirective,
     NgClass,
   ],
 })
-export class AuthOverviewComponent {
+export class AuthOverview {
   private readonly router = inject(Router);
   private readonly store = inject(Store);
   private readonly authService = inject(AuthenticationService);
@@ -68,21 +67,21 @@ export class AuthOverviewComponent {
   /**
    * This method navigates to the login path.
    */
-  onLogin(): void {
+  protected onLogin(): void {
     this.router.navigate([PATHS.login]);
   }
 
   /**
    * This method navigates to the register path
    */
-  onRegister(): void {
+  protected onRegister(): void {
     this.router.navigate([PATHS.register]);
   }
 
   /**
    * This method navigates to the reset password path
    */
-  onForgetPwd(): void {
+  protected onForgetPwd(): void {
     this.router.navigate([PATHS.login, PATHS.forgotPwd]);
   }
 
@@ -92,7 +91,7 @@ export class AuthOverviewComponent {
    *
    * @param email The email address.
    */
-  onSendEmail(email: string): void {
+  protected onSendEmail(email: string): void {
     this.loading.update(() => true);
     this.email.update(() => email);
     this.authService.postForgotPwd(email).subscribe({
@@ -117,7 +116,7 @@ export class AuthOverviewComponent {
    *
    * @param code The access code.
    */
-  onSendAccessCode(code: string): void {
+  protected onSendAccessCode(code: string): void {
     this.loading.update(() => true);
     this.authService.postAccessCode(code).subscribe({
       complete: () => {
@@ -140,7 +139,7 @@ export class AuthOverviewComponent {
    *
    * @param data The login data.
    */
-  onSubmitLogin(data: ILoginDTO): void {
+  protected onSubmitLogin(data: ILoginDTO): void {
     this.loading.update(() => true);
     this.authService.postLogin(data).subscribe({
       next: response => {
@@ -164,7 +163,7 @@ export class AuthOverviewComponent {
    *
    * @param data The registration data.
    */
-  onSubmitRegister(data: IRegisterDTO): void {
+  protected onSubmitRegister(data: IRegisterDTO): void {
     this.loading.update(() => true);
     this.authService.postRegister(data).subscribe({
       next: response => {

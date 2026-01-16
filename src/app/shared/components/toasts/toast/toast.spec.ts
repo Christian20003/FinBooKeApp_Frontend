@@ -2,28 +2,28 @@ import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatIcon } from '@angular/material/icon';
 import { MockComponent } from 'ng-mocks';
-import { ToastComponent } from './toast';
+import { Toast } from './toast';
 import {
   TestToast,
   ToastLifeTime,
   ToastType,
 } from 'src/app/core/models/toast/toast';
-import { ICON_NAMES, IconService } from 'src/app/core';
+import { IconService } from 'src/app/core';
 import { setInputSignal } from 'src/app/testing/helper/set-input-signal';
 import { getHTMLElement } from 'src/app/testing/helper/get-html-element';
 
-describe('ToastComponent - Unit Tests', () => {
-  let component: ToastComponent;
-  let fixture: ComponentFixture<ToastComponent>;
+describe('Toast - Unit Tests', () => {
+  let component: Toast;
+  let fixture: ComponentFixture<Toast>;
 
   beforeEach(() => {
     const service = jasmine.createSpyObj('IconService', ['registerIcons']);
     TestBed.configureTestingModule({
-      imports: [ToastComponent, MockComponent(MatIcon)],
+      imports: [Toast, MockComponent(MatIcon)],
       providers: [provideZonelessChangeDetection()],
     });
     TestBed.overrideProvider(IconService, { useValue: service });
-    fixture = TestBed.createComponent(ToastComponent);
+    fixture = TestBed.createComponent(Toast);
     component = fixture.componentInstance;
     TestToast.lifetime = ToastLifeTime.NONE;
   });
@@ -78,29 +78,7 @@ describe('ToastComponent - Unit Tests', () => {
     expect(emit).toHaveBeenCalled();
   });
 
-  it('U-Test-5: Toast type error should return assigned css classes', () => {
-    TestToast.type = ToastType.ERROR;
-    setInputSignal(fixture, 'toast', TestToast);
-    fixture.detectChanges();
-
-    const boxColor = component.getBoxColor();
-    const iconColor = component.getIconColor();
-
-    expect(boxColor).toBe('error-box');
-    expect(iconColor).toBe('error-icon');
-  });
-
-  it('U-Test-6: Toast type error should return assigned icon name', () => {
-    TestToast.type = ToastType.ERROR;
-    setInputSignal(fixture, 'toast', TestToast);
-    fixture.detectChanges();
-
-    const iconName = component.getSvgName();
-
-    expect(iconName).toBe(ICON_NAMES.error);
-  });
-
-  it('U-Test-7: Toast type error should assign correct css classes in template', () => {
+  it('U-Test-5: Toast type error should assign correct css classes in template', () => {
     TestToast.type = ToastType.ERROR;
     setInputSignal(fixture, 'toast', TestToast);
     fixture.detectChanges();
@@ -114,29 +92,7 @@ describe('ToastComponent - Unit Tests', () => {
     expect(line!.className).toContain('error-box');
   });
 
-  it('U-Test-8: Toast type warning should return assigned css classes', () => {
-    TestToast.type = ToastType.WARNING;
-    setInputSignal(fixture, 'toast', TestToast);
-    fixture.detectChanges();
-
-    const boxColor = component.getBoxColor();
-    const iconColor = component.getIconColor();
-
-    expect(boxColor).toBe('warning-box');
-    expect(iconColor).toBe('warning-icon');
-  });
-
-  it('U-Test-9: Toast type warning should return assigned icon name', () => {
-    TestToast.type = ToastType.WARNING;
-    setInputSignal(fixture, 'toast', TestToast);
-    fixture.detectChanges();
-
-    const iconName = component.getSvgName();
-
-    expect(iconName).toBe(ICON_NAMES.warning);
-  });
-
-  it('U-Test-10: Toast type warning should assign correct css classes in template', () => {
+  it('U-Test-6: Toast type warning should assign correct css classes in template', () => {
     TestToast.type = ToastType.WARNING;
     setInputSignal(fixture, 'toast', TestToast);
     fixture.detectChanges();
@@ -150,29 +106,7 @@ describe('ToastComponent - Unit Tests', () => {
     expect(line!.className).toContain('warning-box');
   });
 
-  it('U-Test-11: Toast type info should return assigned css classes', () => {
-    TestToast.type = ToastType.INFO;
-    setInputSignal(fixture, 'toast', TestToast);
-    fixture.detectChanges();
-
-    const boxColor = component.getBoxColor();
-    const iconColor = component.getIconColor();
-
-    expect(boxColor).toBe('info-box');
-    expect(iconColor).toBe('info-icon');
-  });
-
-  it('U-Test-12: Toast type info should return assigned icon name', () => {
-    TestToast.type = ToastType.INFO;
-    setInputSignal(fixture, 'toast', TestToast);
-    fixture.detectChanges();
-
-    const iconName = component.getSvgName();
-
-    expect(iconName).toBe(ICON_NAMES.info);
-  });
-
-  it('U-Test-13: Toast type info should assign correct css classes in template', () => {
+  it('U-Test-7: Toast type info should assign correct css classes in template', () => {
     TestToast.type = ToastType.INFO;
     setInputSignal(fixture, 'toast', TestToast);
     fixture.detectChanges();
@@ -186,29 +120,7 @@ describe('ToastComponent - Unit Tests', () => {
     expect(line!.className).toContain('info-box');
   });
 
-  it('U-Test-14: Toast type success should return assigned css classes', () => {
-    TestToast.type = ToastType.SUCCESS;
-    setInputSignal(fixture, 'toast', TestToast);
-    fixture.detectChanges();
-
-    const boxColor = component.getBoxColor();
-    const iconColor = component.getIconColor();
-
-    expect(boxColor).toBe('success-box');
-    expect(iconColor).toBe('success-icon');
-  });
-
-  it('U-Test-15: Toast type success should return assigned icon name', () => {
-    TestToast.type = ToastType.SUCCESS;
-    setInputSignal(fixture, 'toast', TestToast);
-    fixture.detectChanges();
-
-    const iconName = component.getSvgName();
-
-    expect(iconName).toBe(ICON_NAMES.success);
-  });
-
-  it('U-Test-16: Toast type success should assign correct css classes in template', () => {
+  it('U-Test-8: Toast type success should assign correct css classes in template', () => {
     TestToast.type = ToastType.SUCCESS;
     setInputSignal(fixture, 'toast', TestToast);
     fixture.detectChanges();
@@ -222,17 +134,7 @@ describe('ToastComponent - Unit Tests', () => {
     expect(line!.className).toContain('success-box');
   });
 
-  it('U-Test-17: Toast lifetime type short should return assigned css class', () => {
-    TestToast.lifetime = ToastLifeTime.SHORT;
-    setInputSignal(fixture, 'toast', TestToast);
-    fixture.detectChanges();
-
-    const value = component.getLifetime();
-
-    expect(value).toBe('short-time');
-  });
-
-  it('U-Test-18: Toast lifetime type short assign correct css class in template', () => {
+  it('U-Test-9: Toast lifetime type short assign correct css class in template', () => {
     TestToast.lifetime = ToastLifeTime.SHORT;
     setInputSignal(fixture, 'toast', TestToast);
     fixture.detectChanges();
@@ -242,17 +144,7 @@ describe('ToastComponent - Unit Tests', () => {
     expect(line).toBeTruthy();
   });
 
-  it('U-Test-19: Toast lifetime type long should return assigned css class', () => {
-    TestToast.lifetime = ToastLifeTime.LONG;
-    setInputSignal(fixture, 'toast', TestToast);
-    fixture.detectChanges();
-
-    const value = component.getLifetime();
-
-    expect(value).toBe('long-time');
-  });
-
-  it('U-Test-20: Toast lifetime type long should assign correct css class in template', () => {
+  it('U-Test-10: Toast lifetime type long should assign correct css class in template', () => {
     TestToast.lifetime = ToastLifeTime.LONG;
     setInputSignal(fixture, 'toast', TestToast);
     fixture.detectChanges();
@@ -262,17 +154,7 @@ describe('ToastComponent - Unit Tests', () => {
     expect(line).toBeTruthy();
   });
 
-  it('U-Test-21: Toast lifetime type none should return assigned css class', () => {
-    TestToast.lifetime = ToastLifeTime.NONE;
-    setInputSignal(fixture, 'toast', TestToast);
-    fixture.detectChanges();
-
-    const value = component.getLifetime();
-
-    expect(value).toBe('infinite-time');
-  });
-
-  it('U-Test-22: Toast lifetime type none should assign correct css class in template', () => {
+  it('U-Test-11: Toast lifetime type none should assign correct css class in template', () => {
     TestToast.lifetime = ToastLifeTime.NONE;
     setInputSignal(fixture, 'toast', TestToast);
     fixture.detectChanges();

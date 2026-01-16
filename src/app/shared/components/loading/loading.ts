@@ -13,7 +13,7 @@ import { TRANSLATION_KEYS } from 'src/app/shared/localization/translation-keys';
   styleUrls: ['./loading.scss'],
   imports: [TranslocoDirective, MatIcon],
 })
-export class LoadingComponent {
+export class Loading {
   private readonly iconService = inject(IconService);
   protected readonly iconNames = ICON_NAMES;
   protected readonly translationKeys = TRANSLATION_KEYS;

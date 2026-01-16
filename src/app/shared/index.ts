@@ -1,7 +1,7 @@
-export { FormInputErrorComponent } from './components/form-input-error/form-input-error';
-export { LoadingComponent } from './components/loading/loading';
-export { NavbarComponent } from './components/navbar/navbar';
-export { ToastsComponent } from './components/toasts/toasts';
+export { FormInputError } from './components/form-input-error/form-input-error';
+export { Loading } from './components/loading/loading';
+export { Navbar } from './components/navbar/navbar';
+export { Toasts } from './components/toasts/toasts';
 
 export { TRANSLATION_KEYS } from './localization/translation-keys';
 export { translocoConfig } from './localization/transloco-config';

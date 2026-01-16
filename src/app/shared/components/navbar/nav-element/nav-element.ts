@@ -27,7 +27,7 @@ import {
     RouterLinkActive,
   ],
 })
-export class NavElementComponent {
+export class NavElement {
   private readonly authService = inject(AuthenticationService);
   private readonly toastService = inject(ToastService);
   private readonly iconService = inject(IconService);
@@ -49,7 +49,7 @@ export class NavElementComponent {
     ]);
   }
 
-  onLogout(): void {
+  protected onLogout(): void {
     this.authService.postLogout().subscribe({
       complete: () => {
         this.store.dispatch(deleteUser());
@@ -69,7 +69,7 @@ export class NavElementComponent {
    * This method returns the key to retrieve the correct
    * translation from transloco.
    */
-  get key(): string {
+  protected get key(): string {
     switch (this.type()) {
       case PATHS.dashboard:
         return TRANSLATION_KEYS.navbar.dashboard;
@@ -90,7 +90,7 @@ export class NavElementComponent {
    * This method returns the correct css class to set the
    * color of the SVG icon.
    */
-  get cssClass(): string {
+  protected get cssClass(): string {
     if (this.type() === PATHS.finances || this.type() === PATHS.settings) {
       return 'nav-elem-icon-stroke';
     }

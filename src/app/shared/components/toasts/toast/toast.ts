@@ -27,7 +27,7 @@ import {
   styleUrl: './toast.scss',
   imports: [NgClass, MatIcon],
 })
-export class ToastComponent implements OnInit, OnDestroy {
+export class Toast implements OnInit, OnDestroy {
   private readonly iconService = inject(IconService);
   private readonly shortLifetime = 10000;
   private readonly longLifetime = 15000;
@@ -70,7 +70,7 @@ export class ToastComponent implements OnInit, OnDestroy {
   /**
    * This method triggers an emitter to remove itself from the toast list
    */
-  onRemove(): void {
+  protected onRemove(): void {
     this.remove.emit(this.toast());
   }
 
@@ -79,7 +79,7 @@ export class ToastComponent implements OnInit, OnDestroy {
    *
    * @returns The name of the corresponding css class.
    */
-  getBoxColor(): string {
+  protected getBoxColor(): string {
     const type = this.toast().type;
     switch (type) {
       case ToastType.ERROR:
@@ -98,7 +98,7 @@ export class ToastComponent implements OnInit, OnDestroy {
    *
    * @returns The name of the corresponding css class.
    */
-  getIconColor(): string {
+  protected getIconColor(): string {
     const type = this.toast().type;
     switch (type) {
       case ToastType.ERROR:
@@ -117,7 +117,7 @@ export class ToastComponent implements OnInit, OnDestroy {
    *
    * @returns The name of the corresponding css class.
    */
-  getLifetime(): string {
+  protected getLifetime(): string {
     const lifetime = this.toast().lifetime;
     switch (lifetime) {
       case ToastLifeTime.LONG:
@@ -135,7 +135,7 @@ export class ToastComponent implements OnInit, OnDestroy {
    *
    * @returns The name of the SVG icon.
    */
-  getSvgName(): string {
+  protected getSvgName(): string {
     const type = this.toast().type;
     switch (type) {
       case ToastType.SUCCESS:

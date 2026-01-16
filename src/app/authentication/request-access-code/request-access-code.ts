@@ -9,7 +9,7 @@ import {
 import { MatIcon } from '@angular/material/icon';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { ICON_NAMES, IconService } from 'src/app/core';
-import { FormInputErrorComponent, TRANSLATION_KEYS } from 'src/app/shared';
+import { FormInputError, TRANSLATION_KEYS } from 'src/app/shared';
 
 /**
  * This component provides a form for users to request an access code by entering their email address.
@@ -19,14 +19,9 @@ import { FormInputErrorComponent, TRANSLATION_KEYS } from 'src/app/shared';
   selector: 'app-request-access-code',
   templateUrl: './request-access-code.html',
   styleUrls: ['./request-access-code.scss'],
-  imports: [
-    MatIcon,
-    FormInputErrorComponent,
-    TranslocoDirective,
-    ReactiveFormsModule,
-  ],
+  imports: [MatIcon, FormInputError, TranslocoDirective, ReactiveFormsModule],
 })
-export class RequestAccessCodeComponent implements OnInit {
+export class RequestAccessCode implements OnInit {
   private readonly iconService = inject(IconService);
 
   protected readonly translationKeys = TRANSLATION_KEYS;
@@ -64,7 +59,7 @@ export class RequestAccessCodeComponent implements OnInit {
    * This function send the entered email address to the parent component. If the email is not valid
    * then the event will not be triggered. But the user will be notified with a specific error message.
    */
-  onSubmit() {
+  protected onSubmit() {
     if (this.field?.valid) {
       this.send.emit(this.field.value);
     }
