@@ -3,8 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MockComponent } from 'ng-mocks';
 import { SetAccessCodeComponent } from './set-access-code';
-import { FormInputErrorComponent } from 'src/app/shared';
-import { getTranslocoModule } from 'src/app/shared/localization/transloco-testing';
+import { FormInputErrorComponent, getTranslocoModule } from 'src/app/shared';
 import {
   getHTMLElement,
   getHTMLElements,

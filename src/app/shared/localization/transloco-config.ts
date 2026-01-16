@@ -4,7 +4,7 @@ import { TranslocoHttpLoader } from './transloco-loader';
 /**
  * Configuration for the Transloco localization library.
  */
-export const config = {
+export const translocoConfig = {
   config: {
     availableLangs: ['en', 'de'],
     defaultLang: 'en',

@@ -12,6 +12,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import {
   FormInputErrorComponent,
+  getTranslocoModule,
   LoadingComponent,
   selectUser,
   userEffects,
@@ -31,7 +32,6 @@ import { LoginComponent } from 'src/app/authentication/login/login';
 import { RegisterComponent } from 'src/app/authentication/register/register';
 import { SetAccessCodeComponent } from 'src/app/authentication/set-access-code/set-access-code';
 import { RequestAccessCodeComponent } from 'src/app/authentication/request-access-code/request-access-code';
-import { getTranslocoModule } from 'src/app/shared/localization/transloco-testing';
 import { routes } from 'src/app/core/routing/routes';
 import {
   getHTMLElement,

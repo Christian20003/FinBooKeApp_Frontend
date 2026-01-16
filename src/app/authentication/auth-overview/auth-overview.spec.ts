@@ -5,7 +5,12 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { of, throwError } from 'rxjs';
 import { MockComponent } from 'ng-mocks';
 import { ToastService } from 'src/app/core/services/toast/toast-service';
-import { initialState, LoadingComponent, setUser } from 'src/app/shared/index';
+import {
+  getTranslocoModule,
+  initialState,
+  LoadingComponent,
+  setUser,
+} from 'src/app/shared';
 import {
   AuthenticationService,
   PATHS,
@@ -20,7 +25,6 @@ import { SetAccessCodeComponent } from 'src/app/authentication/set-access-code/s
 import { routes } from 'src/app/core/routing/routes';
 import { getHTMLElement } from 'src/app/testing/helper/get-html-element';
 import { getComponent } from 'src/app/testing/helper/get-component';
-import { getTranslocoModule } from 'src/app/shared/localization/transloco-testing';
 import { NgClass } from '@angular/common';
 
 describe('AuthOverviewComponent - Unit Tests', () => {

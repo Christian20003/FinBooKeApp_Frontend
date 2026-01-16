@@ -11,7 +11,7 @@ import { TestRegisterDTO } from 'src/app/core/models/authentication/registerDTO'
 import { isIUser, TestUser } from 'src/app/core/models/authentication/user';
 import { EnvironmentService } from 'src/app/core/services/environment/environment-service';
 import { AuthenticationService } from './authentication-service';
-import { LoggerService } from 'src/app/core/services/logging/logging-service';
+import { LoggingService } from 'src/app/core/services/logging/logging-service';
 import { HttpErrorService } from 'src/app/core/services/http-error-handling/http-error-service';
 import { API_PATHS } from 'src/app/core/routing/api-paths';
 
@@ -40,7 +40,7 @@ describe('AuthenticationService - Unit Tests', () => {
   };
 
   beforeEach(() => {
-    const logging = jasmine.createSpyObj(LoggerService, [
+    const logging = jasmine.createSpyObj(LoggingService, [
       'logInfo',
       'logWarning',
       'logError',
@@ -58,7 +58,7 @@ describe('AuthenticationService - Unit Tests', () => {
         provideZonelessChangeDetection(),
         provideHttpClient(),
         provideHttpClientTesting(),
-        { provide: LoggerService, useValue: logging },
+        { provide: LoggingService, useValue: logging },
         { provide: EnvironmentService, useValue: environment },
         { provide: HttpErrorService, useValue: errorHandler },
         { provide: TranslocoService, useValue: transloco },

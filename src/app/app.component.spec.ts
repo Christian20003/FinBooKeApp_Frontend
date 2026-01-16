@@ -1,8 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { ToastsComponent } from './shared/components/toasts/toasts';
+import { ToastsComponent, NavbarComponent } from './shared';
 import { MockComponent } from 'ng-mocks';
-import { NavbarComponent } from './shared/components/navbar/navbar';
 import { provideZonelessChangeDetection } from '@angular/core';
 
 xdescribe('AppComponent - Unit Tests', () => {

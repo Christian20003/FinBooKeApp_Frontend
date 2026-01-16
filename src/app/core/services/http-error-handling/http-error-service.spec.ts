@@ -2,7 +2,7 @@ import { TranslocoService } from '@jsverse/transloco';
 import { HttpErrorService } from './http-error-service';
 import { TestBed } from '@angular/core/testing';
 import { provideZonelessChangeDetection } from '@angular/core';
-import { LoggerService } from '../logging/logging-service';
+import { LoggingService } from '../logging/logging-service';
 import {
   HttpErrorResponse,
   HttpEventType,
@@ -29,13 +29,13 @@ describe('HttpErrorService - Unit Test', () => {
   }
 
   beforeEach(() => {
-    const logging = jasmine.createSpyObj(LoggerService, ['logError']);
+    const logging = jasmine.createSpyObj(LoggingService, ['logError']);
     transloco = jasmine.createSpyObj(TranslocoService, ['translate']);
     TestBed.configureTestingModule({
       providers: [
         provideZonelessChangeDetection(),
         { provide: TranslocoService, useValue: transloco },
-        { provide: LoggerService, useValue: logging },
+        { provide: LoggingService, useValue: logging },
       ],
     });
     service = TestBed.inject(HttpErrorService);

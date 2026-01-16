@@ -1,6 +1,12 @@
 export { FormInputErrorComponent } from './components/form-input-error/form-input-error';
 export { LoadingComponent } from './components/loading/loading';
-export { TRANSLATION_KEYS } from 'src/app/shared/localization/translation-keys';
+export { NavbarComponent } from './components/navbar/navbar';
+export { ToastsComponent } from './components/toasts/toasts';
+
+export { TRANSLATION_KEYS } from './localization/translation-keys';
+export { translocoConfig } from './localization/transloco-config';
+export { getTranslocoModule } from './localization/transloco-testing';
+
 export {
   setUser,
   setUserName,

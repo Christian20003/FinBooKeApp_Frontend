@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
-import { LoggerService } from 'src/app/core/services/logging/logging-service';
+import { LoggingService } from 'src/app/core/services/logging/logging-service';
 import { TRANSLATION_KEYS } from 'src/app/shared';
 
 /**
@@ -12,7 +12,7 @@ import { TRANSLATION_KEYS } from 'src/app/shared';
 })
 export class HttpErrorService {
   private readonly transloco = inject(TranslocoService);
-  private readonly logger = inject(LoggerService);
+  private readonly logger = inject(LoggingService);
 
   /**
    * This method process http errors.

@@ -8,7 +8,7 @@ import { LogType } from './log-type';
 @Injectable({
   providedIn: 'root',
 })
-export class LoggerService {
+export class LoggingService {
   private readonly environment = inject(EnvironmentService);
 
   /**

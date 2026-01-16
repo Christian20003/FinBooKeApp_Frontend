@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
 import { Observable, catchError, map } from 'rxjs';
 import { EnvironmentService } from 'src/app/core/services/environment/environment-service';
-import { LoggerService } from 'src/app/core/services/logging/logging-service';
+import { LoggingService } from 'src/app/core/services/logging/logging-service';
 import { isIUser, IUser } from 'src/app/core/models/authentication/user';
 import { ILoginDTO } from 'src/app/core/models/authentication/loginDTO';
 import { IRegisterDTO } from 'src/app/core/models/authentication/registerDTO';
@@ -21,7 +21,7 @@ export class AuthenticationService {
   private readonly client = inject(HttpClient);
   private readonly errorHandler = inject(HttpErrorService);
   private readonly transloco = inject(TranslocoService);
-  private readonly logger = inject(LoggerService);
+  private readonly logger = inject(LoggingService);
   private readonly environment = inject(EnvironmentService);
 
   /**

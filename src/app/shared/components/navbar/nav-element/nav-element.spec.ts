@@ -4,7 +4,7 @@ import { provideRouter, Router, RouterLinkWithHref } from '@angular/router';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { MatIcon } from '@angular/material/icon';
 import { of, throwError } from 'rxjs';
-import { deleteUser } from 'src/app/shared';
+import { deleteUser, getTranslocoModule } from 'src/app/shared';
 import { NavElementComponent } from './nav-element';
 import {
   AuthenticationService,
@@ -15,7 +15,6 @@ import {
 import { setInputSignal } from 'src/app/testing/helper/set-input-signal';
 import { getDebugElement } from 'src/app/testing/helper/get-debug-element';
 import { getHTMLElement } from 'src/app/testing/helper/get-html-element';
-import { getTranslocoModule } from 'src/app/shared/localization/transloco-testing';
 import { routes } from 'src/app/core/routing/routes';
 import { MockComponent } from 'ng-mocks';
 
