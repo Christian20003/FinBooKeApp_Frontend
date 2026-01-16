@@ -1,0 +1,45 @@
+{
+    "title": "Welcome to FinBoKeApp",
+    "auth": {
+        "actions": {
+            "login": "Login",
+            "register": "Register",
+            "forgotPwd": "Forgot password?",
+            "sendCode": "Send code"
+        },
+        "email": {
+            "label": "E-Mail",
+            "missing": "Empty e-mail address",
+            "invalid": "Invalid e-mail address"            
+        },
+        "password": {
+            "label": "Password",
+            "missing": "Empty password"
+        },
+        "code": {
+            "missing": "Please enter the complete code"
+        }
+    },
+    "navbar": {
+        "dashboard": "Dashboard",
+        "finances": "Finances",
+        "accounts": "Accounts",
+        "profile": "Profile",
+        "settings": "Settings",
+        "logout": "Logout"
+    },
+    "loading-screen": {
+        "header": "Please wait...",
+        "send": "Data is transmitted",
+        "read": "Data is requested"
+    },
+    "http-error": {
+        "invalid": "The submitted data could not be processed",
+        "credentials": "The given account data is incorrect",
+        "locked": "The requested resource is currently locked. Try it later",
+        "unautherized": "You are not authorised for this action",
+        "not-found": "The requested resource could not be found",
+        "unavailable": "The requested service is currently not available",
+        "server-error": "An unexpected error has occurred"
+    }
+}

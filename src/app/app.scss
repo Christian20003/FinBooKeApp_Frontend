@@ -1,0 +1,49 @@
+@use "app/shared/styles/effects" as effects;
+
+.small-shape-bottom,
+.large-shape-bottom {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+}
+
+.small-shape-left,
+.large-shape-left {
+    position: fixed;
+    left: 2rem;
+    top: 10rem;
+    @media (min-width: 53rem) {
+        left: 2rem;
+        top: 2rem;
+    }
+}
+
+.small-shape-bottom,
+.small-shape-left {
+    width: 20rem;
+    height: 20rem;
+    border-radius: 100%;
+    background-color: var(--highlight-color-container-primary);
+    z-index: -1;
+    @include effects.border-shadow-effect();
+
+    @media (max-width: 60rem) {
+        width: 15rem;
+        height: 15rem;
+    }
+}
+
+.large-shape-bottom,
+.large-shape-left {
+    width: 25rem;
+    height: 25rem;
+    border-radius: 100%;
+    background-color: var(--highlight-color-container-secondary);
+    z-index: -2;
+    @include effects.border-shadow-effect();
+
+    @media (max-width: 60rem) {
+        width: 20rem;
+        height: 20rem;
+    }
+}

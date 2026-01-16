@@ -1,0 +1,37 @@
+<div *transloco="let text">
+  @if (type() === 'logout') {
+    <a
+      class="nav-elem"
+      role="button"
+      tabindex="0"
+      (click)="onLogout()"
+      (keydown.enter)="onLogout()"
+      [ngClass]="
+        borderAnimation() ? 'border-animation' : 'underline-animation'
+      ">
+      <mat-icon
+        [ngClass]="cssClass"
+        [svgIcon]="type()"
+        [inline]="true"></mat-icon>
+      <p class="nav-elem-description">
+        {{ text(key) }}
+      </p>
+    </a>
+  } @else {
+    <a
+      class="nav-elem"
+      [routerLink]="link()"
+      routerLinkActive="active"
+      [ngClass]="
+        borderAnimation() ? 'border-animation' : 'underline-animation'
+      ">
+      <mat-icon
+        [ngClass]="cssClass"
+        [svgIcon]="type()"
+        [inline]="true"></mat-icon>
+      <p class="nav-elem-description">
+        {{ text(key) }}
+      </p>
+    </a>
+  }
+</div>

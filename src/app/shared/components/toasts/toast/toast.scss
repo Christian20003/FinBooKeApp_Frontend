@@ -1,0 +1,112 @@
+@use "app/shared/styles/typography/font" as font;
+@use "app/shared/styles/components" as components;
+@use "app/shared/styles/animations" as animations;
+
+.toast-content {
+    display: flex;
+    gap: 0.5rem;
+    height: 100%;
+    align-items: center;
+    color: var(--text-color-primary);
+    @include components.box-container();
+    @include font.description-font();
+
+    .success-icon,
+    .error-icon,
+    .warning-icon,
+    .info-icon,
+    .box {
+        flex: 0 0 auto;
+    }
+
+    .box {
+        width: 1.5rem;
+        height: 100%;
+        border-top-left-radius: 0.3rem;
+        border-bottom-left-radius: 0.3rem;
+    }
+
+    .success-icon {
+        @include components.svg-container($stroke: var(--icon-color-success), $fill: none);
+    }
+
+    .success-box {
+        background-color: var(--icon-color-success);
+    }
+
+    .error-icon {
+        @include components.svg-container($stroke: var(--icon-color-error), $fill: none);
+    }
+
+    .error-box {
+        background-color: var(--icon-color-error);
+    }
+
+    .warning-icon {
+        @include components.svg-container($stroke: none, $fill: var(--icon-color-warning));
+    }
+
+    .warning-box {
+        background-color: var(--icon-color-warning);
+    }
+
+    .info-icon {
+        @include components.svg-container($stroke: var(--icon-color-info));
+    }
+
+    .info-box {
+        background-color: var(--icon-color-info);
+    }
+
+    .time-line {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        height: 0.3rem;
+        border-radius: 0.3rem;
+    }
+
+    .short-time {
+        @include animations.width(10s);
+    }
+
+    .long-time {
+        @include animations.width(15s);
+    }
+
+    .infinite-time {
+        width: 100%;
+    }
+
+    .description {
+        margin-right: auto;
+    }
+
+    .close {
+        border: none;
+        background: none;
+        width: 2rem;
+        height: 100%;
+        cursor: pointer;
+        margin-right: 0.25rem;
+
+        .close-icon {
+            border-radius: 0.3rem;
+            @include components.svg-container($stroke: var(--icon-color-primary));
+            transition: 0.5s background-color;
+        }
+
+        &:hover,
+        &:focus {
+            .close-icon {
+                background-color: var(--background-color-button-focus);
+            }
+        }
+
+        &:active {
+            .close-icon {
+                background-color: var(--background-color-button-active);
+            }
+        }
+    }
+}

@@ -1,0 +1,6 @@
+@mixin blur-effect(){
+    height: 100%;
+    backdrop-filter: blur(0.3rem);
+    border-radius: 1%;
+    background-color: var(--blur-background);
+}

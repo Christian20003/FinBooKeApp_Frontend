@@ -1,0 +1,40 @@
+@use "app/shared/styles/effects" as effects;
+@use 'app/shared/styles/typography/font' as font;
+
+@mixin major-button() {
+    background-color: var(--background-color-container-seconday);
+    color: var(--background-color-button-focus);
+    border-color: var(--background-color-button-focus);
+    @include font.description-font($align: center);
+    outline: none;
+    cursor: pointer;
+    padding: 1rem 2rem;
+    transition:
+        all 0.5s,
+        background-color 0.1s;
+
+    &:where(:focus, :hover) {
+        transform: translateY(-10px);
+        background-color: var(--background-color-button-focus);
+        color: var(--text-color-primary);
+        @include effects.background-shadow-effect();
+    }
+
+    &:active {
+        background-color: var(--background-color-button-active);
+    }
+}
+
+@mixin link-button() {
+    background-color: var(--background-color-container-seconday);
+    color: var(--link-color);
+    @include font.label-font($align: center);
+    border: none;
+    cursor: pointer;
+    text-align: start;
+    text-decoration: underline;
+
+    &:where(:focus, :hover) {
+        color: var(--link-color-focus);
+    }
+}

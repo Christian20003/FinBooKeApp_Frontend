@@ -1,0 +1,69 @@
+<form
+  id="login-form"
+  [formGroup]="form"
+  *transloco="let text"
+  (submit)="onSubmit()">
+  <div class="relative-container">
+    <!-- The input element for the email -->
+    <input id="email" class="input" type="email" formControlName="email" />
+    <!-- The label for the email element with an SVG -->
+    <div id="label-email" class="label">
+      <mat-icon
+        class="icon-stroke"
+        [svgIcon]="iconNames.email"
+        [inline]="true"></mat-icon>
+      <p>{{ text(translationKeys.auth.email.label) }}</p>
+    </div>
+  </div>
+  <div class="relative-container">
+    <!-- The element with the information about missing email address -->
+    @if (email?.errors?.['required'] && email?.touched) {
+      <app-form-input-error
+        class="missing"
+        [message]="text(translationKeys.auth.email.missing)"
+        animate.enter="enterX"
+        animate.leave="leaveX"></app-form-input-error>
+      <!-- The element with the information about invalid email address -->
+    } @else if (email?.errors?.['email'] && email?.touched) {
+      <app-form-input-error
+        class="missing"
+        [message]="text(translationKeys.auth.email.invalid)"
+        animate.enter="enterX"
+        animate.leave="leaveX"></app-form-input-error>
+    }
+  </div>
+  <div class="relative-container">
+    <!-- The input element for the passord -->
+    <input
+      id="password"
+      class="input"
+      type="password"
+      formControlName="password" />
+    <!-- The label for the password field with an SVG -->
+    <div id="label-password" class="label">
+      <mat-icon
+        class="icon-fill"
+        [svgIcon]="iconNames.password"
+        [inline]="true"></mat-icon>
+      <p>{{ text(translationKeys.auth.password.label) }}</p>
+    </div>
+  </div>
+  <div class="relative-container">
+    <!-- The element with the information about missing password -->
+    @if (!password?.valid && password?.touched) {
+      <app-form-input-error
+        class="missing"
+        [message]="text(translationKeys.auth.password.missing)"
+        animate.enter="enterX"
+        animate.leave="leaveX"></app-form-input-error>
+    }
+  </div>
+  <!-- The login button -->
+  <button id="login-button">
+    {{ text(translationKeys.auth.actions.login) }}
+  </button>
+</form>
+<!-- The forget pasword button -->
+<button id="forget-pwd" *transloco="let text" (click)="onForgetPassword()">
+  {{ text(translationKeys.auth.actions.forgotPwd) }}
+</button>

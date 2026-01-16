@@ -1,0 +1,87 @@
+@use "app/shared/styles/effects" as effects;
+@use "app/shared/styles/components" as components;
+@use "app/shared/styles/typography/font" as font; 
+
+nav {
+    position: sticky;
+    top: 0;
+    // Delete margin added by the browser
+    margin: -0.5rem;
+    z-index: 2;
+    @include effects.border-shadow-effect();
+
+    .nav-container {
+        display: flex;
+        gap: 1.6rem;
+        justify-content: center;
+        background-color: var(--background-color-container-primary);
+
+        :first-child {
+            padding-top: 0.2rem;
+            margin-left: 1rem;
+            margin-right: auto;
+        }
+        :last-child:not(.profile-box) {
+            margin-right: 1rem;
+            margin-left: auto;
+        }
+
+        .nav-elem {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            cursor: pointer;
+
+            .profile-btn {
+                color: var(--text-color-highlight);
+                @include components.circle-container();
+            }
+        }
+
+        .logo{
+            display: flex;
+
+            mat-icon {
+                padding: 0;
+                margin: 0 0.5rem 0 0;
+                width: 2.5rem;
+            }
+
+            p {
+                margin: 0;
+                font-weight: 800;
+                color: var(--text-color-highlight);
+                @include font.title-font();
+            }
+        }
+    }
+    .vertical-secondary-nav,
+    .vertical-primary-nav {
+        position: absolute;
+        top: 4rem;
+        right: 1rem;
+        width: 11rem;
+        background-color: var(--background-color-container-primary);
+        border: 0.1rem var(--border-color-secondary) solid;
+        padding: 0.5rem 1.8rem 0.5rem 0.8rem;
+        @include effects.border-shadow-effect();
+    }
+}
+
+$desktop-screen-width: 46rem;
+
+@media (min-width: $desktop-screen-width) {
+    .vertical-primary-nav {
+        visibility: hidden;
+    }
+}
+
+@media (max-width: $desktop-screen-width) {
+    .can-hide {
+        display: none;
+    }
+
+    .vertical-secondary-nav {
+        visibility: hidden;
+    }
+}

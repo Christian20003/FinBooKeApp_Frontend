@@ -1,0 +1,40 @@
+<form
+  id="email-form"
+  [formGroup]="form"
+  *transloco="let text"
+  (submit)="onSubmit()">
+  <div class="relative-container">
+    <!-- The input element for the email -->
+    <input id="email" class="input" type="email" formControlName="email" />
+    <!-- The label for the email element with an SVG -->
+    <div id="label-email" class="label">
+      <mat-icon
+        class="icon"
+        [svgIcon]="iconNames.email"
+        [inline]="true"></mat-icon>
+      <p>{{ text(translationKeys.auth.email.label) }}</p>
+    </div>
+  </div>
+  <div class="relative-container">
+    <!-- Used this inefficient way for better animations -->
+    <!-- The element with the information about missing email address -->
+    @if (field?.errors?.['required'] && field?.touched) {
+      <app-form-input-error
+        class="missing"
+        [message]="text(translationKeys.auth.email.missing)"
+        animate.enter="enterX"
+        animate.leave="leaveX"></app-form-input-error>
+      <!-- The element with the information about invalid email address -->
+    } @else if (field?.errors?.['email'] && field?.touched) {
+      <app-form-input-error
+        class="missing"
+        [message]="text(text(translationKeys.auth.email.invalid))"
+        animate.enter="enterX"
+        animate.leave="leaveX"></app-form-input-error>
+    }
+  </div>
+  <!-- Button to send the email address -->
+  <button id="send-code-button">
+    {{ text(translationKeys.auth.actions.sendCode) }}
+  </button>
+</form>

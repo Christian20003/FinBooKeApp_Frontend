@@ -1,0 +1,18 @@
+@mixin circle-container(
+    $width: 2.5rem,
+    $animate: true
+) {
+    width: $width;
+    height: $width;
+    margin: auto;
+    background-color: var(--background-color-container-secondary);
+    text-align: center;
+    border-radius: 50%;
+    transition: opacity 0.5s;
+
+    @if ($animate) {
+        &:where(:hover, :focus) {
+            opacity: 50%;
+        }
+    }
+}

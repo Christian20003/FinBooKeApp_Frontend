@@ -1,0 +1,45 @@
+{
+    "title": "Willkommen zur FinBoKeApp",
+    "auth": {
+        "actions": {
+            "login": "Anmelden",
+            "register": "Registrieren",
+            "forgotPwd": "Passwort vergessen?",
+            "sendCode": "Code senden"
+        },
+        "email": {
+            "label": "E-Mail",
+            "missing": "Fehlende E-Mail-Adresse",
+            "invalid": "Ungültige E-Mail-Adresse"            
+        },
+        "password": {
+            "label": "Passwort",
+            "missing": "Fehlendes Passwort"
+        },
+        "code": {
+            "missing": "Bitte vollständigen Code eingeben"
+        }
+    },
+    "navbar": {
+        "dashboard": "Dashboard",
+        "finances": "Finanzen",
+        "accounts": "Konten",
+        "profile": "Profil",
+        "settings": "Einstellungen",
+        "logout": "Logout"
+    },
+    "loading-screen": {
+        "header": "Bitte warten...",
+        "send": "Daten werden übermittelt",
+        "read": "Daten werden angefragt"
+    },
+    "http-error": {
+        "invalid": "Die übergebenen Daten konnten nicht verarbeitet werden",
+        "credentials": "Die angegebenen Account-Daten sind fehlerhaft",
+        "locked": "Die angefragte Resource ist gesperrt. Bitte versuche es später erneut",
+        "unautherized": "Sie sind für diese Aktion nicht autorisiert",
+        "not-found": "Die angeforderte Ressource konnte nicht gefunden werden",
+        "unavailable": "Der angeforderte Service ist zurzeit nicht erreichbar",
+        "server-error": "Es ist ein unerwarteter Fehler eingetreten"
+    }
+}

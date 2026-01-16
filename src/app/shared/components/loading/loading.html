@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="outer-circle" animate.enter="grow" animate.leave="shrink">
+    <div class="inner-circle">
+      <mat-icon
+        class="icon"
+        [svgIcon]="iconNames.loading"
+        [inline]="true"></mat-icon>
+    </div>
+  </div>
+  <div
+    class="loading-description"
+    *transloco="let text"
+    animate.enter="enterX"
+    animate.leave="leaveX">
+    <h3 class="loading-title">
+      {{ text(translationKeys.loadingScreen.header) }}
+    </h3>
+    <p class="loading-text">{{ message() }}</p>
+  </div>
+</div>

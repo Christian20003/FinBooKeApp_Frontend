@@ -1,0 +1,30 @@
+@use "app/shared/styles/components" as components;
+
+#code-form {
+    position: relative;
+    display: grid;
+    gap: 2rem;
+
+    #input-container {
+        display: grid;
+        grid-auto-flow: column;
+        gap: 0.2rem;
+        margin-top: 1.5rem;
+
+        .key-field {
+            @include components.input-digit-container();
+        }
+    }
+
+    #relative-container {
+
+        #missing {
+            position: absolute;
+            bottom: 4rem;
+        }
+    }
+
+    #proof-code-button {
+        @include components.major-button();
+    }
+}

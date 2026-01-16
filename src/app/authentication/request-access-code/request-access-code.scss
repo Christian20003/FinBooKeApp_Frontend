@@ -1,0 +1,32 @@
+@use "app/shared/styles/components" as components;
+
+#email-form {
+    display: grid;
+    gap: 2rem;
+    margin-top: 1.5rem;
+
+    .relative-container {
+        position: relative;
+
+        .input {
+            @include components.input-container();
+        }
+
+        #label-email {
+            @include components.label-container();
+        }
+
+        .icon {
+            @include components.svg-container();
+        }
+
+        .missing {
+            position: absolute;
+            bottom: -0.5rem;
+        }
+    }
+
+    #send-code-button {
+        @include components.major-button();
+    }
+}

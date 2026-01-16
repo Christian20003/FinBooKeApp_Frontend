@@ -1,0 +1,60 @@
+@use "app/shared/styles/effects" as effects;
+@use "app/shared/styles/components" as components;
+@use "app/shared/styles/animations" as animation;
+@use "app/shared/styles/typography/font" as font;
+
+$icon-width: 2rem;
+
+.container {
+    display: grid;
+    @include effects.blur-effect();
+
+    .outer-circle {
+        padding: 0.8rem;
+        margin: auto;
+        margin-bottom: 0;
+        position: relative;
+
+        .inner-circle {
+            background-color: var(--highlight-color-container-primary);
+            padding: 0.5rem;
+            width: $icon-width;
+            height: $icon-width;
+            border-radius: 50%;
+
+            .icon {
+                @include components.svg-container($width: $icon-width, $stroke: none, $fill: var(--background-color-container-primary));
+            }
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 0.12rem;
+            left: 0.1rem;
+            width: calc($icon-width * 2);
+            height: calc($icon-width * 2);
+            border-radius: 50%;
+            border: 0.2rem solid;
+            border-color: var(--border-color-primary) var(--border-color-secondary) var(--border-color-secondary)
+                var(--border-color-secondary);
+            @include animation.rotate();
+        }
+    }
+
+    .loading-description {
+        margin: auto;
+        margin-top: 0.5rem;
+
+        .loading-title {
+            color: var(--text-color-primary);
+            font-weight: 900;
+            @include font.description-font($align: center);
+        }
+
+        .loading-text {
+            color: var(--text-color-primary);
+            @include font.description-font($align: center);
+        }
+    }
+}

@@ -1,0 +1,59 @@
+@use "../../../shared/styles/components" as components;
+@use "../../../shared/styles/typography/font" as font;
+
+.action-block {
+    @include components.box-container();
+    display: flex;
+    overflow-x: scroll;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+
+    .action-container {
+        margin-top: 1rem;
+        cursor: pointer;
+
+        &:first-child {
+            margin-left: auto;
+            margin-right: 1rem;
+        }
+
+        &:last-child {
+            margin-left: 1rem;
+            margin-right: auto;
+        }
+
+        &:not(:first-child, :last-child) {
+            margin-left: 1rem;
+            margin-right: 1rem;
+        }
+
+        .action-description {
+            margin-top: 0.2rem;
+            text-align: center;
+            transition: color 0.2s;
+            color: var(--text-color-primary);
+            @include font.description-font();
+        }
+
+        .icon-container {
+            border-style: dashed;
+            border-color: var(--background-color-container-complement);
+            @include components.circle-container($width: 3.8rem, $animate: false);
+
+            .icon {
+                @include components.svg-container($width: 2.2rem, $stroke: var(--icon-color-primary));
+            }
+        }
+
+        &:where(:hover, :focus) {
+            .action-description {
+                color: var(--text-color-highlight);
+            }
+
+            .icon-container {
+                border-style: solid;
+                border-color: var(--border-color-secondary);
+            }
+        }
+    }
+}

@@ -1,0 +1,42 @@
+@use 'app/shared/styles/effects' as effects;
+@use 'app/shared/styles/typography/font' as font;
+
+@mixin input-container($hasLabel: true) {
+    padding: 0.4rem;
+    width: 93%;
+    background-color: var(--background-color-container-secondary);
+    color: var(--text-color-primary);
+    outline: none;
+    border: none;
+    border-bottom: 0.2rem var(--border-color-primary) solid;
+    transition: border-color 0.5s ease-out;
+    @include font.description-font();
+
+    &:focus {
+        border-color: var(--border-color-secondary);
+    }
+
+    @if ($hasLabel) {
+        &:where(:focus, .ng-dirty) ~ .label {
+            transform: translateY(-60%);
+        }
+    }
+}
+
+@mixin input-digit-container(){
+    width: 2.5rem;
+    height: 2.5rem;
+    color: var(--text-color-primary);
+    background-color: var(--background-color-container-primary);
+    outline: none;
+    border: none;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    @include font.header-font($align: center);
+    @include effects.border-shadow-effect();
+
+    &:focus{
+        @include effects.border-shadow-effect();
+        outline: none;
+    }
+}

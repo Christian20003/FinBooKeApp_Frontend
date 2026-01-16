@@ -1,0 +1,45 @@
+<h1 id="title" *transloco="let text">{{ text(translationKeys.title) }}</h1>
+<div class="container" *transloco="let text">
+  <div class="grid-container">
+    <!-- Button to access the login screen -->
+    <button id="login" [ngClass]="{ inactive: !isLogin() }" (click)="onLogin()">
+      {{ text(translationKeys.auth.actions.login) }}
+    </button>
+    <!-- Button to access the register screen -->
+    <button
+      id="register"
+      [ngClass]="{ inactive: isLogin() }"
+      (click)="onRegister()">
+      {{ text(translationKeys.auth.actions.register) }}
+    </button>
+  </div>
+  <div class="overlap-grid-container">
+    @if (isLogin() && isForgotPwd()) {
+      <app-request-access-code
+        [email]="email()"
+        (send)="onSendEmail($event)"
+        animate.enter="enterX"
+        animate.leave="leaveXOverlap"></app-request-access-code>
+    } @else if (isLogin() && isResetPwd()) {
+      <app-set-access-code
+        (send)="onSendAccessCode($event)"
+        animate.enter="enterX"
+        animate.leave="leaveXOverlap"></app-set-access-code>
+    } @else if (isLogin()) {
+      <app-login
+        (login)="onSubmitLogin($event)"
+        (forgotPwd)="onForgetPwd()"
+        animate.enter="enterX"
+        animate.leave="leaveXOverlap"></app-login>
+    } @else {
+      <app-register
+        animate.enter="enterX"
+        animate.leave="leaveXOverlap"></app-register>
+    }
+  </div>
+  @if (loading()) {
+    <app-loading
+      id="loading"
+      [message]="text(translationKeys.loadingScreen.send)"></app-loading>
+  }
+</div>

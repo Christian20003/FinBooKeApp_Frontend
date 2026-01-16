@@ -1,0 +1,42 @@
+@use "app/shared/styles/components" as components;
+
+#login-form {
+    display: grid;
+    gap: 2rem;
+    margin-top: 2.5rem;
+
+    .relative-container {
+        position: relative;
+
+        .input {
+            @include components.input-container();
+        }
+
+        #label-email,
+        #label-password {
+            @include components.label-container();
+        }
+
+        .icon-stroke {
+            @include components.svg-container();
+        }
+
+        .icon-fill {
+            @include components.svg-container($stroke: none, $fill: var(--icon-color-primary));
+        }
+
+        .missing {
+            position: absolute;
+            bottom: 0rem;
+        }
+    }
+
+    #login-button {
+        @include components.major-button();
+    }
+}
+
+#forget-pwd {
+    margin-top: 2rem;
+    @include components.link-button();
+}

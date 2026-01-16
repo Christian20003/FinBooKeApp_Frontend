@@ -1,0 +1,35 @@
+<!-- The form to entere the access code -->
+<form
+  id="code-form"
+  [formGroup]="form"
+  *transloco="let text"
+  (submit)="onSubmit()">
+  <div id="input-container">
+    @for (key of getKeys(); track key; let index = $index) {
+      <input
+        [id]="key"
+        class="key-field"
+        type="text"
+        maxlength="1"
+        [formControlName]="key"
+        (input)="onInput(index)"
+        (keydown)="onKeydown($event, index)"
+        (focus)="onFocus(index)"
+        placeholder="0" />
+    }
+  </div>
+  <!-- Element with the error message -->
+  <div id="relative-container">
+    @if (!isValid) {
+      <app-form-input-error
+        id="missing"
+        [message]="text(translationKeys.auth.code.missing)"
+        animate.enter="enterX"
+        animate.leave="leaveX"></app-form-input-error>
+    }
+  </div>
+  <!-- Button to emit the entered access code -->
+  <button id="proof-code-button">
+    {{ text(translationKeys.auth.actions.sendCode) }}
+  </button>
+</form>

@@ -1,0 +1,32 @@
+@mixin slideYIn() {
+    animation: YIn 1s;
+}
+
+@mixin slideYOut($overlap: false) {
+    @if ($overlap) {
+        position: absolute;
+    }
+    animation: YOut 1s;
+}
+
+@keyframes YIn {
+    from {
+        opacity: 0;
+        transform: translateY(-2.5rem);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0rem);
+    }
+}
+
+@keyframes YOut {
+    from {
+        opacity: 1;
+        transform: translateY(0rem);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(2.5rem);
+    }
+}

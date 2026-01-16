@@ -1,1 +1,55 @@
-/* You can add global styles to this file, and also import other style files */
+@use "@angular/material" as mat;
+@use "app/shared/styles/animations" as animations;
+@use "app/shared/styles/theme" as theme;
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: var(--background-color-container-primary);
+  font-family: mat.get-theme-typography(theme.$application-theme, display-large, font-family);
+}
+
+:root {
+  @include theme.light-theme-color-vars();
+}
+
+:root body.dark {
+  @include theme.dark-theme-color-vars();
+}
+
+// Animation classes
+
+.enterX {
+  @include animations.slideXIn();
+}
+
+.leaveX {
+  @include animations.slideXOut();
+}
+
+.leaveXOverlap {
+  @include animations.slideXOut($overlap: true);
+}
+
+.enterY {
+  @include animations.slideYIn();
+}
+
+.leaveY {
+  @include animations.slideYOut();
+}
+
+.leaveYOverlap {
+  @include animations.slideYOut($overlap: true);
+}
+
+.grow {
+  @include animations.grow();
+}
+
+.shrink {
+  @include animations.shrink();
+}

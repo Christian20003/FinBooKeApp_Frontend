@@ -1,0 +1,19 @@
+<div class="toast-content">
+  <span class="box" [ngClass]="getBoxColor()"></span>
+  <mat-icon
+    [class]="getIconColor()"
+    [svgIcon]="getSvgName()"
+    [inline]="true"></mat-icon>
+  <p class="description">
+    {{ toast().message }}
+  </p>
+  <button class="close" (click)="onRemove()">
+    <mat-icon
+      class="close-icon"
+      [svgIcon]="iconNames.close"
+      [inline]="true"></mat-icon>
+  </button>
+  <span
+    class="time-line"
+    [ngClass]="getBoxColor() + ' ' + getLifetime()"></span>
+</div>

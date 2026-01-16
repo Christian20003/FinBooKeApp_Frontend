@@ -1,0 +1,44 @@
+@use "@angular/material" as mat;
+@use "app/shared/styles/theme" as theme;
+
+$desktop-screen-width: 44rem;
+
+@mixin title-font($align: start, $text-decoration: none) {
+    text-align: $align;
+    text-decoration: $text-decoration;
+    font-size: mat.get-theme-typography(theme.$application-theme, headline-medium, font-size);
+
+    @media (min-width: $desktop-screen-width) {
+        font-size: mat.get-theme-typography(theme.$application-theme, headline-large, font-size);
+    }
+}
+
+@mixin header-font($align: start, $text-decoration: none) {
+    text-align: $align;
+    text-decoration: $text-decoration;
+    font-size: mat.get-theme-typography(theme.$application-theme, headline-small, font-size);
+
+    @media (min-width: $desktop-screen-width) {
+        font-size: mat.get-theme-typography(theme.$application-theme, headline-medium, font-size);
+    }
+}
+
+@mixin description-font($align: start, $text-decoration: none) {
+    text-align: $align;
+    text-decoration: $text-decoration;
+    font-size: mat.get-theme-typography(theme.$application-theme, body-medium, font-size);
+
+    @media (min-width: $desktop-screen-width) {
+        font-size: mat.get-theme-typography(theme.$application-theme, body-large, font-size);
+    }
+}
+
+@mixin label-font($align: start, $text-decoration: none) {
+    text-align: $align;
+    text-decoration: $text-decoration;
+    font-size: mat.get-theme-typography(theme.$application-theme, label-medium, font-size);
+
+    @media (min-width: $desktop-screen-width) {
+        font-size: mat.get-theme-typography(theme.$application-theme, label-large, font-size);
+    }
+}

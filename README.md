@@ -3,7 +3,6 @@ This repository includes the frontend of the financial-book-keeping application.
 
 <big>IMPORTANT:</big> 
 - This application is still in development and not ready for production.
-- A migration to Angular 20 is currently being carried out. Thereby some major changes on the current project scaffold are in progress. To get the project with the newest version, use the branch ```migration```.
 
 # Goal
 This application was designed to help individual users manage their finances. By recording income and expenditure and assigning them to different categories and payment methods, the aim is to make it as easy as possible for users to manage their household finances. Furthermore this is a student project.

@@ -1,0 +1,18 @@
+@use "app/shared/styles/components" as components;
+@use "app/shared/styles/typography/font" as font;
+
+#invalid-content-container {
+    display: flex;
+    color: var(--icon-color-error);
+    @include font.label-font();
+
+    #message {
+        align-self: center;
+        margin: 0;
+    }
+
+    #icon {
+        @include components.svg-container($width: 1.3rem, $fill: var(--icon-color-error), $stroke: none);
+    }
+}
+

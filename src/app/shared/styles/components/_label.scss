@@ -1,0 +1,13 @@
+@use 'app/shared/styles/typography/font' as font;
+
+@mixin label-container() {
+    display: flex;
+    position: absolute;
+    width: 100%;
+    color: var(--text-color-primary);
+    bottom: 0;
+    opacity: 0.4;
+    pointer-events: none;
+    transition: all 0.5s;
+    @include font.label-font();
+}
