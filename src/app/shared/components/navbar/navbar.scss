@@ -1,5 +1,6 @@
 @use "app/shared/styles/effects" as effects;
 @use "app/shared/styles/components" as components;
+@use "app/shared/styles/typography/font" as font; 
 
 nav {
     position: sticky;
@@ -34,6 +35,23 @@ nav {
             .profile-btn {
                 color: var(--text-color-highlight);
                 @include components.circle-container();
+            }
+        }
+
+        .logo{
+            display: flex;
+
+            mat-icon {
+                padding: 0;
+                margin: 0 0.5rem 0 0;
+                width: 2.5rem;
+            }
+
+            p {
+                margin: 0;
+                font-weight: 800;
+                color: var(--text-color-highlight);
+                @include font.title-font();
             }
         }
     }

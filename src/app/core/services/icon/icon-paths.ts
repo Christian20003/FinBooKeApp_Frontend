@@ -18,4 +18,5 @@ export const ICON_PATHS = {
   [ICON_NAMES.profile]: 'assets/icons/symbols/profile.svg',
   [ICON_NAMES.settings]: 'assets/icons/symbols/settings.svg',
   [ICON_NAMES.logout]: 'assets/icons/symbols/logout.svg',
+  [ICON_NAMES.logo]: 'assets/icons/symbols/logo.svg',
 } as const;

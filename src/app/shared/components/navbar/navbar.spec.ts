@@ -15,6 +15,8 @@ import {
 } from 'src/app/testing/helper/get-html-element';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { getTranslocoModule } from '../../localization/transloco-testing';
+import { MockComponent } from 'ng-mocks';
+import { MatIcon } from '@angular/material/icon';
 
 describe('Navbar - Unit Tests', () => {
   let component: Navbar;
@@ -24,7 +26,12 @@ describe('Navbar - Unit Tests', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Navbar, NavElement, getTranslocoModule()],
+      imports: [
+        Navbar,
+        NavElement,
+        getTranslocoModule(),
+        MockComponent(MatIcon),
+      ],
       providers: [
         provideMockStore(),
         provideHttpClient(),

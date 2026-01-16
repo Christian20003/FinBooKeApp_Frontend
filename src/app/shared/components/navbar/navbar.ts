@@ -3,20 +3,26 @@ import { Store } from '@ngrx/store';
 import { selectUser } from 'src/app/shared/stores/UserStore/User.selector';
 import { NavElement } from './nav-element/nav-element';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { Logo } from 'src/app/shared/components/logo/logo';
+import { MatIcon } from '@angular/material/icon';
+import { ICON_NAMES, IconService } from 'src/app/core';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
-  imports: [NavElement, RouterLink, RouterLinkActive, Logo],
+  imports: [NavElement, RouterLink, RouterLinkActive, MatIcon],
 })
 export class Navbar implements OnInit {
   private readonly store = inject(Store);
+  private readonly iconService = inject(IconService);
 
   protected readonly imagePath = signal<string>('');
   protected readonly firstLetter = signal<string>('');
   protected readonly activeProfile = signal<boolean>(false);
+
+  constructor() {
+    this.iconService.registerIcon(ICON_NAMES.logo);
+  }
 
   ngOnInit(): void {
     const data = this.store.select(selectUser);

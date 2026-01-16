@@ -16,4 +16,5 @@ export const ICON_NAMES = {
   profile: 'profile',
   settings: 'settings',
   logout: 'logout',
+  logo: 'logo',
 } as const;
