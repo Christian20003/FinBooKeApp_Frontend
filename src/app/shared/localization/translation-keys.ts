@@ -15,9 +15,18 @@ export const TRANSLATION_KEYS = {
       missing: 'auth.email.missing',
       invalid: 'auth.email.invalid',
     },
+    username: {
+      label: 'auth.username.label',
+      missing: 'auth.username.missing',
+    },
     password: {
       label: 'auth.password.label',
       missing: 'auth.password.missing',
+      lowerCase: 'auth.password.lowerCase',
+      upperCase: 'auth.password.upperCase',
+      digit: 'auth.password.digit',
+      chars: 'auth.password.chars',
+      length: 'auth.password.length',
     },
     code: {
       missing: 'auth.code.missing',

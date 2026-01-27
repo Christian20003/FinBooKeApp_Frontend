@@ -25,6 +25,7 @@ import {
   EnvironmentService,
   IconService,
   PATHS,
+  TestRegisterDTO,
   TestUser,
   ToastService,
 } from 'src/app/core';
@@ -49,6 +50,9 @@ describe('AuthOverview', () => {
 
   const loginPath = function (): string {
     return API + API_PATHS.auth.login;
+  };
+  const registerPath = function (): string {
+    return API + API_PATHS.auth.register;
   };
   const forgotPwdPath = function (): string {
     return API + API_PATHS.auth.forgotPwd;
@@ -93,8 +97,6 @@ describe('AuthOverview', () => {
     fixture.detectChanges();
   });
 
-  // TODO: Add integration tests for registration
-
   it('I-Test-1: Successful login process', async () => {
     // Click on the login button to get the login form
     const login = getHTMLElement<HTMLButtonElement>(fixture, '#login')!;
@@ -128,7 +130,42 @@ describe('AuthOverview', () => {
     expect(router.url.includes(PATHS.dashboard)).toBeTrue();
   });
 
-  it('I-Test-2: Successful reset password process', async () => {
+  it('I-Test-2: Successful registration process', async () => {
+    // Click on the register button to get the register form
+    const register = getHTMLElement<HTMLButtonElement>(fixture, '#register')!;
+    register.click();
+    await fixture.whenStable();
+
+    // Add valid values to the register form
+    const email = getHTMLElement<HTMLInputElement>(fixture, '#email')!;
+    const username = getHTMLElement<HTMLInputElement>(fixture, '#username')!;
+    const password = getHTMLElement<HTMLInputElement>(fixture, '#password')!;
+    email.value = TestUser.email;
+    username.value = TestUser.name;
+    password.value = TestRegisterDTO.password;
+    setInputValues([email, username, password]);
+    await fixture.whenStable();
+
+    // Click on the login button to trigger a HTTP request
+    const submit = getHTMLElement<HTMLButtonElement>(fixture, '#register-btn')!;
+    submit.click();
+    await fixture.whenStable();
+
+    // Define the response of the HTTP request
+    const req = controller.expectOne(registerPath());
+    req.flush(TestUser);
+    await fixture.whenStable();
+
+    // Proof if data is sent to the store
+    store.select(selectUser).subscribe({
+      next: state => {
+        expect(state).toEqual(TestUser);
+      },
+    });
+    expect(router.url.includes(PATHS.dashboard)).toBeTrue();
+  });
+
+  it('I-Test-3: Successful reset password process', async () => {
     // Click on the login button to get the login form
     const login = getHTMLElement<HTMLButtonElement>(fixture, '#login')!;
     login.click();

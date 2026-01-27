@@ -15,6 +15,7 @@ import {
   AuthenticationService,
   PATHS,
   TestLoginDTO,
+  TestRegisterDTO,
   TestUser,
 } from 'src/app/core/index';
 import { AuthOverview } from './auth-overview';
@@ -147,9 +148,47 @@ describe('AuthOverview - Unit Tests', () => {
     expect(toastService.addToast).toHaveBeenCalled();
   });
 
-  /**TODO: Register */
+  it('U-Test-7: Component should store user object after successful register request', async () => {
+    authService.postRegister.and.returnValue(of(TestUser));
+    const spy = spyOn(store, 'dispatch');
+    const button = getHTMLElement<HTMLButtonElement>(fixture, '#register')!;
+    button.click();
+    await fixture.whenStable();
 
-  it('U-Test-7: Component should add error toast after failed access code request', async () => {
+    const register = getComponent(fixture, Register)!;
+    register.register.emit(TestRegisterDTO);
+    await fixture.whenStable();
+
+    expect(spy).toHaveBeenCalledWith(setUser({ user: TestUser }));
+  });
+
+  it('U-Test-8: Component should navigate to dashboard after successful register request', async () => {
+    authService.postRegister.and.returnValue(of(TestUser));
+    const button = getHTMLElement<HTMLButtonElement>(fixture, '#register')!;
+    button.click();
+    await fixture.whenStable();
+
+    const register = getComponent(fixture, Register)!;
+    register.register.emit(TestRegisterDTO);
+    await fixture.whenStable();
+
+    expect(router.url.includes(PATHS.dashboard)).toBeTrue();
+  });
+
+  it('U-Test-9: Component should add error toast after failed register request', async () => {
+    authService.postRegister.and.returnValue(throwError(() => new Error()));
+    const button = getHTMLElement<HTMLButtonElement>(fixture, '#register')!;
+    button.click();
+    await fixture.whenStable();
+
+    const register = getComponent(fixture, Register)!;
+    register.register.emit(TestRegisterDTO);
+    await fixture.whenStable();
+
+    expect(toastService.addToast).toHaveBeenCalled();
+  });
+
+  it('U-Test-10: Component should add error toast after failed access code request', async () => {
     authService.postForgotPwd.and.returnValue(throwError(() => new Error()));
     const button = getHTMLElement<HTMLButtonElement>(fixture, '#login')!;
     button.click();
@@ -166,7 +205,7 @@ describe('AuthOverview - Unit Tests', () => {
     expect(toastService.addToast).toHaveBeenCalled();
   });
 
-  it('U-Test-8: Component should navigate to login after successful reset password request', async () => {
+  it('U-Test-11: Component should navigate to login after successful reset password request', async () => {
     authService.postForgotPwd.and.returnValue(of());
     authService.postAccessCode.and.returnValue(of());
     const button = getHTMLElement<HTMLButtonElement>(fixture, '#login')!;
@@ -188,7 +227,7 @@ describe('AuthOverview - Unit Tests', () => {
     expect(router.url.includes(PATHS.login)).toBeTrue();
   });
 
-  it('U-Test-9: Component should add error toast after failed reset password request', async () => {
+  it('U-Test-12: Component should add error toast after failed reset password request', async () => {
     authService.postForgotPwd.and.returnValue(of());
     authService.postAccessCode.and.returnValue(throwError(() => new Error()));
     const button = getHTMLElement<HTMLButtonElement>(fixture, '#login')!;

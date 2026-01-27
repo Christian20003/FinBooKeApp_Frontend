@@ -12,9 +12,18 @@
             "missing": "Fehlende E-Mail-Adresse",
             "invalid": "Ungültige E-Mail-Adresse"            
         },
+        "username": {
+            "label": "Benutzername",
+            "missing": "Fehlender Benutzername"
+        },
         "password": {
             "label": "Passwort",
-            "missing": "Fehlendes Passwort"
+            "missing": "Fehlendes Passwort",
+            "upperCase": "Mindestens ein Großbuchstabe",
+            "lowerCase": "Mindestens ein Kleinbuchstabe",
+            "digit": "Mindestens eine Ziffer",
+            "chars": "Mindestens 5 verschiedene Zeichen",
+            "length": "Mindestlänge: 10 Zeichen"
         },
         "code": {
             "missing": "Bitte vollständigen Code eingeben"
