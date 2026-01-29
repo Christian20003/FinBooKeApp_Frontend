@@ -25,6 +25,7 @@ import {
   EnvironmentService,
   IconService,
   PATHS,
+  ReauthenticationService,
   ToastService,
 } from 'src/app/core';
 import { Login } from 'src/app/authentication/login/login';
@@ -60,6 +61,15 @@ describe('AuthOverview', () => {
     return API + API_PATHS.auth.resetPwd;
   };
 
+  const skipReauthentication = function (): void {
+    const service = TestBed.inject(ReauthenticationService);
+    const time = TestUser.session.jwtExpire - new Date().getTime();
+    service.stop();
+    jasmine.clock().install();
+    jasmine.clock().tick(time);
+    jasmine.clock().uninstall();
+  };
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -76,6 +86,7 @@ describe('AuthOverview', () => {
       ],
       providers: [
         AuthenticationService,
+        ReauthenticationService,
         EnvironmentService,
         ToastService,
         IconService,
@@ -127,6 +138,7 @@ describe('AuthOverview', () => {
       },
     });
     expect(router.url.includes(PATHS.dashboard)).toBeTrue();
+    skipReauthentication();
   });
 
   it('I-Test-2: Successful registration process', async () => {
@@ -162,6 +174,7 @@ describe('AuthOverview', () => {
       },
     });
     expect(router.url.includes(PATHS.dashboard)).toBeTrue();
+    skipReauthentication();
   });
 
   it('I-Test-3: Successful reset password process', async () => {

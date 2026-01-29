@@ -23,6 +23,7 @@ export { passwordStrengthValidator } from './validators/passwordStrengthValidato
 export { IconService } from './services/icon/icon-service';
 export { ToastService } from './services/toast/toast-service';
 export { AuthenticationService } from './services/authentication/authentication-service';
+export { ReauthenticationService } from './services/authentication/reauthentication-service';
 export { EnvironmentService } from './services/environment/environment-service';
 export { HttpErrorService } from './services/http-error-handling/http-error-service';
 export { LoggingService } from './services/logging/logging-service';

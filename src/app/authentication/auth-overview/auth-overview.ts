@@ -12,6 +12,7 @@ import {
   ILoginDTO,
   IRegisterDTO,
   PATHS,
+  ReauthenticationService,
 } from 'src/app/core/index';
 import { ToastService } from 'src/app/core/services/toast/toast-service';
 import { SetAccessCode } from 'src/app/authentication/set-access-code/set-access-code';
@@ -40,6 +41,7 @@ export class AuthOverview {
   private readonly router = inject(Router);
   private readonly store = inject(Store);
   private readonly authService = inject(AuthenticationService);
+  private readonly reauthService = inject(ReauthenticationService);
   private readonly toastService = inject(ToastService);
 
   protected readonly translationKeys = TRANSLATION_KEYS;
@@ -145,6 +147,7 @@ export class AuthOverview {
       next: response => {
         this.loading.update(() => false);
         this.store.dispatch(setUser({ user: response }));
+        this.reauthService.start();
         this.router.navigate([PATHS.dashboard]);
       },
       error: error => {
@@ -169,6 +172,7 @@ export class AuthOverview {
       next: response => {
         this.loading.update(() => false);
         this.store.dispatch(setUser({ user: response }));
+        this.reauthService.start();
         this.router.navigate([PATHS.dashboard]);
       },
       error: error => {
