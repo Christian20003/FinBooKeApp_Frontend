@@ -9,8 +9,8 @@ import {
   setUserSession,
 } from './User.actions';
 import { selectUser } from './User.selector';
-import { initialState } from './User.reducer';
 import { concatLatestFrom } from '@ngrx/operators';
+import { IUserUnauthenticated } from 'src/app/core';
 
 @Injectable()
 export class userEffects {
@@ -41,7 +41,7 @@ export class userEffects {
           return of(setUser({ user: JSON.parse(userObj) }));
         }
         // If no object was found, create new default object
-        return of(setUser({ user: initialState }));
+        return of(setUser({ user: IUserUnauthenticated }));
       })
     );
   });

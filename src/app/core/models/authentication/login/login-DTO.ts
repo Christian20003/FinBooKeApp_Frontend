@@ -8,8 +8,3 @@ export interface ILoginDTO {
   email: string;
   password: string;
 }
-
-export const TestLoginDTO: ILoginDTO = {
-  email: 'max-mustermann@gmail.com',
-  password: '1234',
-};

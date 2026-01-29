@@ -1,4 +1,4 @@
-import { TestUser } from 'src/app/core';
+import { TestUser } from 'src/app/core/index.spec';
 import { selectSession, selectUser } from './User.selector';
 
 describe('User-Store Selectors - Unit Tests', () => {

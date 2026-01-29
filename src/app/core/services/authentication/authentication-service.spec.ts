@@ -6,14 +6,20 @@ import {
 } from '@angular/common/http/testing';
 import { HttpErrorResponse, provideHttpClient } from '@angular/common/http';
 import { TranslocoService } from '@jsverse/transloco';
-import { TestLoginDTO } from 'src/app/core/models/authentication/loginDTO';
-import { TestRegisterDTO } from 'src/app/core/models/authentication/registerDTO';
-import { isIUser, TestUser } from 'src/app/core/models/authentication/user';
 import { EnvironmentService } from 'src/app/core/services/environment/environment-service';
 import { AuthenticationService } from './authentication-service';
 import { LoggingService } from 'src/app/core/services/logging/logging-service';
 import { HttpErrorService } from 'src/app/core/services/http-error-handling/http-error-service';
 import { API_PATHS } from 'src/app/core/routing/api-paths';
+import {
+  TestLoginDTO,
+  TestReauthenticationDTO,
+  TestRegisterDTO,
+  TestSession,
+  TestUser,
+} from 'src/app/core/index.spec';
+import { isIUser } from 'src/app/core/models/authentication/user/is-user';
+import { isISession } from '../../models';
 
 describe('AuthenticationService - Unit Tests', () => {
   let service: AuthenticationService;
@@ -28,6 +34,9 @@ describe('AuthenticationService - Unit Tests', () => {
   };
   const registerPath = function (): string {
     return API + API_PATHS.auth.register;
+  };
+  const refreshTokenPath = function (): string {
+    return API + API_PATHS.auth.refreshToken;
   };
   const forgotPwdPath = function (): string {
     return API + API_PATHS.auth.forgotPwd;
@@ -216,6 +225,42 @@ describe('AuthenticationService - Unit Tests', () => {
 
     const error = new HttpErrorResponse({ status: 423 });
     const req = controller.expectOne(logoutPath());
+    req.flush('Resource locked', error);
+  });
+
+  it('U-Test-13: Service should return session object after successful refresh access token request', () => {
+    service.postRefreshToken(TestReauthenticationDTO).subscribe({
+      next: response => {
+        expect(isISession(response)).toBeTrue();
+      },
+    });
+
+    const req = controller.expectOne(refreshTokenPath());
+    req.flush(TestSession);
+  });
+
+  it('U-Test-14: Service should return error after refresh access token request if API returns faulty session object', () => {
+    service.postRefreshToken(TestReauthenticationDTO).subscribe({
+      error: error => {
+        expect(error.message).toEqual(TEXT);
+      },
+    });
+
+    const req = controller.expectOne(refreshTokenPath());
+    req.flush({
+      jwtToken: 'abcde',
+    });
+  });
+
+  it('U-Test-15: Service should return error after refresh access token request if API returns error response', () => {
+    service.postRefreshToken(TestReauthenticationDTO).subscribe({
+      error: error => {
+        expect(error.message).toEqual(ERROR.message);
+      },
+    });
+
+    const error = new HttpErrorResponse({ status: 423 });
+    const req = controller.expectOne(refreshTokenPath());
     req.flush('Resource locked', error);
   });
 });

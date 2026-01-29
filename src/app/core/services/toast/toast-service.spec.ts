@@ -4,13 +4,10 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-import {
-  TestToast,
-  IToast,
-  ToastLifeTime,
-  ToastType,
-} from 'src/app/core/models/toast/toast';
+import { IToast } from 'src/app/core/models/toast/toast';
 import { ToastService } from './toast-service';
+import { ToastLifeTime, ToastType } from 'src/app/core/models';
+import { TestToast } from 'src/app/core/index.spec';
 
 describe('ToastService - Unit Tests', () => {
   let service: ToastService;

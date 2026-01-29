@@ -25,8 +25,6 @@ import {
   EnvironmentService,
   IconService,
   PATHS,
-  TestRegisterDTO,
-  TestUser,
   ToastService,
 } from 'src/app/core';
 import { Login } from 'src/app/authentication/login/login';
@@ -39,6 +37,7 @@ import {
   getHTMLElements,
 } from 'src/app/testing/helper/get-html-element';
 import { setInputValues } from 'src/app/testing/helper/set-input-values';
+import { TestRegisterDTO, TestUser } from 'src/app/core/index.spec';
 
 describe('AuthOverview', () => {
   let fixture: ComponentFixture<AuthOverview>;

@@ -1,23 +1,17 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NgClass } from '@angular/common';
 import { provideRouter, Router } from '@angular/router';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { of, throwError } from 'rxjs';
 import { MockComponent } from 'ng-mocks';
 import { ToastService } from 'src/app/core/services/toast/toast-service';
-import {
-  getTranslocoModule,
-  initialState,
-  Loading,
-  setUser,
-} from 'src/app/shared';
+import { getTranslocoModule, Loading, setUser } from 'src/app/shared';
 import {
   AuthenticationService,
+  IUserUnauthenticated,
   PATHS,
-  TestLoginDTO,
-  TestRegisterDTO,
-  TestUser,
-} from 'src/app/core/index';
+} from 'src/app/core';
 import { AuthOverview } from './auth-overview';
 import { Login } from 'src/app/authentication/login/login';
 import { Register } from 'src/app/authentication/register/register';
@@ -26,7 +20,11 @@ import { SetAccessCode } from 'src/app/authentication/set-access-code/set-access
 import { routes } from 'src/app/core/routing/routes';
 import { getHTMLElement } from 'src/app/testing/helper/get-html-element';
 import { getComponent } from 'src/app/testing/helper/get-component';
-import { NgClass } from '@angular/common';
+import {
+  TestLoginDTO,
+  TestRegisterDTO,
+  TestUser,
+} from 'src/app/core/index.spec';
 
 describe('AuthOverview - Unit Tests', () => {
   let fixture: ComponentFixture<AuthOverview>;
@@ -58,7 +56,7 @@ describe('AuthOverview - Unit Tests', () => {
       providers: [
         { provide: AuthenticationService, useValue: authService },
         { provide: ToastService, useValue: toastService },
-        provideMockStore({ initialState }),
+        provideMockStore({ initialState: IUserUnauthenticated }),
         provideRouter(routes),
         provideZonelessChangeDetection(),
       ],

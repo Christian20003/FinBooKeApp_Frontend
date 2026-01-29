@@ -6,13 +6,14 @@ import { TranslocoDirective } from '@jsverse/transloco';
 import { Store } from '@ngrx/store';
 import { deleteUser } from 'src/app/shared/stores/UserStore/User.actions';
 import { TRANSLATION_KEYS } from 'src/app/shared/localization/translation-keys';
-import { ToastLifeTime, ToastType } from 'src/app/core/models/toast/toast';
 import {
   AuthenticationService,
   ICON_NAMES,
   IconService,
   PATHS,
+  ToastLifeTime,
   ToastService,
+  ToastType,
 } from 'src/app/core';
 
 @Component({

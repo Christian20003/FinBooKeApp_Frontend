@@ -5,13 +5,14 @@ import { provideZonelessChangeDetection } from '@angular/core';
 import { MockComponent } from 'ng-mocks';
 import { Register } from './register';
 import { FormInputError, getTranslocoModule } from 'src/app/shared';
-import { IconService, TestRegisterDTO } from 'src/app/core';
+import { IconService } from 'src/app/core';
 import { getHTMLElement } from 'src/app/testing/helper/get-html-element';
 import { setInputValues } from 'src/app/testing/helper/set-input-values';
 import {
   getComponent,
   getComponents,
 } from 'src/app/testing/helper/get-component';
+import { TestRegisterDTO } from 'src/app/core/index.spec';
 
 describe('Register - Unit Tests', () => {
   let component: Register;

@@ -5,9 +5,9 @@ import { Action } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { userEffects } from './User.effects';
 import { selectUser } from './User.selector';
-import { initialState } from './User.reducer';
-import { TestUser } from 'src/app/core';
 import { provideZonelessChangeDetection } from '@angular/core';
+import { TestUser } from 'src/app/core/index.spec';
+import { IUserUnauthenticated } from 'src/app/core';
 
 describe('User-Store Effects - Unit Tests', () => {
   let actions$: Observable<Action>;
@@ -91,7 +91,7 @@ describe('User-Store Effects - Unit Tests', () => {
     effects.loadUserData$.subscribe(action => {
       expect(action).toEqual({
         type: '[User] Set',
-        user: initialState,
+        user: IUserUnauthenticated,
       });
     });
   });

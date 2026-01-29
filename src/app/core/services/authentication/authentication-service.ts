@@ -4,9 +4,15 @@ import { TranslocoService } from '@jsverse/transloco';
 import { Observable, catchError, map } from 'rxjs';
 import { EnvironmentService } from 'src/app/core/services/environment/environment-service';
 import { LoggingService } from 'src/app/core/services/logging/logging-service';
-import { isIUser, IUser } from 'src/app/core/models/authentication/user';
-import { ILoginDTO } from 'src/app/core/models/authentication/loginDTO';
-import { IRegisterDTO } from 'src/app/core/models/authentication/registerDTO';
+import {
+  IUser,
+  ILoginDTO,
+  IRegisterDTO,
+  ISession,
+  isIUser,
+  isISession,
+  IReauthenticationDTO,
+} from 'src/app/core/models/';
 import { API_PATHS, buildApiUrl } from 'src/app/core/routing/api-paths';
 import { TRANSLATION_KEYS } from 'src/app/shared';
 import { HttpErrorService } from 'src/app/core/services/http-error-handling/http-error-service';
@@ -154,6 +160,37 @@ export class AuthenticationService {
       }),
       catchError(error => {
         throw this.errorHandler.processError(error);
+      })
+    );
+  }
+
+  /**
+   * This method makes a refresh access token request via HTTP to the API.
+   *
+   * @param data The refresh token data to authenticate the user.
+   * @returns An observable with the received session object.
+   */
+  postRefreshToken(data: IReauthenticationDTO): Observable<ISession> {
+    const path = this.getPath(API_PATHS.auth.refreshToken);
+    this.logger.logInfo(`POST to ${path}`);
+
+    return this.client.post<ISession>(path, data).pipe(
+      map(response => {
+        if (isISession(response)) {
+          this.logger.logInfo(`Success of POST to ${path}`, response);
+          return response;
+        }
+        this.logger.logError(`Error of POST to ${path}`, response);
+        const message = this.transloco.translate(
+          TRANSLATION_KEYS.httpError.invalid
+        );
+        throw new Error(message);
+      }),
+      catchError(error => {
+        if (error instanceof HttpErrorResponse) {
+          throw this.errorHandler.processError(error);
+        }
+        throw error;
       })
     );
   }

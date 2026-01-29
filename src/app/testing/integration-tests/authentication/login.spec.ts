@@ -13,8 +13,8 @@ import {
 import { getHTMLElement } from 'src/app/testing/helper/get-html-element';
 import { IconService } from 'src/app/core';
 import { setInputValues } from 'src/app/testing/helper/set-input-values';
-import { TestLoginDTO } from 'src/app/core/models/authentication/loginDTO';
 import { getComponent } from 'src/app/testing/helper/get-component';
+import { TestLoginDTO } from 'src/app/core/index.spec';
 
 describe('Login - Integration Tests', () => {
   let fixture: ComponentFixture<Login>;

@@ -1,17 +1,18 @@
-export { ILoginDTO, TestLoginDTO } from './models/authentication/loginDTO';
 export {
+  ILoginDTO,
   IRegisterDTO,
-  TestRegisterDTO,
-} from './models/authentication/registerDTO';
-export { IIcon, IconDictionary } from './models/icon/icon';
-export { ISession, TestSession } from './models/authentication/session';
-export {
+  IReauthenticationDTO,
+  IIcon,
+  ISession,
   IToast,
+  IUser,
+  IUserUnauthenticated,
+  IconDictionary,
+  isISession,
+  isIUser,
   ToastType,
   ToastLifeTime,
-  TestToast,
-} from './models/toast/toast';
-export { IUser, isIUser, TestUser } from './models/authentication/user';
+} from './models';
 
 export { API_PATHS, buildApiUrl } from './routing/api-paths';
 export { PATHS } from './routing/paths';

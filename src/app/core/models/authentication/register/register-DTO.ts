@@ -10,9 +10,3 @@ export interface IRegisterDTO {
   name: string;
   password: string;
 }
-
-export const TestRegisterDTO: IRegisterDTO = {
-  email: 'max-mustermann@gmail.com',
-  name: 'max',
-  password: 'aBcD33446688',
-};
