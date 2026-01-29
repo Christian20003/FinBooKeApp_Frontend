@@ -1,7 +1,7 @@
 import { HttpEvent, HttpHandlerFn, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { includeAuthUrl } from 'src/app/core/routing/api-paths';
-import { IUser } from '../models';
+import { IUser } from 'src/app/core/models';
 
 /**
  * This function should intercept all non authentication requests sent to the backend of this application.
@@ -10,15 +10,15 @@ import { IUser } from '../models';
  * @param next      see {@link HttpHandlerFn}.
  * @returns         The updated request object.
  */
-export function authInterceptor(
+export function AuthInterceptor(
   request: HttpRequest<unknown>,
   next: HttpHandlerFn
 ): Observable<HttpEvent<unknown>> {
   const obj = localStorage.getItem('user');
-  if (includeAuthUrl(request.url) || obj === null) {
+  const user: IUser = JSON.parse(obj ? obj : '');
+  if (includeAuthUrl(request.url) || user === null) {
     return next(request);
   }
-  const user: IUser = JSON.parse(obj);
   const newRequest = request.clone({
     headers: request.headers.append(
       'Authorization',

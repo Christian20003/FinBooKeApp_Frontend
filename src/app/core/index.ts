@@ -20,6 +20,8 @@ export { ICON_NAMES } from './services/icon/icon-names';
 
 export { passwordStrengthValidator } from './validators/passwordStrengthValidator';
 
+export { AuthInterceptor } from './interceptors/auth-interceptor';
+
 export { IconService } from './services/icon/icon-service';
 export { ToastService } from './services/toast/toast-service';
 export { AuthenticationService } from './services/authentication/authentication-service';
