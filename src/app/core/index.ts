@@ -22,6 +22,8 @@ export { passwordStrengthValidator } from './validators/passwordStrengthValidato
 
 export { AuthInterceptor } from './interceptors/auth-interceptor';
 
+export { authGuard } from './guards';
+
 export { IconService } from './services/icon/icon-service';
 export { ToastService } from './services/toast/toast-service';
 export { AuthenticationService } from './services/authentication/authentication-service';
