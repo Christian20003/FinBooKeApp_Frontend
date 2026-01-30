@@ -14,20 +14,21 @@ export {
   ToastLifeTime,
 } from './models';
 
-export { API_PATHS, buildApiUrl } from './routing/api-paths';
-export { PATHS } from './routing/paths';
-export { ICON_NAMES } from './services/icon/icon-names';
+export { PATHS, API_PATHS, buildApiUrl, includeAuthUrl } from './routing';
 
-export { passwordStrengthValidator } from './validators/passwordStrengthValidator';
+export { passwordStrengthValidator } from './validators';
 
-export { AuthInterceptor } from './interceptors/auth-interceptor';
+export { authInterceptor } from './interceptors';
 
 export { authGuard } from './guards';
 
-export { IconService } from './services/icon/icon-service';
-export { ToastService } from './services/toast/toast-service';
-export { AuthenticationService } from './services/authentication/authentication-service';
-export { ReauthenticationService } from './services/authentication/reauthentication-service';
-export { EnvironmentService } from './services/environment/environment-service';
-export { HttpErrorService } from './services/http-error-handling/http-error-service';
-export { LoggingService } from './services/logging/logging-service';
+export {
+  AuthenticationService,
+  ReauthenticationService,
+  EnvironmentService,
+  HttpErrorService,
+  LoggingService,
+  IconService,
+  ToastService,
+  ICON_NAMES,
+} from './services';

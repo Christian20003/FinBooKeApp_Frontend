@@ -9,7 +9,7 @@ import { selectSession } from 'src/app/shared';
 import { TestSession } from 'src/app/core/index.spec';
 import { PATHS } from 'src/app/core/routing/paths';
 
-describe('authGuardGuard', () => {
+describe('authGuard - Unit Tests', () => {
   @Component({ template: '<p>App</p>' })
   class AppComponent {}
 

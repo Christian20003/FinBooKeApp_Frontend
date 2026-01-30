@@ -9,12 +9,12 @@ import {
   HttpTestingController,
   provideHttpClientTesting,
 } from '@angular/common/http/testing';
-import { AuthInterceptor } from './auth-interceptor';
+import { authInterceptor } from './auth-interceptor';
 import { TestUser } from 'src/app/core/index.spec';
 import { IUser } from 'src/app/core/models';
-import { API_PATHS } from 'src/app/core/routing/api-paths';
+import { API_PATHS } from 'src/app/core/routing/api/api-paths';
 
-describe('AuthInterceptor: Unit Tests', () => {
+describe('authInterceptor: Unit Tests', () => {
   let client: HttpClient;
   let controller: HttpTestingController;
 
@@ -27,7 +27,7 @@ describe('AuthInterceptor: Unit Tests', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        provideHttpClient(withInterceptors([AuthInterceptor])),
+        provideHttpClient(withInterceptors([authInterceptor])),
         provideHttpClientTesting(),
         provideZonelessChangeDetection(),
       ],

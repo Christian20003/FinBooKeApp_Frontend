@@ -8,7 +8,7 @@ import { provideTransloco } from '@jsverse/transloco';
 import { provideRouter } from '@angular/router';
 import { routes } from './app/core/routing/routes';
 import { translocoConfig, userEffects, userReducer } from './app/shared';
-import { AuthInterceptor } from './app/core';
+import { authInterceptor } from './app/core';
 
 bootstrapApplication(App, {
   providers: [
@@ -16,7 +16,7 @@ bootstrapApplication(App, {
     provideStore({ user: userReducer }),
     provideEffects([userEffects]),
     provideTransloco(translocoConfig),
-    provideHttpClient(withInterceptors([AuthInterceptor])),
+    provideHttpClient(withInterceptors([authInterceptor])),
     provideZonelessChangeDetection(),
   ],
 });

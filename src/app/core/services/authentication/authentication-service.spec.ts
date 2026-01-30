@@ -10,7 +10,7 @@ import { EnvironmentService } from 'src/app/core/services/environment/environmen
 import { AuthenticationService } from './authentication-service';
 import { LoggingService } from 'src/app/core/services/logging/logging-service';
 import { HttpErrorService } from 'src/app/core/services/http-error-handling/http-error-service';
-import { API_PATHS } from 'src/app/core/routing/api-paths';
+import { API_PATHS } from 'src/app/core/routing';
 import {
   TestLoginDTO,
   TestReauthenticationDTO,

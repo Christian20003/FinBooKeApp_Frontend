@@ -13,7 +13,7 @@ import {
   isISession,
   IReauthenticationDTO,
 } from 'src/app/core/models/';
-import { API_PATHS, buildApiUrl } from 'src/app/core/routing/api-paths';
+import { API_PATHS, buildApiUrl } from 'src/app/core/routing';
 import { TRANSLATION_KEYS } from 'src/app/shared';
 import { HttpErrorService } from 'src/app/core/services/http-error-handling/http-error-service';
 

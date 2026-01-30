@@ -1,6 +1,6 @@
 import { HttpEvent, HttpHandlerFn, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { includeAuthUrl } from 'src/app/core/routing/api-paths';
+import { includeAuthUrl } from 'src/app/core/routing/api/include-path';
 import { IUser } from 'src/app/core/models';
 
 /**
@@ -10,7 +10,7 @@ import { IUser } from 'src/app/core/models';
  * @param next      see {@link HttpHandlerFn}.
  * @returns         The updated request object.
  */
-export function AuthInterceptor(
+export function authInterceptor(
   request: HttpRequest<unknown>,
   next: HttpHandlerFn
 ): Observable<HttpEvent<unknown>> {
