@@ -1,9 +1,6 @@
 import { computed, Injectable, signal } from '@angular/core';
-import {
-  IToast,
-  ToastLifeTime,
-  ToastType,
-} from 'src/app/core/models/toast/toast';
+import { IToast } from 'src/app/core/models/toast/toast';
+import { ToastLifeTime, ToastType } from 'src/app/core/models';
 
 /**
  * Service to manage toast notifications within the application.

@@ -1,0 +1,40 @@
+@use "app/shared/styles/components" as components;
+
+#register-form {
+    display: grid;
+    gap: 2rem;
+    margin-top: 2.5rem;
+
+    .relative-container {
+        position: relative;
+
+        .input {
+            @include components.input-container();
+        }
+
+        .label {
+            @include components.label-container();
+        }
+
+        .icon-stroke {
+            @include components.svg-container();
+        }
+
+        .icon-fill {
+            @include components.svg-container($stroke: none, $fill: var(--icon-color-primary))
+        }
+
+        .error {
+            position: absolute;
+            bottom: 0rem;
+        }
+    }
+
+    #require-container {
+        max-width: 14rem;
+    }
+
+    #register-btn {
+        @include components.major-button();
+    }
+}

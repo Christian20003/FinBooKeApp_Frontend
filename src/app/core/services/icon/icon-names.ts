@@ -8,6 +8,7 @@ export const ICON_NAMES = {
   warning: 'warning',
   close: 'close',
   loading: 'loading',
+  username: 'username',
   email: 'email',
   password: 'password',
   accounts: 'accounts',

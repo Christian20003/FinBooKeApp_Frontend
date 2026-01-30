@@ -7,14 +7,10 @@ import {
 } from '@angular/common/http/testing';
 import { Toast } from 'src/app/shared/components/toasts/toast/toast';
 import { Toasts } from 'src/app/shared/components/toasts/toasts';
-import {
-  IconService,
-  TestToast,
-  ToastLifeTime,
-  ToastService,
-} from 'src/app/core';
+import { IconService, ToastLifeTime, ToastService } from 'src/app/core';
 import { getHTMLElement } from 'src/app/testing/helper/get-html-element';
 import { getComponents } from 'src/app/testing/helper/get-component';
+import { TestToast } from 'src/app/core/index.spec';
 
 describe('Toasts - Integration Tests', () => {
   let fixture: ComponentFixture<Toasts>;

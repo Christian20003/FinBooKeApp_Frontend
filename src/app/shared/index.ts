@@ -15,6 +15,6 @@ export {
   setUserSession,
   deleteUser,
 } from './stores/UserStore/User.actions';
-export { initialState, userReducer } from './stores/UserStore/User.reducer';
+export { userReducer } from './stores/UserStore/User.reducer';
 export { userEffects } from './stores/UserStore/User.effects';
 export { selectUser, selectSession } from './stores/UserStore/User.selector';

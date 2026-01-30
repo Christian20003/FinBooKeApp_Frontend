@@ -1,9 +1,9 @@
 import { Component, ElementRef, Renderer2, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { initialState, selectUser, setUser, Navbar, Toasts } from './shared';
+import { selectUser, setUser, Navbar, Toasts } from './shared';
 import { ChildrenOutletContexts, Router, RouterOutlet } from '@angular/router';
 import { TranslocoService } from '@jsverse/transloco';
-import { PATHS } from './core';
+import { IUserUnauthenticated, PATHS } from './core';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +22,7 @@ export class App {
   constructor() {
     const data = this.store.select(selectUser);
     data.subscribe(state => {
-      if (state === initialState) {
+      if (state === IUserUnauthenticated) {
         this.router.navigate([PATHS.login]);
       }
     });

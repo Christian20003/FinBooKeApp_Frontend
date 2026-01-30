@@ -7,26 +7,13 @@ import {
   setUserName,
   setUserSession,
 } from './User.actions';
-import { IUser } from 'src/app/core';
-
-/** This object represents the initial state of a user in the store */
-export const initialState: IUser = {
-  name: '',
-  email: '',
-  imagePath: '',
-  session: {
-    jwtToken: '',
-    jwtExpire: 0,
-    refreshToken: '',
-    refreshExpire: 0,
-  },
-};
+import { IUser, IUserUnauthenticated } from 'src/app/core';
 
 /**
  * Reducer function to manage user state in the store.
  */
 export const userReducer = createReducer(
-  initialState,
+  IUserUnauthenticated,
   on(setUser, (_, action): IUser => action.user),
   on(
     setUserName,
@@ -56,5 +43,5 @@ export const userReducer = createReducer(
       session: action.session,
     })
   ),
-  on(deleteUser, (): IUser => initialState)
+  on(deleteUser, (): IUser => IUserUnauthenticated)
 );

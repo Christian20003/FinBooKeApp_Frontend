@@ -1,9 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { IIcon, IconDictionary } from 'src/app/core/models/icon/icon';
 import { ICON_NAMES } from './icon-names';
 import { ICON_PATHS } from './icon-paths';
+import { IconDictionary, IIcon } from 'src/app/core/models';
 
 /**
  * Service to manage SVG icons within the application.

@@ -7,11 +7,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponent } from 'ng-mocks';
 import { Toasts } from './toasts';
 import { Toast } from './toast/toast';
-import { ToastService, TestToast, IToast } from 'src/app/core';
+import { ToastService, IToast } from 'src/app/core';
 import {
   getComponent,
   getComponents,
 } from 'src/app/testing/helper/get-component';
+import { TestToast } from 'src/app/core/index.spec';
 
 describe('Toasts - Unit Tests', () => {
   let component: Toasts;

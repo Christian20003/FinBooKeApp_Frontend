@@ -1,22 +1,18 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NgClass } from '@angular/common';
 import { provideRouter, Router } from '@angular/router';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { of, throwError } from 'rxjs';
 import { MockComponent } from 'ng-mocks';
 import { ToastService } from 'src/app/core/services/toast/toast-service';
-import {
-  getTranslocoModule,
-  initialState,
-  Loading,
-  setUser,
-} from 'src/app/shared';
+import { getTranslocoModule, Loading, setUser } from 'src/app/shared';
 import {
   AuthenticationService,
+  IUserUnauthenticated,
   PATHS,
-  TestLoginDTO,
-  TestUser,
-} from 'src/app/core/index';
+  ReauthenticationService,
+} from 'src/app/core';
 import { AuthOverview } from './auth-overview';
 import { Login } from 'src/app/authentication/login/login';
 import { Register } from 'src/app/authentication/register/register';
@@ -25,23 +21,29 @@ import { SetAccessCode } from 'src/app/authentication/set-access-code/set-access
 import { routes } from 'src/app/core/routing/routes';
 import { getHTMLElement } from 'src/app/testing/helper/get-html-element';
 import { getComponent } from 'src/app/testing/helper/get-component';
-import { NgClass } from '@angular/common';
+import {
+  TestLoginDTO,
+  TestRegisterDTO,
+  TestUser,
+} from 'src/app/core/index.spec';
 
 describe('AuthOverview - Unit Tests', () => {
   let fixture: ComponentFixture<AuthOverview>;
   let router: Router;
   let store: MockStore;
   let authService: jasmine.SpyObj<AuthenticationService>;
+  let reauthService: jasmine.SpyObj<ReauthenticationService>;
   let toastService: jasmine.SpyObj<ToastService>;
 
   beforeEach(async () => {
-    authService = jasmine.createSpyObj(AuthenticationService, [
+    authService = jasmine.createSpyObj('AuthenticationService', [
       'postLogin',
       'postRegister',
       'postForgotPwd',
       'postAccessCode',
     ]);
-    toastService = jasmine.createSpyObj(ToastService, ['addToast']);
+    reauthService = jasmine.createSpyObj('ReauthenticationService', ['start']);
+    toastService = jasmine.createSpyObj('ToastService', ['addToast']);
 
     TestBed.configureTestingModule({
       imports: [
@@ -57,7 +59,8 @@ describe('AuthOverview - Unit Tests', () => {
       providers: [
         { provide: AuthenticationService, useValue: authService },
         { provide: ToastService, useValue: toastService },
-        provideMockStore({ initialState }),
+        { provide: ReauthenticationService, useValue: reauthService },
+        provideMockStore({ initialState: IUserUnauthenticated }),
         provideRouter(routes),
         provideZonelessChangeDetection(),
       ],
@@ -134,7 +137,20 @@ describe('AuthOverview - Unit Tests', () => {
     expect(router.url.includes(PATHS.dashboard)).toBeTrue();
   });
 
-  it('U-Test-6: Component should add error toast after failed login request', async () => {
+  it('U-Test-6: Component should activate reauthentication process after successful login request', async () => {
+    authService.postLogin.and.returnValue(of(TestUser));
+    const button = getHTMLElement<HTMLButtonElement>(fixture, '#login')!;
+    button.click();
+    await fixture.whenStable();
+
+    const login = getComponent(fixture, Login)!;
+    login.login.emit(TestLoginDTO);
+    await fixture.whenStable();
+
+    expect(reauthService.start).toHaveBeenCalled();
+  });
+
+  it('U-Test-7: Component should add error toast after failed login request', async () => {
     authService.postLogin.and.returnValue(throwError(() => new Error()));
     const button = getHTMLElement<HTMLButtonElement>(fixture, '#login')!;
     button.click();
@@ -147,9 +163,60 @@ describe('AuthOverview - Unit Tests', () => {
     expect(toastService.addToast).toHaveBeenCalled();
   });
 
-  /**TODO: Register */
+  it('U-Test-8: Component should store user object after successful register request', async () => {
+    authService.postRegister.and.returnValue(of(TestUser));
+    const spy = spyOn(store, 'dispatch');
+    const button = getHTMLElement<HTMLButtonElement>(fixture, '#register')!;
+    button.click();
+    await fixture.whenStable();
 
-  it('U-Test-7: Component should add error toast after failed access code request', async () => {
+    const register = getComponent(fixture, Register)!;
+    register.register.emit(TestRegisterDTO);
+    await fixture.whenStable();
+
+    expect(spy).toHaveBeenCalledWith(setUser({ user: TestUser }));
+  });
+
+  it('U-Test-9: Component should activate reauthentication process after successful register request', async () => {
+    authService.postRegister.and.returnValue(of(TestUser));
+    const button = getHTMLElement<HTMLButtonElement>(fixture, '#register')!;
+    button.click();
+    await fixture.whenStable();
+
+    const register = getComponent(fixture, Register)!;
+    register.register.emit(TestRegisterDTO);
+    await fixture.whenStable();
+
+    expect(reauthService.start).toHaveBeenCalled();
+  });
+
+  it('U-Test-10: Component should navigate to dashboard after successful register request', async () => {
+    authService.postRegister.and.returnValue(of(TestUser));
+    const button = getHTMLElement<HTMLButtonElement>(fixture, '#register')!;
+    button.click();
+    await fixture.whenStable();
+
+    const register = getComponent(fixture, Register)!;
+    register.register.emit(TestRegisterDTO);
+    await fixture.whenStable();
+
+    expect(router.url.includes(PATHS.dashboard)).toBeTrue();
+  });
+
+  it('U-Test-11: Component should add error toast after failed register request', async () => {
+    authService.postRegister.and.returnValue(throwError(() => new Error()));
+    const button = getHTMLElement<HTMLButtonElement>(fixture, '#register')!;
+    button.click();
+    await fixture.whenStable();
+
+    const register = getComponent(fixture, Register)!;
+    register.register.emit(TestRegisterDTO);
+    await fixture.whenStable();
+
+    expect(toastService.addToast).toHaveBeenCalled();
+  });
+
+  it('U-Test-12: Component should add error toast after failed access code request', async () => {
     authService.postForgotPwd.and.returnValue(throwError(() => new Error()));
     const button = getHTMLElement<HTMLButtonElement>(fixture, '#login')!;
     button.click();
@@ -166,7 +233,7 @@ describe('AuthOverview - Unit Tests', () => {
     expect(toastService.addToast).toHaveBeenCalled();
   });
 
-  it('U-Test-8: Component should navigate to login after successful reset password request', async () => {
+  it('U-Test-13: Component should navigate to login after successful reset password request', async () => {
     authService.postForgotPwd.and.returnValue(of());
     authService.postAccessCode.and.returnValue(of());
     const button = getHTMLElement<HTMLButtonElement>(fixture, '#login')!;
@@ -188,7 +255,7 @@ describe('AuthOverview - Unit Tests', () => {
     expect(router.url.includes(PATHS.login)).toBeTrue();
   });
 
-  it('U-Test-9: Component should add error toast after failed reset password request', async () => {
+  it('U-Test-14: Component should add error toast after failed reset password request', async () => {
     authService.postForgotPwd.and.returnValue(of());
     authService.postAccessCode.and.returnValue(throwError(() => new Error()));
     const button = getHTMLElement<HTMLButtonElement>(fixture, '#login')!;

@@ -10,6 +10,7 @@ export const ICON_PATHS = {
   [ICON_NAMES.warning]: 'assets/icons/action-results/warning.svg',
   [ICON_NAMES.close]: 'assets/icons/actions/close.svg',
   [ICON_NAMES.loading]: 'assets/icons/symbols/coins.svg',
+  [ICON_NAMES.username]: 'assets/icons/symbols/user.svg',
   [ICON_NAMES.email]: 'assets/icons/symbols/email.svg',
   [ICON_NAMES.password]: 'assets/icons/symbols/password.svg',
   [ICON_NAMES.accounts]: 'assets/icons/symbols/accounts.svg',

@@ -33,6 +33,7 @@
         animate.leave="leaveXOverlap"></app-login>
     } @else {
       <app-register
+        (register)="onSubmitRegister($event)"
         animate.enter="enterX"
         animate.leave="leaveXOverlap"></app-register>
     }

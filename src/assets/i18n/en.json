@@ -12,9 +12,18 @@
             "missing": "Empty e-mail address",
             "invalid": "Invalid e-mail address"            
         },
+        "username": {
+            "label": "Username",
+            "missing": "Empty username"
+        },
         "password": {
             "label": "Password",
-            "missing": "Empty password"
+            "missing": "Empty password",
+            "upperCase": "At least one upper case letter",
+            "lowerCase": "At least one lower case letter",
+            "digit": "At least one digit",
+            "chars": "At least five different character",
+            "length": "Minimum length: 10 characters"
         },
         "code": {
             "missing": "Please enter the complete code"

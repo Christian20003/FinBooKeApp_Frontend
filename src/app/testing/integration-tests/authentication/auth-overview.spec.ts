@@ -25,7 +25,7 @@ import {
   EnvironmentService,
   IconService,
   PATHS,
-  TestUser,
+  ReauthenticationService,
   ToastService,
 } from 'src/app/core';
 import { Login } from 'src/app/authentication/login/login';
@@ -38,6 +38,7 @@ import {
   getHTMLElements,
 } from 'src/app/testing/helper/get-html-element';
 import { setInputValues } from 'src/app/testing/helper/set-input-values';
+import { TestRegisterDTO, TestUser } from 'src/app/core/index.spec';
 
 describe('AuthOverview', () => {
   let fixture: ComponentFixture<AuthOverview>;
@@ -50,11 +51,23 @@ describe('AuthOverview', () => {
   const loginPath = function (): string {
     return API + API_PATHS.auth.login;
   };
+  const registerPath = function (): string {
+    return API + API_PATHS.auth.register;
+  };
   const forgotPwdPath = function (): string {
     return API + API_PATHS.auth.forgotPwd;
   };
   const resetPwdPath = function (): string {
     return API + API_PATHS.auth.resetPwd;
+  };
+
+  const skipReauthentication = function (): void {
+    const service = TestBed.inject(ReauthenticationService);
+    const time = TestUser.session.jwtExpire - new Date().getTime();
+    service.stop();
+    jasmine.clock().install();
+    jasmine.clock().tick(time);
+    jasmine.clock().uninstall();
   };
 
   beforeEach(() => {
@@ -73,6 +86,7 @@ describe('AuthOverview', () => {
       ],
       providers: [
         AuthenticationService,
+        ReauthenticationService,
         EnvironmentService,
         ToastService,
         IconService,
@@ -92,8 +106,6 @@ describe('AuthOverview', () => {
     spyOnProperty(envService, 'apiUrl', 'get').and.returnValue(API);
     fixture.detectChanges();
   });
-
-  // TODO: Add integration tests for registration
 
   it('I-Test-1: Successful login process', async () => {
     // Click on the login button to get the login form
@@ -126,9 +138,46 @@ describe('AuthOverview', () => {
       },
     });
     expect(router.url.includes(PATHS.dashboard)).toBeTrue();
+    skipReauthentication();
   });
 
-  it('I-Test-2: Successful reset password process', async () => {
+  it('I-Test-2: Successful registration process', async () => {
+    // Click on the register button to get the register form
+    const register = getHTMLElement<HTMLButtonElement>(fixture, '#register')!;
+    register.click();
+    await fixture.whenStable();
+
+    // Add valid values to the register form
+    const email = getHTMLElement<HTMLInputElement>(fixture, '#email')!;
+    const username = getHTMLElement<HTMLInputElement>(fixture, '#username')!;
+    const password = getHTMLElement<HTMLInputElement>(fixture, '#password')!;
+    email.value = TestUser.email;
+    username.value = TestUser.name;
+    password.value = TestRegisterDTO.password;
+    setInputValues([email, username, password]);
+    await fixture.whenStable();
+
+    // Click on the login button to trigger a HTTP request
+    const submit = getHTMLElement<HTMLButtonElement>(fixture, '#register-btn')!;
+    submit.click();
+    await fixture.whenStable();
+
+    // Define the response of the HTTP request
+    const req = controller.expectOne(registerPath());
+    req.flush(TestUser);
+    await fixture.whenStable();
+
+    // Proof if data is sent to the store
+    store.select(selectUser).subscribe({
+      next: state => {
+        expect(state).toEqual(TestUser);
+      },
+    });
+    expect(router.url.includes(PATHS.dashboard)).toBeTrue();
+    skipReauthentication();
+  });
+
+  it('I-Test-3: Successful reset password process', async () => {
     // Click on the login button to get the login form
     const login = getHTMLElement<HTMLButtonElement>(fixture, '#login')!;
     login.click();

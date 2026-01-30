@@ -1,7 +1,109 @@
-<p>register works!</p>
-<p>register works!</p>
-<p>register works!</p>
-<p>register works!</p>
-<p>register works!</p>
-<p>register works!</p>
-<p>register works!</p>
+<form id="register-form" [formGroup]="form" *transloco="let text">
+  <!-- Email input -->
+  <div class="relative-container">
+    <input id="email" class="input" type="email" formControlName="email" />
+    <div class="label">
+      <mat-icon
+        class="icon-stroke"
+        [svgIcon]="iconNames.email"
+        [inline]="true"></mat-icon>
+      <p>{{ text(translationKeys.auth.email.label) }}</p>
+    </div>
+  </div>
+  <div class="relative-container">
+    @if (email.errors?.['required'] && email.touched) {
+      <app-form-input-error
+        class="error"
+        [message]="text(translationKeys.auth.email.missing)"
+        animate.enter="enterX"
+        animate.leave="leaveX"></app-form-input-error>
+    } @else if (email.errors?.['email'] && email.touched) {
+      <app-form-input-error
+        class="error"
+        [message]="text(translationKeys.auth.email.invalid)"
+        animate.enter="enterX"
+        animate.leave="leaveX"></app-form-input-error>
+    }
+  </div>
+  <!-- Username input -->
+  <div class="relative-container">
+    <input id="username" class="input" type="text" formControlName="username" />
+    <div class="label">
+      <mat-icon
+        class="icon-stroke"
+        [svgIcon]="iconNames.username"
+        [inline]="true"></mat-icon>
+      <p>{{ text(translationKeys.auth.username.label) }}</p>
+    </div>
+  </div>
+  <div class="relative-container">
+    @if (username.errors?.['required'] && username.touched) {
+      <app-form-input-error
+        class="error"
+        [message]="text(translationKeys.auth.username.missing)"
+        animate.enter="enterX"
+        animate.leave="leaveX"></app-form-input-error>
+    }
+  </div>
+  <!-- Pasword input -->
+  <div class="relative-container">
+    <input
+      id="password"
+      class="input"
+      type="password"
+      formControlName="password" />
+    <div class="label">
+      <mat-icon
+        class="icon-fill"
+        [svgIcon]="iconNames.password"
+        [inline]="true"></mat-icon>
+      <p>{{ text(translationKeys.auth.password.label) }}</p>
+    </div>
+  </div>
+  <!-- Password requirements -->
+  <div id="require-container">
+    @if (password.errors?.['minlength'] || password.value === '') {
+      <div animate.enter="enterX" animate.leave="leaveX">
+        <app-form-input-error
+          [message]="
+            text(translationKeys.auth.password.length)
+          "></app-form-input-error>
+      </div>
+    }
+    @if (password.errors?.['lowerCase'] || password.value === '') {
+      <div animate.enter="enterX" animate.leave="leaveX">
+        <app-form-input-error
+          [message]="
+            text(translationKeys.auth.password.lowerCase)
+          "></app-form-input-error>
+      </div>
+    }
+    @if (password.errors?.['upperCase'] || password.value === '') {
+      <div animate.enter="enterX" animate.leave="leaveX">
+        <app-form-input-error
+          [message]="
+            text(translationKeys.auth.password.upperCase)
+          "></app-form-input-error>
+      </div>
+    }
+    @if (password.errors?.['digit'] || password.value === '') {
+      <div animate.enter="enterX" animate.leave="leaveX">
+        <app-form-input-error
+          [message]="
+            text(translationKeys.auth.password.digit)
+          "></app-form-input-error>
+      </div>
+    }
+    @if (password.errors?.['chars'] || password.value === '') {
+      <div animate.enter="enterX" animate.leave="leaveX">
+        <app-form-input-error
+          [message]="
+            text(translationKeys.auth.password.chars)
+          "></app-form-input-error>
+      </div>
+    }
+  </div>
+  <button id="register-btn" (click)="onSubmit()">
+    {{ text(translationKeys.auth.actions.register) }}
+  </button>
+</form>
