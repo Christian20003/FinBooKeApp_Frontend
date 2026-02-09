@@ -8,7 +8,6 @@ export const PATHS = {
   resetPwd: 'resetPwd',
   dashboard: 'dashboard',
   finances: 'finances',
-  accounts: 'accounts',
   profile: 'profile',
   settings: 'settings',
 } as const;

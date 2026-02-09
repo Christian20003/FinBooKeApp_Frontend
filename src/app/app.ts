@@ -48,8 +48,7 @@ export class App {
         user: {
           name: 'Günther',
           email: 'test',
-          imagePath:
-            'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimg.welt.de%2Fimg%2Fdebatte%2Fkommentare%2Fmobile233911782%2F7072501947-ci102l-w1024%2FFDP-Bundesvorsitzender-Christian-Lindner.jpg&f=1&nofb=1&ipt=a83d5fe2d5140ca24dbe2ab4184ba93abc314d4c02f898609808373da747e7f1&ipo=images',
+          imagePath: '',
           session: {
             jwtToken: 'ggggg',
             jwtExpire: 44,

@@ -32,7 +32,6 @@
     "navbar": {
         "dashboard": "Dashboard",
         "finances": "Finances",
-        "accounts": "Accounts",
         "profile": "Profile",
         "settings": "Settings",
         "logout": "Logout"

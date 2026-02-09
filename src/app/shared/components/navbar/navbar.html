@@ -3,7 +3,7 @@
     <!-- Logo -->
     <a class="nav-elem" routerLink="/dashboard" routerLinkActive="active">
       <div class="logo">
-        <mat-icon svgIcon="logo" inline="true"></mat-icon>
+        <mat-icon svgIcon="logo" [inline]="true"></mat-icon>
         <p>FinBoKe</p>
       </div>
     </a>
@@ -11,8 +11,6 @@
     <app-nav-element type="dashboard" class="can-hide"></app-nav-element>
     <!-- Finance link -->
     <app-nav-element type="finances" class="can-hide"></app-nav-element>
-    <!-- Accounts link -->
-    <app-nav-element type="accounts" class="can-hide"></app-nav-element>
     <!-- Profil button -->
     <a
       class="nav-elem"
@@ -20,11 +18,7 @@
       (click)="onProfile()"
       (keydown.enter)="onProfile()"
       tabindex="0">
-      @if (imagePath() !== '') {
-        <img class="profile-btn" [src]="imagePath()" alt="" />
-      } @else {
-        <p class="profile-btn">{{ firstLetter() }}</p>
-      }
+      <img class="profile-btn" [src]="imagePath()" [alt]="firstLetter()" />
     </a>
   </div>
   <!-- Profile window -->
@@ -52,10 +46,6 @@
       <!-- Finance link -->
       <app-nav-element
         type="finances"
-        [borderAnimation]="true"></app-nav-element>
-      <!-- Accounts link -->
-      <app-nav-element
-        type="accounts"
         [borderAnimation]="true"></app-nav-element>
       <app-nav-element
         type="profile"

@@ -41,7 +41,6 @@ export class NavElement {
 
   constructor() {
     this.iconService.registerIcons([
-      ICON_NAMES.accounts,
       ICON_NAMES.dashboard,
       ICON_NAMES.finances,
       ICON_NAMES.profile,
@@ -74,8 +73,6 @@ export class NavElement {
     switch (this.type()) {
       case PATHS.dashboard:
         return TRANSLATION_KEYS.navbar.dashboard;
-      case PATHS.accounts:
-        return TRANSLATION_KEYS.navbar.accounts;
       case PATHS.finances:
         return TRANSLATION_KEYS.navbar.finances;
       case PATHS.profile:
@@ -92,7 +89,7 @@ export class NavElement {
    * color of the SVG icon.
    */
   protected get cssClass(): string {
-    if (this.type() === PATHS.finances || this.type() === PATHS.settings) {
+    if (this.type() === PATHS.finances) {
       return 'nav-elem-icon-stroke';
     }
     return 'nav-elem-icon-fill';

@@ -68,18 +68,15 @@ describe('Navbar - Unit Tests', () => {
     expect(element).toBeInstanceOf(HTMLImageElement);
   });
 
-  it('U-Test-4: An p element should appear as profile button with the first character of the user name, if an url is not provided', () => {
+  it('U-Test-4: An img element should appear as profile button, if an url is not provided', () => {
     const data = { ...TestUser };
     data.imagePath = '';
     selector.setResult(data);
     store.refreshState();
     fixture.detectChanges();
-    const element = getHTMLElement<HTMLParagraphElement>(
-      fixture,
-      '.profile-btn'
-    );
+    const element = getHTMLElement<HTMLImageElement>(fixture, '.profile-btn');
     expect(element).toBeTruthy();
-    expect(element).toBeInstanceOf(HTMLParagraphElement);
+    expect(element).toBeInstanceOf(HTMLImageElement);
   });
 
   it('U-Test-5: An "A" should appear in the profile if an url and name is not provided', () => {
@@ -89,11 +86,8 @@ describe('Navbar - Unit Tests', () => {
     selector.setResult(data);
     store.refreshState();
     fixture.detectChanges();
-    const element = getHTMLElement<HTMLParagraphElement>(
-      fixture,
-      '.profile-btn'
-    )!;
-    expect(element.innerText).toBe('A');
+    const element = getHTMLElement<HTMLImageElement>(fixture, '.profile-btn')!;
+    expect(element.alt).toBe('A');
   });
 
   it('U-Test-6: After clicking the profile button, another navbar should appear', () => {

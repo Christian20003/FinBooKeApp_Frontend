@@ -43,10 +43,6 @@ export const routes: Routes = [
     component: DashboardOverview,
   },
   {
-    path: PATHS.accounts,
-    component: DashboardOverview,
-  },
-  {
     path: PATHS.profile,
     component: DashboardOverview,
   },

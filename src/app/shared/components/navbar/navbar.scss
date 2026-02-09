@@ -5,63 +5,62 @@
 nav {
     position: sticky;
     top: 0;
-    // Delete margin added by the browser
-    margin: -0.5rem;
-    z-index: 2;
+    z-index: 1;
     @include effects.border-shadow-effect();
 
     .nav-container {
         display: flex;
-        gap: 1.6rem;
-        justify-content: center;
+        gap: 1.5rem;
+        justify-content: space-between;
         background-color: var(--background-color-container-primary);
 
-        :first-child {
-            padding-top: 0.2rem;
-            margin-left: 1rem;
-            margin-right: auto;
-        }
-        :last-child:not(.profile-box) {
-            margin-right: 1rem;
-            margin-left: auto;
-        }
-
         .nav-elem {
-            display: flex;
-            align-items: center;
+            flex: 1;
+            display: grid;
             text-decoration: none;
             cursor: pointer;
 
+            .logo {
+                display: flex;
+                align-items: center;
+                margin: 0.5rem auto 0.5rem 0.5rem;
+
+                :first-child {
+                    @include components.svg-container();
+                }
+                :last-child {
+                    margin: 0;
+                    font-weight: 800;
+                    color: var(--text-color-highlight);
+                    @include font.title-font();
+                }
+            }
+
             .profile-btn {
                 color: var(--text-color-highlight);
+                margin: auto 0.5rem auto auto;
+                line-height: 2.5rem;
                 @include components.circle-container();
             }
         }
 
-        .logo{
-            display: flex;
-
-            mat-icon {
-                padding: 0;
-                margin: 0 0.5rem 0 0;
-                width: 2.5rem;
-            }
-
-            p {
-                margin: 0;
-                font-weight: 800;
-                color: var(--text-color-highlight);
-                @include font.title-font();
-            }
+        :first-child {
+            text-align: left;
         }
+
+        :last-child {
+            text-align: right;
+        }
+
     }
     .vertical-secondary-nav,
     .vertical-primary-nav {
         position: absolute;
-        top: 4rem;
-        right: 1rem;
+        top: 5rem;
+        right: 0.5rem;
         width: 11rem;
-        background-color: var(--background-color-container-primary);
+        background-color: var(--background-color-container-secondary);
+        border-radius: 5%;
         border: 0.1rem var(--border-color-secondary) solid;
         padding: 0.5rem 1.8rem 0.5rem 0.8rem;
         @include effects.border-shadow-effect();

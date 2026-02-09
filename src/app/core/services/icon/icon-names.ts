@@ -11,7 +11,6 @@ export const ICON_NAMES = {
   username: 'username',
   email: 'email',
   password: 'password',
-  accounts: 'accounts',
   dashboard: 'dashboard',
   finances: 'finances',
   profile: 'profile',

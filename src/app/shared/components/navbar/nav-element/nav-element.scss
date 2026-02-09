@@ -3,13 +3,11 @@
 
 .nav-elem {
     display: flex;
-    gap: 0.8rem;
+    gap: 0.2rem;
     color: var(--text-color-primary);
     align-items: center;
     cursor: pointer;
-    transition:
-        border 0.5s,
-        padding 0.5s;
+    transition: padding 0.5s;
     @include font.description-font();
 
     .nav-elem-icon-stroke {
@@ -25,14 +23,33 @@
     .nav-elem-description {
         transition: color 0.5s;
         font-weight: 900;
+    }
 
-        &::after {
+    &:is(.underline-animation) {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+        .nav-elem-description::after{
             content: "";
             display: block;
             transform: scaleX(0);
             height: 0.15rem;
             background-color: var(--highlight-color-container-primary);
             transition: transform 0.5s ease-out;
+        }
+    }
+    &:is(.border-animation) {
+        position: relative;
+        overflow: hidden;
+        &::after{
+            position: absolute;
+            content: "";
+            top: 0;
+            left: 0;
+            width: 0.2rem;    
+            height: 100%;
+            background-color: var(--highlight-color-container-primary);
+            transform: translateY(-100%);
+            transition: transform 0.4s ease;
         }
     }
 
@@ -51,8 +68,10 @@
         }
 
         &:is(.border-animation) {
-            border-left: 0.2rem var(--border-color-secondary) solid;
             padding-left: 0.5rem;
+            &::after{
+                transform: translateY(0);
+            }
         }
 
         &:is(.underline-animation) {
