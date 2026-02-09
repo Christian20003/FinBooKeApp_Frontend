@@ -13,6 +13,7 @@
     <app-nav-element type="finances" class="can-hide"></app-nav-element>
     <!-- Profil button -->
     <a
+      appOnClickOutside
       class="nav-elem"
       role="button"
       (click)="onProfile()"
@@ -24,9 +25,11 @@
   <!-- Profile window -->
   @if (activeProfile()) {
     <div
+      appOnClickOutside
       class="vertical-secondary-nav"
       animate.enter="enterY"
-      animate.leave="leaveY">
+      animate.leave="leaveY"
+      (clickOutside)="onProfile()">
       <app-nav-element
         type="profile"
         [borderAnimation]="true"></app-nav-element>

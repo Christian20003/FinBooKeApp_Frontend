@@ -6,7 +6,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { MemoizedSelector } from '@ngrx/store';
 import { Navbar } from './navbar';
 import { NavElement } from './nav-element/nav-element';
-import { PATHS, IUser } from 'src/app/core';
+import { PATHS, IUser, OnClickOutside } from 'src/app/core';
 import { selectUser } from '../../stores/UserStore/User.selector';
 import { routes } from 'src/app/core/routing/routes';
 import {
@@ -15,7 +15,7 @@ import {
 } from 'src/app/testing/helper/get-html-element';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { getTranslocoModule } from '../../localization/transloco-testing';
-import { MockComponent } from 'ng-mocks';
+import { MockComponent, MockDirective } from 'ng-mocks';
 import { MatIcon } from '@angular/material/icon';
 import { TestUser } from 'src/app/core/index.spec';
 
@@ -32,6 +32,7 @@ describe('Navbar - Unit Tests', () => {
         NavElement,
         getTranslocoModule(),
         MockComponent(MatIcon),
+        MockDirective(OnClickOutside),
       ],
       providers: [
         provideMockStore(),

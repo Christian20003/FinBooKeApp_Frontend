@@ -4,13 +4,13 @@ import { selectUser } from 'src/app/shared/stores/UserStore/User.selector';
 import { NavElement } from './nav-element/nav-element';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
-import { ICON_NAMES, IconService } from 'src/app/core';
+import { ICON_NAMES, IconService, OnClickOutside } from 'src/app/core';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
-  imports: [NavElement, RouterLink, RouterLinkActive, MatIcon],
+  imports: [NavElement, RouterLink, RouterLinkActive, MatIcon, OnClickOutside],
 })
 export class Navbar implements OnInit {
   private readonly store = inject(Store);

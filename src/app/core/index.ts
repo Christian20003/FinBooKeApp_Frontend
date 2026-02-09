@@ -22,6 +22,8 @@ export { authInterceptor } from './interceptors';
 
 export { authGuard } from './guards';
 
+export { OnClickOutside } from './directives';
+
 export {
   AuthenticationService,
   ReauthenticationService,
