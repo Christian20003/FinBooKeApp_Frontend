@@ -40,4 +40,10 @@ export class Navbar implements OnInit {
   protected onProfile(): void {
     this.activeProfile.update(value => !value);
   }
+
+  protected onOutside(): void {
+    if (this.activeProfile()) {
+      this.activeProfile.update(() => false);
+    }
+  }
 }

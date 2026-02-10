@@ -1,26 +1,29 @@
 <nav>
   <div class="nav-container">
     <!-- Logo -->
-    <a class="nav-elem" routerLink="/dashboard" routerLinkActive="active">
-      <div class="logo">
-        <mat-icon svgIcon="logo" [inline]="true"></mat-icon>
-        <p>FinBoKe</p>
-      </div>
-    </a>
+    <div class="nav-elem">
+      <a routerLink="/dashboard" routerLinkActive="active">
+        <div id="logo">
+          <mat-icon svgIcon="logo" [inline]="true"></mat-icon>
+          <p>FinBoKe</p>
+        </div>
+      </a>
+    </div>
     <!-- Dashboard link -->
     <app-nav-element type="dashboard" class="can-hide"></app-nav-element>
     <!-- Finance link -->
     <app-nav-element type="finances" class="can-hide"></app-nav-element>
     <!-- Profil button -->
-    <a
-      appOnClickOutside
-      class="nav-elem"
-      role="button"
-      (click)="onProfile()"
-      (keydown.enter)="onProfile()"
-      tabindex="0">
-      <img class="profile-btn" [src]="imagePath()" [alt]="firstLetter()" />
-    </a>
+    <div class="nav-elem">
+      <a
+        appOnClickOutside
+        role="button"
+        (click)="onProfile()"
+        (keydown.enter)="onProfile()"
+        tabindex="0">
+        <img id="profile" [src]="imagePath()" [alt]="firstLetter()" />
+      </a>
+    </div>
   </div>
   <!-- Profile window -->
   @if (activeProfile()) {
@@ -29,7 +32,7 @@
       class="vertical-secondary-nav"
       animate.enter="enterY"
       animate.leave="leaveY"
-      (clickOutside)="onProfile()">
+      (clickOutside)="onOutside()">
       <app-nav-element
         type="profile"
         [borderAnimation]="true"></app-nav-element>

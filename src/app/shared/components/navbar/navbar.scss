@@ -17,31 +17,39 @@ nav {
         .nav-elem {
             flex: 1;
             display: grid;
-            text-decoration: none;
-            cursor: pointer;
 
-            .logo {
-                display: flex;
-                align-items: center;
-                margin: 0.5rem auto 0.5rem 0.5rem;
+            a {
+                @include components.nav-elem();
 
-                :first-child {
-                    @include components.svg-container();
+                #logo {
+                    display: flex;
+                    align-items: center;
+                    margin: auto auto auto 0.8rem;
+
+                    :first-child {
+                        @include components.svg-container();
+                    }
+                    :last-child {
+                        margin: 0;
+                        font-weight: 800;
+                        color: var(--text-color-highlight);
+                        @include font.title-font();
+                    }
                 }
-                :last-child {
-                    margin: 0;
-                    font-weight: 800;
+
+                &:has(#profile) {
+                    justify-self: end;
+                }
+
+                #profile {
                     color: var(--text-color-highlight);
-                    @include font.title-font();
+                    margin: auto 0.8rem auto auto;
+                    line-height: 2.5rem;
+                    @include components.circle-container();
                 }
             }
 
-            .profile-btn {
-                color: var(--text-color-highlight);
-                margin: auto 0.5rem auto auto;
-                line-height: 2.5rem;
-                @include components.circle-container();
-            }
+
         }
 
         :first-child {

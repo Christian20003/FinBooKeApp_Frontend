@@ -64,7 +64,7 @@ describe('Navbar - Unit Tests', () => {
   });
 
   it('U-Test-3: An image should appear as profile button if an url is provided', () => {
-    const element = getHTMLElement<HTMLImageElement>(fixture, '.profile-btn');
+    const element = getHTMLElement<HTMLImageElement>(fixture, '#profile');
     expect(element).toBeTruthy();
     expect(element).toBeInstanceOf(HTMLImageElement);
   });
@@ -75,7 +75,7 @@ describe('Navbar - Unit Tests', () => {
     selector.setResult(data);
     store.refreshState();
     fixture.detectChanges();
-    const element = getHTMLElement<HTMLImageElement>(fixture, '.profile-btn');
+    const element = getHTMLElement<HTMLImageElement>(fixture, '#profile');
     expect(element).toBeTruthy();
     expect(element).toBeInstanceOf(HTMLImageElement);
   });
@@ -87,7 +87,7 @@ describe('Navbar - Unit Tests', () => {
     selector.setResult(data);
     store.refreshState();
     fixture.detectChanges();
-    const element = getHTMLElement<HTMLImageElement>(fixture, '.profile-btn')!;
+    const element = getHTMLElement<HTMLImageElement>(fixture, '#profile')!;
     expect(element.alt).toBe('A');
   });
 

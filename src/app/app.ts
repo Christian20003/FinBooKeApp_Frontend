@@ -48,7 +48,8 @@ export class App {
         user: {
           name: 'Günther',
           email: 'test',
-          imagePath: '',
+          imagePath:
+            'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.xtrafondos.com%2Fwallpapers%2Fdarth-vader-3646.jpg&f=1&nofb=1&ipt=2dd5a854e5ddb850e198bb08e010d2e3eb7441a444d06b828cc4ec705714840b',
           session: {
             jwtToken: 'ggggg',
             jwtExpire: 44,

@@ -2,12 +2,8 @@
 @use "app/shared/styles//components" as components;
 
 .nav-elem {
-    display: flex;
-    gap: 0.2rem;
-    color: var(--text-color-primary);
-    align-items: center;
-    cursor: pointer;
     transition: padding 0.5s;
+    @include components.nav-elem();
     @include font.description-font();
 
     .nav-elem-icon-stroke {

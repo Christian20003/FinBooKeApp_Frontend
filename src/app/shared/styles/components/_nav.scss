@@ -1,0 +1,9 @@
+@mixin nav-elem($align: center) {
+    display: flex;
+    gap: 0.2rem;
+    width: fit-content;
+    color: var(--text-color-primary);
+    align-items: center;
+    cursor: pointer;
+    text-decoration: none;
+}
