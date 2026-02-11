@@ -1,6 +1,6 @@
 @use './functions/build_transition' as *;
 
-@mixin left-border-effect($properties: all, $time) {
+@mixin left-border-effect($properties, $time) {
     position: relative;
     overflow: hidden;
     transition: build_transition($properties, $time, ease);
@@ -22,6 +22,29 @@
         
         &::after {
             transform: translateY(0);
+        }
+    }
+}
+
+@mixin bottom-border-effect($properties, $time, $active: false) {
+    $transition: build_transition($properties, $time, ease);
+
+    &::after {
+        content: "";
+        display: block;
+        height: 0.15rem;
+        background-color: var(--highlight-color-container-primary);
+        transition: $transition;
+        @if ($active) {
+            transform: scaleX(1);
+        } @else {
+            transform: scaleX(0);
+        }
+    }
+
+    &:where(:hover, :focus) {
+        &::after {
+            transform: scaleX(1);
         }
     }
 }

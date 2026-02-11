@@ -49,6 +49,9 @@ export class NavElement {
     ]);
   }
 
+  /**
+   * This method logs out the user.
+   */
   protected onLogout(): void {
     this.authService.postLogout().subscribe({
       complete: () => {

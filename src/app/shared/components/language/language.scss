@@ -2,8 +2,9 @@
 @use "app/shared/styles/typography/font" as font;
 @use "app/shared/styles/effects" as effects;
 
+$width: 2.5rem;
+
 #language {
-    $width: 2.5rem;
     @include components.image-button($width);
     @include components.svg-container($width);
     @include effects.opacity-effect($properties: opacity, $time: 0.4s);
@@ -24,5 +25,9 @@
             @include effects.color-effect($properties: $transition, $time: $time);
         }
         @include effects.left-border-effect($properties: $transition, $time: $time);
+
+        #language-icon {
+            @include components.svg-container($width);
+        }
     }
 }

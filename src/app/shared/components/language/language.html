@@ -20,7 +20,9 @@
         (click)="onLanguage(lang)"
         (keypress)="onLanguage(lang)"
         tabindex="0">
-        <mat-icon [svgIcon]="getIconName(lang)"></mat-icon>
+        <div id="language-icon">
+          <mat-icon [svgIcon]="getIconName(lang)"></mat-icon>
+        </div>
         <p>{{ text(getTranslationKey(lang)) }}</p>
       </div>
     }

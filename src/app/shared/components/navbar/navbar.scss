@@ -42,6 +42,7 @@ nav {
         #nav-elem-middle {
             display: flex;
             gap: 0.8rem;
+            margin: 0.5rem 0 0.5rem;
             justify-content: center;
         }
 
@@ -55,6 +56,7 @@ nav {
                 color: var(--text-color-highlight);
                 line-height: 2.5rem;
                 @include components.circle-container();
+                @include effects.opacity-effect($properties: opacity, $time: 0.5s);
             }
 
             #language {

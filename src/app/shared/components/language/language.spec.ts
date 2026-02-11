@@ -95,4 +95,22 @@ describe('Language - Unit Tests', () => {
     const menu = getHTMLElement<HTMLElement>(fixture, '#menu');
     expect(menu).toBeFalsy();
   });
+
+  it('U-Test-7: Component should work with LangDefinitions', async () => {
+    spyOn(transloco, 'getAvailableLangs').and.returnValue([
+      {
+        id: 'en',
+        label: '',
+      },
+      {
+        id: 'de',
+        label: '',
+      },
+    ]);
+    button.click();
+    await fixture.whenStable();
+
+    const options = getHTMLElements<HTMLElement>(fixture, '.option');
+    expect(options.length).toBe(transloco.getAvailableLangs().length);
+  });
 });
