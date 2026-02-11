@@ -1,0 +1,28 @@
+@use 'app/shared/styles/components' as components;
+@use "app/shared/styles/typography/font" as font;
+@use "app/shared/styles/effects" as effects;
+
+#language {
+    $width: 2.5rem;
+    @include components.image-button($width);
+    @include components.svg-container($width);
+    @include effects.opacity-effect($properties: opacity, $time: 0.4s);
+}
+
+#menu {
+    @include components.vertical-menu();
+    
+    .option {
+        @include components.nav-elem();
+        
+        $transition: color padding;
+        $time: 0.4s;
+        &:is(.active) {
+            @include effects.color-effect($properties: $transition, $time: $time, $active: true);
+        }
+        &:not(:is(.active)) {
+            @include effects.color-effect($properties: $transition, $time: $time);
+        }
+        @include effects.left-border-effect($properties: $transition, $time: $time);
+    }
+}

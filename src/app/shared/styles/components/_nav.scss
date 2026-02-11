@@ -1,3 +1,5 @@
+@use 'app/shared/styles/typography/font' as font;
+
 @mixin nav-elem($align: center) {
     display: flex;
     gap: 0.2rem;
@@ -6,4 +8,6 @@
     align-items: center;
     cursor: pointer;
     text-decoration: none;
+    font-weight: 900;
+    @include font.description-font();
 }

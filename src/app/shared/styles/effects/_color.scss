@@ -1,0 +1,13 @@
+@use './functions/build_transition' as *;
+
+@mixin color-effect($properties: all, $time, $active: false){
+    transition: build_transition($properties, $time, ease);
+    
+    @if ($active) {
+        color: var(--text-color-highlight);
+    }
+
+    &:where(:hover, :focus) {
+        color: var(--text-color-highlight);
+    }
+}

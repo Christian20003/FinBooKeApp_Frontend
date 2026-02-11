@@ -36,6 +36,10 @@
         "settings": "Einstellungen",
         "logout": "Logout"
     },
+    "language": {
+        "english": "Englisch",
+        "german": "Deutsch"
+    },
     "loading-screen": {
         "header": "Bitte warten...",
         "send": "Daten werden übermittelt",

@@ -2,7 +2,6 @@ import { Component, ElementRef, Renderer2, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { selectUser, setUser, Navbar, Toasts } from './shared';
 import { ChildrenOutletContexts, Router, RouterOutlet } from '@angular/router';
-import { TranslocoService } from '@jsverse/transloco';
 import { IUserUnauthenticated, PATHS } from './core';
 
 @Component({
@@ -16,7 +15,6 @@ export class App {
   private router = inject(Router);
   private elementRef = inject(ElementRef);
   private renderer = inject(Renderer2);
-  private translocoService = inject(TranslocoService);
   private contexts = inject(ChildrenOutletContexts);
 
   constructor() {
@@ -69,15 +67,6 @@ export class App {
       this.renderer.removeClass(body, 'dark');
     } else {
       this.renderer.addClass(body, 'dark');
-    }
-  }
-
-  changeLanguage() {
-    const lang = this.translocoService.getActiveLang();
-    if (lang === 'de') {
-      this.translocoService.setActiveLang('en');
-    } else {
-      this.translocoService.setActiveLang('de');
     }
   }
 }

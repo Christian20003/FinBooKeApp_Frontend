@@ -5,12 +5,20 @@ import { NavElement } from './nav-element/nav-element';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { ICON_NAMES, IconService, OnClickOutside } from 'src/app/core';
+import { Language } from '../language/language';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
-  imports: [NavElement, RouterLink, RouterLinkActive, MatIcon, OnClickOutside],
+  imports: [
+    NavElement,
+    RouterLink,
+    RouterLinkActive,
+    MatIcon,
+    OnClickOutside,
+    Language,
+  ],
 })
 export class Navbar implements OnInit {
   private readonly store = inject(Store);

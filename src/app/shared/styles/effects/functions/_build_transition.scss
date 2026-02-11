@@ -1,0 +1,15 @@
+/*
+    This function extracts each provided property and add it with the correct
+    time and method to a list of transition properties.
+*/
+@function build_transition($properties, $time, $method) {
+    $value: ();
+    @each $property in $properties {
+        @if (length($value) > 0) {
+            $value: append($value, unquote(",") #{$property} $time $method);
+        } @else {
+            $value: append($value, #{$property} $time $method);
+        }
+    }
+    @return $value;
+}

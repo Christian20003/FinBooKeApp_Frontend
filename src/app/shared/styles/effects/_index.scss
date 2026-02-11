@@ -1,2 +1,5 @@
 @forward './blur' show blur-effect;
 @forward './shadow' show border-shadow-effect, background-shadow-effect;
+@forward './border' show left-border-effect;
+@forward './color' show color-effect;
+@forward './opacity' show opacity-effect;

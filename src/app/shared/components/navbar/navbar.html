@@ -1,7 +1,7 @@
 <nav>
   <div class="nav-container">
     <!-- Logo -->
-    <div class="nav-elem">
+    <div id="nav-elem-left">
       <a routerLink="/dashboard" routerLinkActive="active">
         <div id="logo">
           <mat-icon svgIcon="logo" [inline]="true"></mat-icon>
@@ -9,12 +9,17 @@
         </div>
       </a>
     </div>
-    <!-- Dashboard link -->
-    <app-nav-element type="dashboard" class="can-hide"></app-nav-element>
-    <!-- Finance link -->
-    <app-nav-element type="finances" class="can-hide"></app-nav-element>
+    <div id="nav-elem-middle">
+      <!-- Dashboard link -->
+      <app-nav-element type="dashboard" class="can-hide"></app-nav-element>
+      <!-- Finance link -->
+      <app-nav-element type="finances" class="can-hide"></app-nav-element>
+    </div>
     <!-- Profil button -->
-    <div class="nav-elem">
+    <div id="nav-elem-right">
+      <div id="language">
+        <app-language></app-language>
+      </div>
       <a
         appOnClickOutside
         role="button"

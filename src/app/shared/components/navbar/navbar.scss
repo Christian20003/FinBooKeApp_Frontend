@@ -9,69 +9,63 @@ nav {
     @include effects.border-shadow-effect();
 
     .nav-container {
-        display: flex;
-        gap: 1.5rem;
-        justify-content: space-between;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
         background-color: var(--background-color-container-primary);
 
-        .nav-elem {
-            flex: 1;
-            display: grid;
-
+        #nav-elem-left, #nav-elem-right {
             a {
                 @include components.nav-elem();
+            }
+        }
 
-                #logo {
-                    display: flex;
-                    align-items: center;
-                    margin: auto auto auto 0.8rem;
+        #nav-elem-left {
+            display: grid;
+            margin-left: 0.5rem;
 
-                    :first-child {
-                        @include components.svg-container();
-                    }
-                    :last-child {
-                        margin: 0;
-                        font-weight: 800;
-                        color: var(--text-color-highlight);
-                        @include font.title-font();
-                    }
+            #logo {
+                display: flex;
+                align-items: center;
+
+                :first-child {
+                    @include components.svg-container();
                 }
-
-                &:has(#profile) {
-                    justify-self: end;
-                }
-
-                #profile {
+                :last-child {
+                    margin: 0;
+                    font-weight: 800;
                     color: var(--text-color-highlight);
-                    margin: auto 0.8rem auto auto;
-                    line-height: 2.5rem;
-                    @include components.circle-container();
+                    @include font.title-font();
                 }
             }
-
-
         }
 
-        :first-child {
-            text-align: left;
+        #nav-elem-middle {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
         }
 
-        :last-child {
-            text-align: right;
+        #nav-elem-right {
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            margin-right: 0.5rem;
+
+            #profile {
+                color: var(--text-color-highlight);
+                line-height: 2.5rem;
+                @include components.circle-container();
+            }
+
+            #language {
+                margin-right: 0.8rem;
+            }
         }
 
     }
     .vertical-secondary-nav,
     .vertical-primary-nav {
-        position: absolute;
-        top: 5rem;
-        right: 0.5rem;
-        width: 11rem;
-        background-color: var(--background-color-container-secondary);
-        border-radius: 5%;
-        border: 0.1rem var(--border-color-secondary) solid;
-        padding: 0.5rem 1.8rem 0.5rem 0.8rem;
-        @include effects.border-shadow-effect();
+        @include components.vertical-menu();
     }
 }
 

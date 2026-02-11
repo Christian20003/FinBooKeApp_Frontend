@@ -1,0 +1,14 @@
+@use './functions/build_transition' as *;
+
+@mixin opacity-effect($properties, $time) {
+    transition: build_transition($properties, $time, ease);
+    opacity: 100%;
+
+    &:where(:hover, :focus) {
+        opacity: 50%;
+    }
+
+    &:active {
+        opacity: 70%;
+    }
+}

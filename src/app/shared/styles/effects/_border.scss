@@ -1,0 +1,27 @@
+@use './functions/build_transition' as *;
+
+@mixin left-border-effect($properties: all, $time) {
+    position: relative;
+    overflow: hidden;
+    transition: build_transition($properties, $time, ease);
+
+    &::after{
+        position: absolute;
+        content: "";
+        top: 0;
+        left: 0;
+        width: 0.2rem;    
+        height: 100%;
+        background-color: var(--highlight-color-container-primary);
+        transform: translateY(-100%);
+        transition: transform $time ease;
+    }
+
+    &:where(:hover, :focus) {
+        padding-left: 0.5rem;
+        
+        &::after {
+            transform: translateY(0);
+        }
+    }
+}

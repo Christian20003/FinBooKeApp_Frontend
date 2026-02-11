@@ -1,0 +1,13 @@
+@use 'app/shared/styles/effects' as effects;
+
+@mixin vertical-menu() {
+    position: absolute;
+    top: 5rem;
+    right: 0.5rem;
+    width: 11rem;
+    background-color: var(--background-color-container-secondary);
+    border-radius: 5%;
+    border: 0.1rem var(--border-color-secondary) solid;
+    padding: 0.5rem 1.8rem 0.5rem 0.8rem;
+    @include effects.border-shadow-effect();
+}

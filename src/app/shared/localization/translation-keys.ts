@@ -39,6 +39,10 @@ export const TRANSLATION_KEYS = {
     settings: 'navbar.settings',
     logout: 'navbar.logout',
   },
+  language: {
+    english: 'language.english',
+    german: 'language.german',
+  },
   loadingScreen: {
     header: 'loading-screen.header',
     send: 'loading-screen.send',

@@ -3,5 +3,6 @@
 @forward './input' show input-container, input-digit-container;
 @forward './label' show label-container;
 @forward './svg' show svg-container;
-@forward './button' show major-button, link-button;
+@forward './button' show major-button, link-button, image-button;
 @forward './nav' show nav-elem;
+@forward './menu' show vertical-menu;

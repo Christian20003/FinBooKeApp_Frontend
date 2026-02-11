@@ -38,7 +38,7 @@
         .icon-container {
             border-style: dashed;
             border-color: var(--background-color-container-complement);
-            @include components.circle-container($width: 3.8rem, $animate: false);
+            @include components.circle-container();
 
             .icon {
                 @include components.svg-container($width: 2.2rem, $stroke: var(--icon-color-primary));

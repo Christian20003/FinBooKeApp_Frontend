@@ -17,4 +17,6 @@ export const ICON_NAMES = {
   settings: 'settings',
   logout: 'logout',
   logo: 'logo',
+  german_flag: 'german_flag',
+  britain_flag: 'britain_flag',
 } as const;
