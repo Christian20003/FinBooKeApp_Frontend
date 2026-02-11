@@ -14,6 +14,8 @@ nav {
         background-color: var(--background-color-container-primary);
 
         #nav-elem-left, #nav-elem-right {
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
             a {
                 @include components.nav-elem();
             }
@@ -42,7 +44,6 @@ nav {
         #nav-elem-middle {
             display: flex;
             gap: 0.8rem;
-            margin: 0.5rem 0 0.5rem;
             justify-content: center;
         }
 
@@ -59,7 +60,7 @@ nav {
                 @include effects.opacity-effect($properties: opacity, $time: 0.5s);
             }
 
-            #language {
+            #language, #theme {
                 margin-right: 0.8rem;
             }
         }

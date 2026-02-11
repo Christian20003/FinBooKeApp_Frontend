@@ -19,6 +19,8 @@ export const ICON_PATHS = {
   [ICON_NAMES.settings]: 'assets/icons/symbols/settings.svg',
   [ICON_NAMES.logout]: 'assets/icons/symbols/logout.svg',
   [ICON_NAMES.logo]: 'assets/icons/symbols/logo.svg',
+  [ICON_NAMES.light_theme]: 'assets/icons/actions/light-theme.svg',
+  [ICON_NAMES.dark_theme]: 'assets/icons/actions/dark-theme.svg',
   [ICON_NAMES.german_flag]: 'assets/icons/flags/german.svg',
   [ICON_NAMES.britain_flag]: 'assets/icons/flags/british.svg',
 } as const;

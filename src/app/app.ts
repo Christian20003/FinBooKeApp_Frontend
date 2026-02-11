@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { selectUser, setUser, Navbar, Toasts } from './shared';
 import { ChildrenOutletContexts, Router, RouterOutlet } from '@angular/router';
@@ -13,8 +13,6 @@ import { IUserUnauthenticated, PATHS } from './core';
 export class App {
   private store = inject(Store);
   private router = inject(Router);
-  private elementRef = inject(ElementRef);
-  private renderer = inject(Renderer2);
   private contexts = inject(ChildrenOutletContexts);
 
   constructor() {
@@ -58,15 +56,5 @@ export class App {
       })
     );
     this.router.navigate(['dashboard']);
-  }
-
-  changeTheme() {
-    const body = this.elementRef.nativeElement.ownerDocument
-      .body as HTMLBodyElement;
-    if (body.classList.contains('dark')) {
-      this.renderer.removeClass(body, 'dark');
-    } else {
-      this.renderer.addClass(body, 'dark');
-    }
   }
 }

@@ -1,0 +1,9 @@
+@use 'app/shared/styles/components' as components;
+@use 'app/shared/styles/effects' as effects;
+
+#theme {
+    $width: 2.5rem;
+    @include components.image-button($width);
+    @include components.svg-container($width);
+    @include effects.opacity-effect(opacity, 0.5s);
+}

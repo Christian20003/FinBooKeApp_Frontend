@@ -6,6 +6,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { ICON_NAMES, IconService, OnClickOutside } from 'src/app/core';
 import { Language } from '../language/language';
+import { Theme } from '../theme/theme';
 
 @Component({
   selector: 'app-navbar',
@@ -18,6 +19,7 @@ import { Language } from '../language/language';
     MatIcon,
     OnClickOutside,
     Language,
+    Theme,
   ],
 })
 export class Navbar implements OnInit {
