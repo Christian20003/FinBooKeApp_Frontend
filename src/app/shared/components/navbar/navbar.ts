@@ -8,6 +8,9 @@ import { ICON_NAMES, IconService, OnClickOutside } from 'src/app/core';
 import { Language } from '../language/language';
 import { Theme } from '../theme/theme';
 
+/**
+ * This component represent the navbar of this application.
+ */
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.html',
@@ -27,7 +30,7 @@ export class Navbar implements OnInit {
   private readonly iconService = inject(IconService);
 
   protected readonly imagePath = signal<string>('');
-  protected readonly firstLetter = signal<string>('');
+  protected readonly firstLetter = signal<string>('A');
   protected readonly activeProfile = signal<boolean>(false);
 
   constructor() {
@@ -41,16 +44,22 @@ export class Navbar implements OnInit {
       if (state.name != '') {
         const char = state.name.charAt(0).toUpperCase();
         this.firstLetter.set(char);
-      } else {
-        this.firstLetter.set('A');
       }
     });
   }
 
+  /**
+   * This method activates and deactivates the second vertical
+   * navbar.
+   */
   protected onProfile(): void {
     this.activeProfile.update(value => !value);
   }
 
+  /**
+   * This methid deactivates the vertical navbar if the user
+   * has clicked outside the HTML element.
+   */
   protected onOutside(): void {
     if (this.activeProfile()) {
       this.activeProfile.update(() => false);

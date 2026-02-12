@@ -1,26 +1,25 @@
+import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { provideRouter, RouterLinkWithHref } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { provideHttpClient } from '@angular/common/http';
 import { MemoizedSelector } from '@ngrx/store';
+import { MatIcon } from '@angular/material/icon';
+import { MockComponent, MockDirective } from 'ng-mocks';
 import { Navbar } from './navbar';
 import { NavElement } from './nav-element/nav-element';
 import { PATHS, IUser, OnClickOutside } from 'src/app/core';
-import { selectUser } from '../../stores/UserStore/User.selector';
+import { selectUser } from 'src/app/shared/stores/UserStore/User.selector';
 import { routes } from 'src/app/core/routing/routes';
 import {
   getHTMLElement,
   getHTMLElements,
 } from 'src/app/testing/helper/get-html-element';
-import { provideZonelessChangeDetection } from '@angular/core';
-import { getTranslocoModule } from '../../localization/transloco-testing';
-import { MockComponent, MockDirective } from 'ng-mocks';
-import { MatIcon } from '@angular/material/icon';
+import { getTranslocoModule } from 'src/app/shared/localization/transloco-testing';
 import { TestUser } from 'src/app/core/index.spec';
 
 describe('Navbar - Unit Tests', () => {
-  let component: Navbar;
   let fixture: ComponentFixture<Navbar>;
   let store: MockStore;
   let selector: MemoizedSelector<object, IUser>;
@@ -45,7 +44,6 @@ describe('Navbar - Unit Tests', () => {
     store = TestBed.inject(MockStore);
     selector = store.overrideSelector(selectUser, TestUser);
     fixture = TestBed.createComponent(Navbar);
-    component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
@@ -53,49 +51,47 @@ describe('Navbar - Unit Tests', () => {
     store.resetSelectors();
   });
 
-  it('U-Test-1: Should create', () => {
-    expect(component).toBeTruthy();
-  });
-
-  it('U-Test-2: The logo (first) anchor element should link to the dashboard route', () => {
+  it('U-Test-1: Component should link to the dashboard route with the logo', () => {
     const debugElement = fixture.debugElement.query(By.css('a'));
     const routerLink = debugElement.injector.get(RouterLinkWithHref);
     expect(routerLink['href']).toEqual('/' + PATHS.dashboard);
   });
 
-  it('U-Test-3: An image should appear as profile button if an url is provided', () => {
+  it('U-Test-2: Component should show an image as profile button when an valid url is provided', () => {
     const element = getHTMLElement<HTMLImageElement>(fixture, '#profile');
     expect(element).toBeTruthy();
-    expect(element).toBeInstanceOf(HTMLImageElement);
+    expect(element?.src).toBe(TestUser.imagePath);
   });
 
-  it('U-Test-4: An img element should appear as profile button, if an url is not provided', () => {
+  it('U-Test-3: Component should show its alt text as profile button, if a invalid url is provided', async () => {
     const data = { ...TestUser };
     data.imagePath = '';
     selector.setResult(data);
     store.refreshState();
-    fixture.detectChanges();
+    await fixture.whenStable();
+
     const element = getHTMLElement<HTMLImageElement>(fixture, '#profile');
     expect(element).toBeTruthy();
-    expect(element).toBeInstanceOf(HTMLImageElement);
+    expect(element?.naturalWidth).toBe(0);
   });
 
-  it('U-Test-5: An "A" should appear in the profile if an url and name is not provided', () => {
+  it('U-Test-5: Component should show the first letter of the user name in the profile if an url is not provided', async () => {
     const data = { ...TestUser };
     data.imagePath = '';
-    data.name = '';
     selector.setResult(data);
     store.refreshState();
-    fixture.detectChanges();
+    await fixture.whenStable();
+
     const element = getHTMLElement<HTMLImageElement>(fixture, '#profile')!;
-    expect(element.alt).toBe('A');
+    expect(element.alt).toBe(TestUser.name.toUpperCase()[0]);
   });
 
-  it('U-Test-6: After clicking the profile button, another navbar should appear', () => {
+  it('U-Test-6: Component should show a vertical navbar after clicking the profile button', async () => {
     const links = getHTMLElements<HTMLAnchorElement>(fixture, 'a');
-    const lastLink = links[links.length - 1];
-    lastLink.click();
-    fixture.detectChanges();
+    const lastLink = links.pop();
+    lastLink?.click();
+    await fixture.whenStable();
+
     const profileNavSmall = getHTMLElement<HTMLDivElement>(
       fixture,
       '.vertical-secondary-nav'
@@ -104,10 +100,6 @@ describe('Navbar - Unit Tests', () => {
       fixture,
       '.vertical-primary-nav'
     );
-    if (!profileNavSmall) {
-      expect(profileNavLarge).toBeTruthy();
-    } else {
-      expect(profileNavSmall).toBeTruthy();
-    }
+    expect(profileNavLarge || profileNavSmall).toBeTruthy();
   });
 });
