@@ -5,66 +5,70 @@
 nav {
     position: sticky;
     top: 0;
-    // Delete margin added by the browser
-    margin: -0.5rem;
-    z-index: 2;
+    z-index: 1;
     @include effects.border-shadow-effect();
 
     .nav-container {
-        display: flex;
-        gap: 1.6rem;
-        justify-content: center;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
         background-color: var(--background-color-container-primary);
 
-        :first-child {
-            padding-top: 0.2rem;
-            margin-left: 1rem;
-            margin-right: auto;
-        }
-        :last-child:not(.profile-box) {
-            margin-right: 1rem;
-            margin-left: auto;
+        #nav-elem-left, #nav-elem-right {
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+            a {
+                @include components.nav-elem();
+            }
         }
 
-        .nav-elem {
+        #nav-elem-left {
+            display: grid;
+            margin-left: 0.5rem;
+
+            #logo {
+                display: flex;
+                align-items: center;
+
+                :first-child {
+                    @include components.svg-container();
+                }
+                :last-child {
+                    margin: 0;
+                    font-weight: 800;
+                    color: var(--text-color-highlight);
+                    @include font.title-font();
+                }
+            }
+        }
+
+        #nav-elem-middle {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
+        }
+
+        #nav-elem-right {
             display: flex;
             align-items: center;
-            text-decoration: none;
-            cursor: pointer;
+            justify-content: end;
+            margin-right: 0.5rem;
 
-            .profile-btn {
+            #profile {
                 color: var(--text-color-highlight);
+                line-height: 2.5rem;
                 @include components.circle-container();
+                @include effects.opacity-effect($properties: opacity, $time: 0.5s);
+            }
+
+            #language, #theme {
+                margin-right: 0.8rem;
             }
         }
 
-        .logo{
-            display: flex;
-
-            mat-icon {
-                padding: 0;
-                margin: 0 0.5rem 0 0;
-                width: 2.5rem;
-            }
-
-            p {
-                margin: 0;
-                font-weight: 800;
-                color: var(--text-color-highlight);
-                @include font.title-font();
-            }
-        }
     }
     .vertical-secondary-nav,
     .vertical-primary-nav {
-        position: absolute;
-        top: 4rem;
-        right: 1rem;
-        width: 11rem;
-        background-color: var(--background-color-container-primary);
-        border: 0.1rem var(--border-color-secondary) solid;
-        padding: 0.5rem 1.8rem 0.5rem 0.8rem;
-        @include effects.border-shadow-effect();
+        @include components.vertical-menu();
     }
 }
 

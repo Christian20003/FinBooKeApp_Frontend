@@ -31,9 +31,6 @@ describe('NavElement - Unit Tests', () => {
   const financesPath = () => {
     return `/${PATHS.finances}`;
   };
-  const accountsPath = () => {
-    return `/${PATHS.accounts}`;
-  };
   const settingsPath = () => {
     return `/${PATHS.settings}`;
   };
@@ -83,17 +80,7 @@ describe('NavElement - Unit Tests', () => {
     expect(routerLink['href']).toEqual(financesPath());
   });
 
-  it('U-Test-3: Component should link to the accounts route', () => {
-    setInputSignal(fixture, 'type', 'accounts');
-    fixture.detectChanges();
-
-    const debugElement = getDebugElement(fixture, 'a');
-    const routerLink = debugElement.injector.get(RouterLinkWithHref);
-
-    expect(routerLink['href']).toEqual(accountsPath());
-  });
-
-  it('U-Test-4: Component should link to the profile route', () => {
+  it('U-Test-5: Component should link to the profile route', () => {
     setInputSignal(fixture, 'type', 'profile');
     fixture.detectChanges();
 
@@ -103,7 +90,7 @@ describe('NavElement - Unit Tests', () => {
     expect(routerLink['href']).toEqual(profilePath());
   });
 
-  it('U-Test-5: Component should link to the settings route', () => {
+  it('U-Test-6: Component should link to the settings route', () => {
     setInputSignal(fixture, 'type', 'settings');
     fixture.detectChanges();
 
@@ -113,7 +100,7 @@ describe('NavElement - Unit Tests', () => {
     expect(routerLink['href']).toEqual(settingsPath());
   });
 
-  it('U-Test-6: Component should delete user object from store, after successful logout', async () => {
+  it('U-Test-7: Component should delete user object from store, after successful logout', async () => {
     spyOn(store, 'dispatch');
     authService.postLogout.and.returnValue(of());
     setInputSignal(fixture, 'type', 'logout');
@@ -126,7 +113,7 @@ describe('NavElement - Unit Tests', () => {
     expect(store.dispatch).toHaveBeenCalledOnceWith(deleteUser());
   });
 
-  it('U-Test-7: Component should navigate to login, after successful logout', async () => {
+  it('U-Test-8: Component should navigate to login, after successful logout', async () => {
     authService.postLogout.and.returnValue(of());
     setInputSignal(fixture, 'type', 'logout');
     fixture.detectChanges();
@@ -138,7 +125,7 @@ describe('NavElement - Unit Tests', () => {
     expect(router.url.includes(PATHS.login)).toBeTrue();
   });
 
-  it('U-Test-8: Component should add error to toast service, after failed logout', async () => {
+  it('U-Test-9: Component should add error to toast service, after failed logout', async () => {
     authService.postLogout.and.returnValue(throwError(() => new Error()));
     setInputSignal(fixture, 'type', 'logout');
     fixture.detectChanges();

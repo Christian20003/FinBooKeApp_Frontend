@@ -1,21 +1,34 @@
-@use "app/shared/styles/effects" as effects;
+@use 'app/shared/styles/effects' as effects;
 @use 'app/shared/styles/typography/font' as font;
+@use 'app/shared/styles/components/circle' as circle;
 
-@mixin major-button() {
+@mixin _button_props() {
     background-color: var(--background-color-container-seconday);
-    color: var(--background-color-button-focus);
-    border-color: var(--background-color-button-focus);
-    @include font.description-font($align: center);
+    border: none;
     outline: none;
     cursor: pointer;
+}
+
+@mixin major-button() {
+    $time: 0.5s;
+    $method: ease;
+    $color: var(--background-color-button-focus);
+
+    @include _button_props();
+    @include font.description-font($align: center);
+    color: $color;
+    border: 0.12rem $color solid;
     padding: 1rem 2rem;
+
     transition:
-        all 0.5s,
-        background-color 0.1s;
+        transform $time $method,
+        background-color $time $method,
+        color $time $method,
+        box-shadow $time $method;
 
     &:where(:focus, :hover) {
         transform: translateY(-10px);
-        background-color: var(--background-color-button-focus);
+        background-color: $color;
         color: var(--text-color-primary);
         @include effects.background-shadow-effect();
     }
@@ -26,15 +39,22 @@
 }
 
 @mixin link-button() {
-    background-color: var(--background-color-container-seconday);
-    color: var(--link-color);
+    $color: var(--link-color);
+
+    @include _button_props();
     @include font.label-font($align: center);
-    border: none;
-    cursor: pointer;
+    color: $color;
     text-align: start;
     text-decoration: underline;
 
     &:where(:focus, :hover) {
-        color: var(--link-color-focus);
+        color: $color;
     }
+}
+
+@mixin image-button($width) {
+    display: grid;
+    align-items: center;
+    @include _button_props();
+    @include circle.circle-container($width);
 }

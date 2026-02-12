@@ -35,10 +35,13 @@ export const TRANSLATION_KEYS = {
   navbar: {
     dashboard: 'navbar.dashboard',
     finances: 'navbar.finances',
-    accounts: 'navbar.accounts',
     profile: 'navbar.profile',
     settings: 'navbar.settings',
     logout: 'navbar.logout',
+  },
+  language: {
+    english: 'language.english',
+    german: 'language.german',
   },
   loadingScreen: {
     header: 'loading-screen.header',

@@ -32,10 +32,13 @@
     "navbar": {
         "dashboard": "Dashboard",
         "finances": "Finances",
-        "accounts": "Accounts",
         "profile": "Profile",
         "settings": "Settings",
         "logout": "Logout"
+    },
+    "language": {
+        "english": "English",
+        "german": "German"
     },
     "loading-screen": {
         "header": "Please wait...",

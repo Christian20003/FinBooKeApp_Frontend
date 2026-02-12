@@ -1,8 +1,7 @@
-import { Component, ElementRef, Renderer2, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { selectUser, setUser, Navbar, Toasts } from './shared';
 import { ChildrenOutletContexts, Router, RouterOutlet } from '@angular/router';
-import { TranslocoService } from '@jsverse/transloco';
 import { IUserUnauthenticated, PATHS } from './core';
 
 @Component({
@@ -14,9 +13,6 @@ import { IUserUnauthenticated, PATHS } from './core';
 export class App {
   private store = inject(Store);
   private router = inject(Router);
-  private elementRef = inject(ElementRef);
-  private renderer = inject(Renderer2);
-  private translocoService = inject(TranslocoService);
   private contexts = inject(ChildrenOutletContexts);
 
   constructor() {
@@ -49,7 +45,7 @@ export class App {
           name: 'Günther',
           email: 'test',
           imagePath:
-            'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimg.welt.de%2Fimg%2Fdebatte%2Fkommentare%2Fmobile233911782%2F7072501947-ci102l-w1024%2FFDP-Bundesvorsitzender-Christian-Lindner.jpg&f=1&nofb=1&ipt=a83d5fe2d5140ca24dbe2ab4184ba93abc314d4c02f898609808373da747e7f1&ipo=images',
+            'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.xtrafondos.com%2Fwallpapers%2Fdarth-vader-3646.jpg&f=1&nofb=1&ipt=2dd5a854e5ddb850e198bb08e010d2e3eb7441a444d06b828cc4ec705714840b',
           session: {
             jwtToken: 'ggggg',
             jwtExpire: 44,
@@ -60,24 +56,5 @@ export class App {
       })
     );
     this.router.navigate(['dashboard']);
-  }
-
-  changeTheme() {
-    const body = this.elementRef.nativeElement.ownerDocument
-      .body as HTMLBodyElement;
-    if (body.classList.contains('dark')) {
-      this.renderer.removeClass(body, 'dark');
-    } else {
-      this.renderer.addClass(body, 'dark');
-    }
-  }
-
-  changeLanguage() {
-    const lang = this.translocoService.getActiveLang();
-    if (lang === 'de') {
-      this.translocoService.setActiveLang('en');
-    } else {
-      this.translocoService.setActiveLang('de');
-    }
   }
 }

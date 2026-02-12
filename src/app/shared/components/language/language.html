@@ -1,0 +1,26 @@
+<button id="language" (click)="onLanguageMenu()" tabindex="0">
+  <mat-icon [svgIcon]="getIconName(activeLang())"></mat-icon>
+</button>
+@if (activeMenu()) {
+  <div
+    appOnClickOutside
+    id="menu"
+    *transloco="let text"
+    (clickOutside)="onOutside()"
+    animate.enter="enterY"
+    animate.leave="leaveY">
+    @for (lang of languages; track lang) {
+      <div
+        class="option"
+        [ngClass]="isActive(lang)"
+        (click)="onLanguage(lang)"
+        (keydown.enter)="onLanguage(lang)"
+        tabindex="0">
+        <div id="language-icon">
+          <mat-icon [svgIcon]="getIconName(lang)"></mat-icon>
+        </div>
+        <p>{{ text(getTranslationKey(lang)) }}</p>
+      </div>
+    }
+  </div>
+}

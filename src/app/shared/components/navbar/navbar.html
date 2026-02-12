@@ -1,38 +1,46 @@
 <nav>
   <div class="nav-container">
     <!-- Logo -->
-    <a class="nav-elem" routerLink="/dashboard" routerLinkActive="active">
-      <div class="logo">
-        <mat-icon svgIcon="logo" inline="true"></mat-icon>
-        <p>FinBoKe</p>
-      </div>
-    </a>
-    <!-- Dashboard link -->
-    <app-nav-element type="dashboard" class="can-hide"></app-nav-element>
-    <!-- Finance link -->
-    <app-nav-element type="finances" class="can-hide"></app-nav-element>
-    <!-- Accounts link -->
-    <app-nav-element type="accounts" class="can-hide"></app-nav-element>
+    <div id="nav-elem-left">
+      <a routerLink="/dashboard" routerLinkActive="active">
+        <div id="logo">
+          <mat-icon svgIcon="logo" [inline]="true"></mat-icon>
+          <p class="can-hide">FinBoKe</p>
+        </div>
+      </a>
+    </div>
+    <div id="nav-elem-middle">
+      <!-- Dashboard link -->
+      <app-nav-element type="dashboard" class="can-hide"></app-nav-element>
+      <!-- Finance link -->
+      <app-nav-element type="finances" class="can-hide"></app-nav-element>
+    </div>
     <!-- Profil button -->
-    <a
-      class="nav-elem"
-      role="button"
-      (click)="onProfile()"
-      (keydown.enter)="onProfile()"
-      tabindex="0">
-      @if (imagePath() !== '') {
-        <img class="profile-btn" [src]="imagePath()" alt="" />
-      } @else {
-        <p class="profile-btn">{{ firstLetter() }}</p>
-      }
-    </a>
+    <div id="nav-elem-right">
+      <div id="theme">
+        <app-theme></app-theme>
+      </div>
+      <div id="language">
+        <app-language></app-language>
+      </div>
+      <a
+        appOnClickOutside
+        role="button"
+        (click)="onProfile()"
+        (keydown.enter)="onProfile()"
+        tabindex="0">
+        <img id="profile" [src]="imagePath()" [alt]="firstLetter()" />
+      </a>
+    </div>
   </div>
   <!-- Profile window -->
   @if (activeProfile()) {
     <div
+      appOnClickOutside
       class="vertical-secondary-nav"
       animate.enter="enterY"
-      animate.leave="leaveY">
+      animate.leave="leaveY"
+      (clickOutside)="onOutside()">
       <app-nav-element
         type="profile"
         [borderAnimation]="true"></app-nav-element>
@@ -52,10 +60,6 @@
       <!-- Finance link -->
       <app-nav-element
         type="finances"
-        [borderAnimation]="true"></app-nav-element>
-      <!-- Accounts link -->
-      <app-nav-element
-        type="accounts"
         [borderAnimation]="true"></app-nav-element>
       <app-nav-element
         type="profile"
