@@ -1,0 +1,23 @@
+@use 'app/shared/styles/animations/slideX' as *;
+@use 'app/shared/styles/animations/slideY' as *;
+
+$transition-x: transition-x;
+$transition-y: transition-y;
+
+@mixin transitions {
+    ::view-transition-old(transition-x) {
+        @include slideXOut();
+    }
+
+    ::view-transition-old(transition-y) {
+        @include slideYOut();
+    }
+    
+    ::view-transition-new(transition-x) {
+        @include slideXIn();
+    }
+
+    ::view-transition-new(transition-y) {
+        @include slideYIn();
+    }
+}

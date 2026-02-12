@@ -5,14 +5,14 @@ import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideTransloco } from '@jsverse/transloco';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withViewTransitions } from '@angular/router';
 import { routes } from './app/core/routing/routes';
 import { translocoConfig, userEffects, userReducer } from './app/shared';
 import { authInterceptor } from './app/core';
 
 bootstrapApplication(App, {
   providers: [
-    provideRouter(routes),
+    provideRouter(routes, withViewTransitions()),
     provideStore({ user: userReducer }),
     provideEffects([userEffects]),
     provideTransloco(translocoConfig),

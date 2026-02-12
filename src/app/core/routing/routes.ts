@@ -40,7 +40,8 @@ export const routes: Routes = [
   },
   {
     path: PATHS.finances,
-    component: DashboardOverview,
+    loadComponent: () =>
+      import('src/app/finances/finances').then(component => component.Finances),
   },
   {
     path: PATHS.profile,

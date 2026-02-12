@@ -1,0 +1,12 @@
+@use 'app/shared/styles/animations' as animations;
+@use 'app/shared/styles/components' as components;
+
+#container {
+    margin: 1rem;
+    view-transition-name: animations.$transition-x;
+
+    #diagram {
+        height: 20rem;
+        @include components.box-container();
+    }
+}

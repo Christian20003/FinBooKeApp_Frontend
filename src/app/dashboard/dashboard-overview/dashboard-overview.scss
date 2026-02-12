@@ -1,8 +1,10 @@
 @use "../../shared/styles/components" as components;
 @use "../../shared/styles/typography/font" as font;
+@use 'app/shared/styles/animations' as animations;
 
 .dashboard-container {
     margin-top: 1rem;
+    view-transition-name: animations.$transition-x;
 
     @media (min-width: 46rem) {
         margin-left: 2rem;
