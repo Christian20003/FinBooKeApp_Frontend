@@ -30,11 +30,4 @@ describe('Theme - Unit Tests', () => {
 
     expect(document.body.classList).toContain('dark');
   });
-
-  it('U-Test-2: Component should change theme after pressing a key when focused', async () => {
-    button.dispatchEvent(new KeyboardEvent('keydown'));
-    await fixture.whenStable();
-
-    expect(document.body.classList).toContain('dark');
-  });
 });

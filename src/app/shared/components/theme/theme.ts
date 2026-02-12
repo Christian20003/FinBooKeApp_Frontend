@@ -13,7 +13,9 @@ export class Theme {
   private readonly document = inject(DOCUMENT);
   private readonly renderer = inject(Renderer2);
 
-  protected readonly isLight = signal<boolean>(true);
+  protected readonly isLight = signal<boolean>(
+    !this.document.body.classList.contains('dark')
+  );
 
   constructor() {
     this.icon.registerIcons([ICON_NAMES.light_theme, ICON_NAMES.dark_theme]);

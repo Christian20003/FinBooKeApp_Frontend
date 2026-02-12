@@ -1,8 +1,4 @@
-<button
-  id="language"
-  (click)="onLanguageMenu()"
-  (keypress)="onLanguageMenu()"
-  tabindex="0">
+<button id="language" (click)="onLanguageMenu()" tabindex="0">
   <mat-icon [svgIcon]="getIconName(activeLang())"></mat-icon>
 </button>
 @if (activeMenu()) {
@@ -18,7 +14,7 @@
         class="option"
         [ngClass]="isActive(lang)"
         (click)="onLanguage(lang)"
-        (keypress)="onLanguage(lang)"
+        (keydown.enter)="onLanguage(lang)"
         tabindex="0">
         <div id="language-icon">
           <mat-icon [svgIcon]="getIconName(lang)"></mat-icon>

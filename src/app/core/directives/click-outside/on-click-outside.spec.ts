@@ -40,8 +40,18 @@ describe('OnClickOutside - Unit Tests', () => {
     expect(host.outsideCount).toBe(1);
   });
 
-  it('U-Test-2: Directive does not emit when clicking inside', () => {
+  it('U-Test-3: Directive emits when pressing enter outside', () => {
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'enter' }));
+    expect(host.outsideCount).toBe(1);
+  });
+
+  it('U-Test-4: Directive does not emit when clicking inside', () => {
     insideEl.dispatchEvent(new MouseEvent('click'));
+    expect(host.outsideCount).toBe(0);
+  });
+
+  it('U-Test-5: Directive does not emit when pressint enter inside', () => {
+    insideEl.dispatchEvent(new KeyboardEvent('keydown', { key: 'enter' }));
     expect(host.outsideCount).toBe(0);
   });
 });

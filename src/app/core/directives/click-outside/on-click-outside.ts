@@ -7,8 +7,8 @@ import {
 } from '@angular/core';
 
 /**
- * This directive emits `clickOutside` if the user clicks outside
- * its host element.
+ * This directive emits `clickOutside` if the user clicks or push enter
+ * outside its host element.
  */
 @Directive({
   selector: '[appOnClickOutside]',
@@ -20,6 +20,16 @@ export class OnClickOutside {
 
   @HostListener('document:click', ['$event.target'])
   onClick(target: EventTarget | null): void {
+    if (
+      !(target instanceof Node) ||
+      !this.element.nativeElement.contains(target)
+    ) {
+      this.clickOutside.emit();
+    }
+  }
+
+  @HostListener('document:keydown.enter', ['$event.target'])
+  onEnter(target: EventTarget | null): void {
     if (
       !(target instanceof Node) ||
       !this.element.nativeElement.contains(target)
