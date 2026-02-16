@@ -2,11 +2,27 @@
 @use 'app/shared/styles/components' as components;
 
 #container {
-    margin: 1rem;
-    view-transition-name: animations.$transition-x;
+        display: flex;
+        gap: 1rem;
+        margin: 1rem;
+        view-transition-name: animations.$transition-x;
 
-    #diagram {
-        height: 20rem;
-        @include components.box-container();
+        #diagram-1, #diagram-2 {
+            flex: 1;
+            min-width: 0;
+            @include components.box-container();
+        }
+}
+
+@media (max-width: 700px) {
+    #container {
+        flex-direction: column;
+
+        #diagram-1, #diagram-2 {
+            flex: 0 1 auto;
+            min-width: 0;
+            width: 100%;
+            @include components.box-container();
+        }
     }
 }

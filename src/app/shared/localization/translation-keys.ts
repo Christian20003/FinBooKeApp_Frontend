@@ -39,6 +39,10 @@ export const TRANSLATION_KEYS = {
     settings: 'navbar.settings',
     logout: 'navbar.logout',
   },
+  diagram: {
+    thousand: 'diagram.thousand',
+    million: 'diagram.million',
+  },
   language: {
     english: 'language.english',
     german: 'language.german',

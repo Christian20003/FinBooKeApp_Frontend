@@ -36,6 +36,10 @@
         "settings": "Einstellungen",
         "logout": "Logout"
     },
+    "diagram": {
+        "thousand": "T",
+        "million": "M"
+    },
     "language": {
         "english": "Englisch",
         "german": "Deutsch"

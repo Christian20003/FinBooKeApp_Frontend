@@ -11,3 +11,4 @@ export { ToastLifeTime } from './toast/toast-lifetime';
 export { IUser } from './authentication/user/user';
 export { isIUser } from './authentication/user/is-user';
 export { IUserUnauthenticated } from './authentication/user/user-unauthenticated';
+export { BarGroup, BarChartData } from './diagram/bar';
