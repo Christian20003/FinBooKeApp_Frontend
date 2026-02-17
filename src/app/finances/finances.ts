@@ -70,7 +70,7 @@ export class Finances {
         ...this.data().groups,
         {
           xValue: 'Funny',
-          yValues: [500, 500],
+          yValues: [4000, 500],
         },
       ],
     });

@@ -30,6 +30,8 @@ export class BarDiagram implements OnInit {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private svg!: d3.Selection<SVGGElement, unknown, HTMLElement, any>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private tooltip!: d3.Selection<HTMLDivElement, unknown, HTMLElement, any>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private xAxis!: d3.Selection<SVGGElement, unknown, HTMLElement, any>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private yAxis!: d3.Selection<SVGGElement, unknown, HTMLElement, any>;
@@ -71,42 +73,27 @@ export class BarDiagram implements OnInit {
       .attr('height', '100%')
       .append('g')
       .attr('transform', `translate(${this.margins.left},${this.margins.top})`);
+
+    this.tooltip = d3
+      .select('#chart')
+      .append('div')
+      .attr('id', 'tooltip')
+      .style('opacity', '0');
   }
 
   private drawX(): void {
-    this.xScale = d3
-      .scaleBand()
-      .range([0, this.width])
-      .domain(this.groups.map(group => group.xValue))
-      .padding(0.2);
+    this.xScale = d3.scaleBand().range([0, this.width]).padding(0.2);
 
     this.xAxis = this.svg
       .append('g')
-      .attr('transform', `translate(0, ${this.height})`)
-      .call(d3.axisBottom(this.xScale).tickFormat(this.service.adjustLabel()))
-      .attr('class', 'x-axis');
-
-    this.xAxis.selectAll('text').attr('class', 'x-text');
-    this.xAxis.selectAll('line').attr('class', 'line');
+      .attr('transform', `translate(0, ${this.height})`);
+    this.updateX();
   }
 
   private drawY(): void {
-    this.yScale = d3
-      .scaleLinear()
-      .domain([0, this.maxY()])
-      .range([this.height, 0]);
-
-    this.yAxis = this.svg
-      .append('g')
-      .call(
-        d3
-          .axisLeft(this.yScale)
-          .tickFormat(value => this.service.adjustLabel()(value.valueOf()))
-      )
-      .attr('class', 'y-axis');
-
-    this.yAxis.selectAll('text').attr('class', 'y-text');
-    this.yAxis.selectAll('line').attr('class', 'line');
+    this.yScale = d3.scaleLinear().range([this.height, 0]);
+    this.yAxis = this.svg.append('g');
+    this.updateY();
   }
 
   private drawBars(): void {
@@ -121,21 +108,34 @@ export class BarDiagram implements OnInit {
       .enter()
       .append('g')
       .attr('class', 'group')
-      .attr('transform', d => `translate(${this.xScale(d.xValue)}, 0)`)
+      .attr('transform', group => `translate(${this.xScale(group.xValue)}, 0)`)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .merge(groups as any)
-      .attr('transform', d => `translate(${this.xScale(d.xValue)}, 0)`)
+      .attr('transform', group => `translate(${this.xScale(group.xValue)}, 0)`)
       .selectAll('rect')
-      .data(d => d.yValues.map((yValue, index) => ({ yValue, index })))
+      .data(group => group.yValues.map((yValue, index) => ({ yValue, index })))
       .join(
         enter =>
           enter
             .append('rect')
-            .attr('x', d => width * d.index)
+            .attr('x', bar => width * bar.index)
             .attr('width', width)
-            .attr('fill', d => this.colors[d.index])
-            .attr('y', d => this.yScale(d.yValue) - 1)
-            .attr('height', 0),
+            .attr('fill', bar => this.colors[bar.index])
+            .attr('y', bar => this.yScale(bar.yValue) - 1)
+            .on('mouseover', event => {
+              this.tooltip.style('opacity', '1');
+              d3.select(event.target).style('opacity', '0.7');
+            })
+            .on('mousemove', (event, bar) => {
+              this.tooltip.text(bar.yValue);
+              this.tooltip
+                .style('top', `${event.y - 85}px`)
+                .style('left', `${event.x + 10}px`);
+            })
+            .on('mouseout', event => {
+              this.tooltip.style('opacity', '0');
+              d3.select(event.target).style('opacity', '1');
+            }),
         update => update,
         exit => exit.remove()
       )
@@ -155,7 +155,22 @@ export class BarDiagram implements OnInit {
         d3
           .axisLeft(this.yScale)
           .tickFormat(value => this.service.adjustLabel()(value.valueOf()))
-      );
+      )
+      .attr('class', 'axis');
+
+    this.yAxis.selectAll('text').attr('class', 'axis-text');
+    this.yAxis.selectAll('line').attr('class', 'axis-line');
+
+    this.svg
+      .selectAll('line.grid-line')
+      .data(this.yScale.ticks(7))
+      .enter()
+      .append('line')
+      .attr('class', 'grid-line')
+      .attr('x1', this.margins.right)
+      .attr('x2', this.width)
+      .attr('y1', d => this.yScale(d))
+      .attr('y2', d => this.yScale(d));
   }
 
   private updateX(): void {
@@ -163,7 +178,11 @@ export class BarDiagram implements OnInit {
     this.xAxis
       .transition()
       .duration(this.animationDuration)
-      .call(d3.axisBottom(this.xScale).tickFormat(this.service.adjustLabel()));
+      .call(d3.axisBottom(this.xScale).tickFormat(this.service.adjustLabel()))
+      .attr('class', 'axis');
+
+    this.xAxis.selectAll('text').attr('class', 'axis-text');
+    this.xAxis.selectAll('line').attr('class', 'axis-line');
   }
 
   private get width(): number {

@@ -2,18 +2,48 @@
 
 #chart-container {
     #chart {  
-        .y-axis, .x-axis {
+        .axis {
             @include font.label-font();
+
+            .axis-text {
+                color: var(--text-color-primary);
+            }
+
+            .axis-line, .domain {
+                stroke: var(--border-color-primary);
+                stroke-width: 0.2rem;
+                stroke-linecap: round;
+            }
         }
-    
-        .domain, .line {
+
+        .grid-line {
+            fill: none;
             stroke: var(--border-color-primary);
-            stroke-width: 0.2rem;
-            stroke-linecap: round;
+            stroke-width: 1px;
+            opacity: 0.5;
+            shape-rendering: crispEdges;
         }
-    
-        .x-text, .y-text {
-            color: var(--text-color-primary);
+
+        #tooltip {
+            position: absolute;
+            color: var(--text-color-complement);
+            padding: 0.5rem;
+            border-radius: 10%;
+            background-color: var(--background-color-container-complement);
+            transition: opacity 0.5s;
+            z-index: 1;
+            @include font.description-font();
+
+            &::after {
+                content: '';
+                position: absolute;
+                top: 38%;
+                right: 100%;
+                margin-left: -5px;
+                border-width: 5px;
+                border-style: solid;
+                border-color: transparent var(--background-color-container-complement) transparent transparent;
+            }
         }
     }
     #legend {
