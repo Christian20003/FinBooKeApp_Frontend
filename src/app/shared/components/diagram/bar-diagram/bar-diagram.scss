@@ -1,27 +1,25 @@
 @use 'app/shared/styles/typography/font' as font; 
 
 #chart-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 1rem auto;
-
-    .y-axis, .x-axis {
-        @include font.label-font();
+    #chart {  
+        .y-axis, .x-axis {
+            @include font.label-font();
+        }
+    
+        .domain, .line {
+            stroke: var(--border-color-primary);
+            stroke-width: 0.2rem;
+            stroke-linecap: round;
+        }
+    
+        .x-text, .y-text {
+            color: var(--text-color-primary);
+        }
+    }
+    #legend {
+        outline: 2px red solid;
+        width: 50px;
+        height: 50px;
     }
 
-    .domain, .line {
-        stroke: var(--border-color-primary);
-        stroke-width: 0.2rem;
-        stroke-linecap: round;
-    }
-
-    .x-text, .y-text, .legend-text {
-        color: var(--text-color-primary);
-    }
-}
-#legend {
-    outline: 2px red solid;
-    width: 50px;
-    height: 50px;
 }

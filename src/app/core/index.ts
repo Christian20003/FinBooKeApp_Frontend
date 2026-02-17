@@ -12,6 +12,8 @@ export {
   isIUser,
   ToastType,
   ToastLifeTime,
+  BarChartData,
+  BarGroup,
 } from './models';
 
 export { PATHS, API_PATHS, buildApiUrl, includeAuthUrl } from './routing';
@@ -32,5 +34,6 @@ export {
   LoggingService,
   IconService,
   ToastService,
+  DiagramService,
   ICON_NAMES,
 } from './services';

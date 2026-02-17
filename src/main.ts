@@ -8,10 +8,22 @@ import { provideTransloco } from '@jsverse/transloco';
 import { provideRouter, withViewTransitions } from '@angular/router';
 import { routes } from './app/core/routing/routes';
 import { translocoConfig, userEffects, userReducer } from './app/shared';
-import { authInterceptor } from './app/core';
+import {
+  AuthenticationService,
+  authInterceptor,
+  DiagramService,
+  EnvironmentService,
+  LoggingService,
+  ToastService,
+} from './app/core';
 
 bootstrapApplication(App, {
   providers: [
+    AuthenticationService,
+    LoggingService,
+    EnvironmentService,
+    DiagramService,
+    ToastService,
     provideRouter(routes, withViewTransitions()),
     provideStore({ user: userReducer }),
     provideEffects([userEffects]),

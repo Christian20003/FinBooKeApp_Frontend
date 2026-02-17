@@ -1,59 +1,58 @@
 import {
   Component,
+  computed,
+  effect,
   inject,
   input,
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
-import { BarChartData, BarGroup } from 'src/app/core/models';
-import { TranslocoService } from '@jsverse/transloco';
-import { TRANSLATION_KEYS } from 'src/app/shared/localization/translation-keys';
+import { BarChartData, BarGroup, DiagramService } from 'src/app/core';
 import * as d3 from 'd3';
 
 @Component({
   selector: 'app-bar-diagram',
-  imports: [],
   templateUrl: './bar-diagram.html',
   styleUrl: './bar-diagram.scss',
+  imports: [],
   encapsulation: ViewEncapsulation.None,
 })
 export class BarDiagram implements OnInit {
-  private readonly transloco = inject(TranslocoService);
+  private readonly service = inject(DiagramService);
 
   private readonly margins = { top: 20, right: 20, bottom: 40, left: 70 };
   private readonly dimensions = { width: 800, height: 400 };
   private readonly animationDuration = 500;
-  private readonly maxStringLength = 3;
 
-  private x = d3.scaleBand();
-  private y = d3.scaleLinear();
+  private xScale!: d3.ScaleBand<string>;
+  private yScale!: d3.ScaleLinear<number, number, never>;
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private svg: d3.Selection<SVGGElement, unknown, HTMLElement, any>;
+  private svg!: d3.Selection<SVGGElement, unknown, HTMLElement, any>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private xAxis!: d3.Selection<SVGGElement, unknown, HTMLElement, any>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private yAxis!: d3.Selection<SVGGElement, unknown, HTMLElement, any>;
 
   readonly data = input.required<BarChartData>();
-
-  private readonly labelFormat = (value: number | string): string => {
-    if (typeof value === 'number') {
-      let label = value.toString();
-      let shortcut = '';
-      if (value >= 1e6) {
-        label = (value / 1e6).toFixed(2);
-        shortcut = this.transloco.translate(TRANSLATION_KEYS.diagram.million);
-      } else if (value >= 1e3) {
-        label = (value / 1e3).toFixed(2);
-        shortcut = this.transloco.translate(TRANSLATION_KEYS.diagram.thousand);
-      }
-      return `${label}${shortcut}`;
+  private readonly groupColors = computed<string[]>(() => {
+    const colors = [...this.data().colors];
+    while (this.groupSize > colors.length) {
+      colors.push(this.service.getColor());
     }
-    if (value.length > this.maxStringLength) {
-      return value.substring(0, this.maxStringLength);
-    }
-    return value;
-  };
+    return colors;
+  });
+  private readonly maxY = computed<number>(() => {
+    const values = this.groups.map(group => group.yValues);
+    return Math.max(...values.flat());
+  });
 
   constructor() {
-    // Required to initialize svg
-    this.svg = d3.select('#chart-container');
+    effect(() => {
+      this.updateX();
+      this.updateY();
+      this.drawBars();
+    });
   }
 
   ngOnInit(): void {
@@ -65,64 +64,54 @@ export class BarDiagram implements OnInit {
 
   private initSvg(): void {
     this.svg = d3
-      .select('#chart-container')
+      .select('#chart')
       .append('svg')
       .attr('viewBox', `0 0 ${this.dimensions.width} ${this.dimensions.height}`)
-      .attr('width', this.dimensions.width)
-      .attr('height', this.dimensions.height)
+      .attr('width', '100%')
+      .attr('height', '100%')
       .append('g')
       .attr('transform', `translate(${this.margins.left},${this.margins.top})`);
   }
 
   private drawX(): void {
-    // Remove old x-axis
-    this.svg.select('.x-axis').remove();
-
-    this.x = d3
+    this.xScale = d3
       .scaleBand()
       .range([0, this.width])
-      .domain(this.bars.map(value => value.xValue))
+      .domain(this.groups.map(group => group.xValue))
       .padding(0.2);
 
-    const xAxis = this.svg
+    this.xAxis = this.svg
       .append('g')
       .attr('transform', `translate(0, ${this.height})`)
-      .call(d3.axisBottom(this.x).tickFormat(this.labelFormat))
+      .call(d3.axisBottom(this.xScale).tickFormat(this.service.adjustLabel()))
       .attr('class', 'x-axis');
 
-    xAxis.selectAll('text').attr('class', 'x-text');
-    xAxis.selectAll('line').attr('class', 'line');
+    this.xAxis.selectAll('text').attr('class', 'x-text');
+    this.xAxis.selectAll('line').attr('class', 'line');
   }
 
   private drawY(): void {
-    // Remove old y-axis
-    this.svg.select('.y-axis').remove();
+    this.yScale = d3
+      .scaleLinear()
+      .domain([0, this.maxY()])
+      .range([this.height, 0]);
 
-    const values = this.bars.map(value => Math.max(...value.yValues));
-    const max = Math.max(...values);
-    this.y = d3.scaleLinear().domain([0, max]).range([this.height, 0]);
-
-    const yAxis = this.svg
+    this.yAxis = this.svg
       .append('g')
       .call(
         d3
-          .axisLeft(this.y)
-          .tickFormat(value => this.labelFormat(value.valueOf()))
+          .axisLeft(this.yScale)
+          .tickFormat(value => this.service.adjustLabel()(value.valueOf()))
       )
       .attr('class', 'y-axis');
 
-    yAxis.selectAll('text').attr('class', 'y-text');
-    yAxis.selectAll('line').attr('class', 'line');
+    this.yAxis.selectAll('text').attr('class', 'y-text');
+    this.yAxis.selectAll('line').attr('class', 'line');
   }
 
   private drawBars(): void {
-    const countBars = Math.max(
-      ...this.bars.map(element => element.yValues.length)
-    );
-    const width = this.x.bandwidth() / countBars;
-    const groups = this.svg
-      .selectAll('.group')
-      .data(this.bars, (item: unknown) => (item as BarGroup).xValue);
+    const width = this.xScale.bandwidth() / this.groupSize;
+    const groups = this.svg.selectAll('.group').data(this.groups);
 
     // Remove old groups
     groups.exit().remove();
@@ -132,10 +121,10 @@ export class BarDiagram implements OnInit {
       .enter()
       .append('g')
       .attr('class', 'group')
-      .attr('transform', d => `translate(${this.x(d.xValue)}, 0)`)
+      .attr('transform', d => `translate(${this.xScale(d.xValue)}, 0)`)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .merge(groups as any)
-      .attr('transform', d => `translate(${this.x(d.xValue)}, 0)`)
+      .attr('transform', d => `translate(${this.xScale(d.xValue)}, 0)`)
       .selectAll('rect')
       .data(d => d.yValues.map((yValue, index) => ({ yValue, index })))
       .join(
@@ -145,15 +134,36 @@ export class BarDiagram implements OnInit {
             .attr('x', d => width * d.index)
             .attr('width', width)
             .attr('fill', d => this.colors[d.index])
-            .attr('y', d => this.y(d.yValue) - 1)
+            .attr('y', d => this.yScale(d.yValue) - 1)
             .attr('height', 0),
         update => update,
         exit => exit.remove()
       )
       .transition()
       .duration(this.animationDuration)
-      .attr('y', d => this.y(d.yValue) - 1)
-      .attr('height', d => this.height - this.y(d.yValue));
+      .attr('y', d => this.yScale(d.yValue) - 1)
+      .attr('height', d => this.height - this.yScale(d.yValue))
+      .attr('fill', d => this.colors[d.index]);
+  }
+
+  private updateY(): void {
+    this.yScale.domain([0, this.maxY()]);
+    this.yAxis
+      .transition()
+      .duration(this.animationDuration)
+      .call(
+        d3
+          .axisLeft(this.yScale)
+          .tickFormat(value => this.service.adjustLabel()(value.valueOf()))
+      );
+  }
+
+  private updateX(): void {
+    this.xScale.domain(this.groups.map(group => group.xValue));
+    this.xAxis
+      .transition()
+      .duration(this.animationDuration)
+      .call(d3.axisBottom(this.xScale).tickFormat(this.service.adjustLabel()));
   }
 
   private get width(): number {
@@ -164,11 +174,15 @@ export class BarDiagram implements OnInit {
     return this.dimensions.height - this.margins.bottom - this.margins.top;
   }
 
-  private get bars(): BarGroup[] {
+  private get groups(): BarGroup[] {
     return this.data().groups;
   }
 
   private get colors(): string[] {
-    return this.data().colors;
+    return this.groupColors();
+  }
+
+  private get groupSize(): number {
+    return Math.max(...this.groups.map(group => group.yValues.length));
   }
 }

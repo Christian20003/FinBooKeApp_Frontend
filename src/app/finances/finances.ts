@@ -60,6 +60,19 @@ export class Finances {
         yValues: [3874, 38],
       },
     ],
-    colors: ['green', 'red', 'orange', 'yellow', 'blue'],
+    colors: ['green'],
   });
+
+  test(): void {
+    this.data.set({
+      ...this.data(),
+      groups: [
+        ...this.data().groups,
+        {
+          xValue: 'Funny',
+          yValues: [500, 500],
+        },
+      ],
+    });
+  }
 }
