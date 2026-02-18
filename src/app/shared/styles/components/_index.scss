@@ -6,3 +6,5 @@
 @forward './button' show major-button, link-button, image-button;
 @forward './nav' show nav-elem;
 @forward './menu' show vertical-menu;
+@forward './line' show axis-line, grid-line;
+@forward './tooltip' show tooltip;
