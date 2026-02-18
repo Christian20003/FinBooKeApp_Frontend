@@ -177,17 +177,17 @@ export class BarDiagram implements OnInit {
     // Adjust y-axis
     this.yScale.domain([0, this.maxY()]);
     this.yAxis
+      .attr('class', 'y-axis')
       .transition()
       .duration(this.animationDuration)
       .call(
         d3
           .axisLeft(this.yScale)
           .tickFormat(value => this.service.adjustLabel()(value.valueOf()))
-      )
-      .attr('class', 'axis');
+      );
 
-    this.yAxis.selectAll('text').attr('class', 'axis-text');
-    this.yAxis.selectAll('line').attr('class', 'axis-line');
+    this.yAxis.selectAll('text').attr('class', 'y-axis-text');
+    this.yAxis.selectAll('line').attr('class', 'y-axis-line');
 
     // Adjust grid line
     this.svg
@@ -210,13 +210,13 @@ export class BarDiagram implements OnInit {
   private updateX(): void {
     this.xScale.domain(this.groups.map(group => group.xValue));
     this.xAxis
+      .attr('class', 'x-axis')
       .transition()
       .duration(this.animationDuration)
-      .call(d3.axisBottom(this.xScale).tickFormat(this.service.adjustLabel()))
-      .attr('class', 'axis');
+      .call(d3.axisBottom(this.xScale).tickFormat(this.service.adjustLabel()));
 
-    this.xAxis.selectAll('text').attr('class', 'axis-text');
-    this.xAxis.selectAll('line').attr('class', 'axis-line');
+    this.xAxis.selectAll('text').attr('class', 'x-axis-text');
+    this.xAxis.selectAll('line').attr('class', 'x-axis-line');
   }
 
   /**

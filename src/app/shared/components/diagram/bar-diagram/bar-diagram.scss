@@ -3,16 +3,16 @@
 
 #bar-chart-container {
     #bar-chart {  
-        .axis {
+        .x-axis, .y-axis {
             font-family: inherit;
             @include font.label-font();
 
-            .axis-text {
+            .x-axis-text, .y-axis-text {
                 color: var(--text-color-primary);
                 font-family: inherit;
             }
 
-            .axis-line, .domain {
+            .x-axis-line, .y-axis-line, .domain {
                 @include components.axis-line();
             }
         }
